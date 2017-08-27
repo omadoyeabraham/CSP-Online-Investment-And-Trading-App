@@ -20,27 +20,27 @@
       <div class="sidebar-accounts d-flex flex-column">
         <div class="sidebar-account">
           <span><i class="fa fa-suitcase" aria-hidden="true"></i>Stockbroking</span>
-          <span>N100,000,000</span>
+          <span>₦100,000,000</span>
         </div>
         <div class="sidebar-account">
-          <span><i class="fa fa-suitcase" aria-hidden="true"></i>Fixed Income</span>
-          <span>N100,000,000</span>
+          <span><i class="fa fa-bars" aria-hidden="true"></i>Fixed Income</span>
+          <span>₦100,000,000</span>
         </div>
         <div class="sidebar-account">
-          <span><i class="fa fa-suitcase" aria-hidden="true"></i>Dollar Investments</span>
-          <span>N100,000,000</span>
+          <span><i class="fa fa-usd" aria-hidden="true"></i>Dollar Investments</span>
+          <span>₦100,000,000</span>
         </div>
         <div class="sidebar-account">
-          <span><i class="fa fa-suitcase" aria-hidden="true"></i>SMA</span>
-          <span>N100,000,000</span>
+          <span><i class="fa fa-cube" aria-hidden="true"></i>SMA</span>
+          <span>₦100,000,000</span>
         </div>
         <div class="sidebar-account">
-          <span><i class="fa fa-suitcase" aria-hidden="true"></i>Structured Inv Plan</span>
-          <span>N100,000,000</span>
+          <span><i class="fa fa-group" aria-hidden="true"></i>Structured Inv Plan</span>
+          <span>₦100,000,000</span>
         </div>
         <div class="sidebar-account">
-          <span><i class="fa fa-suitcase" aria-hidden="true"></i>Cash Account</span>
-          <span>N100,000,000</span>
+          <span><i class="fa fa-money" aria-hidden="true"></i>Cash Account</span>
+          <span>₦100,000,000</span>
         </div>
       </div>
 
@@ -67,12 +67,12 @@
       .sidebar-account
         display: flex
         justify-content: space-between
-        padding: 5px 1px
+        padding: 5px 5px
         font-size: 1.3rem
         border-bottom: 1px solid #fff
-        color: #1a2155
+        color: #333
         &:hover
-          background: #CCC
+          background: #EEE
           cursor: pointer
         .fa
           margin-right: 5px

@@ -12,10 +12,10 @@
     </div>
 
     <div class="row h-100">
-        <div class="hidden-xs-down p0 col-sm-4 col-lg-3">
+        <div class="hidden-xs-down p0 col-sm-4 col-lg-3 col-xl-2">
           <Sidebar></Sidebar>
         </div>
-        <div class="col-sm-8 col-lg-9 bg-green">
+        <div class="col-sm-8 col-lg-9 col-xl-10 bg-green">
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia eos recusandae doloribus? Hic praesentium nam iste doloremque dolorem. Corrupti repellendus obcaecati mollitia, consequuntur nisi culpa voluptas sapiente perspiciatis sit voluptatum.</p>
         </div>
     </div>
