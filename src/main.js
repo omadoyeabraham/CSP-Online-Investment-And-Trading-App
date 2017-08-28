@@ -1,8 +1,14 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+import Vuetify from 'vuetify'
 import App from './App'
 import router from './router'
+
+Vue.use(Vuetify);
+
+// Vuetify CSS
+import '../node_modules/vuetify/dist/vuetify.min.css'
 
 // Stylesheet import
 import './assets/css/main.scss';
