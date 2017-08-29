@@ -15,8 +15,8 @@
         <div class="hidden-xs-down p0 col-sm-5 col-lg-3 ">
           <Sidebar></Sidebar>
         </div>
-        <div class="col-sm-7 col-lg-9 bg-green">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia eos recusandae doloribus? Hic praesentium nam iste doloremque dolorem. Corrupti repellendus obcaecati mollitia, consequuntur nisi culpa voluptas sapiente perspiciatis sit voluptatum.</p>
+        <div class="col-sm-7 col-lg-9 bg-grey">
+
         </div>
     </div>
 

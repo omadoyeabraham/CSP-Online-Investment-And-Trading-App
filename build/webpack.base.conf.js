@@ -79,7 +79,15 @@ module.exports = {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: "file-loader"
       },
-    //   {
+      {
+        test: /\.(otf)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+        }
+     },
+      //   {
     //     test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
     //     loader: 'url-loader',
     //     options: {
@@ -87,15 +95,6 @@ module.exports = {
     //       name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
     //     }
     //  },
-    {
-      test: /\.(otf)(\?.*)?$/,
-      loader: 'url-loader',
-      options: {
-        limit: 10000,
-        name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
-      }
-   },
-
 
     ]
   },

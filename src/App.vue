@@ -1,5 +1,5 @@
 <template>
-  <div id="app" >
+  <div id="app">
     <router-view></router-view>
   </div>
 </template>
@@ -12,5 +12,5 @@ export default {
 
 <style scoped lang="sass">
   #app
-    height: 90%
+    height: 86%
 </style>
