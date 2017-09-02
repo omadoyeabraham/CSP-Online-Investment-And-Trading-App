@@ -16,7 +16,7 @@
           <Sidebar></Sidebar>
         </div>
         <div class="col-sm-7 col-lg-9 bg-grey">
-
+          <Dashboard></Dashboard>
         </div>
     </div>
 
@@ -25,14 +25,16 @@
 
 <script>
   // Import other components that are rendered by the homepage
-  import Sidebar from './Sidebar';
+  import Sidebar from './sidebar/Sidebar';
   import Navbar from './Navbar';
+  import Dashboard from './dashboard/Dashboard';
 
   export default
   {
     components: {
       Sidebar,
-      Navbar
+      Navbar,
+      Dashboard
     }
   };
 </script>
