@@ -5,11 +5,7 @@
  -->
 
 <template>
-  <div class="container-fluid">
-    <div class="jumbotron">
 
-    </div>
-  </div>
 </template>
 
 <script>

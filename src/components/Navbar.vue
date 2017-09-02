@@ -8,7 +8,7 @@
 
     <nav class="nav w100p justify-content-between">
 
-      <div class="ml10 no-gutters d-flex justify-content-between">
+      <div class="ml30 no-gutters d-flex justify-content-between">
         <div class=" h-100 d-flex mr10">
            <span class="vert-center">
              <i class="fa fa-user fa-5x h-100 w100p" aria-hidden="true"></i>
@@ -23,7 +23,7 @@
       </div>
 
       <div class="text-center h-100 d-flex">
-        <img class="logo mr20 vert-center" src="../assets/img/cardinalstone.png" alt="CardinalStone Logo">
+        <img class="logo mr30 vert-center" src="../assets/img/cardinalstone.png" alt="CardinalStone Logo">
       </div>
     </nav>
 

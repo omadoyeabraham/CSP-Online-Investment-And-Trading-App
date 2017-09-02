@@ -17,7 +17,7 @@
       </div>
 
       <v-card height="100%" class="grey lighten-4" id="navigation-1"  style="z-index: 0">
-        <v-navigation-drawer class="grey lighten-4 pb-0 w100p" permanent absolute height="100%" light >
+        <v-navigation-drawer class="grey lighten-4 pb-0 " permanent absolute height="100%" light >
           <UserAccountSummaryComponent :accountTypes="accountTypes"></UserAccountSummaryComponent>
           <UserAccountActionsComponent :accountActions="accountActions"></UserAccountActionsComponent>
         </v-navigation-drawer>
