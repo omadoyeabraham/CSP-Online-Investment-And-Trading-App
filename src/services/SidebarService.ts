@@ -31,7 +31,7 @@ export const userAccounts: Array<object> = [
     icon: 'contacts',
     'icon-alt': 'contacts',
     text: 'Fixed Income',
-    totalValue: 50000,
+    totalValue: '15,000,000',
     model: false,
     children: [
       { icon: 'keyboard_arrow_right', text: 'Running Investments' },
@@ -42,16 +42,16 @@ export const userAccounts: Array<object> = [
     icon: 'contacts',
     'icon-alt': 'contacts',
     text: 'Dollar Investments',
-    totalValue: 50000,
+    totalValue: '1,150,000,000',
     model: false,
     children: [
       { icon: 'keyboard_arrow_right', text: 'Running Investments' },
       { icon: 'keyboard_arrow_right', text: 'Terminated Investments' }
     ]
   },
-  { icon: 'keyboard', text: 'SMA', totalValue: 10000 },
-  { icon: 'keyboard', text: 'Structured Inv. Plan', totalValue: 10000 },
-  { icon: 'keyboard', text: 'Cash Account', totalValue: 130272.41 }
+  { icon: 'keyboard', text: 'SMA', totalValue: '1,150,000,000' },
+  { icon: 'keyboard', text: 'Structured Inv. Plan', totalValue: '1,150,000,000' },
+  { icon: 'keyboard', text: 'Cash Account', totalValue: '1,150,000,000' }
 ]
 
 /**

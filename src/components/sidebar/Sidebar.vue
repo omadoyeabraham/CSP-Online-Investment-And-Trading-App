@@ -1,12 +1,18 @@
-<!--
-  The sidebar component displays a summary of the client's portfolio balance, and also serves as a navigation bar for the application
+<template>
+    <v-navigation-drawer absolute persistent light v-model="showSidebar" overflow>
 
-  @author Omadoye Abraham <omadoyeabraham@gmail.com>
- -->
-
- <template>
-
-    <section class="sidebar h-100">
+      <v-toolbar flat class="transparent" >
+        <v-list class="pa-0" style="border-bottom: 1px solid #eee">
+          <v-list-tile avatar >
+            <v-list-tile-avatar>
+              <img src="https://randomuser.me/api/portraits/men/85.jpg" />
+            </v-list-tile-avatar>
+            <v-list-tile-content >
+              <v-list-tile-title style="white-space: normal">{{username}}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-toolbar>
 
       <!-- Sidebar heading -->
       <div class="sidebar-header d-flex justify-content-between">
@@ -16,70 +22,89 @@
         </span>
       </div>
 
-      <v-card height="100%" class="grey lighten-4" id="navigation-1"  style="z-index: 0">
-        <v-navigation-drawer class="grey lighten-4 pb-0 " permanent absolute height="100%" light >
-          <UserAccountSummaryComponent :accountTypes="accountTypes"></UserAccountSummaryComponent>
-          <UserAccountActionsComponent :accountActions="accountActions"></UserAccountActionsComponent>
-        </v-navigation-drawer>
-      </v-card>
+      <UserAccountSummaryComponent :accountTypes="accountTypes"></UserAccountSummaryComponent>
 
-      <!-- Bottom navigation on sidebar -->
-      <v-card height="auto" >
-        <v-bottom-nav absolute value="true" class="transparent">
-          <v-btn flat light class="teal--text" @click.native="e1 = 1" :value="e1 === 1">
-            <span>Accounts</span>
-            <v-icon>home</v-icon>
-          </v-btn>
-          <v-btn flat light class="teal--text" @click.native="e1 = 2" :value="e1 === 2">
-            <span>Market</span>
-            <v-icon>view_comfy</v-icon>
-          </v-btn>
-          <v-btn flat light class="teal--text" @click.native="e1 = 3" :value="e1 === 3">
-            <span>Contact Us</span>
-            <v-icon>record_voice_over</v-icon>
-          </v-btn>
-        </v-bottom-nav>
-      </v-card>
+      <!-- Account actions -->
+      <div class="sidebar-header d-flex justify-content-between">
+        <span>Account Actions</span>
+      </div>
 
-    </section>
+      <UserAccountActionsComponent :accountActions="accountActions"></UserAccountActionsComponent>
 
- </template>
+      <router-link to="/dashboard">Dashboard</router-link>
 
- <script>
-    // Component for the user's account summary
-    import UserAccountSummaryComponent from './UserAccountSummary';
+    </v-navigation-drawer>
+</template>
 
-    // Component for the user's account actions
-    import UserAccountActionsComponent from './UserAccountActions';
+<script>
+  import { mapState, mapMutations } from 'vuex';
 
-    // Getting the user's data from the Sidebar service
-    import {userAccounts, userAccountActions} from '../../services/SidebarService.ts';
+  // Component for the user's account summary
+  import UserAccountSummaryComponent from './UserAccountSummary';
 
-    const accountTypes = userAccounts;
-    const accountActions = userAccountActions;
+  // Component for the user's account actions
+  import UserAccountActionsComponent from './UserAccountActions';
 
-    export default {
-      components: {
-        UserAccountSummaryComponent,
-        UserAccountActionsComponent
-      },
-      data () {
-        return {
-          accountTypes: accountTypes,
-          accountActions: accountActions
-        }
+  // Getting the user's data from the Sidebar service
+  import {userAccounts, userAccountActions} from '../../services/SidebarService.ts';
+
+  const accountTypes = userAccounts;
+  const accountActions = userAccountActions;
+
+  export default
+  {
+    components: {
+      UserAccountSummaryComponent,
+      UserAccountActionsComponent
+    },
+
+    props: [
+      'isVisible'
+    ],
+
+    // Component specific data
+    data () {
+      return {
+        accountTypes: accountTypes,
+        accountActions: accountActions,
+        showSidebar: this.isVisible,
+        items: [
+          { title: 'Home', icon: 'dashboard' },
+          { title: 'About', icon: 'question_answer' }
+        ],
+        right: null,
+        username: 'Kenechukwu Bolarinwa'
       }
+    },
+
+    watch: {
+      isVisible: function () {
+        this.showSidebar = this.isVisible
+      }
+    },
+
+    // Computed properties gotten mainly from the global application store
+    computed: mapState({
+      'sidebarVisibility': (store) => store.state.dashboard.sidebarVisibility
+    }),
+
+    methods: {
+      ...mapMutations([
+        'TOGGLE_SIDEBAR'
+      ])
     }
 
- </script>
+  }
+</script>
 
-<!-- Stylesheets -->
- <style scoped lang="sass">
-    .sidebar
-      .sidebar-header
-        font-size: 2.5rem
-        margin: 5px
-        margin-bottom: 0
-        border-bottom: 1px solid rgb(204,204,204)
- </style>
-
+<style scoped lang="sass">
+  .toolbar__content
+    border-bottom: 1px solid #ccc
+  .sidebar-header
+    font-size: 2rem
+    color: #1a2155
+    margin: 5px
+    margin-top: 30px
+    margin-bottom: 0
+    border-bottom: 1px solid rgb(204,204,204)
+</style>

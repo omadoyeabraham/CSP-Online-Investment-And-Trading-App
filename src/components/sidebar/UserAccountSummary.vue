@@ -11,7 +11,7 @@
               </div>
               <v-list-tile-content>
                 <v-list-tile-title>
-                  <span style="float: left">{{ item.text }}</span> <span style="float:right">N{{item.totalValue}}</span>
+                  <span style="float: left">{{ item.text }}</span> <span style="float:right">	&#8358;{{item.totalValue}}</span>
                 </v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
@@ -38,7 +38,7 @@
             <v-list-tile-content>
               <v-list-tile-title>
                 <span style="float: left">{{ item.text }}</span>
-                <span style="float:right">N{{item.totalValue}}</span>
+                <span style="float:right">&#8358;{{item.totalValue}}</span>
               </v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
@@ -50,7 +50,9 @@
   export default {
     props: ['accountTypes'],
     data () {
+      return {
 
+      }
     }
   }
 </script>

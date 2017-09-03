@@ -20,7 +20,9 @@
   export default {
     props: ['accountActions'],
     data () {
+      return {
 
+      }
     }
   }
 </script>
