@@ -22,3 +22,17 @@
   {name: 'DIAMOND', change: 4.56},
   {name: 'GTB', change: 2.56}
  ];
+
+ // Treasury bills data
+ export const treasuryBills = [
+  {name: '360 DAY TBILL', yield: 22.23},
+  {name: '180 DAY TBILL', yield: 20.23},
+  {name: '90 DAY TBILL', yield: 18.23}
+ ];
+
+ // Bonds data
+ export const bonds = [
+  {name: '20 YR BOND', yield: 22.23},
+  {name: '10 YR BOND', yield: 20.23},
+  {name: '5 YR BOND', yield: 18.23}
+ ];

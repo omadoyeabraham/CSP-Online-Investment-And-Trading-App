@@ -7,6 +7,8 @@
 
  import {TOGGLE_SIDEBAR} from '../mutation-types.js';
 
+ import {newsFeed} from '../../services/NewsFeedService';
+
  // Initial state
  const state = {
    sidebarVisibility: true,
@@ -38,7 +40,13 @@
          fillOpacity: 0.6
        }
      }
-   }
+   },
+   newsFeed: newsFeed
+ }
+
+ // Getters
+ const getters = {
+   newsFeed: (state) => state.newsFeed
  }
 
  // Mutations
@@ -54,5 +62,6 @@
 
  export default {
    state,
+   getters,
    mutations
  }

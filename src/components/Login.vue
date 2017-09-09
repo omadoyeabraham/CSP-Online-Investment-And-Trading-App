@@ -6,6 +6,16 @@
 
 <template>
 
+  <div class="form-group">
+    <form action="">
+          <input class="form-group" type="text" name="email" id="email" placeholder="Email Address" v-model="email_address">
+          <input type="password" name="password" id="password" placeholder="Password" v-model="password">
+          <input type="submit" value="Login" class="btn btn-primary">
+    </form>
+    {{email_address}}
+    {{password}}
+  </div>
+
 </template>
 
 <script>
@@ -13,7 +23,9 @@
   {
     data () {
       return {
-        name: 'CardinalStone Trade Direct'
+        name: 'CardinalStone Trade Direct',
+        email_address: '',
+        password: ''
       }
     }
   }

@@ -6,17 +6,6 @@
 
   <v-card class="white lighten-2 card h-100" dark>
 
-    <!-- Heading -->
-    <!-- <v-container fluid class="card-header blue darken-3">
-      <v-layout row >
-        <v-flex class="mr-auto" xs7>
-          Market Hightlights
-        </v-flex>
-        <v-flex class="text-right" xs5>
-          30-AUG-2017
-        </v-flex>
-      </v-layout>
-    </v-container> -->
     <div class="w100p blue darken-3 p10">
       <div class="text-uppercase">Market Highlights for 23-AUG-2017</div>
     </div>

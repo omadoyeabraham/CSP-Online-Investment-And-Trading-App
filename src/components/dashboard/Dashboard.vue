@@ -20,7 +20,7 @@
     </div>
   </div> -->
   <v-container fluid>
-    <v-layout row wrap class="grey">
+    <v-layout row wrap class="">
 
       <!-- Market Highlights -->
       <v-flex xs12 md6 lg4 class="mb5">
@@ -37,6 +37,21 @@
         <TopGainersLosers></TopGainersLosers>
       </v-flex>
 
+      <!-- Fixed income -->
+      <v-flex xs12 md6 lg4 class="mb5">
+        <FixedIncome></FixedIncome>
+      </v-flex>
+
+      <!-- Business News -->
+      <v-flex xs12 md6 lg4 class="mb5">
+        <BusinessNews></BusinessNews>
+      </v-flex>
+
+      <!-- Business News -->
+      <v-flex xs12 md6 lg4 class="mb5">
+        <BusinessNews></BusinessNews>
+      </v-flex>
+
     </v-layout>
   </v-container>
 
@@ -46,13 +61,17 @@
   import MarketHighlightsComponent from './MarketHighlights';
   import NseFiveDayChart from './NseFiveDayChart';
   import TopGainersLosers from './TopGainersLosers';
+  import FixedIncome from './FixedIncome';
+  import BusinessNews from './BusinessNews';
 
   export default
   {
     components: {
       MarketHighlightsComponent,
       NseFiveDayChart,
-      TopGainersLosers
+      TopGainersLosers,
+      FixedIncome,
+      BusinessNews
     },
 
     data () {

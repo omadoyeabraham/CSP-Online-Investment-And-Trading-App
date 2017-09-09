@@ -33,6 +33,7 @@
 
       <router-link to="/dashboard">Dashboard</router-link>
 
+
     </v-navigation-drawer>
 </template>
 
@@ -73,7 +74,7 @@
           { title: 'About', icon: 'question_answer' }
         ],
         right: null,
-        username: 'Kenechukwu Bolarinwa'
+        username: 'Kiliwi Nwachukwu Ezegburugburu'
       }
     },
 

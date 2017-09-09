@@ -23,9 +23,9 @@
                 <v-icon>{{ child.icon }}</v-icon>
               </v-list-tile-action>
               <v-list-tile-content>
-                <v-list-tile-title>
+                <router-link :to='child.link'>
                   {{ child.text }}
-                </v-list-tile-title>
+                </router-link>
               </v-list-tile-content>
             </v-list-tile>
           </v-list-group>

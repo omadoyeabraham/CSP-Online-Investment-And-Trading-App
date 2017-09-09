@@ -18,13 +18,13 @@ export const userAccounts: Array<object> = [
     totalValue: 10000,
     model: false,
     children: [
-      { icon: 'keyboard_arrow_right', text: 'Portfolio Summary' },
-      { icon: 'keyboard_arrow_right', text: 'Trade' },
-      { icon: 'keyboard_arrow_right', text: 'Trade History' },
-      { icon: 'keyboard_arrow_right', text: 'Portfolio Holdings' },
-      { icon: 'keyboard_arrow_right', text: 'Market Data' },
-      { icon: 'keyboard_arrow_right', text: 'My Watchlist' },
-      { icon: 'keyboard_arrow_right', text: 'Tools' }
+      { icon: 'keyboard_arrow_right', text: 'Portfolio Summary', link:'/stb/portfolio-summary' },
+      { icon: 'keyboard_arrow_right', text: 'Trade', link:'/stb/portfolio-summary' },
+      { icon: 'keyboard_arrow_right', text: 'Trade History', link:'/stb/portfolio-summary' },
+      { icon: 'keyboard_arrow_right', text: 'Portfolio Holdings', link:'/stb/portfolio-summary' },
+      { icon: 'keyboard_arrow_right', text: 'Market Data', link:'/stb/portfolio-summary' },
+      { icon: 'keyboard_arrow_right', text: 'My Watchlist', link:'/stb/portfolio-summary' },
+      { icon: 'keyboard_arrow_right', text: 'Tools', link:'/stb/portfolio-summary' }
     ]
   },
   {
