@@ -13,7 +13,7 @@
             <img id="company-img" class="img-responsive" src="../assets/img/cardinalstone.png" />
             <p id="profile-name" class="profile-name-card"></p>
             <form class="form-signin">
-                <input type="email" id="inputEmail" class="form-control" placeholder="Username" v-model="username" required autofocus>
+                <input type="text" id="inputEmail" class="form-control" placeholder="Username" v-model="username" required autofocus>
                 <input type="password" id="inputPassword" class="form-control" placeholder="Password" v-model="password" required>
                 <button @click="login" class="btn btn-lg btn-primary btn-block btn-signin" >Sign in</button>
             </form><!-- /form -->
@@ -35,6 +35,8 @@
 </template>
 
 <script>
+  import {AuthenticationService} from '../services/AuthenticationService';
+
   export default
   {
     data () {
@@ -46,9 +48,12 @@
     },
 
     methods: {
+
+      // Login the user
       login: function () {
-        alert(`${this.username} ${this.password}`)
+        AuthenticationService.login(this.username, this.password)
       }
+
     }
 
   }
