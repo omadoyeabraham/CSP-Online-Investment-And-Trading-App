@@ -3,7 +3,7 @@
 import Vue from 'vue'
 
 // Vuetify is the UI library used to build this application
-import Vuetify from 'vuetify'
+// import Vuetify from 'vuetify'
 
 // Map components for highcharts
 import VueHighcharts from 'vue-highcharts';
@@ -16,7 +16,7 @@ import App from './components/App'
 import router from './router'
 
 // Expose the UI library to Vue
-Vue.use(Vuetify);
+// Vue.use(Vuetify);
 
 // Expose highcharts to vue
 Vue.use(VueHighcharts, { Highcharts })
