@@ -4,22 +4,24 @@ import Vue from 'vue'
 
 // Vuetify is the UI library used to build this application
 // import Vuetify from 'vuetify'
+// Vue.use(Vuetify);
 
 // Map components for highcharts
 import VueHighcharts from 'vue-highcharts';
 import Highcharts from 'highcharts/highstock';
 
-// Base component that bootstraps the application
-import App from './components/App'
+// Vuelidate is used for from validation
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
 
 // Router
 import router from './router'
 
-// Expose the UI library to Vue
-// Vue.use(Vuetify);
-
 // Expose highcharts to vue
 Vue.use(VueHighcharts, { Highcharts })
+
+// Base component that bootstraps the application
+import App from './components/App'
 
 // Vuetify CSS
 import '../node_modules/vuetify/dist/vuetify.min.css'

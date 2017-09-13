@@ -19,6 +19,9 @@
  // The dashboard store module
  import DashboardDataStore from './modules/dashboard.js';
 
+ // The user store module
+ import UserDataStore from './modules/user.ts';
+
  // const debug = process.env.NODE_ENV !== 'production'
 
  /**
@@ -28,6 +31,7 @@
  export default new Vuex.Store({
    modules: {
      dashboard: DashboardDataStore,
-     marketData: MarketDataStore
+     marketData: MarketDataStore,
+     user: UserDataStore
    }
  });

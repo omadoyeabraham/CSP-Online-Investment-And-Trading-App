@@ -1,24 +1,5 @@
 <template>
-  <!-- <div class="row">
-    <div class="col-xs-12 col-md-6 col-lg-4 col-xlg-4">
-      <MarketHighlightsComponent></MarketHighlightsComponent>
-    </div>
-    <div class="col-xs-12 col-md-6 col-lg-4 col-xlg-4">
-      <MarketHighlightsComponent></MarketHighlightsComponent>
-    </div>
-    <div class="col-xs-12 col-md-6 col-lg-4 col-xlg-4">
-      <MarketHighlightsComponent></MarketHighlightsComponent>
-    </div>
-    <div class="col-xs-12 col-md-6 col-lg-4 col-xlg-4">
-      <MarketHighlightsComponent></MarketHighlightsComponent>
-    </div>
-    <div class="col-xs-12 col-md-6 col-lg-4 col-xlg-4">
-      <MarketHighlightsComponent></MarketHighlightsComponent>
-    </div>
-    <div class="col-xs-12 col-md-6 col-lg-4 col-xlg-4">
-      <MarketHighlightsComponent></MarketHighlightsComponent>
-    </div>
-  </div> -->
+
   <v-container fluid>
     <v-layout row wrap class="">
 

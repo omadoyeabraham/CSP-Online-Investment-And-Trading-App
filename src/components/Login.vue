@@ -13,10 +13,12 @@
             <img id="company-img" class="img-responsive" src="../assets/img/cardinalstone.png" />
             <p id="profile-name" class="profile-name-card"></p>
             <form class="form-signin">
-                <input type="text" id="inputEmail" class="form-control" placeholder="Username" v-model="username" required autofocus>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" v-model="password" required>
+                <input type="text" id="inputEmail" class="form-control"
+                placeholder="Username" v-model="username">
+                <input type="password" id="inputPassword" class="form-control"
+                 placeholder="Password" v-model="password">
                 <button @click="login" class="btn btn-lg btn-primary btn-block btn-signin" >Sign in</button>
-            </form><!-- /form -->
+            </form>
             <a href="#" class="forgot-password">
                 Forgot your password?
             </a>
@@ -36,6 +38,7 @@
 
 <script>
   import {AuthenticationService} from '../services/AuthenticationService';
+  import { required } from 'vuelidate/lib/validators'
 
   export default
   {
@@ -54,6 +57,15 @@
         AuthenticationService.login(this.username, this.password)
       }
 
+    },
+
+    validations: {
+      username: {
+        required
+      },
+      password: {
+        required
+      }
     }
 
   }
@@ -61,7 +73,9 @@
 
 <!-- Scoped styles apply only to this component -->
 <style scoped>
-
+  .is-danger {
+    background: red
+  }
   #loginWrapper {
     background-image: url('../assets/img/login-background.jpg');
     background-size: cover;
@@ -72,38 +86,32 @@
     max-width: 450px;
     padding: 30px 40px;
   }
-
   input{
     min-width: 250px
   }
-
-.btn {
-    font-weight: 700;
-    height: 36px;
-    margin: 0px auto;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
-    cursor: default;
-}
-
-/*
- * Card component
- */
-.card {
-    background-color: #F7F7F7;
-    /* just in case there no content*/
-    padding: 20px 25px 30px;
-    *margin: 0 auto 25px;
-    *margin-top: 20%;
-    /* shadows and rounded borders */
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
-    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-}
+  .btn {
+      font-weight: 700;
+      height: 36px;
+      margin: 0px auto;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+      cursor: default;
+  }
+  .card {
+      background-color: #F7F7F7;
+      /* just in case there no content*/
+      padding: 20px 25px 30px;
+      *margin: 0 auto 25px;
+      *margin-top: 20%;
+      /* shadows and rounded borders */
+      -moz-border-radius: 2px;
+      -webkit-border-radius: 2px;
+      border-radius: 2px;
+      -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+      -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  }
 
 #company-img{
 	margin: 0 auto;

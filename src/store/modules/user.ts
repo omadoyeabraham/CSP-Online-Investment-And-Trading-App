@@ -9,13 +9,16 @@
 // import { authenticationService } from '../../services/AuthenticationService';
 
  // Initial store state
-const state = {
-  user: {}
+const state: object = {
+  info: {},
+  stockbroking: {},
+  cashAccount: {},
+  fixedIncome: {}
 }
 
  // Getters
 const getters = {
-  user: (state) => state.user
+  info: (state) => state.info
 }
 
 export default {
