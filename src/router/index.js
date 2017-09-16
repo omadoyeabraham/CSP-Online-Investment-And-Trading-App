@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Login from '@/components/Login'
 import Dashboard from '@/components/dashboard/Dashboard'
 import StbPortfolioSummary from '@/components/stockbroking/PortfolioSummary'
+import StbTradeHistory from '@/components/stockbroking/TradeHistory'
 
 Vue.use(Router)
 
@@ -23,6 +24,11 @@ export default new Router({
       path: '/stb/portfolio-summary',
       name: 'stb-portfolio-summary',
       component: StbPortfolioSummary
+    },
+    {
+      path: '/stb/trade-history',
+      name: '/stb/trade-history',
+      component: StbTradeHistory
     }
   ]
 })

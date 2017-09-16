@@ -3,8 +3,8 @@
 import Vue from 'vue'
 
 // Vuetify is the UI library used to build this application
-// import Vuetify from 'vuetify'
-// Vue.use(Vuetify);
+import Vuetify from 'vuetify'
+Vue.use(Vuetify);
 
 // Map components for highcharts
 import VueHighcharts from 'vue-highcharts';
@@ -14,6 +14,11 @@ import Highcharts from 'highcharts/highstock';
 import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate)
 
+// Progress bar
+import VueProgressBar from 'vue-progressbar'
+import VueProgressBarConfig from '../config/vue-progressbar'
+Vue.use(VueProgressBar, VueProgressBarConfig)
+
 // Router
 import router from './router'
 
@@ -21,7 +26,7 @@ import router from './router'
 Vue.use(VueHighcharts, { Highcharts })
 
 // Base component that bootstraps the application
-import App from './components/App'
+import App from './components/App-Me'
 
 // Vuetify CSS
 import '../node_modules/vuetify/dist/vuetify.min.css'

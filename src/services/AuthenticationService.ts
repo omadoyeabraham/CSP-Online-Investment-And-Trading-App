@@ -9,8 +9,14 @@ import axios from 'axios';
 // Router instance for the apllication
 import router from '../router';
 
- const loginUrl = 'https://restserver.cardinalstone.com/api/findCustomerByName';
- // const loginUrl = 'http://192.168.5.111/nexus/customer.php';
+// The vuex store instance
+import store from '../store';
+
+// The vuex store mutation types
+import * as mutationTypes from '../store/mutation-types.js';
+
+// Service exposing the urls for the API
+import * as ApiUrls from './ApiUrlService';
 
  /**
   * Login the user
@@ -22,19 +28,33 @@ import router from '../router';
 
   axios({
     method: 'post',
-    url: loginUrl,
+    url: ApiUrls.AuthenticationUrl,
     data: {'username': username, 'password': password}
-  })
-  .then((response) => {
-    console.log(response)
-  })
-  .catch(error => {
-    console.log(error)
-  });
+    })
+    .then((response) => {
 
-  router.push('dashboard')
+      let userData = response.data;
 
- }
+      // Commit the authenticated user's data to the vue store.
+      store.commit(mutationTypes.SAVE_AUTHENTICATED_USER_TO_STORE, userData);
+
+      // Add authorization header to all future axios requests, until the user logs out
+      axios.defaults.headers.common['Authorization'] = 'Abraham';
+
+      // Redirect to the dashboard after successful authetication
+      // router.push('dashboard')
+    })
+    .catch((error) => {
+
+      // return 'Invalid username or password';
+    });
+
+    axios.get(`${ApiUrls.BaseApiUrl}/getSecurity/`)
+      .then(response => console.log(response));
+
+
+
+ } // EOF Login Fn
 
 
  // Export the methods from the authentication service

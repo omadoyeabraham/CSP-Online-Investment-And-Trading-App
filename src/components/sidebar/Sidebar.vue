@@ -1,28 +1,28 @@
 <template>
-    <v-navigation-drawer absolute persistent light v-model="showSidebar" overflow>
+    <v-navigation-drawer
+      class="pb-0"
+      persistent
+      height="100%"
+      clipped
+      enable-resize-watcher
+      v-model="showSidebar">
 
-      <v-toolbar flat class="transparent" >
-        <v-list class="pa-0" style="border-bottom: 1px solid #eee">
-          <v-list-tile avatar >
-            <v-list-tile-avatar>
-              <img src="https://randomuser.me/api/portraits/men/85.jpg" />
-            </v-list-tile-avatar>
-            <v-list-tile-content >
-              <v-list-tile-title style="white-space: normal">{{username}}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
-      </v-toolbar>
 
-      <!-- Sidebar heading -->
+      <!-- Naira Investments -->
       <div class="sidebar-header d-flex justify-content-between">
-        <span>My Accounts</span>
-        <span>
+        <span>Naira Investments</span>
+        <router-link to="/dashboard">
           <i class="fa fa-home" aria-hidden="true"></i>
-        </span>
+        </router-link>
       </div>
+      <UserInvestments :AccountInvestments="nairaInvestments"></UserInvestments>
 
-      <UserAccountSummaryComponent :accountTypes="accountTypes"></UserAccountSummaryComponent>
+      <!-- Dollar Investments -->
+      <div class="sidebar-header d-flex justify-content-between">
+        <span>Dollar Investments</span>
+      </div>
+      <UserInvestments :AccountInvestments="dollarInvestments"></UserInvestments>
+
 
       <!-- Account actions -->
       <div class="sidebar-header d-flex justify-content-between">
@@ -31,9 +31,6 @@
 
       <UserAccountActionsComponent :accountActions="accountActions"></UserAccountActionsComponent>
 
-      <router-link to="/dashboard">Dashboard</router-link>
-
-
     </v-navigation-drawer>
 </template>
 
@@ -41,21 +38,22 @@
   import { mapState, mapMutations } from 'vuex';
 
   // Component for the user's account summary
-  import UserAccountSummaryComponent from './UserAccountSummary';
+  import UserInvestments from './UserInvestments';
 
   // Component for the user's account actions
   import UserAccountActionsComponent from './UserAccountActions';
 
   // Getting the user's data from the Sidebar service
-  import {userAccounts, userAccountActions} from '../../services/SidebarService.ts';
+  import {nairaInvestments, dollarInvestments, userAccountActions} from '../../services/SidebarService.ts';
 
-  const accountTypes = userAccounts;
+  const NairaInvestments = nairaInvestments;
+  const DollarInvestments = dollarInvestments;
   const accountActions = userAccountActions;
 
   export default
   {
     components: {
-      UserAccountSummaryComponent,
+      UserInvestments,
       UserAccountActionsComponent
     },
 
@@ -66,7 +64,8 @@
     // Component specific data
     data () {
       return {
-        accountTypes: accountTypes,
+        nairaInvestments: NairaInvestments,
+        dollarInvestments: DollarInvestments,
         accountActions: accountActions,
         showSidebar: this.isVisible,
         items: [

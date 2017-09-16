@@ -7,9 +7,9 @@
 
 
 /**
- * The account types to be shown on the sidebar
+ * The naira Investments to be shown on the sidebar
  */
-export const userAccounts: Array<object> = [
+export const nairaInvestments: Array<object> = [
   {
     icon: 'dns',
     'icon-alt': 'dns',
@@ -38,6 +38,15 @@ export const userAccounts: Array<object> = [
       { icon: 'keyboard_arrow_right', text: 'Terminated Investments' }
     ]
   },
+  { icon: 'keyboard', text: 'SMA', totalValue: '1,150,000,000' },
+  { icon: 'keyboard', text: 'Cash Account', totalValue: '1,150,000,000' },
+  {icon: 'keyboard', text: 'TOTAL', totalValue: '200,000,000'}
+]
+
+/**
+ * The Dollar Investments to be shown on the sidebar
+ */
+export const dollarInvestments: Array<object> = [
   {
     icon: 'contacts',
     'icon-alt': 'contacts',
@@ -49,9 +58,7 @@ export const userAccounts: Array<object> = [
       { icon: 'keyboard_arrow_right', text: 'Terminated Investments' }
     ]
   },
-  { icon: 'keyboard', text: 'SMA', totalValue: '1,150,000,000' },
-  { icon: 'keyboard', text: 'Structured Inv. Plan', totalValue: '1,150,000,000' },
-  { icon: 'keyboard', text: 'Cash Account', totalValue: '1,150,000,000' }
+  { icon: 'keyboard', text: 'TOTAL', totalValue: '200,000,000' }
 ]
 
 /**

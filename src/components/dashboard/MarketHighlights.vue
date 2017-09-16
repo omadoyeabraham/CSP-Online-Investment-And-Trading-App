@@ -6,7 +6,7 @@
 
   <v-card class="white lighten-2 card h-100" dark>
 
-    <div class="w100p blue darken-3 p10">
+    <div class="w100p bg-csp-light-blue p10">
       <div class="text-uppercase">Market Highlights for 23-AUG-2017</div>
     </div>
 

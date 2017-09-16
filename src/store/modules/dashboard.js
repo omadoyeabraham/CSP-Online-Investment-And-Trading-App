@@ -53,10 +53,6 @@
  const mutations = {
    [TOGGLE_SIDEBAR] (state) {
      state.sidebarVisibility = !state.sidebarVisibility
-     console.log(state.sidebarVisibility)
-   },
-   incrementCounter (state) {
-     state.counter++;
    }
  }
 

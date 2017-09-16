@@ -22,6 +22,9 @@
  // The user store module
  import UserDataStore from './modules/user.ts';
 
+ // The stockbroking store module
+ import StockbrokingStore from './modules/stockbroking.ts'
+
  // const debug = process.env.NODE_ENV !== 'production'
 
  /**
@@ -32,6 +35,7 @@
    modules: {
      dashboard: DashboardDataStore,
      marketData: MarketDataStore,
-     user: UserDataStore
+     user: UserDataStore,
+     stockbroking: StockbrokingStore
    }
  });

@@ -6,12 +6,6 @@
  -->
 <template>
     <div class="h-100">
-    <!-- <Sidebar :isVisible="sidebarIsVisible"></Sidebar>
-    <v-toolbar fixed class="blue darken-4" dark>
-      <v-toolbar-side-icon @click.stop="sidebarIsVisible = !sidebarIsVisible"></v-toolbar-side-icon>
-      <v-toolbar-title>TradeDirect</v-toolbar-title>
-      <v-btn primary dark large class="ml-auto fund-account-btn elevation-23">Fund My Account</v-btn>
-    </v-toolbar> -->
     <main class="h-100">
         <router-view></router-view>
     </main>
