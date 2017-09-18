@@ -53,8 +53,6 @@
     // Exposes the store for global state management to all components
     store,
 
-    name: 'app',
-
     components: {
       Navbar,
       Sidebar
@@ -73,6 +71,7 @@
     },
 
     created () {
+      console.error('The APP COMPONENT WAS RESCHED');
       //  [App.vue specific] When App.vue is first loaded start the progress bar
       this.$Progress.start();
 

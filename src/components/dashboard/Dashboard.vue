@@ -45,8 +45,14 @@
   import FixedIncome from './FixedIncome';
   import BusinessNews from './BusinessNews';
 
+  import {getDashboardData} from '../../services/DashboardService'
+
   export default
   {
+    beforeCreate () {
+      getDashboardData()
+    },
+
     components: {
       MarketHighlightsComponent,
       NseFiveDayChart,

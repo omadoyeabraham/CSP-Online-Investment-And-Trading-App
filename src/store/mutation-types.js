@@ -4,6 +4,9 @@
 
  export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR';
 
+ // Dashboard mutations
+ export const SAVE_DASHBOARD_DATA_TO_STORE = 'SAVE_DASHBOARD_DATA_TO_STORE';
+
  // User store module mutations
  export const SAVE_AUTHENTICATED_USER_TO_STORE = 'SAVE_AUTHENTICATED_USER_TO_STORE';
 

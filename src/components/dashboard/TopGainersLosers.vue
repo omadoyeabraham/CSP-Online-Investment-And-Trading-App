@@ -16,7 +16,7 @@
             <span>Gainers</span>
             <span>Change(%)</span>
           </div>
-          <div class="content w100p d-flex justify-content-between p5" v-for="(loser, index) in topLosers" :key="index">
+          <div class="content w100p d-flex justify-content-between p5 pt10 pb10" v-for="(loser, index) in topLosers" :key="index">
             <span>{{loser.name}}</span>
             <span class="red--text">{{loser.change}}</span>
           </div>
@@ -28,7 +28,7 @@
             <span>Losers</span>
             <span>Change(%)</span>
           </div>
-          <div class="content w100p d-flex justify-content-between p5" v-for="(gainer, index) in topGainers" :key="index">
+          <div class="content w100p d-flex justify-content-between p5 pt10 pb10" v-for="(gainer, index) in topGainers" :key="index">
             <span>{{gainer.name}}</span>
             <span class="green--text">{{gainer.change}}</span>
           </div>
