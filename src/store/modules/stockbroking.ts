@@ -5,7 +5,8 @@ import * as mutationTypes from '../mutation-types.js';
 const state = {
 
   // Orders already placed by the user
-  tradeOrders: {}
+  tradeOrders: {},
+  marketData: {}
 
 }
 
@@ -15,6 +16,10 @@ const mutations = {
 
   [mutationTypes.SAVE_TRADE_ORDERS_TO_STORE] (state, tradeOrders: Array<object>) {
     state.tradeOrders = tradeOrders
+  },
+
+  [mutationTypes.SAVE_MARKET_DATA_TO_STORE] (state, marketData: Array<object>) {
+    state.marketData = marketData
   }
 
 } // EOF mutations

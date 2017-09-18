@@ -9,6 +9,11 @@
             <v-list-tile-content>
               <v-list-tile-title class="font-size-11">
                 <router-link :to="item.link" >{{ item.action }}</router-link>
+                <v-chip
+                  class="red white--text font-size-10"
+                  style="height: 20px"
+                  v-if="item.new">
+                  New</v-chip>
               </v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>

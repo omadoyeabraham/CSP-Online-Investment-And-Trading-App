@@ -13,8 +13,8 @@
     <!-- Card body -->
     <div class="card-block">
       <ul class="list-group list-group-flush black--text">
-        <li class="list-group-item" v-for="(item, index) in marketHighlights" :key="index">{{item.label}}
-          <span class="ml-auto">{{item.value}}</span>
+        <li class="list-group-item font-weight-bold" v-for="(item, index) in marketHighlights" :key="index">{{item.label}}
+          <span class="ml-auto font-weight-normal">{{item.value}}</span>
         </li>
       </ul>
     </div>

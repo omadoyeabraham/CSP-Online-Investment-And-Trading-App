@@ -5,11 +5,18 @@
       height="100%"
       clipped
       enable-resize-watcher
+      :mini-variant.sync="mini"
       v-model="showSidebar">
 
+      <!-- <v-btn icon @click.native.stop="mini = !mini">
+        <v-icon v-if="mini===false">chevron_left</v-icon>
+         <v-icon v-if="mini===true">chevron_right</v-icon>
+      </v-btn> -->
 
       <!-- Naira Investments -->
-      <div class="sidebar-header d-flex justify-content-between">
+      <div
+        class="sidebar-header d-flex justify-content-between"
+        v-if="mini===false">
         <span>Naira Investments</span>
         <router-link to="/dashboard">
           <i class="fa fa-home" aria-hidden="true"></i>
@@ -18,14 +25,18 @@
       <UserInvestments :AccountInvestments="nairaInvestments"></UserInvestments>
 
       <!-- Dollar Investments -->
-      <div class="sidebar-header d-flex justify-content-between">
+      <div
+        class="sidebar-header d-flex justify-content-between"
+        v-if="mini===false">
         <span>Dollar Investments</span>
       </div>
       <UserInvestments :AccountInvestments="dollarInvestments"></UserInvestments>
 
 
       <!-- Account actions -->
-      <div class="sidebar-header d-flex justify-content-between">
+      <div
+        class="sidebar-header d-flex justify-content-between"
+        v-if="mini===false">
         <span>Account Actions</span>
       </div>
 
@@ -73,6 +84,7 @@
           { title: 'About', icon: 'question_answer' }
         ],
         right: null,
+        mini: true,
         username: 'Kiliwi Nwachukwu Ezegburugburu'
       }
     },
@@ -104,7 +116,7 @@
     font-size: 2rem
     color: #1a2155
     margin: 5px
-    margin-top: 30px
+    margin-top: 10px
     margin-bottom: 0
     border-bottom: 1px solid rgb(204,204,204)
 </style>

@@ -9,3 +9,4 @@
 
  // Stockbroking module mutations
  export const SAVE_TRADE_ORDERS_TO_STORE = 'SAVE_TRADE_ORDERS_TO_STORE';
+ export const SAVE_MARKET_DATA_TO_STORE = 'SAVE_MARKET_DATA_TO_STORE';

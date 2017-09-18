@@ -15,10 +15,10 @@ import * as mutationTypes from '../store/mutation-types.js';
 
 
 /**
- * Get all trade orders that the authenticated user has placed
+ * Get all trade orders that the authenticated user has placed and commit it to the vuex store
  *
  * @param userID: string | The ID of the user
- * @return Array<object>
+ * @return void
  */
  let getTradeOrders = (userID: number) => {
 
@@ -30,8 +30,23 @@ import * as mutationTypes from '../store/mutation-types.js';
 
  }
 
+ /**
+  * Get current market data and commit it to the vuex store
+  *
+  */
+ let getMarketData = () => {
+
+  // obtain current market data
+  const marketData = StbMockData.marketData;
+
+  // commit the market data to the stockbroking module of our vue store
+  store.commit(mutationTypes.SAVE_MARKET_DATA_TO_STORE, marketData);
+
+ }
+
 
 
  export default {
-   getTradeOrders
+   getTradeOrders,
+   getMarketData
  }

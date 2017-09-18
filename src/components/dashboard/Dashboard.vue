@@ -1,6 +1,6 @@
 <template>
 
-  <v-container fluid>
+  <v-container fluid grid-list-xl>
     <v-layout row wrap class="">
 
       <!-- Market Highlights -->

@@ -19,6 +19,11 @@ import VueProgressBar from 'vue-progressbar'
 import VueProgressBarConfig from '../config/vue-progressbar'
 Vue.use(VueProgressBar, VueProgressBarConfig)
 
+// Vue-tabs
+import VueTabs from 'vue-nav-tabs'
+import 'vue-nav-tabs/themes/vue-tabs.css'
+Vue.use(VueTabs)
+
 // Router
 import router from './router'
 

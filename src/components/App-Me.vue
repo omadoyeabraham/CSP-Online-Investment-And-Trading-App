@@ -53,7 +53,7 @@
     // Exposes the store for global state management to all components
     store,
 
-    name: 'CardinalStone TradeDirect',
+    name: 'app',
 
     components: {
       Navbar,
