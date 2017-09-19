@@ -79,13 +79,8 @@
         dollarInvestments: DollarInvestments,
         accountActions: accountActions,
         showSidebar: this.isVisible,
-        items: [
-          { title: 'Home', icon: 'dashboard' },
-          { title: 'About', icon: 'question_answer' }
-        ],
         right: null,
-        mini: true,
-        username: 'Kiliwi Nwachukwu Ezegburugburu'
+        mini: false
       }
     },
 

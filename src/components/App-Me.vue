@@ -20,7 +20,7 @@
       <v-layout column>
         <v-flex>
           <span class="body-1 blue--text text--darken-4">Welcome, </span>
-          <span class="title">Jonathan Gregory</span>
+          <span class="title">{{username}}</span>
         </v-flex>
         <v-flex>
           <v-icon class="logout-btn">lock</v-icon>
@@ -43,6 +43,8 @@
   // The state management store used that houses application wide state
   import store from '../store';
 
+  import {mapState, mapGetters} from 'vuex'
+
   // Import the components that are rendered by the application base
   import Sidebar from './sidebar/Sidebar';
   import Navbar from './Navbar';
@@ -63,6 +65,16 @@
         sidebarIsVisible: true,
         right: null
       }
+    },
+
+    computed: {
+      ...mapState({
+        'user': (store) => store.user
+      }),
+
+      ...mapGetters({
+        'username': 'getUsername'
+      })
     },
 
     mounted () {

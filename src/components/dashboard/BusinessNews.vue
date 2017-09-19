@@ -22,7 +22,7 @@
       <table class="table table-striped mb0">
         <tbody>
           <tr v-for="(newsItem, index) in newsFeed" :key="index">
-            <td class="pt5 pb5 ">
+            <td class="">
               <a :href="newsItem.link" target="_blank"
                 class="font-size-11 black--text">
                 {{newsItem.title}}
@@ -38,13 +38,9 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex';
-
   export default
   {
-    computed: mapState({
-      'newsFeed': (store) => store.dashboard.newsFeed
-    })
+    props: ['newsFeed']
   }
 
 </script>

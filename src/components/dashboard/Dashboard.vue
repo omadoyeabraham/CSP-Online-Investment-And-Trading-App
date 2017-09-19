@@ -32,12 +32,16 @@
 
       <!-- Business News -->
       <v-flex xs12 md6 lg4 class="mb5">
-        <BusinessNews></BusinessNews>
+        <BusinessNews
+          :newsFeed="newsFeed">
+        </BusinessNews>
       </v-flex>
 
       <!-- Business News -->
       <v-flex xs12 md6 lg4 class="mb5">
-        <BusinessNews></BusinessNews>
+         <BusinessNews
+          :newsFeed="newsFeed">
+        </BusinessNews>
       </v-flex>
 
     </v-layout>
@@ -76,7 +80,8 @@
         marketHighlights: 'marketHighlights',
         chartData: 'chartData',
         topGainers: 'topGainers',
-        topLosers: 'topLosers'
+        topLosers: 'topLosers',
+        newsFeed: 'newsFeed'
       })
 
     },

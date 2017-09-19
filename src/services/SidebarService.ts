@@ -4,6 +4,8 @@
  * @author Omadoye Abraham <omadoyeabraham@gmail.com>
  */
 
+// The vuex store instance
+import store from '../store';
 
 
 /**
@@ -15,7 +17,7 @@ export const nairaInvestments: Array<object> = [
     'icon-alt': 'dns',
     heading: 'Stockbroking',
     text: 'Stockbroking',
-    totalValue: 10000,
+    totalValue: store.state.user.stockbroking.totalValue,
     model: false,
     children: [
       { icon: 'keyboard_arrow_right', text: 'Portfolio Summary', link:'/stb/portfolio-summary' },
@@ -31,7 +33,7 @@ export const nairaInvestments: Array<object> = [
     icon: 'contacts',
     'icon-alt': 'contacts',
     text: 'Fixed Income',
-    totalValue: '15,000,000',
+    totalValue: store.state.user.fixedIncome.totalValue,
     model: false,
     children: [
       { icon: 'keyboard_arrow_right', text: 'Running Investments' },

@@ -6,7 +6,7 @@
  *
  * @author Omadoye Abraham <omadoyeabraham@gmail.com>
  */
-// import { authenticationService } from '../../services/AuthenticationService';
+import UserService  from '../../services/UserService';
 
 // All mutation types that can be carried out on the store state by the application
 import * as mutationTypes from '../mutation-types.js';
@@ -14,14 +14,27 @@ import * as mutationTypes from '../mutation-types.js';
  // Initial store state
 const state: object = {
   info: {},
-  stockbroking: {},
-  cashAccount: {},
-  fixedIncome: {}
+  stockbroking: {
+    stbExchangeTotalValue: 0,
+    stbManagedTotalValue: 0,
+    totalValue: 0
+  },
+  cashAccount: {
+    totalValue: 0
+  },
+  fixedIncome: {
+    totalValue: 0
+  },
+
 }
 
  // Getters
 const getters = {
-  info: (state) => state.info
+  // Return the full username
+  getUsername: (state) => {
+    return `${state.info.firstName} ${state.info.lastName}`
+  }
+
 }
 
 const mutations = {
@@ -32,6 +45,8 @@ const mutations = {
     state.stockbroking = userData.STB;
     state.cashAccount = userData.CA;
     state.fixedIncome = userData.FI;
+
+    state.stockbroking.totalValue = UserService.getStbTotalValue(state.stockbroking)
   }
 
 } // End Of MUTATIONS

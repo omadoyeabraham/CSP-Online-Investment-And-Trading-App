@@ -8,22 +8,17 @@
  // All mutation types that can be carried out on the store state by the application
  import * as mutationTypes from '../mutation-types.js';
 
- import {newsFeed} from '../../services/NewsFeedService';
-
  // Initial state
  const state = {
-   businessNews: {},
    marketHighlights: {},
    nseAsi: [],
    topGainers: [],
    topLosers: [],
-   newsFeed: newsFeed
+   newsFeed: []
  }
 
  // Getters
  const getters = {
-   newsFeed: (state) => state.newsFeed,
-
    // Work on market highlights data to fit our dashboard UI specification
    marketHighlights: (state) => {
      const data = [
@@ -124,6 +119,21 @@
      })
 
      return data
+   },
+
+   // Return the news feed on dashboard
+   newsFeed: (state) => {
+     const data = []
+
+     // Get the first 5 news items, and pick only necessary fields
+     state.newsFeed.slice(0, 5).forEach((newsItem) => {
+       data.push({
+         title: newsItem.title,
+         link: newsItem.link
+       })
+     })
+
+     return data
    }
 
  }
@@ -131,7 +141,7 @@
  // Mutations
  const mutations = {
    [mutationTypes.SAVE_DASHBOARD_DATA_TO_STORE] (state, dashboardData) {
-     state.businessNews = dashboardData.BUSINESSNEWS
+     state.newsFeed = dashboardData.BUSINESSNEWS.item
      state.marketHighlights = dashboardData.MARKETHIGHLIGHTS
      state.nseAsi = dashboardData.NSEASI
      state.topGainers = dashboardData.TOPGAINERS.item
