@@ -32,7 +32,7 @@
   * VuexPersistence object used to persist data in localstorage until the user signs out
   */
  const vuexLocalStorage = new VuexPersistence({
-   storage: window.localStorage
+   storage: window.sessionStorage
  })
 
  /**

@@ -114,7 +114,7 @@
     methods: {
       logout: function () {
         // Clear the data saved in local storage
-        window.localStorage.clear()
+        window.sessionStorage.clear()
 
         // Redirect to the login page
         this.$router.push({name: 'Login'})
