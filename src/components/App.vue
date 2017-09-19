@@ -26,7 +26,10 @@
         </v-flex>
         <v-flex>
           <v-icon class="logout-btn">lock</v-icon>
-          <span class="red--text">Logout</span>
+          <span class="red--text"
+            @click="logout()">
+            Logout
+          </span>
         </v-flex>
       </v-layout>
       <img src="https://portal.cardinalstone.com/broker/desktop/public/img/mainlogo.png"
@@ -106,6 +109,16 @@
         // finish the progress bar
         this.$Progress.finish()
       })
+    },
+
+    methods: {
+      logout: function () {
+        // Clear the data saved in local storage
+        window.localStorage.clear()
+
+        // Redirect to the login page
+        this.$router.push({name: 'Login'})
+      }
     }
   }
 </script>

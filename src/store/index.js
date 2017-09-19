@@ -13,6 +13,9 @@
  // Expose vuex to our vue instance
  Vue.use(Vuex)
 
+ // Plugin used in persisting vuex data to localStorage
+ import VuexPersistence from 'vuex-persist'
+
  // The marketdata store module
  import MarketDataStore from './modules/market-data.js';
 
@@ -25,7 +28,12 @@
  // The stockbroking store module
  import StockbrokingStore from './modules/stockbroking.ts'
 
- // const debug = process.env.NODE_ENV !== 'production'
+ /**
+  * VuexPersistence object used to persist data in localstorage until the user signs out
+  */
+ const vuexLocalStorage = new VuexPersistence({
+   storage: window.localStorage
+ })
 
  /**
   * Vuex store which stores and manages application wide data that should be
@@ -37,5 +45,6 @@
      marketData: MarketDataStore,
      user: UserDataStore,
      stockbroking: StockbrokingStore
-   }
+   },
+   plugins: [vuexLocalStorage.plugin]
  });

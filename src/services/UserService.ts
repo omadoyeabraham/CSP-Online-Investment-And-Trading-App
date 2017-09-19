@@ -11,12 +11,22 @@
   * @return string
   */
  const getStbTotalValue = (stockbrokingData: object) => {
-   return '50,000'
+   return '150,000'
  }
 
 
+/**
+  * Calculate the total value of the user's fixed income portfolio
+  *
+  * @param fixedIncomeData  The user's FI data gotten from the vuex store
+  * @return string
+  */
+const getFixedIncomeTotalValue = (stockbrokingData: object) => {
+  return '150,000'
+}
 
 
  export default {
-   getStbTotalValue: getStbTotalValue
+   getStbTotalValue,
+   getFixedIncomeTotalValue
  }

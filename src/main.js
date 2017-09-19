@@ -49,7 +49,17 @@ Vue.config.productionTip = false
  * Used to ensure only authenticated users can access our application
  */
 router.beforeEach((to, from, next) => {
+  /**
+   * If a logged out user is trying to access a "non Login" page, redirect said user to the login * page
+   */
   console.log(to)
+  if (window.localStorage.length === 0 && to.name !== 'Login') {
+    console.log('hereeeee')
+    next(false)
+    next('/login')
+  } else {
+    next()
+  }
 })
 
 /* eslint-disable no-new */

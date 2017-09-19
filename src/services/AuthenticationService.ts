@@ -26,6 +26,11 @@ import * as ApiUrls from './ApiUrlService';
   */
  let login = (username: string, password: string) => {
 
+  // Clear previously saved data before logging into the system again
+  window.localStorage.clear()
+  console.group()
+  console.log(window.localStorage)
+  console.groupEnd()
   axios({
     method: 'post',
     url: ApiUrls.AuthenticationUrl,

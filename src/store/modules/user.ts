@@ -15,16 +15,14 @@ import * as mutationTypes from '../mutation-types.js';
 const state: object = {
   info: {},
   stockbroking: {
-    stbExchangeTotalValue: 0,
-    stbManagedTotalValue: 0,
-    totalValue: 0
+
   },
   cashAccount: {
-    totalValue: 0
+
   },
   fixedIncome: {
-    totalValue: 0
-  },
+
+  }
 
 }
 
@@ -47,6 +45,7 @@ const mutations = {
     state.fixedIncome = userData.FI;
 
     state.stockbroking.totalValue = UserService.getStbTotalValue(state.stockbroking)
+    state.fixedIncome.totalValue = UserService.getFixedIncomeTotalValue(state.stockbroking)
   }
 
 } // End Of MUTATIONS
