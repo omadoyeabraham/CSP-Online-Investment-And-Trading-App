@@ -71,7 +71,6 @@
     },
 
     created () {
-      console.error('The APP COMPONENT WAS RESCHED');
       //  [App.vue specific] When App.vue is first loaded start the progress bar
       this.$Progress.start();
 

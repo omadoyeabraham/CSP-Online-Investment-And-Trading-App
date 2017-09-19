@@ -8,10 +8,10 @@
       :mini-variant.sync="mini"
       v-model="showSidebar">
 
-      <!-- <v-btn icon @click.native.stop="mini = !mini">
+      <v-btn icon @click.native.stop="mini = !mini">
         <v-icon v-if="mini===false">chevron_left</v-icon>
          <v-icon v-if="mini===true">chevron_right</v-icon>
-      </v-btn> -->
+      </v-btn>
 
       <!-- Naira Investments -->
       <div

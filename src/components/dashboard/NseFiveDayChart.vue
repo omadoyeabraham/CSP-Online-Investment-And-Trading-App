@@ -17,12 +17,9 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
   export default
   {
-    computed: mapState({
-      chartData: (store) => store.dashboard.chartData
-    })
+    props: ['chartData']
   }
 </script>
 

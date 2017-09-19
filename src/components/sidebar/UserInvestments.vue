@@ -11,7 +11,7 @@
 
       <!-- For nav-items with dropdown children -->
       <v-list-group v-if="item.children" v-model="item.model" no-action>
-        <v-list-tile slot="item" style="height: 30px">
+        <v-list-tile  slot="item" style="height: 30px">
           <div class="mr10">
             <v-icon>{{ item.model ? item.icon : item['icon-alt'] }}</v-icon>
           </div>
@@ -22,7 +22,7 @@
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile v-for="(child, i) in item.children" :key="i" style="height: 30px">
+        <v-list-tile  v-for="(child, i) in item.children" :key="i" style="height: 30px">
           <v-list-tile-action v-if="child.icon">
             <v-icon class="font-size-11">{{ child.icon }}</v-icon>
           </v-list-tile-action>
@@ -36,7 +36,7 @@
       <!-- EOF of nav-items with dropdown -->
 
       <!-- Nav items without a dropdown -->
-      <v-list-tile :key="i" v-else style="height: 30px">
+      <v-list-tile class="sidebar-item" :key="i" v-else style="height: 30px">
         <div class="mr10">
           <v-icon>{{ item.icon }}</v-icon>
         </div>
@@ -71,6 +71,14 @@
 </script>
 
 <style scoped lang="sass">
-  .list--dense .list__tile:not(.list__tile--avatar)
-    background: red !important
+  .sidebar-item:last-of-type
+    border-top: 1px solid #EEEEEE
+    margin-top: 10px
+  .sidebar-item:last-of-type span
+    font-weight: bold
+  .sidebar-item > div
+    background: red
+    height: 30px
+  .sidebar-item .list__title
+    height: 30px
 </style>

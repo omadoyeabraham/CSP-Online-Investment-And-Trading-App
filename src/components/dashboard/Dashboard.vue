@@ -5,17 +5,24 @@
 
       <!-- Market Highlights -->
       <v-flex xs12 md6 lg4 class="mb5">
-        <MarketHighlightsComponent></MarketHighlightsComponent>
+        <MarketHighlightsComponent
+          :marketHighlights='marketHighlights'>
+        </MarketHighlightsComponent>
       </v-flex>
 
       <!-- NSE 5 Day Chart -->
       <v-flex xs12 md6 lg4 class="mb5">
-        <NseFiveDayChart></NseFiveDayChart>
+        <NseFiveDayChart
+          :chartData="chartData">
+        </NseFiveDayChart>
       </v-flex>
 
       <!-- Top gainers and losers -->
       <v-flex xs12 md6 lg4 class="mb5">
-        <TopGainersLosers></TopGainersLosers>
+        <TopGainersLosers
+          :topGainers="topGainers"
+          :topLosers="topLosers">
+        </TopGainersLosers>
       </v-flex>
 
       <!-- Fixed income -->
@@ -39,6 +46,8 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
+
   import MarketHighlightsComponent from './MarketHighlights';
   import NseFiveDayChart from './NseFiveDayChart';
   import TopGainersLosers from './TopGainersLosers';
@@ -59,6 +68,17 @@
       TopGainersLosers,
       FixedIncome,
       BusinessNews
+    },
+
+    computed: {
+
+      ...mapGetters({
+        marketHighlights: 'marketHighlights',
+        chartData: 'chartData',
+        topGainers: 'topGainers',
+        topLosers: 'topLosers'
+      })
+
     },
 
     data () {

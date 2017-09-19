@@ -16,9 +16,9 @@
             <span>Gainers</span>
             <span>Change(%)</span>
           </div>
-          <div class="content w100p d-flex justify-content-between p5 pt10 pb10" v-for="(loser, index) in topLosers" :key="index">
-            <span>{{loser.name}}</span>
-            <span class="red--text">{{loser.change}}</span>
+          <div class="content w100p d-flex justify-content-between p5 pt10 pb10" v-for="(gainer, index) in topGainers" :key="index">
+            <span>{{gainer.symbol}}</span>
+            <span class="green--text">{{gainer.change}}</span>
           </div>
         </div>
 
@@ -28,9 +28,9 @@
             <span>Losers</span>
             <span>Change(%)</span>
           </div>
-          <div class="content w100p d-flex justify-content-between p5 pt10 pb10" v-for="(gainer, index) in topGainers" :key="index">
-            <span>{{gainer.name}}</span>
-            <span class="green--text">{{gainer.change}}</span>
+          <div class="content w100p d-flex justify-content-between p5 pt10 pb10" v-for="(loser, index) in topLosers" :key="index">
+            <span>{{loser.symbol}}</span>
+            <span class="red--text">({{loser.change}})</span>
           </div>
         </div>
 
@@ -41,14 +41,9 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
-
   export default
   {
-    computed: mapState({
-      'topGainers': (store) => store.marketData.topGainers,
-      'topLosers': (store) => store.marketData.topLosers
-    })
+    props: ['topGainers', 'topLosers']
   }
 
 </script>
@@ -57,4 +52,6 @@
   .header, .content
     border-bottom: 1px solid #ccc
     padding: 10px 10px
+  .content:last-of-type
+    border-bottom: none
 </style>

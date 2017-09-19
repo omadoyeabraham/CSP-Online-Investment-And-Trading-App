@@ -13,12 +13,24 @@
     </div>
 
     <!-- Card body -->
-    <div class="card-block">
-      <ul class="list-group list-group-flush black--text">
+    <div class="card-block p0">
+      <!-- <ul class="list-group list-group-flush black--text">
         <li class="list-group-item" v-for="(newsItem, index) in newsFeed" :key="index">
           <a :href="newsItem.link" target="_blank">{{newsItem.title}}</a>
         </li>
-      </ul>
+      </ul> -->
+      <table class="table table-striped mb0">
+        <tbody>
+          <tr v-for="(newsItem, index) in newsFeed" :key="index">
+            <td class="pt5 pb5 ">
+              <a :href="newsItem.link" target="_blank"
+                class="font-size-11 black--text">
+                {{newsItem.title}}
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
   </v-card>

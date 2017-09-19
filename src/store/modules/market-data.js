@@ -4,20 +4,16 @@
  *
  * @author Omadoye Abraham <omadoyeabraham@gmail.com>
  */
-import { topGainers, topLosers, treasuryBills, bonds } from '../../services/MarketDataService';
+import { treasuryBills, bonds } from '../../services/MarketDataService';
 
  // Initial store state
 const state = {
-  topGainers: topGainers,
-  topLosers: topLosers,
   treasuryBills: treasuryBills,
   bonds: bonds
 }
 
  // Getters
 const getters = {
-  topGainers: (state) => state.topGainers,
-  topLosers: (state) => state.topLosers
 }
 
 export default {

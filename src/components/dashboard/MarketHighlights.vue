@@ -24,16 +24,12 @@
 </template>
 
 <script>
-  // Service function used to obtain market highlight data
-  import {getMarketHighlights} from '../../services/DashboardService';
-
-  const marketHighlights = getMarketHighlights();
-
   export default
   {
+    props: ['marketHighlights'],
     data () {
       return {
-        marketHighlights: marketHighlights
+
       }
     }
   }

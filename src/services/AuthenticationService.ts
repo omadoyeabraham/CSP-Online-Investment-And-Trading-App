@@ -39,19 +39,15 @@ import * as ApiUrls from './ApiUrlService';
       store.commit(mutationTypes.SAVE_AUTHENTICATED_USER_TO_STORE, userData);
 
       // Add authorization header to all future axios requests, until the user logs out
-      axios.defaults.headers.common['Authorization'] = 'Abraham';
+      axios.defaults.headers.common['Authorization'] = userData.customer.portalPasswordToken;
 
       // Redirect to the dashboard after successful authetication
-      // router.push('dashboard')
+      router.push('dashboard')
     })
     .catch((error) => {
 
       // return 'Invalid username or password';
     });
-
-    axios.get(`${ApiUrls.BaseApiUrl}/getSecurity/`)
-      .then(response => console.log(response));
-
 
 
  } // EOF Login Fn
