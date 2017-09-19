@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import Login from '@/components/Login'
 import Dashboard from '@/components/dashboard/Dashboard'
+import PageNotFound from '@/components/404'
 
 // Stockbroking Components
 import StbPortfolioSummary from '@/components/stockbroking/PortfolioSummary'
@@ -22,7 +23,7 @@ export default new Router({
     },
     {
       path: '/dashboard',
-      name: 'dashboard',
+      name: 'Dashboard',
       component: Dashboard
     },
     {
@@ -32,23 +33,32 @@ export default new Router({
     },
     {
       path: '/stb/trade-history',
-      name: '/stb/trade-history',
+      name: 'stb-trade-history',
       component: StbTradeHistory
     },
     {
       path: '/stb/portfolio-holdings',
-      name: '/stb/portfolio-holdings',
+      name: 'stb-portfolio-holdings',
       component: StbPortfolioHoldings
     },
     {
       path: '/stb/market-data',
-      name: '/stb/market-data',
+      name: 'stb-market-data',
       component: StbMarketData
     },
     {
       path: '/stb/watchlist',
-      name: '/stb/watchlist',
+      name: 'stb-watchlist',
       component: StbWatchList
+    },
+    {
+      path: '/',
+      name: 'PageNotFound',
+      component: PageNotFound
+    },
+    {
+      path: '/redirect',
+      redirect: {name: 'Login'}
     }
   ]
 })

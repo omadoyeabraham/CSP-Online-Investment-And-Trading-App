@@ -42,7 +42,7 @@ import * as ApiUrls from './ApiUrlService';
       axios.defaults.headers.common['Authorization'] = userData.customer.portalPasswordToken;
 
       // Redirect to the dashboard after successful authetication
-      router.push('dashboard')
+      router.push({name: 'Dashboard'})
     })
     .catch((error) => {
 

@@ -20,13 +20,13 @@ export const nairaInvestments: Array<object> = [
     totalValue: store.state.user.stockbroking.totalValue,
     model: false,
     children: [
-      { icon: 'keyboard_arrow_right', text: 'Portfolio Summary', link:'/stb/portfolio-summary' },
-      { icon: 'keyboard_arrow_right', text: 'Trade', link:'/stb/portfolio-summary' },
-      { icon: 'keyboard_arrow_right', text: 'Trade History', link:'/stb/trade-history' },
-      { icon: 'keyboard_arrow_right', text: 'Portfolio Holdings', link:'/stb/portfolio-holdings' },
-      { icon: 'keyboard_arrow_right', text: 'Market Data', link:'/stb/market-data' },
-      { icon: 'keyboard_arrow_right', text: 'My Watchlist', link:'/stb/watchlist' },
-      { icon: 'keyboard_arrow_right', text: 'Tools', link:'/stb/portfolio-summary' }
+      { icon: 'keyboard_arrow_right', text: 'Portfolio Summary', routeName:'stb-portfolio-summary' },
+      { icon: 'keyboard_arrow_right', text: 'Trade', routeName:'/stb/portfolio-summary' },
+      { icon: 'keyboard_arrow_right', text: 'Trade History', routeName:'stb-trade-history' },
+      { icon: 'keyboard_arrow_right', text: 'Portfolio Holdings', routeName:'stb-portfolio-holdings' },
+      { icon: 'keyboard_arrow_right', text: 'Market Data', routeName:'stb-market-data' },
+      { icon: 'keyboard_arrow_right', text: 'My Watchlist', routeName:'stb-watchlist' },
+      { icon: 'keyboard_arrow_right', text: 'Tools', routeName:'stb-portfolio-summary' }
     ]
   },
   {

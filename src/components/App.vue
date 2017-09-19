@@ -5,12 +5,12 @@
     <Sidebar
     class="elevation-5"
     :isVisible="sidebarIsVisible"
-    v-if="['Login', 'Register'].indexOf($route.name) !== 0">
+    v-if="['Login'].indexOf($route.name) !== 0">
     </Sidebar>
 
     <!-- Horizontal Naviagtion bar -->
     <v-toolbar class="grey lighten-4 elevation-1" fixed
-      v-if="['Login', 'Register'].indexOf($route.name) !== 0">
+      v-if="['Login', 'Register', 'PageNotFound'].indexOf($route.name) !== 0">
       <v-toolbar-title>
         <v-toolbar-side-icon @click.stop="sidebarIsVisible = !sidebarIsVisible"
          class="blue--text text--darken-4">

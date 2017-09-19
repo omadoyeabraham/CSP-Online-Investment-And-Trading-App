@@ -27,7 +27,7 @@
             <v-icon class="font-size-11">{{ child.icon }}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <router-link :to="'child.link'" class="font-size-11">
+            <router-link :to="{name: child.routeName}" class="font-size-11">
               {{ child.text }}
             </router-link>
           </v-list-tile-content>

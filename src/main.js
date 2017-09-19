@@ -44,6 +44,14 @@ require('font-awesome-sass-loader');
 
 Vue.config.productionTip = false
 
+/**
+ * Navigation guard that's called before every route change
+ * Used to ensure only authenticated users can access our application
+ */
+router.beforeEach((to, from, next) => {
+  console.log(to)
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
