@@ -17,7 +17,13 @@
                 placeholder="Username" v-model="username">
                 <input type="password" id="inputPassword" class="form-control"
                  placeholder="Password" v-model="password">
-                <button @click="login" class="btn btn-lg btn-primary btn-block btn-signin" >Sign in</button>
+                <!-- <button @click="login" class="btn btn-lg btn-success btn-block" >Sign in</button> -->
+
+                <v-btn info class="blue darken-4 font-size-13"
+                  @click="login">
+                SIGN IN
+                </v-btn>
+
             </form>
             <a href="#" class="forgot-password">
                 Forgot your password?

@@ -31,7 +31,7 @@ import router from './router'
 Vue.use(VueHighcharts, { Highcharts })
 
 // Base component that bootstraps the application
-import App from './components/App-Me'
+import App from './components/App'
 
 // Vuetify CSS
 import '../node_modules/vuetify/dist/vuetify.min.css'

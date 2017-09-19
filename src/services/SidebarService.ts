@@ -40,8 +40,8 @@ export const nairaInvestments: Array<object> = [
       { icon: 'keyboard_arrow_right', text: 'Terminated Investments' }
     ]
   },
-  { icon: 'keyboard', text: 'SMA', totalValue: '1,150,000,000' },
-  { icon: 'keyboard', text: 'Cash Account', totalValue: '1,150,000,000' },
+  { icon: 'keyboard', text: 'SMA', totalValue: store.state.user.stockbroking.totalValue },
+  { icon: 'keyboard', text: 'Cash Account', totalValue: store.state.user.stockbroking.totalValue },
   {icon: 'keyboard', text: 'TOTAL', totalValue: '200,000,000'}
 ]
 
