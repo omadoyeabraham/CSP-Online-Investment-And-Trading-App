@@ -52,12 +52,15 @@ router.beforeEach((to, from, next) => {
   /**
    * If a logged out user is trying to access a "non Login" page, redirect said user to the login * page
    */
-  console.log(to)
-  if (window.localStorage.length === 0 && to.name !== 'Login') {
-    console.log('hereeeee')
+
+  if (window.sessionStorage.length === 0 && to.name !== 'Login') {
+    // Stop navigation to the intended route
     next(false)
+
+    // Redirect the user to the login page instead
     next('/login')
   } else {
+    // Continue navigation to the intended route
     next()
   }
 })

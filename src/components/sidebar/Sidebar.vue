@@ -8,10 +8,10 @@
       :mini-variant.sync="mini"
       v-model="showSidebar">
 
-      <v-btn icon @click.native.stop="mini = !mini">
+      <!-- <v-btn icon @click.native.stop="mini = !mini">
         <v-icon v-if="mini===false">chevron_left</v-icon>
          <v-icon v-if="mini===true">chevron_right</v-icon>
-      </v-btn>
+      </v-btn> -->
 
       <!-- Naira Investments -->
       <div
@@ -26,7 +26,7 @@
 
       <!-- Dollar Investments -->
       <div
-        class="sidebar-header d-flex justify-content-between"
+        class="sidebar-header d-flex justify-content-between mt20"
         v-if="mini===false">
         <span>Dollar Investments</span>
       </div>
@@ -35,7 +35,7 @@
 
       <!-- Account actions -->
       <div
-        class="sidebar-header d-flex justify-content-between"
+        class="sidebar-header d-flex justify-content-between mt20"
         v-if="mini===false">
         <span>Account Actions</span>
       </div>

@@ -17,10 +17,10 @@
  import VuexPersistence from 'vuex-persist'
 
  // The marketdata store module
- import MarketDataStore from './modules/market-data.js';
+ import MarketDataStore from './modules/market-data';
 
  // The dashboard store module
- import DashboardDataStore from './modules/dashboard.js';
+ import DashboardDataStore from './modules/dashboard';
 
  // The user store module
  import UserDataStore from './modules/user.ts';

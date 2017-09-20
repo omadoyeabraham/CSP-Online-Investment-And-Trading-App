@@ -13,13 +13,27 @@
             <img id="company-img" class="img-responsive" src="../assets/img/cardinalstone.png" />
             <p id="profile-name" class="profile-name-card"></p>
             <form class="form-signin">
-                <input type="text" id="inputEmail" class="form-control"
-                placeholder="Username" v-model="username">
-                <input type="password" id="inputPassword" class="form-control"
-                 placeholder="Password" v-model="password">
+                <!-- <input type="text" id="inputEmail" class="form-control"
+                placeholder="Username" v-model="username"> -->
+                <v-text-field
+                  label="Username"
+                  :append-icon="'account_circle'"
+                  v-model="username"
+                  :rules="usernameRules">
+                </v-text-field>
+                <v-text-field
+                  label="Password"
+                  v-model="password"
+                  :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
+                  :append-icon-cb="() => (hidePassword = !hidePassword)"
+                  :type="hidePassword ? 'password' : 'text'"
+                  :rules="passwordRules">
+                </v-text-field>
+                <!-- <input type="password" id="inputPassword" class="form-control"
+                 placeholder="Password" v-model="password"> -->
                 <!-- <button @click="login" class="btn btn-lg btn-success btn-block" >Sign in</button> -->
 
-                <v-btn info class="blue darken-4 font-size-13"
+                <v-btn info class="blue darken-4 font-size-13 mt10"
                   @click="login">
                 SIGN IN
                 </v-btn>
@@ -52,7 +66,14 @@
       return {
         name: 'CardinalStone Trade Direct',
         username: '',
-        password: ''
+        password: '',
+        hidePassword: true,
+        usernameRules: [
+          (username) => !!username || 'Required'
+        ],
+        passwordRules: [
+          (password) => !!password || 'Required'
+        ]
       }
     },
 

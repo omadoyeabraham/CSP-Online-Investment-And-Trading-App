@@ -13,15 +13,15 @@ import store from '../store';
  */
 export const nairaInvestments: Array<object> = [
   {
-    icon: 'dns',
-    'icon-alt': 'dns',
+    icon: 'folder_open',
+    'icon-alt': 'folder_open',
     heading: 'Stockbroking',
     text: 'Stockbroking',
     totalValue: store.state.user.stockbroking.totalValue,
     model: false,
     children: [
       { icon: 'keyboard_arrow_right', text: 'Portfolio Summary', routeName:'stb-portfolio-summary' },
-      { icon: 'keyboard_arrow_right', text: 'Trade', routeName:'/stb/portfolio-summary' },
+      { icon: 'keyboard_arrow_right', text: 'Trade', routeName:'stb-portfolio-summary' },
       { icon: 'keyboard_arrow_right', text: 'Trade History', routeName:'stb-trade-history' },
       { icon: 'keyboard_arrow_right', text: 'Portfolio Holdings', routeName:'stb-portfolio-holdings' },
       { icon: 'keyboard_arrow_right', text: 'Market Data', routeName:'stb-market-data' },
@@ -30,8 +30,8 @@ export const nairaInvestments: Array<object> = [
     ]
   },
   {
-    icon: 'contacts',
-    'icon-alt': 'contacts',
+    icon: 'menu',
+    'icon-alt': 'menu',
     text: 'Fixed Income',
     totalValue: store.state.user.fixedIncome.totalValue,
     model: false,
@@ -40,7 +40,7 @@ export const nairaInvestments: Array<object> = [
       { icon: 'keyboard_arrow_right', text: 'Terminated Investments' }
     ]
   },
-  { icon: 'keyboard', text: 'SMA', totalValue: store.state.user.stockbroking.totalValue },
+  { icon: 'account_balance', text: 'SMA', totalValue: store.state.user.stockbroking.totalValue },
   { icon: 'keyboard', text: 'Cash Account', totalValue: store.state.user.stockbroking.totalValue },
   {icon: 'keyboard', text: 'TOTAL', totalValue: '200,000,000'}
 ]
@@ -50,8 +50,8 @@ export const nairaInvestments: Array<object> = [
  */
 export const dollarInvestments: Array<object> = [
   {
-    icon: 'contacts',
-    'icon-alt': 'contacts',
+    icon: 'attach_money',
+    'icon-alt': 'attach_money',
     text: 'Dollar Investments',
     totalValue: '1,150,000,000',
     model: false,
@@ -60,7 +60,8 @@ export const dollarInvestments: Array<object> = [
       { icon: 'keyboard_arrow_right', text: 'Terminated Investments' }
     ]
   },
-  { icon: 'keyboard', text: 'TOTAL', totalValue: '200,000,000' }
+  { icon: 'keyboard', text: 'Cash Account', totalValue: store.state.user.stockbroking.totalValue },
+  { icon: 'keyboard', text: 'TOTAL', totalValue: '$200,000,000' }
 ]
 
 /**

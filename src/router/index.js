@@ -52,13 +52,9 @@ export default new Router({
       component: StbWatchList
     },
     {
-      path: '/',
+      path: '*',
       name: 'PageNotFound',
       component: PageNotFound
-    },
-    {
-      path: '/redirect',
-      redirect: {name: 'Login'}
     }
   ]
 })
