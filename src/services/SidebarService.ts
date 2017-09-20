@@ -17,7 +17,7 @@ export const nairaInvestments: Array<object> = [
     'icon-alt': 'folder_open',
     heading: 'Stockbroking',
     text: 'Stockbroking',
-    totalValue: store.state.user.stockbroking.totalValue,
+    totalValue: store.state.stockbroking.totalValue,
     model: false,
     children: [
       { icon: 'keyboard_arrow_right', text: 'Portfolio Summary', routeName:'stb-portfolio-summary' },
@@ -33,15 +33,15 @@ export const nairaInvestments: Array<object> = [
     icon: 'menu',
     'icon-alt': 'menu',
     text: 'Fixed Income',
-    totalValue: store.state.user.fixedIncome.totalValue,
+    totalValue: store.state.fixedIncome.totalValue,
     model: false,
     children: [
       { icon: 'keyboard_arrow_right', text: 'Running Investments' },
       { icon: 'keyboard_arrow_right', text: 'Terminated Investments' }
     ]
   },
-  { icon: 'account_balance', text: 'SMA', totalValue: store.state.user.stockbroking.totalValue },
-  { icon: 'keyboard', text: 'Cash Account', totalValue: store.state.user.stockbroking.totalValue },
+  { icon: 'account_balance', text: 'SMA', totalValue: store.state.stockbroking.totalValue },
+  { icon: 'keyboard', text: 'Cash Account', totalValue: store.state.stockbroking.totalValue },
   {icon: 'keyboard', text: 'TOTAL', totalValue: '200,000,000'}
 ]
 
@@ -60,7 +60,7 @@ export const dollarInvestments: Array<object> = [
       { icon: 'keyboard_arrow_right', text: 'Terminated Investments' }
     ]
   },
-  { icon: 'keyboard', text: 'Cash Account', totalValue: store.state.user.stockbroking.totalValue },
+  { icon: 'keyboard', text: 'Cash Account', totalValue: store.state.stockbroking.totalValue },
   { icon: 'keyboard', text: 'TOTAL', totalValue: '$200,000,000' }
 ]
 

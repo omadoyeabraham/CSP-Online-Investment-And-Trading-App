@@ -6,6 +6,8 @@
 // All mutation types that can be carried out on the store state by the application
 import * as mutationTypes from '../mutation-types.js';
 
+import UserService from '../../services/UserService';
+
 // Initial Store State
 const state = {
   marketHighlights: {},
@@ -13,7 +15,8 @@ const state = {
   topGainers: [],
   topLosers: [],
   tradeOrders: {},
-  marketData: {}
+  marketData: {},
+  totalValue: 0
 }
 
 const getters = {
@@ -43,6 +46,10 @@ const getters = {
       dates.push(date)
       values.push(parseFloat(dayData.closingPrice))
     });
+
+    // Reverse the order because the data is returned in descending order of date
+    dates.reverse()
+    values.reverse()
 
     // Calculate the data point interval on the Y axis
     const maximumValue = Math.max(...values)
@@ -128,6 +135,11 @@ const mutations = {
     state.nseAsi = dashboardData.NSEASI
     state.topGainers = dashboardData.TOPGAINERS.item
     state.topLosers = dashboardData.TOPLOSERS.item
+  },
+
+  [mutationTypes.SAVE_USER_STOCKBROKING_DATA_TO_STORE] (state, userData) {
+    state.userData = userData.STB;
+    state.totalValue = UserService.getStbTotalValue(state.userData)
   },
 
   [mutationTypes.SAVE_TRADE_ORDERS_TO_STORE] (state, tradeOrders: Array<object>) {

@@ -6,24 +6,14 @@
  *
  * @author Omadoye Abraham <omadoyeabraham@gmail.com>
  */
-import UserService  from '../../services/UserService';
+
 
 // All mutation types that can be carried out on the store state by the application
 import * as mutationTypes from '../mutation-types.js';
 
  // Initial store state
 const state: object = {
-  info: {},
-  stockbroking: {
-
-  },
-  cashAccount: {
-
-  },
-  fixedIncome: {
-
-  }
-
+  info: {}
 }
 
  // Getters
@@ -40,12 +30,7 @@ const mutations = {
   // Mutation used to save a user's details to the store upon successful authentication of a user
   [mutationTypes.SAVE_AUTHENTICATED_USER_TO_STORE] (state, userData) {
     state.info = userData.customer;
-    state.stockbroking = userData.STB;
-    state.cashAccount = userData.CA;
-    state.fixedIncome = userData.FI;
 
-    state.stockbroking.totalValue = UserService.getStbTotalValue(state.stockbroking)
-    state.fixedIncome.totalValue = UserService.getFixedIncomeTotalValue(state.stockbroking)
   }
 
 } // End Of MUTATIONS

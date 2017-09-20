@@ -19,14 +19,20 @@
  // The marketdata store module
  import MarketDataStore from './modules/market-data';
 
- // The dashboard store module
- import DashboardDataStore from './modules/dashboard';
+ // The generalData store module
+ import GeneralDataStore from './modules/general-data';
 
  // The user store module
  import UserDataStore from './modules/user.ts';
 
  // The stockbroking store module
  import StockbrokingStore from './modules/stockbroking.ts'
+
+ // The fixed income store module
+ import FixedIncomeStore from './modules/fixed-income.ts'
+
+ // The cash store module
+ import CashStore from './modules/cash.ts'
 
  /**
   * VuexPersistence object used to persist data in localstorage until the user signs out
@@ -41,10 +47,12 @@
   */
  export default new Vuex.Store({
    modules: {
-     dashboard: DashboardDataStore,
+     generalData: GeneralDataStore,
      marketData: MarketDataStore,
      user: UserDataStore,
-     stockbroking: StockbrokingStore
+     stockbroking: StockbrokingStore,
+     fixedIncome: FixedIncomeStore,
+     cash: CashStore
    },
    plugins: [vuexLocalStorage.plugin]
  });

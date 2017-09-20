@@ -1,6 +1,6 @@
 <template>
     <v-navigation-drawer
-      class="pb-0"
+      class="pb-0 pl5"
       persistent
       height="100%"
       clipped
@@ -17,7 +17,7 @@
       <div
         class="sidebar-header d-flex justify-content-between"
         v-if="mini===false">
-        <span>Naira Investments</span>
+        <span >Naira Investments</span>
         <router-link to="/dashboard">
           <i class="fa fa-home" aria-hidden="true"></i>
         </router-link>
@@ -109,7 +109,7 @@
     border-bottom: 1px solid #ccc
   .sidebar-header
     font-size: 2rem
-    color: #1a2155
+    color: #4c7396
     margin: 5px
     margin-top: 10px
     margin-bottom: 0

@@ -32,6 +32,7 @@ export let getDashboardData = () => {
 
       // commit the dashboard data to the vuex store
       store.commit(mutationTypes.SAVE_DASHBOARD_DATA_TO_STORE, dashboardData)
+      store.commit(mutationTypes.SAVE_NEWSFEED_TO_STORE, dashboardData)
 
   }).catch((error) => {
 

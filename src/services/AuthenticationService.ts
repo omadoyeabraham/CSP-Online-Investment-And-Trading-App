@@ -40,6 +40,9 @@ import * as ApiUrls from './ApiUrlService';
 
       // Commit the authenticated user's data to the vue store.
       store.commit(mutationTypes.SAVE_AUTHENTICATED_USER_TO_STORE, userData);
+      store.commit(mutationTypes.SAVE_USER_STOCKBROKING_DATA_TO_STORE, userData);
+      store.commit(mutationTypes.SAVE_USER_FIXEDINCOME_DATA_TO_STORE, userData);
+      store.commit(mutationTypes.SAVE_USER_CASH_DATA_TO_STORE, userData);
 
       // Add authorization header to all future axios requests, until the user logs out
       axios.defaults.headers.common['Authorization'] = userData.customer.portalPasswordToken;
@@ -48,7 +51,9 @@ import * as ApiUrls from './ApiUrlService';
       router.push({name: 'Dashboard'})
     })
     .catch((error) => {
-
+      console.group()
+      console.log(error)
+      console.groupEnd()
       // return 'Invalid username or password';
     });
 

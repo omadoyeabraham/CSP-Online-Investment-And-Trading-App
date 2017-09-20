@@ -3,6 +3,12 @@
   <v-container fluid grid-list-xl>
     <v-layout row wrap class="">
 
+      <v-flex xs12>
+        <h3 class="font-size-20 page-header pb10 csp-light-blue-text">
+          Dashboard
+        </h3>
+      </v-flex>
+
       <!-- Market Highlights -->
       <v-flex xs12 md6 lg4 class="mb5">
         <MarketHighlightsComponent
