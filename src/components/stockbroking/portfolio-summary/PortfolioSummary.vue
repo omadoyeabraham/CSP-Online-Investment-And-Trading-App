@@ -6,35 +6,36 @@
 <template>
   <v-container fluid>
     <v-layout row wrap class="">
-
+      {{currentPortfolio}}
       <!-- Market Highlights -->
       <v-flex xs12 md6 lg4 class="mb5">
-        <MarketHighlightsComponent></MarketHighlightsComponent>
+        <PortfolioSummaryBox :currentPortfolio="currentPortfolio">
+        </PortfolioSummaryBox>
       </v-flex>
 
       <!-- NSE 5 Day Chart -->
       <v-flex xs12 md6 lg4 class="mb5">
-        <NseFiveDayChart></NseFiveDayChart>
+
       </v-flex>
 
       <!-- Top gainers and losers -->
       <v-flex xs12 md6 lg4 class="mb5">
-        <TopGainersLosers></TopGainersLosers>
+
       </v-flex>
 
       <!-- Fixed income -->
       <v-flex xs12 md6 lg4 class="mb5">
-        <FixedIncome></FixedIncome>
+
       </v-flex>
 
       <!-- Business News -->
       <v-flex xs12 md6 lg4 class="mb5">
-        <BusinessNews></BusinessNews>
+
       </v-flex>
 
       <!-- Business News -->
       <v-flex xs12 md6 lg4 class="mb5">
-        <BusinessNews></BusinessNews>
+
       </v-flex>
 
     </v-layout>
@@ -42,26 +43,26 @@
 </template>
 
 <script>
-import MarketHighlightsComponent from '../dashboard/MarketHighlights';
-import NseFiveDayChart from '../dashboard/NseFiveDayChart';
-import TopGainersLosers from '../dashboard/TopGainersLosers';
-import FixedIncome from '../dashboard/FixedIncome';
-import BusinessNews from '../dashboard/BusinessNews';
+import PortfolioSummaryBox from './PortfolioSummaryBox'
+
+import {mapState} from 'vuex'
 
 export default
 {
   components: {
-    MarketHighlightsComponent,
-    NseFiveDayChart,
-    TopGainersLosers,
-    FixedIncome,
-    BusinessNews
+    PortfolioSummaryBox
   },
 
   data () {
     return {
 
     }
+  },
+
+  computed: {
+    ...mapState({
+      'currentPortfolio': (store) => store.stockbroking.currentPortfolio
+    })
   }
 }
 </script>

@@ -10,6 +10,7 @@ export const AuthenticationUrl = `${BaseApiUrl}/findCustomerByName`;
 
 // Stockbroking
 export const GetTradeOrdersUrl = `${BaseApiUrl}/`;
+export const GetMarketDataUrl = `${BaseApiUrl}/getSecurity`;
 
 // Dashboard
 export const GetDashboardDataUrl = `${BaseApiUrl}/getDashboardData`;

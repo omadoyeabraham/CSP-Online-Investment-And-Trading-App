@@ -4,6 +4,8 @@
  * @author Omadoye Abraham <omadoyeabraham@gmail.com>
  */
 
+ import axios from 'axios'
+
  // Data mocks to be replaced with actual API calls
  import StbMockData from '../data-mocks/stockbroking'
 
@@ -12,6 +14,9 @@ import store from '../store';
 
 // The vuex store mutation types
 import * as mutationTypes from '../store/mutation-types.js';
+
+// Service exposing the urls for the API
+import * as ApiUrls from './ApiUrlService';
 
 
 /**
@@ -39,8 +44,26 @@ import * as mutationTypes from '../store/mutation-types.js';
   // obtain current market data
   const marketData = StbMockData.marketData;
 
-  // commit the market data to the stockbroking module of our vue store
-  store.commit(mutationTypes.SAVE_MARKET_DATA_TO_STORE, marketData);
+  console.time('gettingMarketData')
+
+  axios({
+    method: 'GET',
+    url: ApiUrls.GetMarketDataUrl
+  })
+  .then((response) => {
+
+    console.timeEnd('gettingMarketData')
+
+    console.group()
+    console.log(response)
+    console.groupEnd()
+
+    console.time('savingMarketDataToStore')
+    // commit the market data to the stockbroking module of our vue store
+    store.commit(mutationTypes.SAVE_MARKET_DATA_TO_STORE, response.data)
+    console.timeEnd('savingMarketDataToStore')
+
+  })
 
  }
 

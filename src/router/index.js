@@ -6,7 +6,7 @@ import Dashboard from '@/components/dashboard/Dashboard'
 import PageNotFound from '@/components/404'
 
 // Stockbroking Components
-import StbPortfolioSummary from '@/components/stockbroking/PortfolioSummary'
+import StbPortfolioSummary from '@/components/stockbroking/portfolio-summary/PortfolioSummary'
 import StbTradeHistory from '@/components/stockbroking/TradeHistory'
 import StbPortfolioHoldings from '@/components/stockbroking/PortfolioHoldings'
 import StbMarketData from '@/components/stockbroking/MarketData'

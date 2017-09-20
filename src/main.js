@@ -39,6 +39,8 @@ import '../node_modules/vuetify/dist/vuetify.min.css'
 // Stylesheet import
 import './assets/css/main.scss';
 
+import axios from 'axios'
+
 // Font awesome
 require('font-awesome-sass-loader');
 
@@ -59,7 +61,23 @@ router.beforeEach((to, from, next) => {
 
     // Redirect the user to the login page instead
     next('/login')
+  } else if (window.sessionStorage.length === 0 && to.name === 'Login') {
+    // User is trying to logout
+
+    next()
   } else {
+    // Add the authorization header to axios if its set in storage
+    if (window.sessionStorage.accessToken) {
+      // Add authorization header to all future axios requests, until the user logs out
+      axios.defaults.headers.common['Authorization'] = window.sessionStorage.accessToken;
+    } else {
+      // Access token is not set
+
+      // Stop navigation to the intended route
+      next(false)
+      // Redirect the user to the login page instead
+      next('/login')
+    }
     // Continue navigation to the intended route
     next()
   }

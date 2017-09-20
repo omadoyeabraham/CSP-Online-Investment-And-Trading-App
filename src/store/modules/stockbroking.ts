@@ -16,6 +16,8 @@ const state = {
   topLosers: [],
   tradeOrders: {},
   marketData: {},
+  portfolios: [],
+  currentPortfolio: {},
   totalValue: 0
 }
 
@@ -139,6 +141,18 @@ const mutations = {
 
   [mutationTypes.SAVE_USER_STOCKBROKING_DATA_TO_STORE] (state, userData) {
     state.userData = userData.STB;
+
+    // If the user has at least 1 STB portfolio
+    if (userData.STB.hasOwnProperty('EXCHANGE')) {
+      state.portfolios = userData.STB.EXCHANGE
+
+      // Default the current portfolio to the first portfolio returned
+      state.currentPortfolio = state.portfolios[0]
+
+      // Calculate the portfolio's total value
+      state.currentPortfolio.portfolioValue = parseFloat(state.currentPortfolio.availableCash.amount) + parseFloat(state.currentPortfolio.currentValuation.amount)
+    }
+
     state.totalValue = UserService.getStbTotalValue(state.userData)
   },
 

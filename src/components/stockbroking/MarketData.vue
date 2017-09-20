@@ -1,11 +1,12 @@
 <template>
   <v-container fluid>
 
-    <v-card class="elevation-0 mb0 row d-flex flex-column ml1 mr1">
+    <v-card class="elevation-0 mb0 row d-flex flex-column ml1 mr1"
+      style="background: transparent; border: none">
       <v-container fluid class="pl1 pr1">
         <v-layout row>
           <v-flex xs5 class="d-flex align-items-end">
-             <h3 class="blue--text text--darken-4">Stockbroking - Market Data</h3>
+             <!-- <h3 class="blue--text text--darken-4">Stockbroking - Market Data</h3> -->
           </v-flex>
 
           <v-flex xs7 d-flex class="">

@@ -46,6 +46,8 @@ import * as ApiUrls from './ApiUrlService';
 
       // Add authorization header to all future axios requests, until the user logs out
       axios.defaults.headers.common['Authorization'] = userData.customer.portalPasswordToken;
+      // Store the access token in session, so users who reload can still access resources
+      window.sessionStorage.setItem('accessToken', userData.customer.portalPasswordToken)
 
       // Redirect to the dashboard after successful authetication
       router.push({name: 'Dashboard'})
