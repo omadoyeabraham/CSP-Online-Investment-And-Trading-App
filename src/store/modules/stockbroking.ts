@@ -127,6 +127,71 @@ const getters = {
 
     return data
   },
+
+  /**
+   * Return the number of accounts in a user's STB portfolio
+   *
+   * @return int
+   */
+  numberOfAccountsInPortfolio: (state) => {
+    return state.portfolios.length
+  },
+
+  /**
+   * Get the total value of the currently selected portfolio
+   *
+   * @return float
+   */
+  currentPortfolioTotalValue: (state) => {
+    // Return 0 if the current portfolio is empty
+    if (state.currentPortfolio === {}) {
+      return 0
+    }
+
+    if ((state.currentPortfolio.availableCash === undefined) || (state.currentPortfolio.currentValuation === undefined)) {
+      return 0
+    }
+
+    const totalValue = parseFloat(state.currentPortfolio.availableCash.amount) + parseFloat(state.currentPortfolio.currentValuation.amount)
+
+    return totalValue
+  },
+
+  /**
+   * Get the gain/loss on the currently selected STB portfolio
+   *
+   * @return float
+   */
+  currentPortfolioGainOrLoss: (state) => {
+    // Return 0 if the current portfolio is empty
+    if (state.currentPortfolio === {}) {
+      return 0
+    }
+
+    if ((state.currentPortfolio.availableCash === undefined) || (state.currentPortfolio.currentValuation === undefined)) {
+      return 0
+    }
+
+    const gainOrLoss = parseFloat(state.currentPortfolio.currentValuation.amount) - parseFloat(state.currentPortfolio.costBasis.amount)
+
+    return gainOrLoss
+  },
+
+  /**
+   * Get the % gain or loss on the currently selected stb portfolio
+   *
+   * @return float
+   */
+  currentPortfolioGainOrLossPercentage: (state, getters) => {
+    // Check if the current portfolio has a value for gain/loss
+    if (getters.currentPortfolioGainOrLoss === 0) {
+      return 0
+    }
+
+    const gainOrLossPercentage = ( (getters.currentPortfolioGainOrLoss) / (parseFloat(state.currentPortfolio.costBasis.amount)) ) * 100
+
+    return gainOrLossPercentage
+  }
 }
 
 // Mutations to this module's store state
@@ -149,8 +214,6 @@ const mutations = {
       // Default the current portfolio to the first portfolio returned
       state.currentPortfolio = state.portfolios[0]
 
-      // Calculate the portfolio's total value
-      state.currentPortfolio.portfolioValue = parseFloat(state.currentPortfolio.availableCash.amount) + parseFloat(state.currentPortfolio.currentValuation.amount)
     }
 
     state.totalValue = UserService.getStbTotalValue(state.userData)
@@ -162,6 +225,18 @@ const mutations = {
 
   [mutationTypes.SAVE_MARKET_DATA_TO_STORE] (state, marketData: Array<object>) {
     state.marketData = marketData
+  },
+
+  [mutationTypes.CHANGE_CURRENT_PORTFOLIO] (state, accountNo) {
+    let selectedPortfolio = []
+
+    state.portfolios.forEach((portfolio) => {
+      if (portfolio.accountNo == accountNo) {
+        selectedPortfolio = portfolio
+      }
+    })
+
+    state.currentPortfolio = selectedPortfolio
   }
 
 } // EOF mutations

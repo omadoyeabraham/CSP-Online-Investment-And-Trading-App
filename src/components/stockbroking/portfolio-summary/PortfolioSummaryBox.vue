@@ -26,22 +26,22 @@
         <!-- Current Value -->
         <li class="list-group-item font-weight-bold">
           CURRENT VALUE
-          <span class="ml-auto font-weight-normal">{{currentPortfolio.portfolioValue}}</span>
+          <span class="ml-auto font-weight-normal">{{currentPortfolioTotalValue}}</span>
         </li>
         <!-- Acquisition Cost -->
         <li class="list-group-item font-weight-bold">
           ACQUISITION COST
-          <span class="ml-auto font-weight-normal">{{currentPortfolio.clearingHouseNo}}</span>
+          <span class="ml-auto font-weight-normal">{{currentPortfolio.costBasis.amount || '--'}}</span>
         </li>
         <!-- Gain or Loss -->
         <li class="list-group-item font-weight-bold">
           GAIN/LOSS
-          <span class="ml-auto font-weight-normal">{{currentPortfolio.clearingHouseNo}}</span>
+          <span class="ml-auto font-weight-normal">{{currentPortfolioGainOrLoss}}</span>
         </li>
         <!-- Gain or Loss percentage -->
         <li class="list-group-item font-weight-bold">
           GAIN/LOSS (%)
-          <span class="ml-auto font-weight-normal">{{currentPortfolio.clearingHouseNo}}</span>
+          <span class="ml-auto font-weight-normal">{{currentPortfolioGainOrLossPercentage}}</span>
         </li>
       </ul>
     </div>
@@ -51,9 +51,18 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
   export default
   {
-    props: ['currentPortfolio']
+    props: ['currentPortfolio'],
+
+    computed: {
+      ...mapGetters({
+        'currentPortfolioTotalValue': 'currentPortfolioTotalValue',
+        'currentPortfolioGainOrLoss': 'currentPortfolioGainOrLoss',
+        'currentPortfolioGainOrLossPercentage': 'currentPortfolioGainOrLossPercentage'
+      })
+    }
   }
 </script>
 
