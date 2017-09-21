@@ -30,6 +30,14 @@ import * as ApiUrls from './ApiUrlService';
    // obtain the tradeorders already placed by the user
   let tradeOrders =  StbMockData.tradeOrders;
 
+  axios({
+    method: 'GET',
+    url: ApiUrls.GetTradeOrdersUrl,
+    data: {id: userID}
+  }).then((response) => {
+    console.log(response)
+  })
+
   // Commit the tradeOrders to the stockbroking module of our vuex store
   store.commit(mutationTypes.SAVE_TRADE_ORDERS_TO_STORE, tradeOrders);
 

@@ -9,7 +9,7 @@ export const BaseApiUrl = 'https://restserver.cardinalstone.com/api';
 export const AuthenticationUrl = `${BaseApiUrl}/findCustomerByName`;
 
 // Stockbroking
-export const GetTradeOrdersUrl = `${BaseApiUrl}/`;
+export const GetTradeOrdersUrl = `${BaseApiUrl}/findCustomerOrders`;
 export const GetMarketDataUrl = `${BaseApiUrl}/getSecurity`;
 
 // Dashboard
