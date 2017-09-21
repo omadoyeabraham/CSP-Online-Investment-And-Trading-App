@@ -3,7 +3,7 @@
 // Webpack uses the ~ to import bootstrap from the node_modules folder
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
-// @import "_partials/_adminLTE.scss";
+
 @import "_partials/_vars.scss";
 @import "_partials/_fonts.scss";
 @import "_partials/_font-sizes.sass";
@@ -13,7 +13,5 @@
 @import "_partials/_buttons.sass";
 @import "_partials/_backgrounds.scss";
 
-// Styles for adminLTE dashboard by Leye
-// @import "_adminLTE/_dashboard.scss";
-// @import "_adminLTE/_all-skins.scss";
+
 
