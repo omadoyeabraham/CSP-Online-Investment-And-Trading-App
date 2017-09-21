@@ -33,6 +33,9 @@
             :key="index"
             v-bind:value="item.accountNo">{{item.label}}</option>
         </select>
+
+   {{sectorAllocation}}
+
       </v-flex>
     </v-layout>
 
@@ -51,12 +54,18 @@
 
       <!-- Top gainers and losers -->
       <v-flex xs12 md6 lg4 class="mb5">
-
+        <SectorPerformanceChart
+          :sectorPerformanceChartData="sectorPerformanceChartData"
+          :sectorAllocation="sectorAllocation">
+        </SectorPerformanceChart>
       </v-flex>
 
       <!-- Fixed income -->
       <v-flex xs12 md6 lg4 class="mb5">
-
+        <SectorAllocationChart
+          :sectorAllocationChartData="sectorPerformanceChartData"
+          :sectorAllocation="sectorAllocation">
+        </SectorAllocationChart>
       </v-flex>
 
       <!-- Business News -->
@@ -76,6 +85,8 @@
 <script>
 import PortfolioSummaryBox from './PortfolioSummaryBox'
 import SectorOverview from './SectorOverview'
+import SectorPerformanceChart from './SectorPerformanceChart'
+import SectorAllocationChart from './SectorAllocationChart'
 
 import StockbrokingService from '../../../services/StockbrokingService'
 import {mapState, mapGetters} from 'vuex'
@@ -86,7 +97,9 @@ export default
 {
   components: {
     PortfolioSummaryBox,
-    SectorOverview
+    SectorOverview,
+    SectorPerformanceChart,
+    SectorAllocationChart
   },
 
   data () {
@@ -103,7 +116,9 @@ export default
       'portfolios': (store) => store.stockbroking.portfolios
     }),
     ...mapGetters({
-      'numberOfAccountsInPortfolio': 'numberOfAccountsInPortfolio'
+      'numberOfAccountsInPortfolio': 'numberOfAccountsInPortfolio',
+      'sectorPerformanceChartData': 'sectorPerformanceChartData',
+      'sectorAllocation': 'getSectorAllocation'
     })
   },
   watch: {

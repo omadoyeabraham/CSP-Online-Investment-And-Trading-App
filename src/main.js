@@ -10,6 +10,13 @@ Vue.use(Vuetify);
 import VueHighcharts from 'vue-highcharts';
 import Highcharts from 'highcharts/highstock';
 
+// Loadash for Vue and normal javascript
+import lodash from 'lodash'
+import VueLodash from 'vue-lodash'
+window._ = require('lodash') // eslint-disable-line no-unused-vars
+
+Vue.use(VueLodash, lodash)
+
 // Vuelidate is used for from validation
 import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate)
@@ -21,8 +28,15 @@ Vue.use(VueProgressBar, VueProgressBarConfig)
 
 // Vue-tabs
 import VueTabs from 'vue-nav-tabs'
-import 'vue-nav-tabs/themes/vue-tabs.css'
+import 'vue-nav-tabs/themes/vue-tabs.scss'
 Vue.use(VueTabs)
+
+// BootstrapVue
+import BootstrapVue from 'bootstrap-vue'
+Vue.use(BootstrapVue)
+
+// BoostrapVue css
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 // Router
 import router from './router'

@@ -9,7 +9,11 @@
 
     <!-- Card body -->
     <div class="card-block" id="chartContainer">
-      <highcharts :options="chartData" ref="highcharts" style="height: 230px; max-width: 100%"></highcharts>
+      <highcharts
+        :options="chartData"
+        ref="highcharts"
+        style="height: 230px; max-width: 100%">
+      </highcharts>
     </div>
 
   </v-card>

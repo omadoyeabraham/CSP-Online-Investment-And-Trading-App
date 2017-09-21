@@ -26,7 +26,7 @@
  import UserDataStore from './modules/user.ts';
 
  // The stockbroking store module
- import StockbrokingStore from './modules/stockbroking.ts'
+ import StockbrokingStore from './modules/stb/stockbroking.ts'
 
  // The fixed income store module
  import FixedIncomeStore from './modules/fixed-income.ts'

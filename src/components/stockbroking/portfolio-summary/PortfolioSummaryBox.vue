@@ -31,7 +31,7 @@
         <!-- Acquisition Cost -->
         <li class="list-group-item font-weight-bold">
           ACQUISITION COST
-          <span class="ml-auto font-weight-normal">{{currentPortfolio.costBasis.amount || '--'}}</span>
+          <span class="ml-auto font-weight-normal">{{currentPortfolioAcquisitionCost}}</span>
         </li>
         <!-- Gain or Loss -->
         <li class="list-group-item font-weight-bold">
@@ -60,7 +60,8 @@
       ...mapGetters({
         'currentPortfolioTotalValue': 'currentPortfolioTotalValue',
         'currentPortfolioGainOrLoss': 'currentPortfolioGainOrLoss',
-        'currentPortfolioGainOrLossPercentage': 'currentPortfolioGainOrLossPercentage'
+        'currentPortfolioGainOrLossPercentage': 'currentPortfolioGainOrLossPercentage',
+        'currentPortfolioAcquisitionCost': 'currentPortfolioAcquisitionCost'
       })
     }
   }
