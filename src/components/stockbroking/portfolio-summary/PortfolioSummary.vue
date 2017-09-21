@@ -45,7 +45,8 @@
 
       <!-- NSE 5 Day Chart -->
       <v-flex xs12 md6 lg4 class="mb5">
-
+        <SectorOverview>
+        </SectorOverview>
       </v-flex>
 
       <!-- Top gainers and losers -->
@@ -74,6 +75,7 @@
 
 <script>
 import PortfolioSummaryBox from './PortfolioSummaryBox'
+import SectorOverview from './SectorOverview'
 
 import StockbrokingService from '../../../services/StockbrokingService'
 import {mapState, mapGetters} from 'vuex'
@@ -83,7 +85,8 @@ import {mapState, mapGetters} from 'vuex'
 export default
 {
   components: {
-    PortfolioSummaryBox
+    PortfolioSummaryBox,
+    SectorOverview
   },
 
   data () {
