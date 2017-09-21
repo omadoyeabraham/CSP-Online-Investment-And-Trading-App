@@ -1,3 +1,5 @@
+import 'es6-promise/auto'
+
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
@@ -30,13 +32,6 @@ Vue.use(VueProgressBar, VueProgressBarConfig)
 import VueTabs from 'vue-nav-tabs'
 import 'vue-nav-tabs/themes/vue-tabs.scss'
 Vue.use(VueTabs)
-
-// BootstrapVue
-import BootstrapVue from 'bootstrap-vue'
-Vue.use(BootstrapVue)
-
-// BoostrapVue css
-import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 // Router
 import router from './router'
