@@ -234,6 +234,7 @@ const getters = {
     // Loop through all unique sectors
     sectors.forEach((sector) => {
       let sectorValue = 0
+      let sectorPerformance = 0
       let totalPortfolioValue = 0
 
       // Loop through holdings and increase the unique sectors value, if a user has a stock in that sector
@@ -242,6 +243,7 @@ const getters = {
 
         if (portfolioHolding.securitySector == sector) {
           sectorValue += parseFloat(portfolioHolding.valuation)
+          sectorPerformance += parseFloat(portfolioHolding.percentGain)
         }
       })
 
@@ -251,7 +253,8 @@ const getters = {
       sectorAllocations.push({
         name: sector,
         y: sectorValue,
-        percentageOfPortfolio: percentageOfPortfolio
+        percentageOfPortfolio: percentageOfPortfolio,
+        percentageGain: sectorPerformance
       })
 
     })
