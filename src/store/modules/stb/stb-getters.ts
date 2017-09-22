@@ -194,14 +194,36 @@ const getters = {
     return gainOrLossPercentage
   },
 
+  /**
+   * Get the portfolio holdings of the currentl selected portfolio
+   *
+   */
   getCurrentPortfolioHoldings: (state, getters) => {
     // Ensure that a current portfolio is set
     if (getters.currentPortfolioIsNotSet) {
       return []
     }
 
+    // Check because some portfolios don't have the portfolio holdings index set on the portfolio object
+    let portfolioHoldings = state.currentPortfolio.portfolioHoldings ? state.currentPortfolio.portfolioHoldings : [];
 
-    let portfolioHoldings = state.currentPortfolio.portfolioHoldings;
+    // // Doing this so we loop only through the data and not vuex getters and setters
+    // portfolioHoldings = JSON.parse(JSON.stringify(portfolioHoldings))
+
+    // // Calculating the total value of portfolio holdings
+    // let totalPortfolioHoldingsValue = 0
+
+    // // Using a for loop, because the forEach will also loop through the getters/setters indexes set by vue
+    // for (let i = 0; i < portfolioHoldings.length; i++) {
+    //   totalPortfolioHoldingsValue += parseFloat(portfolioHoldings[i].valuation)
+    // }
+
+    // portfolioHoldings.filter
+
+    // portfolioHoldings.push({
+    //   totalPortfolioValue: totalPortfolioHoldingsValue
+    // })
+
     return portfolioHoldings
   },
 
@@ -210,7 +232,7 @@ const getters = {
    *
    * @return Array<object>
    */
-  getSectorAllocation: (state, getters) => {
+  getPortfolioHoldingsSectorData: (state, getters) => {
     // Ensure that a current portfolio is set
     if (getters.currentPortfolioIsNotSet) {
       return null
@@ -229,9 +251,9 @@ const getters = {
     // Ensure that the sectors are unique
     sectors = _.uniq(sectors).sort()
 
-    let sectorAllocations = []
+    let sectorData = []
 
-    // Loop through all unique sectors
+    // Loop through all unique sectors and get the sector value, and performance
     sectors.forEach((sector) => {
       let sectorValue = 0
       let sectorPerformance = 0
@@ -244,34 +266,38 @@ const getters = {
         if (portfolioHolding.securitySector == sector) {
           sectorValue += parseFloat(portfolioHolding.valuation)
           sectorPerformance += parseFloat(portfolioHolding.percentGain)
+
         }
       })
 
       let percentageOfPortfolio = ((sectorValue / totalPortfolioValue) * 100).toFixed(2)
-
-      // Because requires this structure to draw pie charts
-      sectorAllocations.push({
+      let totalPercentageGain = sectorPerformance.toFixed(2)
+      // Because highcharts requires this structure to draw pie charts
+      sectorData.push({
         name: sector,
         y: sectorValue,
         percentageOfPortfolio: percentageOfPortfolio,
-        percentageGain: sectorPerformance
+        percentageGain: totalPercentageGain
       })
+
 
     })
 
     let others = {
       name: 'others',
       y: 0,
-      percentageOfPortfolio: 0
+      percentageOfPortfolio: 0,
+      percentageGain: 0
     }
 
      // Add all sectors that make up less than 5% of the to an 'others' sector instead
-    let sectorData = sectorAllocations.filter((sectorAllocation, index) => {
+    sectorData = sectorData.filter((sectorAllocation, index) => {
       if (sectorAllocation.percentageOfPortfolio < 5.00) {
         others.y += sectorAllocation.y
         others.percentageOfPortfolio += parseFloat(sectorAllocation.percentageOfPortfolio)
+        others.percentageGain += parseFloat(sectorAllocation.percentageGain)
         return false
-        // sectorAllocations.splice(index, 1)
+
       }else {
         return true
       }
@@ -287,11 +313,11 @@ const getters = {
   },
 
   /**
-   * Get the highcharts object used to plot the sector performance chart on the STB- portfolio summary
+   * Get the highcharts object used to plot the sector allocation chart on the STB- portfolio summary
    *
    * @return Object
    */
-  sectorPerformanceChartData: (state, getters) => {
+  sectorAllocationChartData: (state, getters) => {
     const chartData = {
       chart: {
         plotBackgroundColor: null,
@@ -330,35 +356,87 @@ const getters = {
       series: [{
         name: 'Brands',
         colorByPoint: true,
-        // data: [
-        //   {
-        //     name: 'Explorer',
-        //     y: 56.33
-        //   },
-        //   {
-        //     name: 'Chrome',
-        //     y: 24.03,
-        //     selected: true
-        //   },
-        //   {
-        //     name: 'Firefox',
-        //     y: 10.38
-        //   },
-        //   {
-        //     name: 'Safari',
-        //     y: 4.77,
-        //     dataLabels: {
-        //       enabled: false
-        //     }
-        //   }
-        // ]
-        data: getters.getSectorAllocation
+        data: getters.getPortfolioHoldingsSectorData
 
       }]
     }
 
     return chartData
+  },
+
+  /**
+   * Get the highcharts object used to plot the sector allocation chart on the STB- portfolio summary
+   *
+   * @return Object
+   */
+  sectorPerformanceChartData: (state, getters) => {
+    const chartData = {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: ''
+      },
+      xAxis: {
+        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        name: 'John',
+        data: [5, 3, 4, 7, 2]
+      }, {
+        name: 'Jane',
+        data: [2, -2, -3, 2, 1]
+      }, {
+        name: 'Joe',
+        data: [3, 4, 4, -2, 5]
+      }]
+    }
+
+    return chartData
+  },
+
+  /**
+   * Get all stock portfolio holdings for the user
+   */
+  getStockPortfolioHoldings: (state, getters) => {
+    let currentPortfolioHoldings = getters.getCurrentPortfolioHoldings
+
+    if (currentPortfolioHoldings.length === 0) {
+      return []
+    }
+
+    // Doing this so we loop only through the data and not vuex getters and setters
+    currentPortfolioHoldings = JSON.parse(JSON.stringify(currentPortfolioHoldings))
+
+    const stockPortfolioHoldings = currentPortfolioHoldings.filter((portfolioHolding) => {
+      return (portfolioHolding.securityType === 'EQUITY')
+    })
+
+    return stockPortfolioHoldings
+  },
+
+   /**
+   * Get all bond portfolio holdings for the user
+   */
+  getBondPortfolioHoldings: (state, getters) => {
+    const currentPortfolioHoldings = getters.getCurrentPortfolioHoldings
+
+    if (currentPortfolioHoldings.length === 0) {
+      return []
+    }
+    const bondPortfolioHoldings = currentPortfolioHoldings.filter((portfolioHolding) => {
+      return (portfolioHolding.securityType === 'BOND')
+    })
+
+    return bondPortfolioHoldings
   }
+
+
+
+
 }
 
 

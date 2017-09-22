@@ -13,7 +13,7 @@
       </v-flex>
     </v-layout>
 
-    <v-data-table v-bind:headers="tableheaders" :items="tradeOrders" :search="search" id="tradeHistoryTable" class="table-striped elevation-1">
+    <v-data-table v-bind:headers="tableheaders" :items="stockHoldings" :search="search" id="tradeHistoryTable" class="table-striped elevation-1">
       <template slot="headers" scope="props">
         <tr class="bg-csp-light-blue " id="tradeHistoryTableHeader">
           <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'white--text',
@@ -46,7 +46,7 @@
 
 <script>
 // The stockbroking service
-import StockbrokingService from '../../services/StockbrokingService';
+import StockbrokingService from '../../../services/StockbrokingService';
 
 import DatePicker from 'vue-md-date-picker'
 
@@ -54,6 +54,7 @@ import { mapState } from 'vuex';
 
 export default
 {
+  props: ['stockHoldings'],
   components: [DatePicker],
   // Actions to be carried out before this component is created. Ensures that the component has the necessary data to be rendered
   beforeCreate () {
@@ -83,9 +84,11 @@ export default
     }
   },
 
-  computed: mapState({
-    'tradeOrders': (store) => store.stockbroking.tradeOrders
-  })
+  computed: {
+    ...mapState({
+      'tradeOrders': (store) => store.stockbroking.tradeOrders
+    })
+  }
 
 }
 </script>

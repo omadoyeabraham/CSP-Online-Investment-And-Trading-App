@@ -13,9 +13,9 @@
         :options="sectorPerformanceChartData"
         ref="highcharts" style="height: 230px;
         max-width: 100%"
-        v-if="sectorAllocation">
+        v-if="sectorData">
       </highcharts>
-      <div v-if="!sectorAllocation" class="d-flex">
+      <div v-if="!sectorData" class="d-flex">
          <p  class="font-size-20 blue--text text--darken-4">No holdings in this portfolio</p>
       </div>
     </div>
@@ -27,7 +27,7 @@
 <script>
   export default
   {
-    props: ['sectorPerformanceChartData', 'sectorAllocation']
+    props: ['sectorPerformanceChartData', 'sectorData']
   }
 </script>
 

@@ -46,7 +46,7 @@
 
 <script>
 // The stockbroking service
-import StockbrokingService from '../../services/StockbrokingService';
+import StockbrokingService from '../../../services/StockbrokingService';
 
 import DatePicker from 'vue-md-date-picker'
 

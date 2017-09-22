@@ -8,7 +8,7 @@ import PageNotFound from '@/components/404'
 // Stockbroking Components
 import StbPortfolioSummary from '@/components/stockbroking/portfolio-summary/PortfolioSummary'
 import StbTradeHistory from '@/components/stockbroking/TradeHistory'
-import StbPortfolioHoldings from '@/components/stockbroking/PortfolioHoldings'
+import StbPortfolioHoldings from '@/components/stockbroking/portfolio-holdings/PortfolioHoldings'
 import StbMarketData from '@/components/stockbroking/MarketData'
 import StbWatchList from '@/components/stockbroking/WatchList'
 

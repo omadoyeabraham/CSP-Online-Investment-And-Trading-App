@@ -12,7 +12,8 @@
       activeTextColor="#FFFFFF">
 
       <v-tab title="STOCKS">
-        <PortfolioHoldingsStocks></PortfolioHoldingsStocks>
+        <PortfolioHoldingsStocks :stockHoldings="stockHoldings">
+        </PortfolioHoldingsStocks>
       </v-tab>
 
       <v-tab title="BONDS">
@@ -31,11 +32,19 @@
   import PortfolioHoldingsStocks from './PortfolioHoldings-stocks';
   import PortfolioHoldingsbonds from './PortfolioHoldings-bonds';
 
+  import {mapGetters} from 'vuex'
+
   export default
   {
     components: {
       PortfolioHoldingsStocks,
       PortfolioHoldingsbonds
+    },
+
+    computed: {
+      ...mapGetters({
+        'stockHoldings': 'getStockPortfolioHoldings'
+      })
     }
   }
 </script>

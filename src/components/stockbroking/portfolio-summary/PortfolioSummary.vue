@@ -34,7 +34,7 @@
             v-bind:value="item.accountNo">{{item.label}}</option>
         </select>
 
-   {{sectorAllocation}}
+   {{sectorData}}
 
       </v-flex>
     </v-layout>
@@ -54,18 +54,18 @@
 
       <!-- Top gainers and losers -->
       <v-flex xs12 md6 lg4 class="mb5">
-        <SectorPerformanceChart
-          :sectorPerformanceChartData="sectorPerformanceChartData"
-          :sectorAllocation="sectorAllocation">
-        </SectorPerformanceChart>
+        <SectorAllocationChart
+          :sectorAllocationChartData="sectorAllocationChartData"
+          :sectorData="sectorData">
+        </SectorAllocationChart>
       </v-flex>
 
       <!-- Fixed income -->
       <v-flex xs12 md6 lg4 class="mb5">
-        <SectorAllocationChart
-          :sectorAllocationChartData="sectorPerformanceChartData"
-          :sectorAllocation="sectorAllocation">
-        </SectorAllocationChart>
+        <SectorPerformanceChart
+          :sectorPerformanceChartData="sectorPerformanceChartData"
+          :sectorData="sectorData">
+        </SectorPerformanceChart>
       </v-flex>
 
       <!-- Business News -->
@@ -117,8 +117,9 @@ export default
     }),
     ...mapGetters({
       'numberOfAccountsInPortfolio': 'numberOfAccountsInPortfolio',
+      'sectorAllocationChartData': 'sectorAllocationChartData',
       'sectorPerformanceChartData': 'sectorPerformanceChartData',
-      'sectorAllocation': 'getSectorAllocation'
+      'sectorData': 'getPortfolioHoldingsSectorData'
     })
   },
   watch: {
