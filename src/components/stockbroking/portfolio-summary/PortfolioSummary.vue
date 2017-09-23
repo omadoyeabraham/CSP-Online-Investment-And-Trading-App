@@ -39,6 +39,8 @@
       </v-flex>
     </v-layout>
 
+    <PortfolioSwitchingHeader></PortfolioSwitchingHeader>
+
     <v-layout row wrap class="">
       <!-- Market Highlights -->
       <v-flex xs12 md6 lg4 class="mb5">
@@ -87,11 +89,10 @@ import PortfolioSummaryBox from './PortfolioSummaryBox'
 import SectorOverview from './SectorOverview'
 import SectorPerformanceChart from './SectorPerformanceChart'
 import SectorAllocationChart from './SectorAllocationChart'
+import PortfolioSwitchingHeader from '../../stockbroking/PortfolioSwitchingHeader'
 
 import StockbrokingService from '../../../services/StockbrokingService'
 import {mapState, mapGetters} from 'vuex'
-
-// const initialPortfolioAccountNo = this.$store.state.stockbroking.currentPortfolio.accountNo
 
 export default
 {
@@ -99,7 +100,8 @@ export default
     PortfolioSummaryBox,
     SectorOverview,
     SectorPerformanceChart,
-    SectorAllocationChart
+    SectorAllocationChart,
+    PortfolioSwitchingHeader
   },
 
   data () {

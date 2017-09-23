@@ -207,23 +207,6 @@ const getters = {
     // Check because some portfolios don't have the portfolio holdings index set on the portfolio object
     let portfolioHoldings = state.currentPortfolio.portfolioHoldings ? state.currentPortfolio.portfolioHoldings : [];
 
-    // // Doing this so we loop only through the data and not vuex getters and setters
-    // portfolioHoldings = JSON.parse(JSON.stringify(portfolioHoldings))
-
-    // // Calculating the total value of portfolio holdings
-    // let totalPortfolioHoldingsValue = 0
-
-    // // Using a for loop, because the forEach will also loop through the getters/setters indexes set by vue
-    // for (let i = 0; i < portfolioHoldings.length; i++) {
-    //   totalPortfolioHoldingsValue += parseFloat(portfolioHoldings[i].valuation)
-    // }
-
-    // portfolioHoldings.filter
-
-    // portfolioHoldings.push({
-    //   totalPortfolioValue: totalPortfolioHoldingsValue
-    // })
-
     return portfolioHoldings
   },
 
@@ -408,14 +391,28 @@ const getters = {
       return []
     }
 
-    // Doing this so we loop only through the data and not vuex getters and setters
-    currentPortfolioHoldings = JSON.parse(JSON.stringify(currentPortfolioHoldings))
-
-    const stockPortfolioHoldings = currentPortfolioHoldings.filter((portfolioHolding) => {
+    let stockPortfolioHoldings = currentPortfolioHoldings.filter((portfolioHolding) => {
       return (portfolioHolding.securityType === 'EQUITY')
     })
 
-    return stockPortfolioHoldings
+    let percentageOfPortfolio = 0
+    let currentStockValue = 0
+    let totalPortfolioValue = getters.currentPortfolioTotalValue
+    let currentPortfolioStockHoldings = []
+    stockPortfolioHoldings.forEach((stockPortfolioHolding) => {
+        percentageOfPortfolio = ((parseFloat(stockPortfolioHolding.valuation)) / totalPortfolioValue) * 100
+
+        console.group()
+        console.log(`Stock value is ${stockPortfolioHolding.valuation}`)
+        console.log(`Total portfolio value is ${totalPortfolioValue}`)
+        console.groupEnd()
+
+        stockPortfolioHolding.percentageOfPortfolio = percentageOfPortfolio
+        currentPortfolioStockHoldings.push(stockPortfolioHolding)
+    })
+    console.log(currentPortfolioStockHoldings)
+
+    return currentPortfolioStockHoldings
   },
 
    /**
