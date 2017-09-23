@@ -67,19 +67,33 @@
       <!-- NSE 5 Day Chart -->
       <v-flex xs12 md6 lg4 class="mb5">
         <StockAllocationChart
-          :sectorAllocationChartData="sectorAllocationChartData"
-          :sectorData="sectorData">
+          :stockAllocationChartData="stockAllocationChartData"
+          :stockData="stockData">
         </StockAllocationChart>
       </v-flex>
 
       <!-- Business News -->
       <v-flex xs12 md6 lg4 class="mb5">
-
+        <StockPerformanceChart
+          :stockPerformanceChartData="stockPerformanceChartData"
+          :stockData="stockData">
+        </StockPerformanceChart>
       </v-flex>
 
       <!-- Business News -->
       <v-flex xs12 md6 lg4 class="mb5">
+         <BondAllocationChart
+          :bondAllocationChartData="bondAllocationChartData"
+          :bondData="bondData">
+        </BondAllocationChart>
+      </v-flex>
 
+      <!-- Business News -->
+      <v-flex xs12 md6 lg4 class="mb5">
+        <BondPerformanceChart
+          :bondPerformanceChartData="bondPerformanceChartData"
+          :bondData="bondData">
+        </BondPerformanceChart>
       </v-flex>
 
     </v-layout>
@@ -92,6 +106,9 @@ import SectorOverview from './SectorOverview'
 import SectorPerformanceChart from './SectorPerformanceChart'
 import SectorAllocationChart from './SectorAllocationChart'
 import StockAllocationChart from './StockAllocationChart'
+import StockPerformanceChart from './StockPerformanceChart'
+import BondAllocationChart from './BondAllocationChart'
+import BondPerformanceChart from './BondPerformanceChart'
 import PortfolioSwitchingHeader from '../../stockbroking/PortfolioSwitchingHeader'
 
 import StockbrokingService from '../../../services/StockbrokingService'
@@ -105,6 +122,9 @@ export default
     SectorPerformanceChart,
     SectorAllocationChart,
     StockAllocationChart,
+    StockPerformanceChart,
+    BondAllocationChart,
+    BondPerformanceChart,
     PortfolioSwitchingHeader
   },
 
@@ -126,7 +146,12 @@ export default
       'sectorAllocationChartData': 'sectorAllocationChartData',
       'sectorPerformanceChartData': 'sectorPerformanceChartData',
       'sectorData': 'getPortfolioHoldingsSectorData',
-      'stockData': 'getPortfolioHoldingsStockData'
+      'stockData': 'getPortfolioHoldingsStockData',
+      'stockAllocationChartData': 'stockAllocationChartData',
+      'stockPerformanceChartData': 'stockPerformanceChartData',
+      'bondData': 'getPortfolioHoldingsBondData',
+      'bondAllocationChartData': 'bondAllocationChartData',
+      'bondPerformanceChartData': 'bondPerformanceChartData'
     })
   },
   watch: {

@@ -1,5 +1,6 @@
 // Imports
 import _ from 'lodash'
+import {ChartService} from '../../../services/ChartsService'
 
 const getters = {
 
@@ -306,7 +307,7 @@ const getters = {
       return null
     }
 
-    let portfolioHoldings = getters.getCurrentPortfolioHoldings
+    let portfolioHoldings = getters.getStockPortfolioHoldings
 
     if (portfolioHoldings.length === 0) {
       return null
@@ -369,56 +370,76 @@ const getters = {
   },
 
   /**
-   * Get the highcharts object used to plot the sector allocation chart on the STB- portfolio summary
-   *
-   * @return Object
-   */
-  sectorAllocationChartData: (state, getters) => {
-    const chartData = {
-      chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-      },
-      credits: {
-        enabled: false
-      },
-      legend: {
-        align: 'right',
-        verticalAlign: 'middle',
-        layout: 'vertical',
-      },
-      title: {
-        text: ''
-      },
-      tooltip: {
-        pointFormat: '<b>{point.percentage:.1f}%</b>'
-      },
-      plotOptions: {
-        pie: {
-          size: '100%',
-          allowPointSelect: true,
-          cursor: 'pointer',
-          dataLabels: {
-            enabled: true,
-            formatter: function () {
-              return Math.round(this.percentage * 100) / 100 + ' %';
-            },
-            distance: -50
-          },
-          showInLegend: true
-        }
-      },
-      series: [{
-        name: 'SECTOR PERFORMANCE',
-        colorByPoint: true,
-        data: getters.getPortfolioHoldingsSectorData
-
-      }]
+ * Get the bond allocation and performance for the currently selected portfolio
+ *
+ * @return Array<object>
+ */
+  getPortfolioHoldingsBondData: (state, getters) => {
+    // Ensure that a current portfolio is set
+    if (getters.currentPortfolioIsNotSet) {
+      return null
     }
 
-    return chartData
+    let portfolioHoldings = getters.getBondPortfolioHoldings
+
+    if (portfolioHoldings.length === 0) {
+      return null
+    }
+
+    let bondData = []
+    let bondValue = 0
+    let bondPerformance = 0
+    let totalPortfolioValue = 0
+
+    // Obtain the total value of the portfolio
+    portfolioHoldings.forEach((portfolioHolding) => {
+      totalPortfolioValue += parseFloat(portfolioHolding.valuation)
+    })
+
+    portfolioHoldings.forEach((portfolioHolding) => {
+
+      // get the stock's performance, value, and % of the portfolio
+      bondValue = parseFloat(portfolioHolding.valuation)
+      bondPerformance = parseFloat(portfolioHolding.percentGain)
+
+      let percentageOfPortfolio = ((bondValue / totalPortfolioValue) * 100).toFixed(2)
+      // Because highcharts requires this structure to draw pie charts
+      bondData.push({
+        name: portfolioHolding.securityName,
+        y: bondValue,
+        percentageOfPortfolio: percentageOfPortfolio,
+        percentageGain: bondPerformance
+      })
+
+    })
+
+    // let others = {
+    //   name: 'others',
+    //   y: 0,
+    //   percentageOfPortfolio: 0,
+    //   percentageGain: 0
+    // }
+
+    // // Add all stocks that make up less than 5% of the to an 'others' section instead
+    // stockData = stockData.filter((stock, index) => {
+    //   if (stock.percentageOfPortfolio < 5.00) {
+    //     others.y += stock.y
+    //     others.percentageOfPortfolio += parseFloat(stock.percentageOfPortfolio)
+    //     others.percentageGain += parseFloat(stock.percentageGain)
+    //     return false
+
+    //   } else {
+    //     return true
+    //   }
+    // })
+
+    // // Only add others if there are actually others to add
+    // if (others.y !== 0) {
+    //   stockData.push(others)
+    // }
+
+    return bondData
+
   },
 
   /**
@@ -426,74 +447,67 @@ const getters = {
    *
    * @return Object
    */
-  sectorPerformanceChartData: (state, getters) => {
+  sectorAllocationChartData: (state, getters) => {
 
-    // Get the sector data for the portofolio and initialize variables
-    let sectorData = getters.getPortfolioHoldingsSectorData
-    let graphData = [{
-      data: []
-    }]
-    let categories = []
-    let performanceColor = ''
-
-    /**
-     * Because we return when detecting portfolios with any holding data at all
-     */
-    if (sectorData === null) {
-      sectorData = []
-    }
-
-    sectorData.forEach((sector) => {
-
-      // Red for losses and green for gains
-      performanceColor = (sector.percentageGain < 0) ? '#FF0000' : '#00FF00'
-
-      // Format the data properly for display using highcharts column chart
-      graphData[0].data.push({
-          y: parseFloat(sector.percentageGain),
-          color: performanceColor
-      })
-
-      categories.push(sector.name)
-
-    })
-
-    const chartData = {
-      chart: {
-        type: 'column',
-        verticalAlign: 'middle'
-      },
-      title: {
-        text: ''
-      },
-      tooltip: {
-        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-        pointFormat: '<tr><td style="color:{series.color};padding:0"> </td>' +
-        '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
-        footerFormat: '</table>',
-        shared: true,
-        useHTML: true
-      },
-      xAxis: {
-        categories: categories,
-      },
-      legend: {
-        enabled: false,
-        align: 'left',
-      },
-      yAxis: {
-        title: {
-          text: '( % )'
-        }
-      },
-      credits: {
-        enabled: false
-      },
-      series: graphData
-    }
+    const chartData = ChartService.getCspPieChart(getters.getPortfolioHoldingsSectorData)
 
     return chartData
   },
+
+  /**
+   * Get the highcharts object used to plot the sector performance chart on the STB- portfolio summary
+   *
+   * @return Object
+   */
+  sectorPerformanceChartData: (state, getters) => {
+    const chartData = ChartService.getCspBarChart(getters.getPortfolioHoldingsSectorData)
+    return chartData
+  },
+
+  /**
+ * Get the highcharts object used to plot the stock allocation chart on the STB- portfolio summary
+ *
+ * @return Object
+ */
+  stockAllocationChartData: (state, getters) => {
+
+    const chartData = ChartService.getCspPieChart(getters.getPortfolioHoldingsStockData)
+
+    return chartData
+  },
+
+  /**
+ * Get the highcharts object used to plot the stock performance chart on the STB- portfolio summary
+ *
+ * @return Object
+ */
+  stockPerformanceChartData: (state, getters) => {
+    const chartData = ChartService.getCspBarChart(getters.getPortfolioHoldingsStockData)
+    return chartData
+  },
+
+/**
+* Get the highcharts object used to plot the bond allocation chart on the STB- portfolio summary
+*
+* @return Object
+*/
+  bondAllocationChartData: (state, getters) => {
+
+    const chartData = ChartService.getCspPieChart(getters.getPortfolioHoldingsBondData)
+
+    return chartData
+  },
+
+  /**
+  * Get the highcharts object used to plot the bond performance chart on the STB- portfolio summary
+  *
+  * @return Object
+  */
+  bondPerformanceChartData: (state, getters) => {
+    const chartData = ChartService.getCspBarChart(getters.getPortfolioHoldingsBondData)
+    return chartData
+  },
+
 
   /**
    * Get all stock portfolio holdings for the user
