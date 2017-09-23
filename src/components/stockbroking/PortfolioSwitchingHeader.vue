@@ -30,7 +30,7 @@
             v-bind:value="item.accountNo">{{item.label}}</option>
         </select>
 
-   {{sectorData}}
+   <!-- {{sectorData}} -->
 
       </v-flex>
     </v-layout>

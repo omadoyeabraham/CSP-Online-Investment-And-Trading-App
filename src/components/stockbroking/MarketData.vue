@@ -36,6 +36,8 @@
         v-bind:headers="tableheaders"
         :items="marketData"
         :search="search"
+        :loading="loadingDataTable"
+        :rows-per-page-items="rowsPerPageItems"
         id="marketDataTable"
         class="table-striped elevation-1">
         <template slot="headers" scope="props">
@@ -103,11 +105,13 @@
         startDate: '',
         show: true,
         search: '',
+        loadingDataTable: false,
+        rowsPerPageItems: [15, 20, { text: 'All', value: -1 }],
         pagination: {
           sortBy: 'name'
         },
         tableheaders: [
-          { text: 'SYMBOL', value: 'orderDate', align: 'left' },
+          { text: 'SYMBOL', value: 'orderDate', align: 'left', sortable: true },
           { text: 'P.CLOSE(₦)', value: 'stock', align: 'left' },
           { text: 'OPEN(₦)', value: 'orderType', align: 'left' },
           { text: 'HIGH(₦)', value: 'orderTerm', align: 'left' },

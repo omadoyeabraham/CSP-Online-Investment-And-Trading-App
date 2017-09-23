@@ -7,7 +7,7 @@
   <v-container fluid>
 
     <!-- Page heading and Fund account button -->
-    <v-layout row >
+    <!-- <v-layout row >
       <v-flex d-flex align-center>
         <h3 class="font-size-20 csp-light-blue-text">Stockbroking - Portfolio Summary</h3>
       </v-flex>
@@ -17,10 +17,10 @@
             Fund Account
          </v-btn>
       </v-flex>
-    </v-layout>
+    </v-layout> -->
 
     <!-- Number of accounts and account switching -->
-    <v-layout row  class="mb20">
+    <!-- <v-layout row  class="mb20">
       <v-flex d-flex align-center>
         <h3 class="font-size-12 csp-blue-text font-weight-bold">NUMBER OF ACCOUNTS IN PORTFOLIO: {{numberOfAccountsInPortfolio}}</h3>
       </v-flex>
@@ -37,7 +37,7 @@
    {{sectorData}}
 
       </v-flex>
-    </v-layout>
+    </v-layout> -->
 
     <PortfolioSwitchingHeader></PortfolioSwitchingHeader>
 
@@ -46,12 +46,6 @@
       <v-flex xs12 md6 lg4 class="mb5">
         <PortfolioSummaryBox :currentPortfolio="currentPortfolio">
         </PortfolioSummaryBox>
-      </v-flex>
-
-      <!-- NSE 5 Day Chart -->
-      <v-flex xs12 md6 lg4 class="mb5">
-        <SectorOverview>
-        </SectorOverview>
       </v-flex>
 
       <!-- Top gainers and losers -->
@@ -68,6 +62,14 @@
           :sectorPerformanceChartData="sectorPerformanceChartData"
           :sectorData="sectorData">
         </SectorPerformanceChart>
+      </v-flex>
+
+      <!-- NSE 5 Day Chart -->
+      <v-flex xs12 md6 lg4 class="mb5">
+        <StockAllocationChart
+          :sectorAllocationChartData="sectorAllocationChartData"
+          :sectorData="sectorData">
+        </StockAllocationChart>
       </v-flex>
 
       <!-- Business News -->
@@ -89,6 +91,7 @@ import PortfolioSummaryBox from './PortfolioSummaryBox'
 import SectorOverview from './SectorOverview'
 import SectorPerformanceChart from './SectorPerformanceChart'
 import SectorAllocationChart from './SectorAllocationChart'
+import StockAllocationChart from './StockAllocationChart'
 import PortfolioSwitchingHeader from '../../stockbroking/PortfolioSwitchingHeader'
 
 import StockbrokingService from '../../../services/StockbrokingService'
@@ -101,6 +104,7 @@ export default
     SectorOverview,
     SectorPerformanceChart,
     SectorAllocationChart,
+    StockAllocationChart,
     PortfolioSwitchingHeader
   },
 
@@ -121,7 +125,8 @@ export default
       'numberOfAccountsInPortfolio': 'numberOfAccountsInPortfolio',
       'sectorAllocationChartData': 'sectorAllocationChartData',
       'sectorPerformanceChartData': 'sectorPerformanceChartData',
-      'sectorData': 'getPortfolioHoldingsSectorData'
+      'sectorData': 'getPortfolioHoldingsSectorData',
+      'stockData': 'getPortfolioHoldingsStockData'
     })
   },
   watch: {

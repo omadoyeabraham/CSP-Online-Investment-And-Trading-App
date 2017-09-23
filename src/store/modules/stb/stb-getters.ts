@@ -211,7 +211,7 @@ const getters = {
   },
 
   /**
-   * Get the sector allocation for the currently selected portfolio
+   * Get the sector allocation and performancefor the currently selected portfolio
    *
    * @return Array<object>
    */
@@ -295,6 +295,79 @@ const getters = {
 
   },
 
+/**
+ * Get the stock allocation and performance for the currently selected portfolio
+ *
+ * @return Array<object>
+ */
+  getPortfolioHoldingsStockData: (state, getters) => {
+    // Ensure that a current portfolio is set
+    if (getters.currentPortfolioIsNotSet) {
+      return null
+    }
+
+    let portfolioHoldings = getters.getCurrentPortfolioHoldings
+
+    if (portfolioHoldings.length === 0) {
+      return null
+    }
+
+    let stockData = []
+    let stockValue = 0
+    let stockPerformance = 0
+    let totalPortfolioValue = 0
+
+    // Obtain the total value of the portfolio
+    portfolioHoldings.forEach((portfolioHolding) => {
+      totalPortfolioValue += parseFloat(portfolioHolding.valuation)
+    })
+
+    portfolioHoldings.forEach((portfolioHolding) => {
+
+      // get the stock's performance, value, and % of the portfolio
+      stockValue = parseFloat(portfolioHolding.valuation)
+      stockPerformance = parseFloat(portfolioHolding.percentGain)
+
+      let percentageOfPortfolio = ((stockValue / totalPortfolioValue) * 100).toFixed(2)
+      // Because highcharts requires this structure to draw pie charts
+      stockData.push({
+        name: portfolioHolding.securityName,
+        y: stockValue,
+        percentageOfPortfolio: percentageOfPortfolio,
+        percentageGain: stockPerformance
+      })
+
+    })
+
+    let others = {
+      name: 'others',
+      y: 0,
+      percentageOfPortfolio: 0,
+      percentageGain: 0
+    }
+
+    // Add all stocks that make up less than 5% of the to an 'others' section instead
+    stockData = stockData.filter((stock, index) => {
+      if (stock.percentageOfPortfolio < 5.00) {
+        others.y += stock.y
+        others.percentageOfPortfolio += parseFloat(stock.percentageOfPortfolio)
+        others.percentageGain += parseFloat(stock.percentageGain)
+        return false
+
+      } else {
+        return true
+      }
+    })
+
+    // Only add others if there are actually others to add
+    if (others.y !== 0) {
+      stockData.push(others)
+    }
+
+    return stockData
+
+  },
+
   /**
    * Get the highcharts object used to plot the sector allocation chart on the STB- portfolio summary
    *
@@ -320,10 +393,11 @@ const getters = {
         text: ''
       },
       tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        pointFormat: '<b>{point.percentage:.1f}%</b>'
       },
       plotOptions: {
         pie: {
+          size: '100%',
           allowPointSelect: true,
           cursor: 'pointer',
           dataLabels: {
@@ -331,13 +405,13 @@ const getters = {
             formatter: function () {
               return Math.round(this.percentage * 100) / 100 + ' %';
             },
-            distance: -30
+            distance: -50
           },
           showInLegend: true
         }
       },
       series: [{
-        name: 'Brands',
+        name: 'SECTOR PERFORMANCE',
         colorByPoint: true,
         data: getters.getPortfolioHoldingsSectorData
 
@@ -353,29 +427,69 @@ const getters = {
    * @return Object
    */
   sectorPerformanceChartData: (state, getters) => {
+
+    // Get the sector data for the portofolio and initialize variables
+    let sectorData = getters.getPortfolioHoldingsSectorData
+    let graphData = [{
+      data: []
+    }]
+    let categories = []
+    let performanceColor = ''
+
+    /**
+     * Because we return when detecting portfolios with any holding data at all
+     */
+    if (sectorData === null) {
+      sectorData = []
+    }
+
+    sectorData.forEach((sector) => {
+
+      // Red for losses and green for gains
+      performanceColor = (sector.percentageGain < 0) ? '#FF0000' : '#00FF00'
+
+      // Format the data properly for display using highcharts column chart
+      graphData[0].data.push({
+          y: parseFloat(sector.percentageGain),
+          color: performanceColor
+      })
+
+      categories.push(sector.name)
+
+    })
+
     const chartData = {
       chart: {
-        type: 'column'
+        type: 'column',
+        verticalAlign: 'middle'
       },
       title: {
         text: ''
       },
+      tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0"> </td>' +
+        '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+      },
       xAxis: {
-        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+        categories: categories,
+      },
+      legend: {
+        enabled: false,
+        align: 'left',
+      },
+      yAxis: {
+        title: {
+          text: '( % )'
+        }
       },
       credits: {
         enabled: false
       },
-      series: [{
-        name: 'John',
-        data: [5, 3, 4, 7, 2]
-      }, {
-        name: 'Jane',
-        data: [2, -2, -3, 2, 1]
-      }, {
-        name: 'Joe',
-        data: [3, 4, 4, -2, 5]
-      }]
+      series: graphData
     }
 
     return chartData
@@ -409,19 +523,12 @@ const getters = {
         gainOrLoss = parseFloat(stockPortfolioHolding.valuation) - totalCost
         percentageGainOrLoss = (gainOrLoss / totalCost) * 100
 
-
-        console.group()
-        console.log(`Stock value is ${stockPortfolioHolding.valuation}`)
-        console.log(`Total portfolio value is ${totalPortfolioValue}`)
-        console.groupEnd()
-
         stockPortfolioHolding.percentageOfPortfolio = percentageOfPortfolio
         stockPortfolioHolding.gainOrLoss = gainOrLoss
         stockPortfolioHolding.percentageGainOrLoss  = percentageGainOrLoss
         stockPortfolioHolding.totalCost = totalCost
         currentPortfolioStockHoldings.push(stockPortfolioHolding)
     })
-    console.log(currentPortfolioStockHoldings)
 
     return currentPortfolioStockHoldings
   },
@@ -439,7 +546,26 @@ const getters = {
       return (portfolioHolding.securityType === 'BOND')
     })
 
-    return bondPortfolioHoldings
+    // Data initialization
+    let faceValue = 0
+    let accruedCoupon = 0
+    let currentPortfolioBondHoldings = []
+    let bond = {}
+
+    // Loop through the bond holding, and perform the necessary calculations
+    bondPortfolioHoldings.forEach((bondHolding, index) => {
+      faceValue = parseFloat(bondHolding.quantityHeld) * parseFloat(bondHolding.parValue)
+      accruedCoupon = (parseFloat(bondHolding.dirtyPrice) - parseFloat(bondHolding.marketPrice)) * parseFloat(bondHolding.quantityHeld)
+
+      bondHolding.id = index
+      bondHolding.faceValue = faceValue
+      bondHolding.accruedCoupon = accruedCoupon
+
+      currentPortfolioBondHoldings.push(bondHolding)
+
+    })
+
+    return currentPortfolioBondHoldings
   }
 
 

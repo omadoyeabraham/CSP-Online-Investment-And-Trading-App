@@ -1,5 +1,4 @@
 <template>
-
   <v-card class="white lighten-2 card h-100" dark>
 
     <!-- Heading -->
@@ -10,7 +9,7 @@
     <!-- Card body -->
     <div class="card-block" id="chartContainer">
       <highcharts :options="sectorAllocationChartData" ref="highcharts" style="height: 230px;
-          max-width: 100%" v-if="sectorData">
+            max-width: 100%" v-if="sectorData">
       </highcharts>
       <div v-if="!sectorData" class="d-flex">
         <p class="font-size-20 blue--text text--darken-4">No holdings in this portfolio</p>
@@ -18,14 +17,13 @@
     </div>
 
   </v-card>
-
 </template>
 
 <script>
-  export default
-  {
-    props: ['sectorData', 'sectorAllocationChartData']
-  }
+export default
+{
+  props: ['sectorData', 'sectorAllocationChartData']
+}
 </script>
 
 <style>

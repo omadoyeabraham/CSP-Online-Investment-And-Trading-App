@@ -13,7 +13,12 @@
       </v-flex>
     </v-layout>
 
-    <v-data-table v-bind:headers="tableheaders" :items="stockHoldings" :search="search" id="tradeHistoryTable" class="table-striped elevation-1">
+    <v-data-table
+      v-bind:headers="tableheaders"
+      :items="stockHoldings"
+      :search="search"
+      :no-data-text="noDataText"
+      id="tradeHistoryTable" class="table-striped elevation-1">
       <template slot="headers" scope="props">
         <tr class="bg-csp-light-blue " id="tradeHistoryTableHeader">
           <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'white--text',
@@ -66,6 +71,7 @@ export default
     return {
       show: true,
       search: '',
+      noDataText: 'No stock holdings in this account',
       pagination: {
         sortBy: 'name'
       },
