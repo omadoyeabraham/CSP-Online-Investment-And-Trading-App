@@ -13,7 +13,7 @@
       </v-flex>
     </v-layout>
 
-    <v-data-table v-bind:headers="tableheaders" :items="tradeOrders" :search="search" id="tradeHistoryTable" class="table-striped elevation-1">
+    <v-data-table v-bind:headers="tableheaders" :items="bondHoldings" :search="search" id="tradeHistoryTable" class="table-striped elevation-1">
       <template slot="headers" scope="props">
         <tr class="bg-csp-light-blue " id="tradeHistoryTableHeader">
           <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'white--text',
@@ -28,11 +28,11 @@
 
       <template slot="items" scope="props">
         <tr id="tradeHistoryTableBody">
-          <td class="font-size-10">{{props.item.orderDate}}</td>
           <td class="font-size-10">{{props.item.securityName}}</td>
-          <td class="font-size-10">{{props.item.orderType}}</td>
+          <td class="font-size-10">{{props.item.quantityHeld}}</td>
+          <td class="font-size-10">{{props.item.marketPrice}}</td>
           <td class="font-size-10">{{props.item.orderTermLabel}}</td>
-          <td class="font-size-10">{{props.item.priceType}}</td>
+          <td class="font-size-10">{{props.item.maturityDate}}</td>
           <td class="font-size-10">{{props.item.limitPrice}}</td>
           <td class="font-size-10">{{props.item.quantityRequested}}</td>
           <td class="font-size-10">{{props.item.quantityFilled}}</td>
@@ -45,47 +45,36 @@
 </template>
 
 <script>
-// The stockbroking service
-import StockbrokingService from '../../../services/StockbrokingService';
-
-import DatePicker from 'vue-md-date-picker'
-
-import { mapState } from 'vuex';
 
 export default
 {
-  components: [DatePicker],
+  props: ['bondHoldings'],
   // Actions to be carried out before this component is created. Ensures that the component has the necessary data to be rendered
   beforeCreate () {
-    StockbrokingService.getTradeOrders();
+
   },
 
   data () {
     return {
-      startDate: '',
       show: true,
       search: '',
       pagination: {
         sortBy: 'name'
       },
       tableheaders: [
-        { text: 'ORDER DATE', value: 'orderDate', align: 'left', sortable: false },
-        { text: 'STOCK', value: 'stock', align: 'left' },
-        { text: 'TYPE', value: 'orderType', align: 'left' },
-        { text: 'ORDER TERM', value: 'orderTerm', align: 'left' },
-        { text: 'PRICE TYPE', value: 'priceType', align: 'left' },
-        { text: 'UNIT PRICE', value: 'unitPrice', align: 'left' },
-        { text: 'QUANTITY REQ', value: 'quantityReq', align: 'left' },
-        { text: 'QUANTITY EXEC', value: 'quqntityExec', align: 'left' },
-        { text: 'STATUS', value: 'status', align: 'left' }
+        { text: 'SECURITY', value: 'orderDate', align: 'left', sortable: false },
+        { text: 'UNITS', value: 'stock', align: 'left' },
+        { text: 'CLEAN PRICE(₦)', value: 'orderType', align: 'left' },
+        { text: 'FACE VALUE(₦)', value: 'orderTerm', align: 'left' },
+        { text: 'MATURITY DATE', value: 'priceType', align: 'left' },
+        { text: 'ACCRUED COUPON(₦)', value: 'unitPrice', align: 'left' },
+        { text: 'ACTION', value: 'quantityReq', align: 'left' }
+        // { text: 'QUANTITY EXEC', value: 'quqntityExec', align: 'left' },
+        // { text: 'STATUS', value: 'status', align: 'left' }
         // {text: '', value: 'action', align: 'left'}
       ]
     }
-  },
-
-  computed: mapState({
-    'tradeOrders': (store) => store.stockbroking.tradeOrders
-  })
+  }
 
 }
 </script>

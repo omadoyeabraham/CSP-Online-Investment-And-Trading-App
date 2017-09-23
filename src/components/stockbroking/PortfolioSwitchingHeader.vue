@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="red">
+  <v-container fluid class="">
 
 
   <!-- Page heading and Fund account button -->

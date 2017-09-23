@@ -6,6 +6,8 @@
 <template>
   <v-container fluid>
 
+    <PortfolioSwitchingHeader></PortfolioSwitchingHeader>
+
     <!-- TABS -->
     <vue-tabs
       activeTabColor="#1a2155"
@@ -17,7 +19,8 @@
       </v-tab>
 
       <v-tab title="BONDS">
-        <PortfolioHoldingsbonds></PortfolioHoldingsbonds>
+        <PortfolioHoldingsbonds :bondHoldings="bondHoldings">
+        </PortfolioHoldingsbonds>
       </v-tab>
 
     </vue-tabs>
@@ -31,6 +34,7 @@
 <script>
   import PortfolioHoldingsStocks from './PortfolioHoldings-stocks';
   import PortfolioHoldingsbonds from './PortfolioHoldings-bonds';
+  import PortfolioSwitchingHeader from '../../stockbroking/PortfolioSwitchingHeader';
 
   import {mapGetters} from 'vuex'
 
@@ -38,12 +42,14 @@
   {
     components: {
       PortfolioHoldingsStocks,
-      PortfolioHoldingsbonds
+      PortfolioHoldingsbonds,
+      PortfolioSwitchingHeader
     },
 
     computed: {
       ...mapGetters({
-        'stockHoldings': 'getStockPortfolioHoldings'
+        'stockHoldings': 'getStockPortfolioHoldings',
+        'bondHoldings': 'getBondPortfolioHoldings'
       })
     }
   }

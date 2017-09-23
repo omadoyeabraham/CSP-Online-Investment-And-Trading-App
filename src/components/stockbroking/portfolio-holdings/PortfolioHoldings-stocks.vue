@@ -27,16 +27,24 @@
       </template>
 
       <template slot="items" scope="props">
-        <tr id="tradeHistoryTableBody">
-          <td class="font-size-10">{{props.item.orderDate}}</td>
+        <tr id="tradeHistoryTableBody" class="indigo--text text--darken-4">
           <td class="font-size-10">{{props.item.securityName}}</td>
-          <td class="font-size-10">{{props.item.orderType}}</td>
-          <td class="font-size-10">{{props.item.orderTermLabel}}</td>
-          <td class="font-size-10">{{props.item.priceType}}</td>
-          <td class="font-size-10">{{props.item.limitPrice}}</td>
-          <td class="font-size-10">{{props.item.quantityRequested}}</td>
-          <td class="font-size-10">{{props.item.quantityFilled}}</td>
-          <td class="font-size-10">{{props.item.orderStatus}}</td>
+          <td class="font-size-10">{{props.item.marketValue}}</td>
+          <td class="font-size-10">{{props.item.quantityHeld}}</td>
+          <td class="font-size-10">{{props.item.valuation}}</td>
+          <td class="font-size-10">{{props.item.percentageOfPortfolio}}</td>
+          <td class="font-size-10">{{props.item.costBasis}}</td>
+          <td class="font-size-10">{{props.item.totalCost}}</td>
+          <td class="font-size-10">{{props.item.gainOrLoss}}</td>
+          <td class="font-size-10">{{props.item.percentageGainOrLoss}}</td>
+          <td>
+            <button class="button button-blue-csp elevation-2 mb2">
+                BUY
+              </button>
+              <button class="button button-blue-csp elevation-2 mb2">
+                SELL
+              </button>
+          </td>
         </tr>
       </template>
     </v-data-table>
@@ -45,49 +53,39 @@
 </template>
 
 <script>
-// The stockbroking service
-import StockbrokingService from '../../../services/StockbrokingService';
-
-import DatePicker from 'vue-md-date-picker'
-
-import { mapState } from 'vuex';
 
 export default
 {
   props: ['stockHoldings'],
-  components: [DatePicker],
   // Actions to be carried out before this component is created. Ensures that the component has the necessary data to be rendered
   beforeCreate () {
-    StockbrokingService.getTradeOrders();
+
   },
 
   data () {
     return {
-      startDate: '',
       show: true,
       search: '',
       pagination: {
         sortBy: 'name'
       },
       tableheaders: [
-        { text: 'ORDER DATE', value: 'orderDate', align: 'left', sortable: false },
-        { text: 'STOCK', value: 'stock', align: 'left' },
-        { text: 'TYPE', value: 'orderType', align: 'left' },
-        { text: 'ORDER TERM', value: 'orderTerm', align: 'left' },
-        { text: 'PRICE TYPE', value: 'priceType', align: 'left' },
-        { text: 'UNIT PRICE', value: 'unitPrice', align: 'left' },
-        { text: 'QUANTITY REQ', value: 'quantityReq', align: 'left' },
-        { text: 'QUANTITY EXEC', value: 'quqntityExec', align: 'left' },
-        { text: 'STATUS', value: 'status', align: 'left' }
-        // {text: '', value: 'action', align: 'left'}
+        { text: 'SYMBOL', value: 'orderDate', align: 'left', sortable: false },
+        { text: 'CUR.PRICE(₦)', value: 'stock', align: 'left' },
+        { text: 'UNITS', value: 'orderType', align: 'left' },
+        { text: 'CUR.VALUE(₦)', value: 'orderTerm', align: 'left' },
+        { text: '% OF PORTFOLIO', value: 'priceType', align: 'left' },
+        { text: 'W.A.C.(₦)', value: 'unitPrice', align: 'left' },
+        { text: 'TOTAL COST(₦)', value: 'quantityReq', align: 'left' },
+        { text: 'GAIN/LOSS(₦)', value: 'quqntityExec', align: 'left' },
+        { text: 'GAIN/LOSS(%)', value: 'status', align: 'left' },
+        { text: 'ACTION', value: 'action', align: 'left' }
       ]
     }
   },
 
   computed: {
-    ...mapState({
-      'tradeOrders': (store) => store.stockbroking.tradeOrders
-    })
+
   }
 
 }

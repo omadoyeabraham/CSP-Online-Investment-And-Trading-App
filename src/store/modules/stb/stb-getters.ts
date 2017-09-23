@@ -391,16 +391,24 @@ const getters = {
       return []
     }
 
+    // Filter to pick only equity stock
     let stockPortfolioHoldings = currentPortfolioHoldings.filter((portfolioHolding) => {
       return (portfolioHolding.securityType === 'EQUITY')
     })
 
     let percentageOfPortfolio = 0
+    let gainOrLoss = 0
+    let percentageGainOrLoss = 0
+    let totalCost = 0
     let currentStockValue = 0
     let totalPortfolioValue = getters.currentPortfolioTotalValue
     let currentPortfolioStockHoldings = []
     stockPortfolioHoldings.forEach((stockPortfolioHolding) => {
         percentageOfPortfolio = ((parseFloat(stockPortfolioHolding.valuation)) / totalPortfolioValue) * 100
+        totalCost = parseFloat(stockPortfolioHolding.costBasis) * parseFloat(stockPortfolioHolding.quantityHeld)
+        gainOrLoss = parseFloat(stockPortfolioHolding.valuation) - totalCost
+        percentageGainOrLoss = (gainOrLoss / totalCost) * 100
+
 
         console.group()
         console.log(`Stock value is ${stockPortfolioHolding.valuation}`)
@@ -408,6 +416,9 @@ const getters = {
         console.groupEnd()
 
         stockPortfolioHolding.percentageOfPortfolio = percentageOfPortfolio
+        stockPortfolioHolding.gainOrLoss = gainOrLoss
+        stockPortfolioHolding.percentageGainOrLoss  = percentageGainOrLoss
+        stockPortfolioHolding.totalCost = totalCost
         currentPortfolioStockHoldings.push(stockPortfolioHolding)
     })
     console.log(currentPortfolioStockHoldings)
