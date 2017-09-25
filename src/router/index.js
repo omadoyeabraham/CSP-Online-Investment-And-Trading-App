@@ -13,8 +13,10 @@ import StbMarketData from '@/components/stockbroking/MarketData'
 import StbWatchList from '@/components/stockbroking/WatchList'
 
 // FixedIncome Components
-import FixedIncomeRunningInvestments from '@/components/fixedIncome/RunningInvestments'
-import FixedIncomeTerminatedInvestments from '@/components/fixedIncome/TerminatedInvestments'
+import FixedIncomeRunningInvestments from '@/components/fixedIncome/RunningNairaInvestments'
+import FixedIncomeTerminatedInvestments from '@/components/fixedIncome/TerminatedNairaInvestments'
+import RunningDollarInvestments from '@/components/fixedIncome/RunningDollarInvestments'
+import TerminatedDollarInvestments from '@/components/fixedIncome/TerminatedDollarInvestments'
 
 Vue.use(Router)
 
@@ -64,6 +66,16 @@ export default new Router({
       path: '/fi/terminated',
       name: 'fi-terminated',
       component: FixedIncomeTerminatedInvestments
+    },
+    {
+      path: '/di/running',
+      name: 'di-running',
+      component: RunningDollarInvestments
+    },
+    {
+      path: '/di/terminated',
+      name: 'di-terminated',
+      component: TerminatedDollarInvestments
     },
     {
       path: '*',

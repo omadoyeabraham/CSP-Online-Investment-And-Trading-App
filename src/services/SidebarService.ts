@@ -56,8 +56,8 @@ export const dollarInvestments: Array<object> = [
     totalValue: '1,150,000,000',
     model: false,
     children: [
-      { icon: 'keyboard_arrow_right', text: 'Running Investments' },
-      { icon: 'keyboard_arrow_right', text: 'Terminated Investments' }
+      { icon: 'keyboard_arrow_right', text: 'Running Investments', routeName: 'di-running' },
+      { icon: 'keyboard_arrow_right', text: 'Terminated Investments', routeName: 'di-terminated' }
     ]
   },
   { icon: 'keyboard', text: 'Cash Account', totalValue: store.state.stockbroking.totalValue },

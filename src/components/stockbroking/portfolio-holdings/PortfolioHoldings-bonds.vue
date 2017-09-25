@@ -131,8 +131,6 @@
 
     </v-layout>
 
-
-
   </v-container>
 </template>
 
