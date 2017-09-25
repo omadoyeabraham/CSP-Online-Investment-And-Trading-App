@@ -14,6 +14,19 @@ const state = {
 
 const getters = {
 
+  /**
+   * Get all running Naira fixed income investments for the user
+   *
+   */
+  getRunningNairaInvestments: (state) => {
+    let nairaInvestments =  state.userData.NGN
+    const runningNairaInvestments = nairaInvestments.filter((investment) => {
+      return investment.status === 'RUNNING'
+    })
+
+    return runningNairaInvestments;
+  }
+
 }
 
 const mutations = {

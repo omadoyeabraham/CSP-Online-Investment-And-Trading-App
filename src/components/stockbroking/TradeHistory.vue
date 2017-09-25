@@ -141,7 +141,7 @@
     components: [DatePicker],
     // Actions to be carried out before this component is created. Ensures that the component has the necessary data to be rendered
     beforeCreate () {
-      StockbrokingService.getTradeOrders();
+      StockbrokingService.getTradeOrders(0);
     },
 
     data () {
@@ -171,7 +171,8 @@
     },
 
     computed: mapState({
-      'tradeOrders': (store) => store.stockbroking.tradeOrders
+      'tradeOrders': (store) => store.stockbroking.tradeOrders,
+      'user': (store) => store.user
     })
 
   }

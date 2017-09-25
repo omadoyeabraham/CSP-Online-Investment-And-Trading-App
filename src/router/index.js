@@ -12,6 +12,10 @@ import StbPortfolioHoldings from '@/components/stockbroking/portfolio-holdings/P
 import StbMarketData from '@/components/stockbroking/MarketData'
 import StbWatchList from '@/components/stockbroking/WatchList'
 
+// FixedIncome Components
+import FixedIncomeRunningInvestments from '@/components/fixedIncome/RunningInvestments'
+import FixedIncomeTerminatedInvestments from '@/components/fixedIncome/TerminatedInvestments'
+
 Vue.use(Router)
 
 export default new Router({
@@ -50,6 +54,16 @@ export default new Router({
       path: '/stb/watchlist',
       name: 'stb-watchlist',
       component: StbWatchList
+    },
+    {
+      path: '/fi/running',
+      name: 'fi-running',
+      component: FixedIncomeRunningInvestments
+    },
+    {
+      path: '/fi/terminated',
+      name: 'fi-terminated',
+      component: FixedIncomeTerminatedInvestments
     },
     {
       path: '*',

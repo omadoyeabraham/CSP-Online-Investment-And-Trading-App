@@ -22,21 +22,23 @@ import * as ApiUrls from './ApiUrlService';
 /**
  * Get all trade orders that the authenticated user has placed and commit it to the vuex store
  *
- * @param userID: string | The ID of the user
+ * @param cacheStatus: number | Determines if we need cached data or fresh data from the server
  * @return void
  */
- let getTradeOrders = (userID: number) => {
+ let getTradeOrders = (cacheStatus: number) => {
 
    // obtain the tradeorders already placed by the user
   let tradeOrders =  StbMockData.tradeOrders;
 
-  // axios({
-  //   method: 'GET',
-  //   url: ApiUrls.GetTradeOrdersUrl,
-  //   data: {id: userID}
-  // }).then((response) => {
-  //   console.log(response)
-  // })
+  let userID = store.state.user.info.id;
+
+  axios({
+    method: 'GET',
+    url: `${ApiUrls.GetTradeOrdersUrl}/${userID}/${cacheStatus}`,
+    data: {id: userID}
+  }).then((response) => {
+    console.log(response)
+  })
 
   // Commit the tradeOrders to the stockbroking module of our vuex store
   store.commit(mutationTypes.SAVE_TRADE_ORDERS_TO_STORE, tradeOrders);

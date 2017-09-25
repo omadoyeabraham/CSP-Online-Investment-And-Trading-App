@@ -36,8 +36,8 @@ export const nairaInvestments: Array<object> = [
     totalValue: store.state.fixedIncome.totalValue,
     model: false,
     children: [
-      { icon: 'keyboard_arrow_right', text: 'Running Investments' },
-      { icon: 'keyboard_arrow_right', text: 'Terminated Investments' }
+      { icon: 'keyboard_arrow_right', text: 'Running Investments', routeName: 'fi-running' },
+      { icon: 'keyboard_arrow_right', text: 'Terminated Investments', routeName: 'fi-terminated' }
     ]
   },
   { icon: 'account_balance', text: 'SMA', totalValue: store.state.stockbroking.totalValue },
