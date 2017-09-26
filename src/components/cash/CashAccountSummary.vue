@@ -18,8 +18,29 @@
           <!-- Card body -->
           <div class="card-block">
             <ul class="list-group list-group-flush black--text">
-              <li class="list-group-item font-weight-bold" v-for="(item, index) in marketHighlights" :key="index">{{item.label}}
-                <span class="ml-auto font-weight-normal">{{item.value}}</span>
+              <li class="list-group-item font-weight-bold">
+                Opening Balance
+                <span class="ml-auto font-weight-normal"></span>
+              </li>
+              <li class="list-group-item">
+                Total Credit
+                <span class="ml-auto "></span>
+              </li>
+              <li class="list-group-item ">
+                Total Debit
+                <span class="ml-auto font-weight-normal"></span>
+              </li>
+              <li class="list-group-item font-weight-bold">
+                Closing Balance
+                <span class="ml-auto font-weight-normal"></span>
+              </li>
+              <li class="list-group-item">
+                Uncleared Effects
+                <span class="ml-auto font-weight-normal"></span>
+              </li>
+              <li class="list-group-item font-weight-bold">
+                Cash Available
+                <span class="ml-auto font-weight-normal"></span>
               </li>
             </ul>
           </div>
@@ -36,7 +57,8 @@
           </div>
 
           <!-- Card body -->
-          <div class="card-block">
+          <div class="card-block red">
+            {{cashStatements}}
           </div>
 
         </v-card>
@@ -49,9 +71,10 @@
 </template>
 
 <script>
-export default {
-
-}
+  export default
+  {
+    props: ['cashStatements']
+  }
 </script>
 
 <style>

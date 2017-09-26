@@ -11,7 +11,9 @@ import UserService from '../../services/UserService';
 const state = {
   userData: {},
   selectedNairaCashAccount: {},
-  selectedDollarCashAccount: {}
+  selectedDollarCashAccount: {},
+  nairaCashStatements: [],
+  dollarCashStatements: []
 }
 
 const getters = {
@@ -56,6 +58,15 @@ const getters = {
    */
   getAllCashAccounts: (state) => {
     return _.union(state.userData.NGN, state.userData.USD)
+  },
+
+  /**
+   * Return the cash statements (which might have been filtered by date) for the current
+   * naira cash account selected
+   *
+   */
+  getNairaCashStatements: (state) => {
+    return state.nairaCashStatements
   }
 
 }
@@ -100,6 +111,17 @@ const mutations = {
     })
 
     state.selectedNairaCashAccount = selectedCashAccount
+  },
+
+  /**
+   * Set the Naira cash statements being viewed by the user
+   *
+   * @param {any} state
+   * @param Array<objects> cashStatements
+   */
+  [mutationTypes.SET_NAIRA_CASH_STATEMENTS] (state, cashStatements) {
+    state.nairaCashStatements = cashStatements
+    console.log(state.nairaCashStatements)
   }
 
 }

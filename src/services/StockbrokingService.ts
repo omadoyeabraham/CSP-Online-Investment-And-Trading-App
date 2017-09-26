@@ -54,8 +54,6 @@ import * as ApiUrls from './ApiUrlService';
   // obtain current market data
   const marketData = StbMockData.marketData;
 
-  console.time('gettingMarketData')
-
   axios({
     method: 'GET',
     url: ApiUrls.GetMarketDataUrl

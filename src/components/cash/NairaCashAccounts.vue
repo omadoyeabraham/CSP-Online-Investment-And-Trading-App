@@ -16,11 +16,11 @@
         v-model="selectedTab">
 
         <!-- Tabs bar -->
-        <v-tabs-bar class="blue">
+        <v-tabs-bar class="grey lighten-3 ">
           <v-tabs-item
             :key="tabs[0]"
             :href="'#' + tabs[0]"
-            ripple>
+            >
             {{tabs[0]}}
           </v-tabs-item>
           <v-tabs-item
@@ -34,7 +34,8 @@
         <!-- Tabs content -->
         <v-tabs-content
           :id="tabs[0]">
-          <cash-account-summary>
+          <cash-account-summary
+            :cashStatements="nairaCashStatements">
           </cash-account-summary>
         </v-tabs-content>
 
@@ -53,11 +54,18 @@
 <script>
   import {mapGetters} from 'vuex'
 
+  import CashService from '../../services/CashService'
+
   import NairaCashAccountHeader from './NairaCashAccountHeader'
   import CashAccountSummary from './CashAccountSummary'
   import CashAccountDetails from './CashAccountDetails'
   export default
   {
+
+    beforeCreate () {
+      CashService.getNairaCashStatements()
+    },
+
     data () {
       return {
         selectedCashAccount: this.$store.state.cash.selectedNairaCashAccount.id,
@@ -74,7 +82,8 @@
 
     computed: {
       ...mapGetters({
-        'nairaCashAccounts': 'getNairaCashAccounts'
+        'nairaCashAccounts': 'getNairaCashAccounts',
+        'nairaCashStatements': 'getNairaCashStatements'
       })
     }
   }

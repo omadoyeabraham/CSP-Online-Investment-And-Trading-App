@@ -44,7 +44,7 @@
       <!-- Date range -->
       <v-flex class="mr10">
         <v-layout row>
-          <v-flex xs6>
+          <v-flex xs5>
           </v-flex>
 
           <!-- START DATE -->
@@ -107,6 +107,13 @@
           </v-flex>
           <!-- EOF END DATE -->
 
+          <v-btn
+            class="mr5 ml-auto blue darken-4"
+            fab dark small primary xs1
+            @click="search">
+            <v-icon>search</v-icon>
+          </v-btn>
+
         </v-layout>
       </v-flex>
     </v-layout>
@@ -146,8 +153,15 @@
     },
 
     watch: {
-      selectedNairaCashAccountID: function (newlySelectedCashAccountID) {
-        CashService.changeSelectedNairaCashAccount(newlySelectedCashAccountID)
+      selectedNairaCashAccountID: function (newlySelectedCashAccountID, startDate, endDate) {
+        CashService.changeSelectedNairaCashAccount(newlySelectedCashAccountID, startDate, endDate)
+      }
+    },
+
+    methods: {
+      // Get the cash statements in the date range selected by the user
+      search: function () {
+        CashService.getNairaCashStatements(this.startDate, this.endDate)
       }
     }
   }
