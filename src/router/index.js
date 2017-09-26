@@ -19,7 +19,7 @@ import RunningDollarInvestments from '@/components/fixedIncome/RunningDollarInve
 import TerminatedDollarInvestments from '@/components/fixedIncome/TerminatedDollarInvestments'
 
 // Cash Components
-import CashAccount from '@/components/cash/CashAccount'
+import NairaCashAccounts from '@/components/cash/NairaCashAccounts'
 
 Vue.use(Router)
 
@@ -83,7 +83,7 @@ export default new Router({
     {
       path: '/cash/naira',
       name: 'cash-naira',
-      component: CashAccount
+      component: NairaCashAccounts
     },
     {
       path: '*',

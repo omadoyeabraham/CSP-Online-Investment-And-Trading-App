@@ -71,7 +71,7 @@ import * as ApiUrls from './ApiUrlService';
 
  /**
   * Set the current portfolio from the dropdown
-
+  *
   * @param accountNo
   */
  let setCurrentPortfolio = (accountNo: string) => {

@@ -4,6 +4,7 @@
 
 // All mutation types that can be carried out on the store state by the application
 import * as mutationTypes from '../mutation-types.js';
+import _ from 'lodash'
 
 import UserService from '../../services/UserService';
 
@@ -50,6 +51,13 @@ const getters = {
     return state.userData.USD
   },
 
+  /**
+   * Returns all cash accounts owned by the user
+   */
+  getAllCashAccounts: (state) => {
+    return _.union(state.userData.NGN, state.userData.USD)
+  }
+
 }
 
 const mutations = {
@@ -83,7 +91,15 @@ const mutations = {
    * @param {number} cashAccountID
    */
   [mutationTypes.CHANGE_SELECTED_CASH_ACCOUNT] (state, cashAccountID: number) {
+    let selectedCashAccount = []
 
+    state.userData.NGN.forEach((cashAccount) => {
+      if (cashAccount.id == cashAccountID) {
+        selectedCashAccount = cashAccount
+      }
+    })
+
+    state.selectedNairaCashAccount = selectedCashAccount
   }
 
 }
