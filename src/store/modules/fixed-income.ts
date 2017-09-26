@@ -7,6 +7,9 @@ import * as mutationTypes from '../mutation-types.js';
 
 import UserService from '../../services/UserService';
 
+// Moment.js
+import * as moment from 'moment'
+
 const state = {
   userData: {},
   totalValue: 0
@@ -38,13 +41,32 @@ const getters = {
       let currentValue = parseFloat(investment.accruedNetInterest) + parseFloat(investment.faceValue)
       let valueAtMaturity = parseFloat(investment.faceValue) + parseFloat(investment.expectedInterest)
 
+      let startDate = moment(investment.startDate, "YYYY-MM-DD")
+      let durationTillDate = moment().diff(startDate, 'days')
+
       investment.currentValue = currentValue
       investment.valueAtMaturity = valueAtMaturity
+      investment.durationTillDate = durationTillDate
+
       investments.push(investment)
     })
 
     // loop through the running Tbills and perform the necessary calculations
     runningTbillInvestments.forEach((investment) => {
+      let startDate = moment(investment.startDate, "YYYY-MM-DD")
+      let durationTillDate = moment().diff(startDate, 'days')
+
+      let faceValue = parseFloat(investment.faceValue)
+      let rate = (parseFloat(investment.currentRate)) / 100
+      let accruedInterest = (faceValue * rate * durationTillDate) / 365
+      let currentValue = accruedInterest + faceValue
+      let valueAtMaturity = parseFloat(investment.faceValueAmount)
+
+      investment.durationTillDate = durationTillDate
+      investment.accruedInterest = accruedInterest
+      investment.currentValue = currentValue
+      investment.valueAtMaturity = valueAtMaturity
+
       investments.push(investment)
     })
 

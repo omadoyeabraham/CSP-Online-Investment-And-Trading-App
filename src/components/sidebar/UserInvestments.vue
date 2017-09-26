@@ -42,8 +42,11 @@
         </div>
         <v-list-tile-content>
           <v-list-tile-title class="font-size-11">
-            <span style="float: left">{{ item.text }}</span>
-            <span style="float:right">{{item.totalValue}}</span>
+            <router-link :to="{name: item.routeName}" class="font-size-11">
+              {{ item.text }}
+              <span style="float:right">{{item.totalValue}}</span>
+            </router-link>
+            <!-- <span style="float: left">{{ item.text }}</span> -->
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>

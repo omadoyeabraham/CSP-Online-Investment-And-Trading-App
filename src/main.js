@@ -33,6 +33,10 @@ import VueTabs from 'vue-nav-tabs'
 import 'vue-nav-tabs/themes/vue-tabs.scss'
 Vue.use(VueTabs)
 
+// Vue-moment used for date/time manipulation
+import VueMoment from 'vue-moment'
+Vue.use(VueMoment)
+
 // Router
 import router from './router'
 

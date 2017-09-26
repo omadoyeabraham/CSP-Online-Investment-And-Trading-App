@@ -39,7 +39,7 @@
           <tr id="tradeHistoryTableBody">
             <td class="font-size-10">{{props.item.instrumentTypeLabel}}</td>
             <td class="font-size-10">{{props.item.faceValue}}</td>
-            <td class="font-size-10">{{props.item.accruedNetInterest}}</td>
+            <td class="font-size-10">{{props.item.accruedInterest}}</td>
             <td class="font-size-10">{{props.item.currentValue}}</td>
             <td class="font-size-10">
               <button class="button button-blue-csp elevation-2 mb2" @click="selectInvestment(props.item.id)">
@@ -70,23 +70,27 @@
             </li>
             <li class="list-group-item font-size-12 white--text">
               <span>Date of Investment</span>
-              <span class="ml-auto font-weight-normal">{{selectedInvestment.startDate}}</span>
+              <span class="ml-auto font-weight-normal">
+                {{selectedInvestment.startDate | moment("DD-MMM-YYYY") }}
+              </span>
             </li>
             <li class="list-group-item font-size-12 white--text">
               <span>Date of Maturity</span>
-              <span class="ml-auto font-weight-normal">{{selectedInvestment.expectedMaturity}}</span>
+              <span class="ml-auto font-weight-normal">
+                {{selectedInvestment.expectedMaturity | moment("DD-MMM-YYYY") }}
+              </span>
             </li>
             <li class="list-group-item font-size-12 white--text">
               <span>Investment Duration</span>
-              <span class="ml-auto font-weight-normal">{{selectedInvestment.tenure}}</span>
+              <span class="ml-auto font-weight-normal">{{selectedInvestment.tenure}} days</span>
             </li>
             <li class="list-group-item font-size-12 white--text">
               <span>Duration till Date</span>
-              <span class="ml-auto font-weight-normal">{{}}</span>
+              <span class="ml-auto font-weight-normal">{{selectedInvestment.durationTillDate}} days</span>
             </li>
             <li class="list-group-item font-size-12 white--text">
               <span>Rate of Return</span>
-              <span class="ml-auto font-weight-normal">{{selectedInvestment.currentRate}}</span>
+              <span class="ml-auto font-weight-normal">{{selectedInvestment.currentRate}}% P.A.</span>
             </li>
             <li class="list-group-item font-size-12 white--text">
               <span>Return to Date</span>

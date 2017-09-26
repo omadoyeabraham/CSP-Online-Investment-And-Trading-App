@@ -18,6 +18,9 @@ import FixedIncomeTerminatedInvestments from '@/components/fixedIncome/Terminate
 import RunningDollarInvestments from '@/components/fixedIncome/RunningDollarInvestments'
 import TerminatedDollarInvestments from '@/components/fixedIncome/TerminatedDollarInvestments'
 
+// Cash Components
+import CashAccount from '@/components/cash/CashAccount'
+
 Vue.use(Router)
 
 export default new Router({
@@ -76,6 +79,11 @@ export default new Router({
       path: '/di/terminated',
       name: 'di-terminated',
       component: TerminatedDollarInvestments
+    },
+    {
+      path: '/cash/naira',
+      name: 'cash-naira',
+      component: CashAccount
     },
     {
       path: '*',

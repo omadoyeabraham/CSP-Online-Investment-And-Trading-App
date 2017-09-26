@@ -1,7 +1,6 @@
 <template>
   <v-container fluid class="">
 
-
   <!-- Page heading and Fund account button -->
   <v-layout row>
     <v-flex d-flex align-center>
@@ -13,7 +12,6 @@
       </v-btn>
     </v-flex>
   </v-layout>
-
 
     <!-- Number of accounts and account switching -->
     <v-layout row  class="mb20">

@@ -62,16 +62,8 @@ import * as ApiUrls from './ApiUrlService';
   })
   .then((response) => {
 
-    console.timeEnd('gettingMarketData')
-
-    console.group()
-    console.log(response)
-    console.groupEnd()
-
-    console.time('savingMarketDataToStore')
     // commit the market data to the stockbroking module of our vue store
     store.commit(mutationTypes.SAVE_MARKET_DATA_TO_STORE, response.data)
-    console.timeEnd('savingMarketDataToStore')
 
   })
 

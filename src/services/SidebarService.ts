@@ -41,7 +41,7 @@ export const nairaInvestments: Array<object> = [
     ]
   },
   { icon: 'account_balance', text: 'SMA', totalValue: store.state.stockbroking.totalValue },
-  { icon: 'keyboard', text: 'Cash Account', totalValue: store.state.stockbroking.totalValue },
+  { icon: 'keyboard', text: 'Cash Account', totalValue: store.state.stockbroking.totalValue, routeName: 'cash-naira' },
   {icon: 'keyboard', text: 'TOTAL', totalValue: '200,000,000'}
 ]
 
