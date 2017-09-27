@@ -7,7 +7,7 @@
       <h3 class="font-size-20 csp-light-blue-text">Cash Account Statement</h3>
     </v-flex>
     <v-flex d-flex justify-end align-start>
-      <v-btn info class="blue darken-4 font-size-10 p0 ml-auto mb0 mr0">
+      <v-btn info class="blue darken-1 font-size-10 p0 ml-auto mb0 mr0">
         Fund Account
       </v-btn>
     </v-flex>
@@ -22,7 +22,7 @@
       <v-flex d-flex justify-end>
         <select class="custom-select mt10"
           v-model="selectedNairaCashAccountID"
-          v-on:change.native="changeSelectedCashAccount">
+          >
           <option v-for="(item, index) in cashAccounts"
             :key="index"
             v-bind:value="item.id">{{item.label}}</option>
@@ -108,7 +108,7 @@
           <!-- EOF END DATE -->
 
           <v-btn
-            class="mr5 ml-auto blue darken-4"
+            class="mr5 ml-auto blue darken-1"
             fab dark small primary xs1
             @click="search">
             <v-icon>search</v-icon>
@@ -124,8 +124,8 @@
 
 <script>
   import {mapGetters, mapState} from 'vuex'
+  import * as mutationTypes from '../../store/mutation-types'
 
-  import moment from 'moment'
   import CashService from '../../services/CashService'
 
   export default
@@ -135,8 +135,6 @@
     data () {
       return {
         selectedNairaCashAccountID: this.$store.state.cash.selectedNairaCashAccount.id,
-        startDate: moment().format('YYYY-MM-01'),
-        endDate: moment().format('YYYY-MM-DD'),
         menu: false,
         menu2: false
       }
@@ -149,12 +147,31 @@
 
       ...mapState({
         'selectedNairaCashAccount': (store) => store.cash.selectedNairaCashAccount
-      })
+      }),
+
+      startDate: {
+        get () {
+          return this.$store.state.cash.nairaSearchStartDate
+        },
+        set (value) {
+          this.$store.commit(mutationTypes.SET_NAIRA_SEARCH_START_DATE, value)
+        }
+      },
+
+      endDate: {
+        get () {
+          return this.$store.state.cash.nairaSearchEndDate
+        },
+        set (value) {
+          this.$store.commit(mutationTypes.SET_NAIRA_SEARCH_END_DATE, value)
+        }
+      }
+
     },
 
     watch: {
       selectedNairaCashAccountID: function (newlySelectedCashAccountID, startDate, endDate) {
-        CashService.changeSelectedNairaCashAccount(newlySelectedCashAccountID, startDate, endDate)
+        CashService.changeSelectedNairaCashAccount(newlySelectedCashAccountID, this.startDate, this.endDate)
       }
     },
 

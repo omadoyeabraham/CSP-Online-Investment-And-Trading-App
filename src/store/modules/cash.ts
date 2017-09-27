@@ -4,7 +4,9 @@
 
 // All mutation types that can be carried out on the store state by the application
 import * as mutationTypes from '../mutation-types.js';
+
 import _ from 'lodash'
+import moment from 'moment'
 
 import UserService from '../../services/UserService';
 
@@ -13,7 +15,10 @@ const state = {
   selectedNairaCashAccount: {},
   selectedDollarCashAccount: {},
   nairaCashStatements: [],
-  dollarCashStatements: []
+  dollarCashStatements: [],
+  nairaCashStatementSummary: {},
+  nairaSearchStartDate: moment().format('YYYY-MM-01'),
+  nairaSearchEndDate: moment().format('YYYY-MM-DD')
 }
 
 const getters = {
@@ -67,6 +72,90 @@ const getters = {
    */
   getNairaCashStatements: (state) => {
     return state.nairaCashStatements
+  },
+
+  /**
+   * Return all uncleared effects in the selected naira cash account
+   *
+   * Uncleared effects are transactions that have a value date greater than the endDate in
+   * the current search range. I.E. as at the endDate of the search these transactions had not yet settled (T+3) and are hence uncleared
+   */
+  getNairaUnclearedEffects: (state, getters) => {
+    let cashStatements = state.nairaCashStatements
+    const startDate = state.nairaSearchStartDate
+    const endDate = state.nairaSearchEndDate
+
+    let unclearedEffects = cashStatements.filter((cashStatement) => {
+
+      let valueDate = moment(cashStatement.valueDate, 'YYYY-MM-DD')
+      let searchEndDate = moment(endDate, 'YYYY-MM-DD')
+
+      return searchEndDate.isBefore(valueDate)
+    })
+
+    return unclearedEffects
+
+  },
+
+  /**
+   * Returns data computed from the nairaCashStatements used to populate the statement summary box
+   *
+   */
+  getNairaCashStatementSummary: (state, getters) => {
+
+    let cashStatements = state.nairaCashStatements
+    let openingStatement = cashStatements[0]
+    let closingStatement = cashStatements[cashStatements.length - 1]
+
+    let openingBalance = 0
+    let totalDebitAmount = 0
+    let totalCreditAmount = 0
+    let closingBalance = 0
+    let unclearedEffects = 0
+    let cashAvailable = 0
+
+    /**
+     * Calculating the opening balance
+     *  - If there is a debit entry in the statement, add it to the current balance to get the opening balance. This is because the debited amount has been debited (taken out) of the opening balance to
+     * arrive at the current balance
+     *  - Else subtract the creditAmount (amount added to the initial balance) from the current balance to get the initial balance
+     */
+     if (parseFloat(openingStatement.debitAmount) > 0) {
+       openingBalance = parseFloat(openingStatement.balance) + parseFloat(openingStatement.debitAmount)
+     } else {
+       openingBalance = parseFloat(openingStatement.balance) - parseFloat(openingStatement.creditAmount)
+     }
+
+     // calculating the total amount debited
+     cashStatements.forEach((cashStatement) => {
+       totalDebitAmount += parseFloat(cashStatement.debitAmount)
+     })
+
+     // calculating the total amount credited
+     cashStatements.forEach((cashStatement) => {
+       totalCreditAmount += parseFloat(cashStatement.creditAmount)
+     })
+
+     // Closing Balance
+     closingBalance = parseFloat(closingStatement.balance)
+
+     // UnclearedEffects and unclearedBalance
+     getters.getNairaUnclearedEffects.forEach((unclearedEffect) => {
+       unclearedEffects += parseFloat(unclearedEffect.creditAmount)
+     })
+
+     // Cash Available = Most recent balance - uncleared balance (i.e uncleared effects)
+     cashAvailable = parseFloat(closingStatement.balance) - unclearedEffects
+
+     return {
+       openingBalance,
+       totalDebitAmount,
+       totalCreditAmount,
+       closingBalance,
+       unclearedEffects,
+       cashAvailable
+     }
+
   }
 
 }
@@ -121,7 +210,15 @@ const mutations = {
    */
   [mutationTypes.SET_NAIRA_CASH_STATEMENTS] (state, cashStatements) {
     state.nairaCashStatements = cashStatements
-    console.log(state.nairaCashStatements)
+
+  },
+
+  [mutationTypes.SET_NAIRA_SEARCH_START_DATE] (state, newStartDate) {
+    state.nairaSearchStartDate = newStartDate
+  },
+
+  [mutationTypes.SET_NAIRA_SEARCH_END_DATE](state, newEndDate) {
+    state.nairaSearchEndDate = newEndDate
   }
 
 }

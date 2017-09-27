@@ -35,7 +35,9 @@
         <v-tabs-content
           :id="tabs[0]">
           <cash-account-summary
-            :cashStatements="nairaCashStatements">
+            :cashStatements="nairaCashStatements"
+            :cashStatementSummary="nairaCashStatementSummary"
+            :unclearedEffects="nairaUnclearedEffects">
           </cash-account-summary>
         </v-tabs-content>
 
@@ -83,7 +85,9 @@
     computed: {
       ...mapGetters({
         'nairaCashAccounts': 'getNairaCashAccounts',
-        'nairaCashStatements': 'getNairaCashStatements'
+        'nairaCashStatements': 'getNairaCashStatements',
+        'nairaCashStatementSummary': 'getNairaCashStatementSummary',
+        'nairaUnclearedEffects': 'getNairaUnclearedEffects'
       })
     }
   }

@@ -34,12 +34,9 @@ let changeSelectedNairaCashAccount = (cashAccountID: number, startDate = Utility
   *
   */
  let getNairaCashStatements = (startDate = UtilityService.getDefaultCashStatementStartDate(), endDate = UtilityService.getDefaultCashStatementEndDate()) => {
-
-  console.group()
-    console.log(startDate)
-    console.log(endDate)
+  console.group();
+    console.log(startDate, endDate)
   console.groupEnd()
-
   const cashAccountNumber = store.state.cash.selectedNairaCashAccount.name
 
     axios({
@@ -58,7 +55,7 @@ let changeSelectedNairaCashAccount = (cashAccountID: number, startDate = Utility
        * Either a single object, or an array of objects will be returned.
        * This ensures that we always have an array of objects
        */
-      let cashStatements = (responseData.isArray) ? responseData : [responseData]
+      let cashStatements = (responseData.constructor === Array) ? responseData : [responseData]
 
       store.commit(mutationTypes.SET_NAIRA_CASH_STATEMENTS, cashStatements)
 
