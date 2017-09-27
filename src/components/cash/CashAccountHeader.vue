@@ -4,7 +4,7 @@
   <!-- Page heading and Fund account button -->
   <v-layout row>
     <v-flex d-flex align-center>
-      <h3 class="font-size-20 csp-light-blue-text">Cash Account Statement</h3>
+      <h3 class="font-size-20 csp-light-blue-text">{{title}}</h3>
     </v-flex>
     <v-flex d-flex justify-end align-start>
       <v-btn info class="blue darken-1 font-size-10 p0 ml-auto mb0 mr0">
@@ -130,7 +130,7 @@
 
   export default
   {
-    props: ['cashAccounts'],
+    props: ['cashAccounts', 'title'],
 
     data () {
       return {

@@ -5,30 +5,34 @@
 -->
 <template>
   <v-container fluid class="p0">
-      <naira-cash-account-header
-        :cashAccounts = "nairaCashAccounts">
-      </naira-cash-account-header>
+      <cash-account-header
+        :cashAccounts = "nairaCashAccounts"
+        :title = "'Naira Cash Accounts'">
+      </cash-account-header>
 
       <!-- TABS -->
-      <div>
+      <div class="container-fluid">
       <v-tabs
         dark
         v-model="selectedTab">
 
         <!-- Tabs bar -->
-        <v-tabs-bar class="grey lighten-3 ">
+        <v-tabs-bar class="blue darken-4 mb20">
           <v-tabs-item
             :key="tabs[0]"
             :href="'#' + tabs[0]"
             >
-            {{tabs[0]}}
+            <span class="font-size-14">{{tabs[0]}}</span>
           </v-tabs-item>
           <v-tabs-item
             :key="tabs[1]"
             :href="'#' + tabs[1]">
-            {{tabs[1]}}
+            <span class="font-size-14">{{tabs[1]}}</span>
           </v-tabs-item>
-          <v-tabs-slider class="blue darken--4"></v-tabs-slider>
+          <v-tabs-slider
+            class="blue darken--2"
+            style="height: 4px">
+          </v-tabs-slider>
         </v-tabs-bar>
 
         <!-- Tabs content -->
@@ -37,13 +41,15 @@
           <cash-account-summary
             :cashStatements="nairaCashStatements"
             :cashStatementSummary="nairaCashStatementSummary"
-            :unclearedEffects="nairaUnclearedEffects">
+            :unclearedEffects="nairaUnclearedEffects"
+            :currency="'₦'">
           </cash-account-summary>
         </v-tabs-content>
 
         <v-tabs-content
           :id="tabs[1]">
-          <cash-account-details>
+          <cash-account-details
+            :cashStatements="nairaCashStatements">
           </cash-account-details>
         </v-tabs-content>
 
@@ -58,7 +64,7 @@
 
   import CashService from '../../services/CashService'
 
-  import NairaCashAccountHeader from './NairaCashAccountHeader'
+  import CashAccountHeader from './CashAccountHeader'
   import CashAccountSummary from './CashAccountSummary'
   import CashAccountDetails from './CashAccountDetails'
   export default
@@ -77,7 +83,7 @@
     },
 
     components: {
-      NairaCashAccountHeader,
+      CashAccountHeader,
       CashAccountSummary,
       CashAccountDetails
     },

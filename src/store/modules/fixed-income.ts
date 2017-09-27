@@ -23,6 +23,7 @@ const getters = {
    */
   getRunningNairaInvestments: (state) => {
     // Get the FI and Tbill investments
+    console.log(state)
     let nairaInvestments =  state.userData.NGN
     let treasuryBills = state.userData.TBills
 

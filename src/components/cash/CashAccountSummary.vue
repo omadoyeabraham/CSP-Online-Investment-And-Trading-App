@@ -4,7 +4,7 @@
   @author Omadoye Abraham <omadoyeabraham@gmail.com>
 -->
 <template>
-  <v-container fluid grid-list-lg>
+  <v-container fluid grid-list-lg class="p0">
     <v-layout row>
 
       <!-- Statement summary -->
@@ -20,27 +20,32 @@
             <ul class="list-group list-group-flush black--text">
               <li class="list-group-item font-weight-bold">
                 Opening Balance
-                <span class="ml-auto font-weight-normal">{{cashStatementSummary.openingBalance}}</span>
+                <span class="ml-auto font-weight-normal">{{currency}}
+                  {{cashStatementSummary.openingBalance}}</span>
               </li>
               <li class="list-group-item">
                 Total Credit
-                <span class="ml-auto ">{{cashStatementSummary.totalCreditAmount}}</span>
+                <span class="ml-auto ">{{currency}} {{cashStatementSummary.totalCreditAmount}}</span>
               </li>
               <li class="list-group-item ">
                 Total Debit
-                <span class="ml-auto font-weight-normal">{{cashStatementSummary.totalDebitAmount}}</span>
+                <span class="ml-auto font-weight-normal">
+                  {{currency}} {{cashStatementSummary.totalDebitAmount}}</span>
               </li>
               <li class="list-group-item font-weight-bold">
                 Closing Balance
-                <span class="ml-auto font-weight-normal">{{cashStatementSummary.closingBalance}}</span>
+                <span class="ml-auto font-weight-normal">{{currency}}
+                  {{cashStatementSummary.closingBalance}}</span>
               </li>
               <li class="list-group-item">
                 Uncleared Effects
-                <span class="ml-auto font-weight-normal">{{cashStatementSummary.unclearedEffects}}</span>
+                <span class="ml-auto font-weight-normal">{{currency}}
+                  {{cashStatementSummary.unclearedEffects}}</span>
               </li>
               <li class="list-group-item font-weight-bold">
                 Cash Available
-                <span class="ml-auto font-weight-normal">{{cashStatementSummary.cashAvailable}}</span>
+                <span class="ml-auto font-weight-normal">{{currency}}
+                  {{cashStatementSummary.cashAvailable}}</span>
               </li>
             </ul>
           </div>
@@ -57,55 +62,28 @@
           </div>
 
           <!-- Card body -->
-          <div class="card-block red p0">
+          <div class="card-block p0">
             <!-- Uncleared effects -->
-            <v-data-table
-              v-bind:headers="tableheaders"
-              :items="marketData"
-              :search="search"
-              :loading="loadingDataTable"
-              :rows-per-page-items="rowsPerPageItems"
-              id="marketDataTable"
-              class="table-striped elevation-1 p0">
-              <template slot="headers" scope="props">
-                <tr class="bg-csp-light-blue " id="marketDataTableHeader">
-                  <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'white--text',
-                                          pagination.descending ? 'desc' : 'asc',
-                                          header.value === pagination.sortBy ? 'active' : ''
-                                          ]" @click="changeSort(header.value)">
-                    <!-- <v-icon>arrow_upward</v-icon> -->
-                    {{ header.text }}
-                  </th>
+            <table
+              v-if="unclearedEffects"
+              class="table table-striped">
+              <thead>
+                <tr>
+                  <th class="font-weight-bold">VALUE DATE</th>
+                  <th>DESCRIPTION</th>
+                  <th>AMOUNT</th>
                 </tr>
-              </template>
-
-              <template slot="items" scope="props">
-                <tr id="marketDataTableBody">
-                  <td class="font-size-10">{{props.item.name}}</td>
-                  <td class="font-size-10">{{props.item.previousClose}}</td>
-                  <td class="font-size-10">{{props.item.openingPrice}}</td>
-                  <td class="font-size-10">{{props.item.highPrice}}</td>
-                  <td class="font-size-10">{{props.item.lowPrice}}</td>
-                  <td class="font-size-10">{{props.item.currentPrice}}</td>
-                  <td class="font-size-10">{{props.item.closingPrice}}</td>
-                  <td class="font-size-10">{{props.item.priceChange}}</td>
-                  <td class="font-size-10">{{props.item.percentChange}}</td>
-                  <td class="font-size-10">{{props.item.quantityTraded}}</td>
-                  <td class="font-size-10">{{props.item.valueTraded}}</td>
-                  <td class="font-size-10">
-                    <button class="button button-blue-csp elevation-2 mb2">
-                      BUY
-                    </button>
-                    <button class="button button-blue-csp elevation-2 mb2">
-                      SELL
-                    </button>
-                    <button class="button button-blue-csp elevation-2">
-                      WATCH
-                    </button>
-                  </td>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="(item, index) in unclearedEffects"
+                  :key="index">
+                    <td>{{item.valueDate | moment("DD-MMM-YYYY") }} </td>
+                    <td>{{item.description}}</td>
+                    <td>{{currency}} {{item.unclearedAmount}}</td>
                 </tr>
-              </template>
-            </v-data-table>
+              </tbody>
+            </table>
 
           </div>
 
@@ -121,10 +99,17 @@
 <script>
   export default
   {
-    props: ['cashStatements', 'cashStatementSummary', 'unclearedEffects'],
+    props: ['cashStatements', 'cashStatementSummary', 'unclearedEffects', 'currency'],
 
     data () {
       return {
+        show: true,
+        search: '',
+        loadingDataTable: false,
+        rowsPerPageItems: [15, 20, { text: 'All', value: -1 }],
+        pagination: {
+          sortBy: 'name'
+        },
         tableheaders: [
           { text: 'VALUE DATE', value: 'valueDate', align: 'left', sortable: true },
           { text: 'DESCRIPTION', value: 'description', align: 'left' },
@@ -135,6 +120,22 @@
   }
 </script>
 
-<style>
+<style scoped lang="sass">
+  #marketDataTable
+    margin-bottom: 0px !important
 
+  #marketDataTableHeader,
+  #marketDataTableBody
+    height: 25px
+
+  #marketDataTableHeader
+    th
+      padding: 0px 5px !important
+
+  #marketDataTableBody
+    td
+      padding: 5px 5px !important
+      height: 25px
+  .btn__content
+    padding: 0px !important
 </style>

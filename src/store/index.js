@@ -32,7 +32,7 @@
  import FixedIncomeStore from './modules/fixed-income.ts'
 
  // The cash store module
- import CashStore from './modules/cash.ts'
+ import CashStore from './modules/cash/cash.ts'
 
  /**
   * VuexPersistence object used to persist data in localstorage until the user signs out

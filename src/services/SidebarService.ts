@@ -60,7 +60,7 @@ export const dollarInvestments: Array<object> = [
       { icon: 'keyboard_arrow_right', text: 'Terminated Investments', routeName: 'di-terminated' }
     ]
   },
-  { icon: 'keyboard', text: 'Cash Account', totalValue: store.state.stockbroking.totalValue },
+  { icon: 'keyboard', text: 'Cash Account', totalValue: store.state.stockbroking.totalValue, routeName: 'cash-dollar' },
   { icon: 'keyboard', text: 'TOTAL', totalValue: '$200,000,000' }
 ]
 
