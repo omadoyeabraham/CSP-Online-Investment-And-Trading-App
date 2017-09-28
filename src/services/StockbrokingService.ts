@@ -28,8 +28,9 @@ import * as ApiUrls from './ApiUrlService';
  let getTradeOrders = (cacheStatus: number) => {
 
    // obtain the tradeorders already placed by the user
-  let tradeOrders =  StbMockData.tradeOrders;
+  // let tradeOrders =  StbMockData.tradeOrders;
 
+  let tradeOrders = []
   let userID = store.state.user.info.id;
 
   axios({
@@ -37,11 +38,15 @@ import * as ApiUrls from './ApiUrlService';
     url: `${ApiUrls.GetTradeOrdersUrl}/${userID}/${cacheStatus}`,
     data: {id: userID}
   }).then((response) => {
-    console.log(response)
+
+    if(response.data.item !== undefined) {
+      tradeOrders = response.data.item
+    }
+
+    // Commit the tradeOrders to the stockbroking module of our vuex store
+    store.commit(mutationTypes.SAVE_TRADE_ORDERS_TO_STORE, tradeOrders);
   })
 
-  // Commit the tradeOrders to the stockbroking module of our vuex store
-  store.commit(mutationTypes.SAVE_TRADE_ORDERS_TO_STORE, tradeOrders);
 
  }
 
@@ -76,7 +81,6 @@ import * as ApiUrls from './ApiUrlService';
   store.commit(mutationTypes.CHANGE_CURRENT_PORTFOLIO, accountNo)
 
  }
-
 
 
  export default {

@@ -580,7 +580,58 @@ const getters = {
     })
 
     return currentPortfolioBondHoldings
+  },
+
+  /**
+   * Return the trade orders that belong to the selected portfolio
+   *
+   */
+  getCurrentPortfolioTradeOrders: (state, getters) => {
+
+    let selectedPortfolioName = state.currentPortfolio.name
+    let tradeOrders = state.tradeOrders
+
+    let currentPortfolioTradeOrders = tradeOrders.filter((tradeOrder) => {
+      return (tradeOrder.portfolioName === selectedPortfolioName)
+    })
+
+    return currentPortfolioTradeOrders
+  },
+
+  /**
+   * Return completed trades for the selected portfolio
+   *
+   */
+  getCompletedTradeOrders: (state, getters) => {
+
+    let tradeOrders = getters.getCurrentPortfolioTradeOrders
+
+    let completedTradeOrders = tradeOrders.filter((tradeOrder) => {
+      return tradeOrder.fixOrderStatus === 'FILLED'
+    })
+
+    return completedTradeOrders
+  },
+
+  /**
+   * Return completed trades for the selected portfolio
+   *
+   */
+  getOutstandingTradeOrders: (state, getters) => {
+
+    let tradeOrders = getters.getCurrentPortfolioTradeOrders
+
+    let outstandingTradeOrders = tradeOrders.filter((tradeOrder) => {
+
+      // if () {
+
+      // }
+      return tradeOrder.fixOrderStatus !== 'FILLED'
+    })
+
+    return outstandingTradeOrders
   }
+
 
 
 

@@ -6,7 +6,9 @@
 <template>
   <v-container fluid>
 
-    <PortfolioSwitchingHeader></PortfolioSwitchingHeader>
+    <PortfolioSwitchingHeader
+       :title="'Stockbroking - Portfolio Summary'">
+    </PortfolioSwitchingHeader>
 
     <v-layout row wrap class="">
       <!-- Market Highlights -->

@@ -7,10 +7,11 @@ import PageNotFound from '@/components/404'
 
 // Stockbroking Components
 import StbPortfolioSummary from '@/components/stockbroking/portfolio-summary/PortfolioSummary'
-import StbTradeHistory from '@/components/stockbroking/TradeHistory'
+import StbTradeHistory from '@/components/stockbroking/trade-history/TradeHistory'
 import StbPortfolioHoldings from '@/components/stockbroking/portfolio-holdings/PortfolioHoldings'
 import StbMarketData from '@/components/stockbroking/MarketData'
 import StbWatchList from '@/components/stockbroking/WatchList'
+import StbTrade from '@/components/stockbroking/trade/Trade'
 
 // FixedIncome Components
 import FixedIncomeRunningInvestments from '@/components/fixedIncome/RunningNairaInvestments'
@@ -40,6 +41,11 @@ export default new Router({
       path: '/stb/portfolio-summary',
       name: 'stb-portfolio-summary',
       component: StbPortfolioSummary
+    },
+    {
+      path: '/stb/trade',
+      name: 'stb-trade',
+      component: StbTrade
     },
     {
       path: '/stb/trade-history',

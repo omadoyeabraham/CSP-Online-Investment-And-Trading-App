@@ -17,17 +17,17 @@
         v-model="selectedTab">
 
         <!-- Tabs bar -->
-        <v-tabs-bar class="blue darken-4 mb20">
+        <v-tabs-bar class="white mb20" >
           <v-tabs-item
             :key="tabs[0]"
             :href="'#' + tabs[0]"
             >
-            <span class="font-size-14">{{tabs[0]}}</span>
+            <span class="font-size-14" style="color: #000000">{{tabs[0]}}</span>
           </v-tabs-item>
           <v-tabs-item
             :key="tabs[1]"
             :href="'#' + tabs[1]">
-            <span class="font-size-14">{{tabs[1]}}</span>
+            <span class="font-size-14 red-text" style="color: #000000">{{tabs[1]}}</span>
           </v-tabs-item>
           <v-tabs-slider
             class="blue darken--2"
