@@ -5,6 +5,7 @@
  */
 
  import axios from 'axios'
+ import _ from 'lodash'
 
  // Data mocks to be replaced with actual API calls
  import StbMockData from '../data-mocks/stockbroking'
@@ -29,7 +30,7 @@ import * as ApiUrls from './ApiUrlService';
 
    // obtain the tradeorders already placed by the user
   // let tradeOrders =  StbMockData.tradeOrders;
-
+  console.log('called getTradeOrders')
   let tradeOrders = []
   let userID = store.state.user.info.id;
 
@@ -79,12 +80,50 @@ import * as ApiUrls from './ApiUrlService';
   */
  let setCurrentPortfolio = (accountNo: string) => {
   store.commit(mutationTypes.CHANGE_CURRENT_PORTFOLIO, accountNo)
+ }
 
+ /**
+  * Get and set the active trade order terms
+  *
+  */
+ let getActiveTradeOrderTerms = () => {
+
+  axios({
+    method: 'GET',
+    url: ApiUrls.GetTradeOrderTerms
+  }).then((response) => {
+
+    let orderTerms = response.data.item
+    orderTerms = _.orderBy(orderTerms, ['defLifeTime'], ['asc'])
+
+    store.commit(mutationTypes.SAVE_TRADE_ORDER_TERMS, orderTerms)
+
+  })
+
+ }
+
+ /**
+  * Returns a list of all securities trading on the floor of the NSE
+  *
+  */
+ let getSecurityNames = () => {
+
+  axios({
+    method: 'GET',
+    url: ApiUrls.GetSecurityNames
+  }).then((response) => {
+
+    let securityNames = response.data
+
+    store.commit(mutationTypes.SAVE_SECURITY_NAMES, securityNames)
+  })
  }
 
 
  export default {
    getTradeOrders,
    getMarketData,
-   setCurrentPortfolio
+   setCurrentPortfolio,
+   getActiveTradeOrderTerms,
+   getSecurityNames
  }

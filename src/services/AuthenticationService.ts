@@ -18,6 +18,8 @@ import * as mutationTypes from '../store/mutation-types.js';
 // Service exposing the urls for the API
 import * as ApiUrls from './ApiUrlService';
 
+import StockbrokingService from './StockbrokingService'
+
  /**
   * Login the user
   *
@@ -46,16 +48,18 @@ import * as ApiUrls from './ApiUrlService';
 
       // Add authorization header to all future axios requests, until the user logs out
       axios.defaults.headers.common['Authorization'] = userData.customer.portalPasswordToken;
+
       // Store the access token in session, so users who reload can still access resources
       window.sessionStorage.setItem('accessToken', userData.customer.portalPasswordToken)
+
+      StockbrokingService.getActiveTradeOrderTerms()
+      StockbrokingService.getSecurityNames()
 
       // Redirect to the dashboard after successful authetication
       router.push({name: 'Dashboard'})
     })
     .catch((error) => {
-      console.group()
-      console.log(error)
-      console.groupEnd()
+
       // return 'Invalid username or password';
     });
 

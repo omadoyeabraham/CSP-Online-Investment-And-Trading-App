@@ -24,6 +24,12 @@
    return moment().format('YYYY-MM-DD')
  }
 
+ let objectHasNodata = (objectToTest) => {
+
+     let keys = Object.keys(objectToTest)
+     return (keys.length == 0)
+ }
+
 
 
 

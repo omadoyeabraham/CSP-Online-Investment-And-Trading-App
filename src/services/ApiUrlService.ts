@@ -11,6 +11,8 @@ export const AuthenticationUrl = `${BaseApiUrl}/findCustomerByName`;
 // Stockbroking
 export const GetTradeOrdersUrl = `${BaseApiUrl}/findCustomerOrders`;
 export const GetMarketDataUrl = `${BaseApiUrl}/getSecurity`;
+export const GetTradeOrderTerms = `${BaseApiUrl}/findActiveTradeOrderTerms`;
+export const GetSecurityNames = `${BaseApiUrl}/getSecurityNames`;
 
 // Dashboard
 export const GetDashboardDataUrl = `${BaseApiUrl}/getDashboardData`;

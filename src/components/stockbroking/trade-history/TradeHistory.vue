@@ -160,6 +160,7 @@
     },
     // Actions to be carried out before this component is created. Ensures that the component has the necessary data to be rendered
     beforeCreate () {
+      console.log('Called before create')
       StockbrokingService.getTradeOrders(0);
     },
 

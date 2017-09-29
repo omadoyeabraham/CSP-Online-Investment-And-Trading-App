@@ -143,6 +143,18 @@ const getters = {
   },
 
   /**
+   * Get the available cash for the currently selected portfolio
+   *
+   */
+  currentPortfolioAvailableCash: (state, getters) => {
+    if (getters.currentPortfolioIsNotSet) {
+      return 0
+    }
+
+    return state.currentPortfolio.availableCash.amount
+  },
+
+  /**
    * Get the total value of the currently selected portfolio
    *
    * @return float
@@ -170,7 +182,6 @@ const getters = {
   currentPortfolioGainOrLoss: (state, getters) => {
     // Return 0 if the current portfolio is empty
     if (getters.currentPortfolioIsNotSet) {
-      console.log('here')
       return 0
     }
 
@@ -304,13 +315,13 @@ const getters = {
   getPortfolioHoldingsStockData: (state, getters) => {
     // Ensure that a current portfolio is set
     if (getters.currentPortfolioIsNotSet) {
-      return null
+      return []
     }
 
     let portfolioHoldings = getters.getStockPortfolioHoldings
 
     if (portfolioHoldings.length === 0) {
-      return null
+      return []
     }
 
     let stockData = []
@@ -377,13 +388,13 @@ const getters = {
   getPortfolioHoldingsBondData: (state, getters) => {
     // Ensure that a current portfolio is set
     if (getters.currentPortfolioIsNotSet) {
-      return null
+      return []
     }
 
     let portfolioHoldings = getters.getBondPortfolioHoldings
 
     if (portfolioHoldings.length === 0) {
-      return null
+      return []
     }
 
     let bondData = []
@@ -412,31 +423,6 @@ const getters = {
       })
 
     })
-
-    // let others = {
-    //   name: 'others',
-    //   y: 0,
-    //   percentageOfPortfolio: 0,
-    //   percentageGain: 0
-    // }
-
-    // // Add all stocks that make up less than 5% of the to an 'others' section instead
-    // stockData = stockData.filter((stock, index) => {
-    //   if (stock.percentageOfPortfolio < 5.00) {
-    //     others.y += stock.y
-    //     others.percentageOfPortfolio += parseFloat(stock.percentageOfPortfolio)
-    //     others.percentageGain += parseFloat(stock.percentageGain)
-    //     return false
-
-    //   } else {
-    //     return true
-    //   }
-    // })
-
-    // // Only add others if there are actually others to add
-    // if (others.y !== 0) {
-    //   stockData.push(others)
-    // }
 
     return bondData
 
@@ -630,6 +616,56 @@ const getters = {
     })
 
     return outstandingTradeOrders
+  },
+
+  /**
+   * Get the trade order terms
+   *
+   */
+  getTradeOrderTerms: (state, getters) => {
+
+    let orderTerms = []
+
+    state.tradeOrderTerms.forEach((orderTerm) => {
+      orderTerms.push({
+        text: orderTerm.label,
+        value: orderTerm.name
+      })
+    })
+
+    return orderTerms
+
+  },
+
+  /**
+   * Returns all securities trading on the NSE floor
+   *
+   */
+  getSecurityNames: (state, getters) => {
+
+    let securityNames = []
+
+    state.securityNames.forEach((securityName) => {
+      securityNames.push({
+        text: securityName.name,
+        value: securityName.name
+      })
+    })
+
+    return securityNames
+
+  },
+
+  getAllSecuritiesInCurrentPortfolio: (state, getters) => {
+    let currentPortfolioHoldings = getters.getPortfolioHoldingsStockData
+
+    let currentPortfolioSecurities = []
+
+    currentPortfolioHoldings.forEach((portfolioHolding) => {
+      currentPortfolioSecurities.push(portfolioHolding.name)
+    })
+
+    return currentPortfolioSecurities
   }
 
 

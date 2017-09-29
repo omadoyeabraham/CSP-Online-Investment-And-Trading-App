@@ -54,6 +54,18 @@ const mutations = {
       state.currentPortfolio.portfolioHoldings = []
     }
 
+  },
+
+  [mutationTypes.SAVE_TRADE_ORDER_TERMS](state, orderTerms) {
+    state.tradeOrderTerms = orderTerms
+  },
+
+  [mutationTypes.SAVE_SECURITY_NAMES](state, securityNames) {
+    state.securityNames = securityNames
+  },
+
+  [mutationTypes.SET_SECURITY_SELECTED_ON_TRADE_PAGE](state, newlySelectedSecurity) {
+    state.selectedSecurityOnTradePage = newlySelectedSecurity
   }
 
 }
