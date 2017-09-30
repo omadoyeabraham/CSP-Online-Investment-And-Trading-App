@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="">
+  <v-container fluid class="p0">
 
   <!-- Page heading and Fund account button -->
   <v-layout row>
@@ -7,7 +7,7 @@
       <h3 class="font-size-20 csp-light-blue-text">{{title}}</h3>
     </v-flex>
     <v-flex d-flex justify-end align-start>
-      <v-btn info class="blue darken-4 font-size-10 p0 ml-auto mb0">
+      <v-btn info class="blue darken-4 font-size-10 p0 ml-auto mb0 mr0">
         Fund Account
       </v-btn>
     </v-flex>

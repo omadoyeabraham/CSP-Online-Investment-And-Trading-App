@@ -1,5 +1,5 @@
 <template>
-  <v-container
+  <v-container class=""
     fluid>
 
      <!-- Portfolio Switching Header -->

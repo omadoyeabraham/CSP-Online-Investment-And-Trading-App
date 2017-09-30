@@ -119,11 +119,83 @@ import * as ApiUrls from './ApiUrlService';
   })
  }
 
+ /**
+  * Returns the market data for a stock selected on the trade page
+  *
+  */
+ let getSecurityMarketSnapShot = (newlySelectedSecurity) => {
+
+  // axios({
+  //   method: 'GET',
+  //   url: `${ApiUrls.GetSecurityMarketSnapShot}${newlySelectedSecurity}`
+  // }).then((response) => {
+  //   console.log(response)
+  // })
+
+  let marketSnapShot = StbMockData.marketSnapShot
+
+  // Calculating bids
+  let bidLevels = marketSnapShot.bidLevels ? (marketSnapShot.bidLevels) : []
+  let bids = []
+  let bidsTotal = 0
+
+  bidLevels.forEach((bidLevel, index) => {
+    bidLevel.id = ++index
+    bidLevel.total = bidsTotal + parseFloat(bidLevel.qty)
+    bidsTotal = bidLevel.total
+    bids.push(bidLevel)
+  })
+
+  // Calculating offers
+  let offerLevels = (marketSnapShot.offerLevels) ? marketSnapShot.offerLevels : []
+  let offers = []
+  let offersTotal = 0
+
+  offerLevels.forEach((offerLevel, index) => {
+    offerLevel.id = ++index
+    offerLevel.total = offersTotal + parseFloat(offerLevel.qty)
+    offersTotal = offerLevel.total
+    offers.push(offerLevel)
+  })
+
+  // Getting trades and price movements
+  let trades = (marketSnapShot.trades) ? marketSnapShot.trades : []
+  let priceMovements = []
+
+  trades.forEach((trade, index) => {
+    trade.id = ++index
+
+    let priceMovement = {
+      id: ++index,
+      date: trade.date,
+      price: trade.tradePrice
+    }
+
+    priceMovements.push(priceMovement)
+  })
+
+  // So the graph is plotted in the correct order
+  priceMovements.reverse()
+
+
+
+
+
+  return {
+    bids,
+    offers,
+    trades,
+    priceMovements
+  }
+
+ }
+
 
  export default {
    getTradeOrders,
    getMarketData,
    setCurrentPortfolio,
    getActiveTradeOrderTerms,
-   getSecurityNames
+   getSecurityNames,
+   getSecurityMarketSnapShot
  }
