@@ -666,7 +666,8 @@ const getters = {
     })
 
     return currentPortfolioSecurities
-  }
+  },
+
 
 
 

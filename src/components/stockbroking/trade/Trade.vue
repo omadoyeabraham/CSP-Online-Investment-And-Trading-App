@@ -20,14 +20,11 @@
       <v-flex
         sm8
         class="">
-
+        <market-snap-shot>
+        </market-snap-shot>
       </v-flex>
 
     </v-layout>
-
-
-
-    <!-- Mandate Form -->
 
   </v-container>
 </template>
@@ -35,12 +32,14 @@
 <script>
    import PortfolioSwitchingHeader from '../PortfolioSwitchingHeader'
    import MandateForm from './MandateForm'
+   import MarketSnapShot from './MarketSnapShot'
 
 export default
 {
   components: {
        PortfolioSwitchingHeader,
-       MandateForm
+       MandateForm,
+       MarketSnapShot
   }
 
 }

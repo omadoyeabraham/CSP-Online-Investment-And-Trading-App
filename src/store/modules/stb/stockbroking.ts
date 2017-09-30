@@ -14,7 +14,7 @@ const state = {
   tradeOrders: {},
   tradeOrderTerms: [],
   securityNames: [],
-  selectedSecurityOnTradePage: '',
+  selectedSecurityOnTradePage: null,
   marketData: {},
   portfolios: [],
   currentPortfolio: {},
