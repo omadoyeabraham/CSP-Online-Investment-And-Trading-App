@@ -16,12 +16,19 @@ import Highcharts from 'highcharts/highstock';
 import lodash from 'lodash'
 import VueLodash from 'vue-lodash'
 window._ = require('lodash') // eslint-disable-line no-unused-vars
-
 Vue.use(VueLodash, lodash)
 
+// VueJS Filters
+import Vue2Filters from 'vue2-filters'
+Vue.use(Vue2Filters)
+
 // Vuelidate is used for from validation
-import Vuelidate from 'vuelidate'
-Vue.use(Vuelidate)
+// import Vuelidate from 'vuelidate'
+// Vue.use(Vuelidate)
+
+// VeeValidate is used for form validation
+import VeeValidate from 'vee-validate';
+Vue.use(VeeValidate);
 
 // Progress bar
 import VueProgressBar from 'vue-progressbar'

@@ -8,21 +8,23 @@
 
     <v-card-media>
 
-       <v-container fluid class="p0 pt5">
+       <v-container fluid class="p0 pt2">
         <v-layout row>
 
-          <v-flex sm12 class="blue p5 white--text">
+          <v-flex sm12 class="blue-grey darken-1 p5 white--text">
             <span class="font-size-12 font-weight-bold p15">
-              Cash Available for Trading: ₦ {{availableCash}}
+              Cash Available for Trading:  {{availableCash | currency('₦') }}
             </span>
           </v-flex>
 
         </v-layout>
       </v-container>
 
-      <v-container fluid>
+      <v-container fluid class="pt0">
         <v-layout row>
-
+          <v-form v-model="mandatePreviewFormIsValid" ref="mandatePreviewForm"
+            class="w100p">
+        <v-layout row class="p20 pt0">
           <!-- Order Type -->
           <v-flex sm6 class="">
               <v-select
@@ -100,9 +102,8 @@
                 >
               </v-text-field>
           </v-flex>
-
-
-
+           </v-layout>
+          </v-form>
 
         </v-layout>
       </v-container>
@@ -113,7 +114,8 @@
 
           <v-flex xs6
             class="d-flex justify-end">
-            <v-btn primary>
+            <v-btn primary
+              @click="previewOrder()">
               Preview Order
             </v-btn>
           </v-flex>
@@ -136,12 +138,15 @@
 
 <script>
 import {mapGetters} from 'vuex'
+
 import * as mutationTypes from '../../../store/mutation-types'
+import StockbrokingService from '../../../services/StockbrokingService'
 
 export default
 {
   data () {
     return {
+      mandatePreviewFormIsValid: false,
       orderType: '',
       orderTerm: '',
       priceOption: '',
@@ -205,6 +210,18 @@ export default
   watch: {
     securityName: function (selectedSecurityName) {
       this.$store.commit(mutationTypes.SET_SECURITY_SELECTED_ON_TRADE_PAGE, selectedSecurityName)
+    }
+  },
+
+  methods: {
+    // Preview a mandate before sending it out
+    previewOrder: function () {
+      if (!this.$refs.mandatePreviewForm.validate()) {
+        console.log(this.$refs.mandatePreviewForm.validate())
+        console.log('before')
+        return
+      }
+      StockbrokingService.previewTradeOrder({})
     }
   }
 

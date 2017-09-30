@@ -190,6 +190,15 @@ import * as ApiUrls from './ApiUrlService';
 
  }
 
+ /**
+  * Preview a trade order request and get the tradeorder total
+
+  * @param tradeOrder
+  */
+ let previewTradeOrder = (tradeOrder: object) => {
+  console.log(tradeOrder)
+ }
+
 
  export default {
    getTradeOrders,
@@ -197,5 +206,6 @@ import * as ApiUrls from './ApiUrlService';
    setCurrentPortfolio,
    getActiveTradeOrderTerms,
    getSecurityNames,
-   getSecurityMarketSnapShot
+   getSecurityMarketSnapShot,
+   previewTradeOrder
  }
