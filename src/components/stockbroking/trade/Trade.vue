@@ -14,8 +14,8 @@
         sm12 lg4
         class="mb10">
         <mandate-form
-          :orderType = "redirectedOrderType"
-          :securityName = "redirectedInstrument">
+          :redirectedOrderType = "redirectedOrderType"
+          :redirectedSecurityName = "redirectedInstrument">
         </mandate-form>
       </v-flex>
 

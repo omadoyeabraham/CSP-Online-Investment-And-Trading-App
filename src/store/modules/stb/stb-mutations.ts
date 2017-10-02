@@ -70,6 +70,7 @@ const mutations = {
     state.selectedSecurityOnTradePage = newlySelectedSecurity
   },
 
+
   /**
    * Set the total value of the stb portfolio
    *
@@ -78,6 +79,38 @@ const mutations = {
    */
   [mutationTypes.SET_STOCKBROKING_TOTAL_VALUE](state, stbTotalValue) {
     state.totalValue = "234,690"
+  },
+
+  /**
+   * Save the market data for the selected security on the trade page to the vuex store
+   *
+   * @param state
+   * @param marketSnapShot
+   */
+  [mutationTypes.SAVE_SELECTED_SECURITY_MARKET_SNAPSHOT](state, marketSnapShot) {
+    state.selectedSecurityMarketSnapShot = marketSnapShot
+  },
+
+  /**
+   *
+   * Commit the info to be displayed on the status box in the trade page, when a stock is selected
+   *
+   * @param {any} state
+   * @param {any} statusInfo
+   */
+  [mutationTypes.SAVE_SELECTED_SECURITY_STATUS_INFO](state, statusInfo) {
+    state.selectedSecurityStatusInfo = statusInfo
+  },
+
+
+  /**
+   * Reset all data for the market snapshot component
+   *
+   * @param {any} state
+   */
+  [mutationTypes.RESET_MARKET_SNAPSHOT](state) {
+    state.selectedSecurityMarketSnapShot = null
+    state.selectedSecurityStatusInfo = null
   }
 
 }

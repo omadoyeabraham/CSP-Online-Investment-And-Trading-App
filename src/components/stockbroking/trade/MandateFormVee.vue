@@ -1,3 +1,8 @@
+<!--
+  This component represents the form used in placing trade orders to the NSE floor
+
+  @author Omadoye Abraham <omadoyeabraham@gmail.com>
+-->
 <template>
   <v-card>
 
@@ -81,25 +86,6 @@
         </v-layout>
       </v-container>
 
-      <!-- Buttons -->
-      <!-- <v-container fluid>
-        <v-layout row>
-
-          <v-flex xs6 class="d-flex justify-end">
-            <v-btn primary @click="previewOrder()">
-              Preview Order
-            </v-btn>
-          </v-flex>
-
-          <v-flex xs6>
-            <v-btn error>
-              Cancel Order
-            </v-btn>
-          </v-flex>
-
-        </v-layout>
-      </v-container> -->
-
     </v-card-media>
 
   </v-card>
@@ -113,15 +99,26 @@ import StockbrokingService from '../../../services/StockbrokingService'
 
 export default
 {
-  props: ['orderType', 'securityName'],
+  props: ['redirectedOrderType', 'redirectedSecurityName'],
+
+  mounted () {
+    // Set the selected security, when redirecting from any of the BUY/SELL buttons
+    if (this.redirectedOrderType && this.redirectedSecurityName) {
+      this.orderType = this.redirectedOrderType
+      this.securityName = this.redirectedSecurityName
+    }
+
+    this.$store.commit(mutationTypes.SET_SECURITY_SELECTED_ON_TRADE_PAGE, this.securityName)
+  },
+
   data () {
     return {
       valid: false,
-      // orderType: '',
       orderTerm: '',
+      orderType: '',
+      securityName: '',
       priceOption: '',
       limitPrice: '',
-      // securityName: '',
       quantity: '',
       orderTypeRules: [
         (v) => !!v || 'Required'

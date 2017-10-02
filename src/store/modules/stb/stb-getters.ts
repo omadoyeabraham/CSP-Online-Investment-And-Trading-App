@@ -684,7 +684,8 @@ const getters = {
     state.securityNames.forEach((securityName) => {
       securityNames.push({
         text: securityName.name,
-        value: securityName.name
+        value: securityName.name,
+        id: securityName.id
       })
     })
 
@@ -693,15 +694,25 @@ const getters = {
   },
 
   getAllSecuritiesInCurrentPortfolio: (state, getters) => {
-    let currentPortfolioHoldings = getters.getPortfolioHoldingsStockData
 
-    let currentPortfolioSecurities = []
+    // Ensure that a current portfolio is set
+    if (getters.currentPortfolioIsNotSet) {
+      return []
+    }
 
-    currentPortfolioHoldings.forEach((portfolioHolding) => {
-      currentPortfolioSecurities.push(portfolioHolding.name)
+    let portfolioHoldings = getters.getStockPortfolioHoldings
+
+    if (portfolioHoldings.length === 0) {
+      return []
+    }
+
+    let stockNames = []
+
+    portfolioHoldings.forEach((portfolioHolding) => {
+      stockNames.push(portfolioHolding.securityName)
     })
 
-    return currentPortfolioSecurities
+    return stockNames
   },
 
 

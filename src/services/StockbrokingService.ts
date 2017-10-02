@@ -19,12 +19,12 @@ import * as mutationTypes from '../store/mutation-types.js';
 // Service exposing the urls for the API
 import * as ApiUrls from './ApiUrlService';
 
-/**
- * Get the total value of the user's stockbroking portfolio
- */
-let getStockbrokingTotalValue = (stbData) => {
-  store.commit(mutationTypes.SET_STOCKBROKING_TOTAL_VALUE, '234,600')
-}
+// /**
+//  * Get the total value of the user's stockbroking portfolio
+//  */
+// let getStockbrokingTotalValue = (stbData) => {
+//   store.commit(mutationTypes.SET_STOCKBROKING_TOTAL_VALUE, '234,600')
+// }
 
 /**
  * Get all trade orders that the authenticated user has placed and commit it to the vuex store
@@ -129,69 +129,99 @@ let getStockbrokingTotalValue = (stbData) => {
   */
  let getSecurityMarketSnapShot = (newlySelectedSecurity) => {
 
-  // axios({
-  //   method: 'GET',
-  //   url: `${ApiUrls.GetSecurityMarketSnapShot}${newlySelectedSecurity}`
-  // }).then((response) => {
-  //   console.log(response)
-  // })
+  axios({
+    method: 'GET',
+    url: `${ApiUrls.GetSecurityMarketSnapShot}/${newlySelectedSecurity}`
+  }).then((response) => {
+    let marketSnapShot = response.data
 
-  let marketSnapShot = StbMockData.marketSnapShot
+    // let marketSnapShot = StbMockData.marketSnapShot
 
-  // Calculating bids
-  let bidLevels = marketSnapShot.bidLevels ? (marketSnapShot.bidLevels) : []
-  let bids = []
-  let bidsTotal = 0
+    // Calculating bids
+    let bidLevels = marketSnapShot.bidLevels ? (marketSnapShot.bidLevels) : []
+    let bids = []
+    let bidsTotal = 0
+    let companyName = marketSnapShot.companyName
 
-  bidLevels.forEach((bidLevel, index) => {
-    bidLevel.id = ++index
-    bidLevel.total = bidsTotal + parseFloat(bidLevel.qty)
-    bidsTotal = bidLevel.total
-    bids.push(bidLevel)
-  })
+    bidLevels.forEach((bidLevel, index) => {
+      bidLevel.id = ++index
+      bidLevel.total = bidsTotal + parseFloat(bidLevel.qty)
+      bidsTotal = bidLevel.total
+      bids.push(bidLevel)
+    })
 
-  // Calculating offers
-  let offerLevels = (marketSnapShot.offerLevels) ? marketSnapShot.offerLevels : []
-  let offers = []
-  let offersTotal = 0
+    // Calculating offers
+    let offerLevels = (marketSnapShot.offerLevels) ? marketSnapShot.offerLevels : []
+    let offers = []
+    let offersTotal = 0
 
-  offerLevels.forEach((offerLevel, index) => {
-    offerLevel.id = ++index
-    offerLevel.total = offersTotal + parseFloat(offerLevel.qty)
-    offersTotal = offerLevel.total
-    offers.push(offerLevel)
-  })
+    offerLevels.forEach((offerLevel, index) => {
+      offerLevel.id = ++index
+      offerLevel.total = offersTotal + parseFloat(offerLevel.qty)
+      offersTotal = offerLevel.total
+      offers.push(offerLevel)
+    })
 
-  // Getting trades and price movements
-  let trades = (marketSnapShot.trades) ? marketSnapShot.trades : []
-  let priceMovements = []
+    // Getting trades and price movements
+    let trades = (marketSnapShot.trades) ? marketSnapShot.trades : []
+    let priceMovements = []
 
-  trades.forEach((trade, index) => {
-    trade.id = ++index
+    trades.forEach((trade, index) => {
+      trade.id = ++index
 
-    let priceMovement = {
-      id: ++index,
-      date: trade.date,
-      price: trade.tradePrice
+      let priceMovement = {
+        id: ++index,
+        date: trade.date,
+        price: trade.tradePrice
+      }
+
+      priceMovements.push(priceMovement)
+    })
+
+    // So the graph is plotted in the correct order
+    priceMovements.reverse()
+
+    let currentMarketData =  {
+      bids,
+      offers,
+      trades,
+      priceMovements,
+      companyName
     }
 
-    priceMovements.push(priceMovement)
+    store.commit(mutationTypes.SAVE_SELECTED_SECURITY_MARKET_SNAPSHOT, currentMarketData)
+
+  }).catch((error) => {
+    console.log(error)
   })
 
-  // So the graph is plotted in the correct order
-  priceMovements.reverse()
+ }
 
+ /**
+  * Get the data for the status box on the trade page
+  *
+  * @param securityID
+  */
+ let getSecurityStatusInfo = (securityID: number) => {
 
+    axios({
+      method: 'GET',
+      url: `${ApiUrls.GetSecurityStatusInfo}/${securityID}`
+    }).then((response) => {
+      let statusInfo = response.data
 
+      store.commit(mutationTypes.SAVE_SELECTED_SECURITY_STATUS_INFO, statusInfo)
+    }).catch((error) => {
+      console.log(error)
+    })
 
+ }
 
-  return {
-    bids,
-    offers,
-    trades,
-    priceMovements
-  }
-
+ /**
+  * Reset all the data on the STB market snapshot component
+  */
+ let resetMarketSnapShot = () => {
+   store.commit(mutationTypes.RESET_MARKET_SNAPSHOT)
  }
 
  /**
@@ -211,6 +241,7 @@ let getStockbrokingTotalValue = (stbData) => {
    getActiveTradeOrderTerms,
    getSecurityNames,
    getSecurityMarketSnapShot,
-   previewTradeOrder,
-   getStockbrokingTotalValue
+   getSecurityStatusInfo,
+   resetMarketSnapShot,
+   previewTradeOrder
  }

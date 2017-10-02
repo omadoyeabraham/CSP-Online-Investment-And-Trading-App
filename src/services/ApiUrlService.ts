@@ -13,7 +13,8 @@ export const GetTradeOrdersUrl = `${BaseApiUrl}/findCustomerOrders`;
 export const GetMarketDataUrl = `${BaseApiUrl}/getSecurity`;
 export const GetTradeOrderTerms = `${BaseApiUrl}/findActiveTradeOrderTerms`;
 export const GetSecurityNames = `${BaseApiUrl}/getSecurityNames`;
-export const GetSecurityMarketSnapShot = `http://mds.zanibal.com/mds/rest/api/v1/research/get-security-overview/symbol?x=NSE&s=`;
+export const GetSecurityMarketSnapShot = `${BaseApiUrl}/findSecurityOverviewByName`;
+export const GetSecurityStatusInfo = `${BaseApiUrl}/findSecurityOverviewById`;
 
 // Dashboard
 export const GetDashboardDataUrl = `${BaseApiUrl}/getDashboardData`;
