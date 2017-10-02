@@ -25,9 +25,11 @@ const mutations = {
       // Default the current portfolio to the first portfolio returned
       state.currentPortfolio = state.portfolios[0]
 
+      // The user has a stockbroking portfolio
+      state.userHasStb = true
+
     }
 
-    state.totalValue = UserService.getStbTotalValue(state.userData)
   },
 
   [mutationTypes.SAVE_TRADE_ORDERS_TO_STORE](state, tradeOrders: Array<object>) {
@@ -66,6 +68,16 @@ const mutations = {
 
   [mutationTypes.SET_SECURITY_SELECTED_ON_TRADE_PAGE](state, newlySelectedSecurity) {
     state.selectedSecurityOnTradePage = newlySelectedSecurity
+  },
+
+  /**
+   * Set the total value of the stb portfolio
+   *
+   * @param {any} state
+   * @param {any} stbTotalValue
+   */
+  [mutationTypes.SET_STOCKBROKING_TOTAL_VALUE](state, stbTotalValue) {
+    state.totalValue = "234,690"
   }
 
 }

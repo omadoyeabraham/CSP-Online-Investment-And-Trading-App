@@ -35,9 +35,9 @@
  import CashStore from './modules/cash/cash.ts'
 
  /**
-  * VuexPersistence object used to persist data in localstorage until the user signs out
+  * VuexPersistence object used to persist data in sessionstorage until the user signs out
   */
- const vuexLocalStorage = new VuexPersistence({
+ const vuexSessionStorage = new VuexPersistence({
    storage: window.sessionStorage
  })
 
@@ -54,5 +54,5 @@
      fixedIncome: FixedIncomeStore,
      cash: CashStore
    },
-   plugins: [vuexLocalStorage.plugin]
+   plugins: [vuexSessionStorage.plugin]
  });

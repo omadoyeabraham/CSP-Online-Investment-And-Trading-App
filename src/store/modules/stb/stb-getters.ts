@@ -1,6 +1,7 @@
 // Imports
 import _ from 'lodash'
 import {ChartService} from '../../../services/ChartsService'
+import UtilityService from '../../../services/UtilityService'
 
 const getters = {
 
@@ -118,6 +119,26 @@ const getters = {
    */
   numberOfAccountsInPortfolio: (state) => {
     return state.portfolios.length
+  },
+
+
+  /**
+   * Calculate the total stockbroking value of the user's portfolio
+   */
+  getStbTotalValue: (state) => {
+    const portfolios = state.portfolios
+    let stbTotalValue = 0
+
+    portfolios.forEach((portfolio) => {
+      // DO not sum up non-exchange or SMA portfolios
+      if (portfolio.portfolioClass != "EXCHANGE" || portfolio.label.indexOf('(SMA)') != -1){
+        return
+      } else {
+        stbTotalValue += parseFloat(portfolio.currentValuation.amount)
+      }
+    })
+
+    return stbTotalValue
   },
 
   /**
@@ -576,6 +597,11 @@ const getters = {
 
     let selectedPortfolioName = state.currentPortfolio.name
     let tradeOrders = state.tradeOrders
+    console.log(tradeOrders)
+
+    if(UtilityService.objectHasNodata(tradeOrders)) {
+      return []
+    }
 
     let currentPortfolioTradeOrders = tradeOrders.filter((tradeOrder) => {
       return (tradeOrder.portfolioName === selectedPortfolioName)

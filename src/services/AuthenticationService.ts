@@ -43,6 +43,7 @@ import StockbrokingService from './StockbrokingService'
       // Commit the authenticated user's data to the vue store.
       store.commit(mutationTypes.SAVE_AUTHENTICATED_USER_TO_STORE, userData);
       store.commit(mutationTypes.SAVE_USER_STOCKBROKING_DATA_TO_STORE, userData);
+      store.commit(mutationTypes.SET_STOCKBROKING_TOTAL_VALUE, userData);
       store.commit(mutationTypes.SAVE_USER_FIXEDINCOME_DATA_TO_STORE, userData);
       store.commit(mutationTypes.SAVE_USER_CASH_DATA_TO_STORE, userData);
 

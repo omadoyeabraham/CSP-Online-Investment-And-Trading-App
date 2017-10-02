@@ -19,6 +19,12 @@ import * as mutationTypes from '../store/mutation-types.js';
 // Service exposing the urls for the API
 import * as ApiUrls from './ApiUrlService';
 
+/**
+ * Get the total value of the user's stockbroking portfolio
+ */
+let getStockbrokingTotalValue = (stbData) => {
+  store.commit(mutationTypes.SET_STOCKBROKING_TOTAL_VALUE, '234,600')
+}
 
 /**
  * Get all trade orders that the authenticated user has placed and commit it to the vuex store
@@ -192,7 +198,7 @@ import * as ApiUrls from './ApiUrlService';
 
  /**
   * Preview a trade order request and get the tradeorder total
-
+  *
   * @param tradeOrder
   */
  let previewTradeOrder = (tradeOrder: object) => {
@@ -207,5 +213,6 @@ import * as ApiUrls from './ApiUrlService';
    getActiveTradeOrderTerms,
    getSecurityNames,
    getSecurityMarketSnapShot,
-   previewTradeOrder
+   previewTradeOrder,
+   getStockbrokingTotalValue
  }

@@ -17,6 +17,15 @@
         </PortfolioSummaryBox>
       </v-flex>
 
+       <!-- Sector Overview -->
+      <v-flex xs12 md6 lg4 class="mb5 red">
+        <SectorOverview
+          :sectorAllocationChartData="sectorAllocationChartData"
+          :sectorPerformanceChartData="sectorPerformanceChartData"
+          :sectorData="sectorData">
+        </SectorOverview>
+      </v-flex>
+
       <!-- Top gainers and losers -->
       <v-flex xs12 md6 lg4 class="mb5">
         <SectorAllocationChart

@@ -15,18 +15,20 @@
 
     <!-- Number of accounts and account switching -->
     <v-layout row  class="mb20">
-      <v-flex d-flex align-center>
+      <v-flex d-flex align-end>
         <h3 class="font-size-12 csp-blue-text font-weight-bold">NUMBER OF ACCOUNTS IN PORTFOLIO: {{numberOfAccountsInPortfolio}}</h3>
       </v-flex>
-      <v-flex d-flex justify-end>
-
-        <select class="custom-select mt10"
+      <v-flex d-flex justify-end align-end class="pb5">
+        <form class="form-inline">
+        <label class="mr-sm-2 font-size-11 font-weight-bold mt10" for="selectAccount">SELECT ACCOUNT:</label>
+        <select class="custom-select mt10 form-group" id="selectAccount"
           v-model="selectedPortfolioAccountNo"
           v-on:change.native="changeCurrentPortfolio">
           <option v-for="(item, index) in portfolios"
             :key="index"
             v-bind:value="item.accountNo">{{item.label}}</option>
         </select>
+        </form>
 
    <!-- {{sectorData}} -->
 

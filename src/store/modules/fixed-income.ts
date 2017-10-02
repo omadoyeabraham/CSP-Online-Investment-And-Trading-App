@@ -6,6 +6,7 @@
 import * as mutationTypes from '../mutation-types.js';
 
 import UserService from '../../services/UserService';
+import UtilityService from '../../services/UtilityService';
 
 // Moment.js
 import * as moment from 'moment'
@@ -27,7 +28,12 @@ const getters = {
     let nairaInvestments =  state.userData.NGN
     let treasuryBills = state.userData.TBills
 
+    if (UtilityService.objectHasNodata(nairaInvestments) || UtilityService.objectHasNodata(treasuryBills)) {
+      return []
+    }
+
     let investments = []
+
 
     let runningNairaInvestments = nairaInvestments.filter((investment) => {
       return investment.status === 'RUNNING'

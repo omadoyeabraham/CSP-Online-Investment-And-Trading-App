@@ -7,6 +7,7 @@ import mutations from './stb-mutations'
 
 // Initial Store State
 const state = {
+  userHasStb: false,
   marketHighlights: {},
   nseAsi: [],
   topGainers: [],

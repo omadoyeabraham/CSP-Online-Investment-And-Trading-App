@@ -11,18 +11,33 @@
 
       <!-- For nav-items with dropdown children -->
       <v-list-group v-if="item.children" v-model="item.model" no-action>
-        <v-list-tile  slot="item" style="height: 30px">
+        <v-list-tile  slot="item" style="height: 30pxs"
+         class=" align-center w100p"
+>
           <div class="mr10">
             <v-icon>{{ item.model ? item.icon : item['icon-alt'] }}</v-icon>
           </div>
-          <v-list-tile-content>
-            <v-list-tile-title class="font-size-11">
+          <v-list-tile-content class="w100p">
+            <v-list-tile-title class="font-size-11 w100p">
               <span style="float:left;">{{ item.text }}</span>
-              <span style="float:right;"> {{item.totalValue}}</span>
+
+              <!-- Stockbroking -->
+              <span style="float: right" class="mr0" v-if="item.isSTB">
+                <span v-if="userHasStb">{{stbTotalValue | currency('&#8358;', 2)}}</span>
+                <span v-else>---</span>
+              </span>
+
+              <!-- Fixed income -->
+              <span style="float: right" class="mr0" v-if="item.isFI">
+                {{stbTotalValue}}
+              </span>
+
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile  v-for="(child, i) in item.children" :key="i" style="height: 30px">
+        <v-list-tile  v-for="(child, i) in item.children"
+          :key="i" style="height: 30px"
+          class="d-flex align-center justify-between">
           <v-list-tile-action v-if="child.icon">
             <v-icon class="font-size-11">{{ child.icon }}</v-icon>
           </v-list-tile-action>
@@ -36,18 +51,28 @@
       <!-- EOF of nav-items with dropdown -->
 
       <!-- Nav items without a dropdown -->
-      <v-list-tile class="sidebar-item" :key="i" v-else style="height: 30px">
+      <v-list-tile class="sidebar-item hover" :key="i" v-else style="height: 30pxs"
+        >
         <div class="mr10">
           <v-icon>{{ item.icon }}</v-icon>
         </div>
         <v-list-tile-content>
-          <v-list-tile-title class="font-size-11">
-            <router-link :to="{name: item.routeName}" class="font-size-11">
+          <!-- <v-list-tile-title class="font-size-11 hover">
+            <router-link :to="{name: item.routeName}" class="font-size-11 w100p">
               {{ item.text }}
               <span style="float:right">{{item.totalValue}}</span>
             </router-link>
             <!-- <span style="float: left">{{ item.text }}</span> -->
-          </v-list-tile-title>
+          <!-- </v-list-tile-title> -->
+
+          <!-- <v-list-tile-title class="font-size-11 hover"> -->
+            <router-link :to="{name: item.routeName}" class="font-size-11 hover w100p">
+              <span>{{item.text}}</span>
+              <span style="float:right">{{item.totalValue}}</span>
+            </router-link>
+            <!-- <span style="float: left">{{ item.text }}</span> -->
+          <!-- </v-list-tile-title> -->
+
         </v-list-tile-content>
       </v-list-tile>
 
@@ -57,7 +82,7 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex'
+  import {mapState, mapGetters} from 'vuex'
 
   export default
   {
@@ -73,7 +98,12 @@
 
     computed: {
       ...mapState({
-        'user': (store) => store.user
+        'user': (store) => store.user,
+        'userHasStb': (store) => store.stockbroking.userHasStb
+      }),
+
+      ...mapGetters({
+        'stbTotalValue': 'getStbTotalValue'
       })
     }
 
@@ -84,7 +114,7 @@
 <style scoped lang="sass">
   .sidebar-item:last-of-type
     border-top: 1px solid #EEEEEE
-    margin-top: 10px
+    margin-top: 0px
   .sidebar-item:last-of-type span
     font-weight: bold
   .sidebar-item > div
@@ -92,4 +122,11 @@
     height: 30px
   .sidebar-item .list__title
     height: 30px
+  .hover
+    &:hover
+      background: #DDDDDD
+      cursor: pointer
+      a
+        &:hover, &:focus
+          text-decoration: none
 </style>

@@ -1,5 +1,4 @@
 <template>
-
   <v-card>
 
     <v-card-title primary-title class="blue darken-4 white--text p2 d-flex justify-center">
@@ -8,12 +7,12 @@
 
     <v-card-media>
 
-       <v-container fluid class="p0 pt2">
+      <v-container fluid class="p0 pt2">
         <v-layout row>
 
           <v-flex sm12 class="blue-grey darken-1 p5 white--text">
             <span class="font-size-12 font-weight-bold p15">
-              Cash Available for Trading:  {{availableCash | currency('₦') }}
+              Cash Available for Trading: {{availableCash | currency('₦') }}
             </span>
           </v-flex>
 
@@ -22,96 +21,50 @@
 
       <v-container fluid class="pt0">
         <v-layout row>
-          <v-form v-model="valid" ref="form"
-            class="w100p">
+          <v-form v-model="valid" ref="form" class="w100p">
 
             <v-layout row class="p20 pt0">
               <!-- Order Type -->
-              <v-flex sm6 class="">
-                  <v-select
-                    class=""
-                    :label="'Order Type'"
-                    :items="orderTypes"
-                    v-model="orderType"
-                    v-validate="'required'"
-                    prepend-icon="work"
-                    :rules="orderTypeRules"
-                    >
-                  </v-select>
+              <v-flex xs6 class="">
+                <v-select class="" :label="'Order Type'" :items="orderTypes" v-model="orderType" v-validate="'required'" prepend-icon="work" name="orderType" :rules="orderTypeRules">
+                </v-select>
               </v-flex>
 
               <!-- Price Option -->
-              <v-flex sm6 class="">
-                  <v-select
-                    class=""
-                    :label="'Price Option'"
-                    :items="priceOptions"
-                    v-model="priceOption"
-                    :rules="priceOptionRules"
-                    prepend-icon="bookmark"
-                    >
-                  </v-select>
+              <v-flex xs6 class="">
+                <v-select class="" :label="'Price Option'" :items="priceOptions" v-model="priceOption" v-validate="'required'" :rules="priceOptionRules" prepend-icon="bookmark" name="priceOption">
+                </v-select>
               </v-flex>
 
               <!-- Stocks -->
-              <v-flex sm12 class="">
-                  <v-select
-                    class=""
-                    :label="'Stock'"
-                    :items="securityNames"
-                    v-model="securityName"
-                    :rules="securityNameRules"
-                    prepend-icon="map"
-                    >
-                  </v-select>
+              <v-flex xs12 class="">
+                <v-select class="" :label="'Stock'" :items="securityNames" v-model="securityName" :rules="securityNameRules" prepend-icon="map" v-validate="'required'" name="securityName">
+                </v-select>
               </v-flex>
 
               <!-- Order Term -->
-              <v-flex sm12 class="font-size-10">
-                  <v-select
-                    class="font-size-10"
-                    :label="'Order Term'"
-                    :items="tradeOrderTerms"
-                    v-model="orderTerm"
-                    :rules="orderTermRules"
-                    prepend-icon="today"
-                    >
-                  </v-select>
+              <v-flex xs12 class="font-size-10">
+                <v-select class="font-size-10" :label="'Order Term'" :items="tradeOrderTerms" v-model="orderTerm" :rules="orderTermRules" prepend-icon="today" v-validate="'required'" name="orderTerm">
+                </v-select>
               </v-flex>
 
               <!-- Limit Price -->
-              <v-flex
-              sm12 class="">
-                  <v-text-field
-                    v-if="isLimitOrder"
-                    :label="'Limit Price'"
-                    v-model="limitPrice"
-                    :rules="limitPriceRules"
-                    prepend-icon="remove_shopping_cart"
-                    >
-                  </v-text-field>
+              <v-flex xs12 class="">
+                <v-text-field v-if="isLimitOrder" :label="'Limit Price'" v-model="limitPrice" :rules="limitPriceRules" prepend-icon="remove_shopping_cart" v-validate="'required'" name="limitPrice">
+                </v-text-field>
               </v-flex>
 
               <!-- Quantity -->
-              <v-flex
-              sm12 class="">
-                  <v-text-field
-                    :label="'Quantity'"
-                    v-model="quantity"
-                    :type="'number'"
-                    :rules="quantityRules"
-                    prepend-icon="add_shopping_cart"
-                    >
-                  </v-text-field>
+              <v-flex xs12 class="">
+                <v-text-field :label="'Quantity'" v-model="quantity" :type="'number'" :rules="quantityRules" prepend-icon="add_shopping_cart" v-validate="'required'" name="quantity">
+                </v-text-field>
               </v-flex>
 
             </v-layout>
 
             <v-layout row>
-              <v-flex xs6
-                class="d-flex justify-end">
-                <v-btn primary
-                  @click="previewOrder()">
+              <v-flex xs6 class="d-flex justify-end">
+                <v-btn primary @click="previewOrder()">
                   Preview Order
                 </v-btn>
               </v-flex>
@@ -129,13 +82,11 @@
       </v-container>
 
       <!-- Buttons -->
-      <v-container fluid>
+      <!-- <v-container fluid>
         <v-layout row>
 
-          <v-flex xs6
-            class="d-flex justify-end">
-            <v-btn primary
-              @click="previewOrder()">
+          <v-flex xs6 class="d-flex justify-end">
+            <v-btn primary @click="previewOrder()">
               Preview Order
             </v-btn>
           </v-flex>
@@ -147,17 +98,15 @@
           </v-flex>
 
         </v-layout>
-      </v-container>
+      </v-container> -->
 
     </v-card-media>
 
   </v-card>
-
-
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 import * as mutationTypes from '../../../store/mutation-types'
 import StockbrokingService from '../../../services/StockbrokingService'
@@ -211,6 +160,11 @@ export default
       'availableCash': 'currentPortfolioAvailableCash'
     }),
 
+    ...mapState({
+      'portfolioName': (store) => store.stockbroking.currentPortfolio.name,
+      'portfolioLabel': (store) => store.stockbroking.currentPortfolio.label
+    }),
+
     isLimitOrder: function () {
       return this.priceOption === 'limit'
     },
@@ -236,13 +190,32 @@ export default
   methods: {
     // Preview a mandate before sending it out
     previewOrder: function () {
-      // Form was not validated
-      if (this.$refs.form.validate()) {
-        console.log('validated')
-        StockbrokingService.previewTradeOrder({})
-      }
-      console.log(this.$refs.form.validate())
-      console.log('notvalodated')
+      this.$validator.validateAll().then((result) => {
+        // No form errors..Proceed
+        if (result) {
+          let tradeOrder = {
+            orderType: this.orderType,
+            priceType: this.priceOption,
+            instrument: this.securityName,
+            orderTermName: this.orderTerm,
+            quantityRequested: this.quantity,
+            limitPrice: this.limitPrice,
+            orderOrigin: 'WEB',
+            orderCurrency: 'NGN',
+            portfolioLabel: this.portfolioLabel,
+            portfolioName: this.portfolioName
+          }
+          StockbrokingService.previewTradeOrder(tradeOrder)
+        } else { // Validation errors occured
+          // Used to display the errors to the user, if the preview btn is pressed
+          let formComponents = this.$refs.form.$children
+          formComponents.forEach((formComponent) => {
+            formComponent.shouldValidate = true
+          })
+
+          return
+        }
+      })
     }
   }
 

@@ -11,14 +11,15 @@
 
       <!-- Mandate Form -->
       <v-flex
-        xs4>
+        sm12 lg4
+        class="mb10">
         <mandate-form>
         </mandate-form>
       </v-flex>
 
       <!-- Bids,offers,trades,status and price movement -->
       <v-flex
-        sm8
+        sm12 lg8
         class="">
         <market-snap-shot>
         </market-snap-shot>
@@ -31,7 +32,7 @@
 
 <script>
    import PortfolioSwitchingHeader from '../PortfolioSwitchingHeader'
-   import MandateForm from './MandateForm'
+   import MandateForm from './MandateFormVee'
    import MarketSnapShot from './MarketSnapShot'
 
 export default

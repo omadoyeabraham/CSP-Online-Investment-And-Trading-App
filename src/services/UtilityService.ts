@@ -36,5 +36,6 @@
 
  export default {
    getDefaultCashStatementStartDate,
-   getDefaultCashStatementEndDate
+   getDefaultCashStatementEndDate,
+   objectHasNodata
  }

@@ -47,6 +47,7 @@
 
 <script>
   import { mapState, mapMutations } from 'vuex';
+  // import StockbrokingService from '../../services/StockbrokingService'
 
   // Component for the user's account summary
   import UserInvestments from './UserInvestments';

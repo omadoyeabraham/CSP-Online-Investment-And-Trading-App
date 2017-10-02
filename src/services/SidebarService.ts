@@ -7,6 +7,9 @@
 // The vuex store instance
 import store from '../store';
 
+let stbTotalValue = store.state.stockbroking.totalValue
+console.log(stbTotalValue)
+
 
 /**
  * The naira Investments to be shown on the sidebar
@@ -17,8 +20,9 @@ export const nairaInvestments: Array<object> = [
     'icon-alt': 'folder_open',
     heading: 'Stockbroking',
     text: 'Stockbroking',
-    totalValue: store.state.stockbroking.totalValue,
+    totalValue: stbTotalValue,
     model: false,
+    isSTB: true,
     children: [
       { icon: 'keyboard_arrow_right', text: 'Portfolio Summary', routeName:'stb-portfolio-summary' },
       { icon: 'keyboard_arrow_right', text: 'Trade', routeName:'stb-trade' },
@@ -35,14 +39,30 @@ export const nairaInvestments: Array<object> = [
     text: 'Fixed Income',
     totalValue: store.state.fixedIncome.totalValue,
     model: false,
+    isFI: true,
     children: [
       { icon: 'keyboard_arrow_right', text: 'Running Investments', routeName: 'fi-running' },
       { icon: 'keyboard_arrow_right', text: 'Terminated Investments', routeName: 'fi-terminated' }
     ]
   },
-  { icon: 'account_balance', text: 'SMA', totalValue: store.state.stockbroking.totalValue },
-  { icon: 'keyboard', text: 'Cash Account', totalValue: store.state.stockbroking.totalValue, routeName: 'cash-naira' },
-  {icon: 'keyboard', text: 'TOTAL', totalValue: '200,000,000'}
+  {
+    icon: 'account_balance',
+     text: 'SMA', totalValue: store.state.stockbroking.totalValue,
+     isSMA: true
+  },
+  {
+    icon: 'keyboard',
+    text: 'Cash Account',
+    totalValue: store.state.stockbroking.totalValue,
+    routeName: 'cash-naira',
+    isCASH: true
+  },
+  {
+    icon: 'keyboard',
+    text: 'TOTAL',
+    totalValue: '200,000,000',
+    isTOTAL: true
+  }
 ]
 
 /**
