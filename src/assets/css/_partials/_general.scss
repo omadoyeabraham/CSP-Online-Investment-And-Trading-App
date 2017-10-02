@@ -9,6 +9,10 @@ a {
   text-decoration: none
 }
 
+a:focus, a:hover {
+  text-decoration: none !important
+}
+
 /**
 * Backgrounds
 **/

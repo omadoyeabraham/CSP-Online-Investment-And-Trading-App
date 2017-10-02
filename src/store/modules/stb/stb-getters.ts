@@ -1,5 +1,6 @@
 // Imports
 import _ from 'lodash'
+import moment from 'moment'
 import {ChartService} from '../../../services/ChartsService'
 import UtilityService from '../../../services/UtilityService'
 
@@ -538,6 +539,7 @@ const getters = {
     let currentStockValue = 0
     let totalPortfolioValue = getters.currentPortfolioTotalValue
     let currentPortfolioStockHoldings = []
+
     stockPortfolioHoldings.forEach((stockPortfolioHolding) => {
         percentageOfPortfolio = ((parseFloat(stockPortfolioHolding.valuation)) / totalPortfolioValue) * 100
         totalCost = parseFloat(stockPortfolioHolding.costBasis) * parseFloat(stockPortfolioHolding.quantityHeld)
@@ -548,6 +550,13 @@ const getters = {
         stockPortfolioHolding.gainOrLoss = gainOrLoss
         stockPortfolioHolding.percentageGainOrLoss  = percentageGainOrLoss
         stockPortfolioHolding.totalCost = totalCost
+
+        if (gainOrLoss < 0) {
+          stockPortfolioHolding.lost = true
+        }else if(gainOrLoss > 0) {
+          stockPortfolioHolding.gained = true
+        }
+
         currentPortfolioStockHoldings.push(stockPortfolioHolding)
     })
 
@@ -581,6 +590,8 @@ const getters = {
       bondHolding.id = index
       bondHolding.faceValue = faceValue
       bondHolding.accruedCoupon = accruedCoupon
+      let nextCouponDate = moment(bondHolding.lastCouponDate).add(90, 'days')
+      bondHolding.nextCouponDate = nextCouponDate
 
       currentPortfolioBondHoldings.push(bondHolding)
 
@@ -597,7 +608,6 @@ const getters = {
 
     let selectedPortfolioName = state.currentPortfolio.name
     let tradeOrders = state.tradeOrders
-    console.log(tradeOrders)
 
     if(UtilityService.objectHasNodata(tradeOrders)) {
       return []
@@ -622,6 +632,9 @@ const getters = {
       return tradeOrder.fixOrderStatus === 'FILLED'
     })
 
+    // completedTradeOrders.reverse()
+    console.log(completedTradeOrders)
+
     return completedTradeOrders
   },
 
@@ -635,9 +648,6 @@ const getters = {
 
     let outstandingTradeOrders = tradeOrders.filter((tradeOrder) => {
 
-      // if () {
-
-      // }
       return tradeOrder.fixOrderStatus !== 'FILLED'
     })
 

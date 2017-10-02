@@ -22,7 +22,7 @@
       <v-layout column>
         <v-flex>
           <span class="body-1 blue--text text--darken-4">Welcome, </span>
-          <span class="title">{{username}}</span>
+          <span class=" font-size-20">{{username}}</span>
         </v-flex>
         <v-flex>
           <v-icon class="logout-btn">lock</v-icon>

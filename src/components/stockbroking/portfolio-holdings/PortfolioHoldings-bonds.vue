@@ -4,18 +4,17 @@
   @author Omadoye Abraham <omadoyeabraham@gmail.com>
   -->
 <template>
-  <v-container fluid>
-
-    <v-layout class="mb10">
+  <v-container fluid class="p0 pt10">
+    <!-- <v-layout class="mb10">
       <v-flex xs8 offset-xs4 sm6 offset-sm6 lg4 offset-lg8>
         <v-text-field append-icon="search" label="Search Bond Holdings" single-line hide-details v-model="search">
         </v-text-field>
       </v-flex>
-    </v-layout>
+    </v-layout> -->
 
     <v-layout class="" row wrap>
 
-      <v-flex xs12 sm8>
+      <v-flex xs12 sm8 class="mb20">
         <!-- Table -->
         <v-data-table
         v-bind:headers="tableheaders"
@@ -41,9 +40,9 @@
               <td class="font-size-10">{{props.item.securityName}}</td>
               <td class="font-size-10">{{props.item.quantityHeld}}</td>
               <td class="font-size-10">{{props.item.marketPrice}}</td>
-              <td class="font-size-10">{{props.item.faceValue}}</td>
-              <td class="font-size-10">{{props.item.maturityDate}}</td>
-              <td class="font-size-10">{{props.item.accruedCoupon}}</td>
+              <td class="font-size-10">{{props.item.faceValue | currency('',2)}}</td>
+              <td class="font-size-10">{{props.item.maturityDate | moment('DD-MMM-YYYY')}}</td>
+              <td class="font-size-10">{{props.item.accruedCoupon | currency('',2)}}</td>
               <td class="font-size-10">
                 <button
                   class="button button-blue-csp elevation-2 mb2"
@@ -54,10 +53,16 @@
             </tr>
           </template>
         </v-data-table>
+
+     <div class="mt20">
+      <span class="text-danger font-weight-bold">***Gain/Loss is exclusive of sell charges</span>
+    </div>
       </v-flex>
 
       <v-flex xs12 sm4>
-          <v-card class="white lighten-2 card h-100" dark>
+              <!-- If a bond is selected -->
+          <v-card class="white lighten-2 card h-100" dark
+            v-if="bondIsSelected">
 
             <div class="w100p bg-csp-light-blue p10">
               <div class="text-uppercase font-weight-bold">BOND INVESTMENT DETAILS</div>
@@ -67,22 +72,22 @@
             <div class="card-block indigo darken-4 p0">
               <ul class="list-group list-group-flush black--text"
                 id="selectedBondList"
-                 v-if="bondIsSelected">
+                 >
                 <li class="list-group-item font-size-12 white--text">
                   <span>SECURITY</span>
                   <span class="ml-auto font-weight-normal">{{selectedBond.securityName}}</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
                   <span>MATURITY DATE</span>
-                  <span class="ml-auto font-weight-normal">{{selectedBond.maturityDate}}</span>
+                  <span class="ml-auto font-weight-normal">{{selectedBond.maturityDate | moment('DD-MMM-YYYY')}}</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
                    <span>LAST COUPON DATE</span>
-                   <span class="ml-auto font-weight-normal">{{selectedBond.lastCouponDate}}</span>
+                   <span class="ml-auto font-weight-normal">{{selectedBond.lastCouponDate | moment('DD-MMM-YYYY')}}</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
                   <span>NEXT COUPON DATE</span>
-                  <span class="ml-auto font-weight-normal">{{selectedBond.tst}}</span>
+                  <span class="ml-auto font-weight-normal">{{selectedBond.nextCouponDate | moment('DD-MMM-YYYY')}}</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
                   <span>COUPON RATE</span>
@@ -94,7 +99,7 @@
                 </li>
                 <li class="list-group-item font-size-12 white--text">
                   <span>DIRTY PRICE</span>
-                  <span class="ml-auto font-weight-normal">{{selectedBond.dirtyPrice}}</span>
+                  <span class="ml-auto font-weight-normal">{{selectedBond.dirtyPrice | currency('',2)}}</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
                   <span>UNITS</span>
@@ -106,11 +111,11 @@
                 </li>
                 <li class="list-group-item font-size-12 white--text">
                   <span>ACCRUED COUPON</span>
-                  <span class="ml-auto font-weight-normal">{{selectedBond.accruedCoupon}}</span>
+                  <span class="ml-auto font-weight-normal">{{selectedBond.accruedCoupon | currency('',2)}}</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
                   <span>CHANGE</span>
-                  <span class="ml-auto font-weight-normal">{{selectedBond.gain}}</span>
+                  <span class="ml-auto font-weight-normal">{{selectedBond.gain | currency('',2)}}</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
                  <span>CHANGE(%)</span>
@@ -119,14 +124,17 @@
 
 
               </ul>
-              <div
-                class="d-flex justify-center mt20 font-size-12"
-                v-if="!bondIsSelected">
-                Kindly select an investment to view more information
-              </div>
             </div>
 
            </v-card>
+
+            <!-- If no bond is selected -->
+            <v-card
+              class="d-flex justify-center align-center font-size-12 min-height-150px indigo darken-4 white--text"
+              v-if="!bondIsSelected"
+              >
+              Kindly select an investment to view more information
+            </v-card>
       </v-flex>
 
     </v-layout>
@@ -135,7 +143,7 @@
 </template>
 
 <script>
-
+import { mapState } from 'vuex'
 export default
 {
   props: ['bondHoldings'],
@@ -166,6 +174,12 @@ export default
     }
   },
 
+  computed: {
+    ...mapState({
+      'currentPortfolio': (store) => store.stockbroking.currentPortfolio
+    })
+  },
+
   methods: {
 
     /**
@@ -182,6 +196,14 @@ export default
       this.bondIsSelected = true
     }
 
+  },
+
+  watch: {
+    currentPortfolio: function (newlySelectedPortfolio) {
+      // Reset the selected bond when the user changes the selected portfolio
+      this.selectedBond = null
+      this.bondIsSelected = null
+    }
   }
 
 }
@@ -192,7 +214,7 @@ export default
   ul#selectedBondList
     li
       background: #1a2155
-      border-bottom: 2px solid #FFFFFF
+      border-bottom: 1px solid #FFFFFF
   .form-element > label
     font-size: 10px !important
     color: green

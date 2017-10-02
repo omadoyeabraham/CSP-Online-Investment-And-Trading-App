@@ -48,6 +48,11 @@ export default new Router({
       component: StbTrade
     },
     {
+      path: '/stb/trade/:orderType/:instrument',
+      name: 'stb-trade-redirected',
+      component: StbTrade
+    },
+    {
       path: '/stb/trade-history',
       name: 'stb-trade-history',
       component: StbTradeHistory

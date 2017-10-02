@@ -11,14 +11,14 @@
     </PortfolioSwitchingHeader>
 
     <v-layout row wrap class="">
-      <!-- Market Highlights -->
+      <!-- Portfolio Summary Box -->
       <v-flex xs12 md6 lg4 class="mb5">
         <PortfolioSummaryBox :currentPortfolio="currentPortfolio">
         </PortfolioSummaryBox>
       </v-flex>
 
        <!-- Sector Overview -->
-      <v-flex xs12 md6 lg4 class="mb5 red">
+      <v-flex xs12 md6 lg4 class="mb5">
         <SectorOverview
           :sectorAllocationChartData="sectorAllocationChartData"
           :sectorPerformanceChartData="sectorPerformanceChartData"
@@ -26,39 +26,16 @@
         </SectorOverview>
       </v-flex>
 
-      <!-- Top gainers and losers -->
+      <!-- Stock Overview -->
       <v-flex xs12 md6 lg4 class="mb5">
-        <SectorAllocationChart
-          :sectorAllocationChartData="sectorAllocationChartData"
-          :sectorData="sectorData">
-        </SectorAllocationChart>
-      </v-flex>
-
-      <!-- Fixed income -->
-      <v-flex xs12 md6 lg4 class="mb5">
-        <SectorPerformanceChart
-          :sectorPerformanceChartData="sectorPerformanceChartData"
-          :sectorData="sectorData">
-        </SectorPerformanceChart>
-      </v-flex>
-
-      <!-- NSE 5 Day Chart -->
-      <v-flex xs12 md6 lg4 class="mb5">
-        <StockAllocationChart
+        <stocks-overview
           :stockAllocationChartData="stockAllocationChartData"
-          :stockData="stockData">
-        </StockAllocationChart>
-      </v-flex>
-
-      <!-- Business News -->
-      <v-flex xs12 md6 lg4 class="mb5">
-        <StockPerformanceChart
           :stockPerformanceChartData="stockPerformanceChartData"
           :stockData="stockData">
-        </StockPerformanceChart>
+        </stocks-overview>
       </v-flex>
 
-      <!-- Business News -->
+      <!-- Bond Allocation -->
       <v-flex xs12 md6 lg4 class="mb5">
          <BondAllocationChart
           :bondAllocationChartData="bondAllocationChartData"
@@ -66,7 +43,7 @@
         </BondAllocationChart>
       </v-flex>
 
-      <!-- Business News -->
+      <!-- Bond Performance -->
       <v-flex xs12 md6 lg4 class="mb5">
         <BondPerformanceChart
           :bondPerformanceChartData="bondPerformanceChartData"
@@ -81,6 +58,7 @@
 <script>
 import PortfolioSummaryBox from './PortfolioSummaryBox'
 import SectorOverview from './SectorOverview'
+import StocksOverview from './StocksOverview'
 import SectorPerformanceChart from './SectorPerformanceChart'
 import SectorAllocationChart from './SectorAllocationChart'
 import StockAllocationChart from './StockAllocationChart'
@@ -97,6 +75,7 @@ export default
   components: {
     PortfolioSummaryBox,
     SectorOverview,
+    StocksOverview,
     SectorPerformanceChart,
     SectorAllocationChart,
     StockAllocationChart,

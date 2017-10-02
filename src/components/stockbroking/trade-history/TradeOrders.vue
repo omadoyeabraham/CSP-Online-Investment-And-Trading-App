@@ -5,14 +5,16 @@
       v-bind:headers="tableheaders"
       :items="orders"
       :search="search"
+      :loading="loading"
+      :rows-per-page-items="rowsPerPageItems"
+      :no-data-text="noDataText"
       id="tradeHistoryTable"
       class="table-striped elevation-1">
       <template slot="headers" scope="props">
         <tr class="bg-csp-light-blue " id="tradeHistoryTableHeader">
           <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'white--text',
-                      pagination.descending ? 'desc' : 'asc',
                       header.value === pagination.sortBy ? 'active' : ''
-                      ]" @click="changeSort(header.value)">
+                      ]">
             <!-- <v-icon>arrow_upward</v-icon> -->
             {{ header.text }}
           </th>
@@ -21,14 +23,14 @@
 
       <template slot="items" scope="props">
         <tr id="tradeHistoryTableBody">
-          <td class="font-size-10">{{props.item.orderDate}}</td>
+          <td class="font-size-10">{{props.item.orderDate | moment("DD-MMM-YYYY")}}</td>
           <td class="font-size-10">{{props.item.securityName}}</td>
           <td class="font-size-10">{{props.item.orderType}}</td>
           <td class="font-size-10">{{props.item.orderTermLabel}}</td>
           <td class="font-size-10">{{props.item.priceType}}</td>
           <td class="font-size-10">{{props.item.limitPrice}}</td>
-          <td class="font-size-10">{{props.item.quantityRequested}}</td>
-          <td class="font-size-10">{{props.item.quantityFilled}}</td>
+          <td class="font-size-10">{{props.item.quantityRequested | currency('', 2)}}</td>
+          <td class="font-size-10">{{props.item.quantityFilled | currency('',2)}}</td>
           <td class="font-size-10">{{props.item.fixOrderStatus}}</td>
           <td>
             <span></span>
@@ -48,11 +50,18 @@
     data () {
       return {
         search: '',
+        totalItems: 0,
         pagination: {
-          sortBy: 'name'
+          sync: {
+            sortBy: 'orderDate',
+            descending: true
+          }
         },
+        loading: false,
+        noDataText: 'No Trade Orders',
+        rowsPerPageItems: [10, 15, 20, { text: 'All', value: -1 }],
         tableheaders: [
-          { text: 'ORDER DATE', value: 'orderDate', align: 'left', sortable: false },
+          { text: 'ORDER DATE', value: 'orderDate', align: 'left' },
           { text: 'STOCK', value: 'stock', align: 'left' },
           { text: 'TYPE', value: 'orderType', align: 'left' },
           { text: 'ORDER TERM', value: 'orderTerm', align: 'left' },

@@ -10,16 +10,16 @@
       :title="'Stockbroking - Trade History'">
     </PortfolioSwitchingHeader>
 
-    <v-layout row class="mb5">
-      <v-flex row class="green align-items-center">
+    <!-- <v-layout row class="mb5">
+      <v-flex row class="align-items-center" sm8>
         <span class="ml10">Showing Trade orders from 01-AUG-2017 to 16-SEPT-2017</span>
       </v-flex>
 
-      <v-flex row class="red align-items-center justify-content-end">
+      <v-flex row class="red align-items-center justify-content-end" sm4>
         <span class="mr20">Specify date range</span>
         <v-form class="d-flex">
 
-          <!-- Start Date -->
+
            <v-menu
             lazy
             :close-on-content-click="false"
@@ -46,9 +46,7 @@
               </template>
             </v-date-picker>
            </v-menu>
-          <!-- EOF Start Date -->
 
-          <!-- End Date -->
            <v-menu
             lazy
             :close-on-content-click="false"
@@ -75,29 +73,17 @@
               </template>
             </v-date-picker>
            </v-menu>
-          <!-- EOF End Date -->
+
 
         </v-form>
       </v-flex>
-    </v-layout>
-
-    <!-- Search -->
-    <!-- <v-layout class="mb10">
-      <v-flex xs8 offset-xs4 sm6 offset-sm6 lg4 offset-lg8>
-        <v-text-field
-          append-icon="search"
-          label="Search Trade History"
-          single-line
-          hide-details
-          v-model="search">
-        </v-text-field>
-      </v-flex>
     </v-layout> -->
+
 
     <!-- Tabs -->
     <div>
       <v-tabs dark v-model="active">
-        <v-tabs-bar class="cyan">
+        <v-tabs-bar class="indigo darken-4" style="height: 40px; overflow-x: none">
           <v-tabs-item
             v-for="tab in tabs"
             :key="tab"
@@ -106,7 +92,7 @@
           >
             {{ tab }}
           </v-tabs-item>
-          <v-tabs-slider class="yellow"></v-tabs-slider>
+          <v-tabs-slider class="white"></v-tabs-slider>
         </v-tabs-bar>
         <v-tabs-items>
 
@@ -160,7 +146,6 @@
     },
     // Actions to be carried out before this component is created. Ensures that the component has the necessary data to be rendered
     beforeCreate () {
-      console.log('Called before create')
       StockbrokingService.getTradeOrders(0);
     },
 
@@ -180,7 +165,6 @@
     computed: {
 
       ...mapState({
-        'tradeOrders': (store) => store.stockbroking.tradeOrders,
         'user': (store) => store.user
       }),
       ...mapGetters({
@@ -213,4 +197,6 @@
     td
       padding: 5px 5px !important
       height: 25px
+  .tabs__wrapper
+    overflow-x: none !important
 </style>

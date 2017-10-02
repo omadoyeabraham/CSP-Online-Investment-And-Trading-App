@@ -35,8 +35,6 @@ let getStockbrokingTotalValue = (stbData) => {
  let getTradeOrders = (cacheStatus: number) => {
 
    // obtain the tradeorders already placed by the user
-  // let tradeOrders =  StbMockData.tradeOrders;
-  console.log('called getTradeOrders')
   let tradeOrders = []
   let userID = store.state.user.info.id;
 

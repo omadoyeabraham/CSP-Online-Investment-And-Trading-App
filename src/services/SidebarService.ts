@@ -8,8 +8,6 @@
 import store from '../store';
 
 let stbTotalValue = store.state.stockbroking.totalValue
-console.log(stbTotalValue)
-
 
 /**
  * The naira Investments to be shown on the sidebar

@@ -13,7 +13,9 @@
       <v-flex
         sm12 lg4
         class="mb10">
-        <mandate-form>
+        <mandate-form
+          :orderType = "redirectedOrderType"
+          :securityName = "redirectedInstrument">
         </mandate-form>
       </v-flex>
 
@@ -37,6 +39,19 @@
 
 export default
 {
+  created () {
+       // Assign the orderType and instrument if the user is being redirected to this component from any of the BUY/SELL buttons
+       if (this.$route.params.instrument && this.$route.params.orderType) {
+         this.redirectedInstrument = this.$route.params.instrument
+         this.redirectedOrderType = this.$route.params.orderType
+       }
+  },
+  data () {
+       return {
+         redirectedInstrument: null,
+         redirectedOrderType: null
+       }
+  },
   components: {
        PortfolioSwitchingHeader,
        MandateForm,

@@ -113,14 +113,15 @@ import StockbrokingService from '../../../services/StockbrokingService'
 
 export default
 {
+  props: ['orderType', 'securityName'],
   data () {
     return {
       valid: false,
-      orderType: '',
+      // orderType: '',
       orderTerm: '',
       priceOption: '',
       limitPrice: '',
-      securityName: '',
+      // securityName: '',
       quantity: '',
       orderTypeRules: [
         (v) => !!v || 'Required'

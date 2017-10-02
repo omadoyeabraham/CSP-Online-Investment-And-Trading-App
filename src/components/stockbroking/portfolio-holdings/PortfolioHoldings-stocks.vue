@@ -4,14 +4,14 @@
   @author Omadoye Abraham <omadoyeabraham@gmail.com>
   -->
 <template>
-  <v-container fluid>
+  <v-container fluid class="p0 pt10">
 
-    <v-layout class="mb10">
-      <v-flex xs8 offset-xs4 sm6 offset-sm6 lg4 offset-lg8>
+    <!-- <v-layout class="mb5 pt0">
+      <v-flex xs8 offset-xs4 sm6 offset-sm6 lg4 offset-lg8 class="pt0 mt0">
         <v-text-field append-icon="search" label="Search Stock Holdings" single-line hide-details v-model="search">
         </v-text-field>
       </v-flex>
-    </v-layout>
+    </v-layout> -->
 
     <v-data-table
       v-bind:headers="tableheaders"
@@ -35,24 +35,38 @@
         <tr id="tradeHistoryTableBody" class="indigo--text text--darken-4">
           <td class="font-size-10">{{props.item.securityName}}</td>
           <td class="font-size-10">{{props.item.marketValue}}</td>
-          <td class="font-size-10">{{props.item.quantityHeld}}</td>
-          <td class="font-size-10">{{props.item.valuation}}</td>
-          <td class="font-size-10">{{props.item.percentageOfPortfolio}}</td>
-          <td class="font-size-10">{{props.item.costBasis}}</td>
-          <td class="font-size-10">{{props.item.totalCost}}</td>
-          <td class="font-size-10">{{props.item.gainOrLoss}}</td>
-          <td class="font-size-10">{{props.item.percentageGainOrLoss}}</td>
+          <td class="font-size-10">{{props.item.quantityHeld | currency('',0)}}</td>
+          <td class="font-size-10">{{props.item.valuation | currency('',2)}}</td>
+          <td class="font-size-10">{{props.item.percentageOfPortfolio | currency('',2)}}</td>
+          <td class="font-size-10">{{props.item.costBasis | currency('',2)}}</td>
+          <td class="font-size-10">{{props.item.totalCost | currency('',2)}}</td>
+          <td class="font-size-10">{{props.item.gainOrLoss | currency('',2)}}</td>
+          <td class="">
+            {{props.item.percentageGainOrLoss | currency('',2)}}
+            <v-icon v-if="props.item.lost" class="text-danger h-100">fa-arrow-down</v-icon>
+            <v-icon v-if="props.item.gained" class="text-success h-100">fa-arrow-up</v-icon>
+          </td>
           <td>
-            <button class="button button-blue-csp elevation-2 mb2">
+            <button
+              class="button button-blue-csp elevation-2 mb2"
+              @click="tradeStock('buy', props.item.securityName)">
                 BUY
               </button>
-              <button class="button button-blue-csp elevation-2 mb2">
+              <button
+                class="button button-blue-csp elevation-2 mb2"
+                @click="tradeStock('sell', props.item.securityName)">
                 SELL
               </button>
           </td>
         </tr>
       </template>
     </v-data-table>
+
+
+  <div class="mt20">
+    <span class="text-danger font-weight-bold">***Gain/Loss is exclusive of sell charges</span>
+  </div>
+
 
   </v-container>
 </template>
@@ -92,6 +106,18 @@ export default
 
   computed: {
 
+  },
+
+  methods: {
+    /**
+     * Called when a user clicks on the buy/sell btn from the portfolio holdings
+     *
+     * @param orderType {string} The type of order intended. (Either a buy or sell)
+     * @param instrument {string} The security to be traded
+     * */
+    tradeStock: function (orderType, instrument) {
+      this.$router.push(`/stb/trade/${orderType}/${instrument}`)
+    }
   }
 
 }
@@ -113,4 +139,5 @@ export default
     td
       padding: 5px 5px !important
       height: 25px
+      color: #000000
 </style>

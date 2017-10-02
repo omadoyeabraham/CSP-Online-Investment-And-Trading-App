@@ -1,31 +1,33 @@
 <!--
-  Shows the client's stockbroking trade history
+  Shows the client's stockbroking Portfolio holdings
 
   @author Omadoye Abraham <omadoyeabraham@gmail.com>
 -->
 <template>
   <v-container fluid>
 
-    <PortfolioSwitchingHeader></PortfolioSwitchingHeader>
+    <PortfolioSwitchingHeader
+      title="Stockbroking - Portfolio Holdings"></PortfolioSwitchingHeader>
 
     <!-- TABS -->
     <vue-tabs
       activeTabColor="#1a2155"
-      activeTextColor="#FFFFFF">
+      activeTextColor="#FFFFFF"
+      class="">
 
-      <v-tab title="STOCKS">
+      <v-tab title="STOCKS" class="">
         <PortfolioHoldingsStocks :stockHoldings="stockHoldings">
         </PortfolioHoldingsStocks>
       </v-tab>
 
-      <v-tab title="BONDS">
-        <PortfolioHoldingsbonds :bondHoldings="bondHoldings">
+      <v-tab title="BONDS" class="">
+        <PortfolioHoldingsbonds
+          :bondHoldings="bondHoldings">
         </PortfolioHoldingsbonds>
       </v-tab>
 
     </vue-tabs>
     <!-- EOF TABS -->
-
 
 
   </v-container>
@@ -55,6 +57,7 @@
   }
 </script>
 
-<style scoped lang="sass">
-
+<style  lang="sass">
+  .title
+    font-size: 15px !important
 </style>
