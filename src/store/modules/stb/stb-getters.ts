@@ -693,6 +693,9 @@ const getters = {
 
   },
 
+  /**
+   * Return the names of all securities in the current portfolio
+   */
   getAllSecuritiesInCurrentPortfolio: (state, getters) => {
 
     // Ensure that a current portfolio is set

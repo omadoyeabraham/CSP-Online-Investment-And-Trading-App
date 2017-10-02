@@ -43,7 +43,7 @@
 
               <!-- Stocks -->
               <v-flex xs12 class="">
-                <v-select class="" :label="'Stock'" :items="securityNames" v-model="securityName" :rules="securityNameRules" prepend-icon="map" v-validate="'required'" name="securityName">
+                <v-select class="" :label="'Stock'" :items="securityNames" v-model="securityName" :rules="securityNameRules" :no-data-text="noStockToSellText" prepend-icon="map" v-validate="'required'" name="securityName">
                 </v-select>
               </v-flex>
 
@@ -113,6 +113,7 @@ export default
 
   data () {
     return {
+      noStockToSellText: 'No stock to sell',
       valid: false,
       orderTerm: '',
       orderType: '',
