@@ -20,6 +20,7 @@ const state = {
   selectedSecurityStatusInfo: null,
   marketData: {},
   portfolios: [],
+  smaPortfolios: [],
   currentPortfolio: {},
   totalValue: 0
 }

@@ -21,6 +21,7 @@ const mutations = {
     // If the user has at least 1 STB portfolio
     if (userData.STB.hasOwnProperty('EXCHANGE')) {
       state.portfolios = userData.STB.EXCHANGE
+      state.smaPortfolios = userData.STB.MANAGED ? (userData.STB.MANAGED) : []
 
       // Default the current portfolio to the first portfolio returned
       state.currentPortfolio = state.portfolios[0]

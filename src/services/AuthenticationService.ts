@@ -60,8 +60,12 @@ import StockbrokingService from './StockbrokingService'
       router.push({name: 'Dashboard'})
     })
     .catch((error) => {
-
       // return 'Invalid username or password';
+
+      store.commit(mutationTypes.SET_AUTHENTICATION_ERROR_MESSAGE, 'We do not recognise this username or password')
+
+      router.push({name: 'Login'})
+
     });
 
 

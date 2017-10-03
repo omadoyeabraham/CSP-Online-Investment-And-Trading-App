@@ -46,20 +46,20 @@ export const nairaInvestments: Array<object> = [
   {
     icon: 'account_balance',
      text: 'SMA', totalValue: store.state.stockbroking.totalValue,
-     isSMA: true
+     isSma: true
   },
   {
     icon: 'keyboard',
     text: 'Cash Account',
     totalValue: store.state.stockbroking.totalValue,
     routeName: 'cash-naira',
-    isCASH: true
+    isNairaCashBalance: true
   },
   {
     icon: 'keyboard',
     text: 'TOTAL',
     totalValue: '200,000,000',
-    isTOTAL: true
+    isTotalForNairaInvestments: true
   }
 ]
 
@@ -73,13 +73,25 @@ export const dollarInvestments: Array<object> = [
     text: 'Dollar Investments',
     totalValue: '1,150,000,000',
     model: false,
+    isDollarInvestments: true,
     children: [
       { icon: 'keyboard_arrow_right', text: 'Running Investments', routeName: 'di-running' },
       { icon: 'keyboard_arrow_right', text: 'Terminated Investments', routeName: 'di-terminated' }
     ]
   },
-  { icon: 'keyboard', text: 'Cash Account', totalValue: store.state.stockbroking.totalValue, routeName: 'cash-dollar' },
-  { icon: 'keyboard', text: 'TOTAL', totalValue: '$200,000,000' }
+  {
+    icon: 'keyboard',
+    text: 'Cash Account',
+    totalValue: store.state.stockbroking.totalValue,
+    routeName: 'cash-dollar',
+    isDollarCashBalance: true
+  },
+  {
+    icon: 'keyboard',
+    text: 'TOTAL',
+    isTotalForDollarInvestments: true,
+    totalValue: '$200,000,000'
+  }
 ]
 
 /**

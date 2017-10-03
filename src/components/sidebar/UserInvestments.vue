@@ -29,7 +29,12 @@
 
               <!-- Fixed income -->
               <span style="float: right" class="mr0" v-if="item.isFI">
-                {{stbTotalValue}}
+                {{fiTotalValue | currency('&#8358;', 2)}}
+              </span>
+
+              <!-- Dollar investments -->
+               <span style="float:right" v-else-if="item.isDollarInvestments">
+                {{dollarInvestmentsTotalValue | currency('&#36;',2)}}
               </span>
 
             </v-list-tile-title>
@@ -68,7 +73,22 @@
           <!-- <v-list-tile-title class="font-size-11 hover"> -->
             <router-link :to="{name: item.routeName}" class="font-size-11 hover w100p">
               <span>{{item.text}}</span>
-              <span style="float:right">{{item.totalValue}}</span>
+               <span style="float:right" v-if="item.isNairaCashBalance">
+                 {{totalNairaCashBalance | currency('&#8358;',2)}}
+              </span>
+              <span style="float:right" v-else-if="item.isDollarCashBalance">
+                 {{totalDollarCashBalance | currency('&#36;',2)}}
+              </span>
+              <span style="float:right" v-else-if="item.isTotalForDollarInvestments">
+                 {{totalForDollarInvestments | currency('&#36;',2)}}
+              </span>
+              <span style="float:right" v-else-if="item.isTotalForNairaInvestments">
+                 {{totalForNairaInvestments | currency('&#8358;',2)}}
+              </span>
+              <span style="float:right" v-else-if="item.isSma">
+                 {{totalValueOfSmaInvestments | currency('&#8358;',2)}}
+              </span>
+              <span style="float:right" v-else>{{item.totalValue}}</span>
             </router-link>
             <!-- <span style="float: left">{{ item.text }}</span> -->
           <!-- </v-list-tile-title> -->
@@ -103,8 +123,33 @@
       }),
 
       ...mapGetters({
-        'stbTotalValue': 'getStbTotalValue'
-      })
+        'stbTotalValue': 'getStbTotalValue',
+        'fiTotalValue': 'getFiTotalValue',
+        'smaTotalValue': 'getSmaTotalValue',
+        'dollarInvestmentsTotalValue': 'getDollarInvestmentsTotalValue',
+        'totalNairaCashBalance': 'getTotalNairaCashBalance',
+        'totalDollarCashBalance': 'getTotalDollarCashBalance',
+        'totalNairaSmaCashBalance': 'getTotalNairaSmaCashBalance'
+      }),
+
+      // The total value shown for dollar investments
+      totalForDollarInvestments: function () {
+        let total = parseFloat(this.dollarInvestmentsTotalValue) + parseFloat(this.totalDollarCashBalance)
+
+        return total
+      },
+
+      // The total value shown for naira investments
+      totalForNairaInvestments: function () {
+        let total = parseFloat(this.stbTotalValue) + parseFloat(this.fiTotalValue) + parseFloat(this.totalNairaCashBalance) + parseFloat(this.totalValueOfSmaInvestments)
+
+        return total
+      },
+
+      totalValueOfSmaInvestments: function () {
+        return parseFloat(this.smaTotalValue) + parseFloat(this.totalNairaSmaCashBalance)
+      }
+
     }
 
   }

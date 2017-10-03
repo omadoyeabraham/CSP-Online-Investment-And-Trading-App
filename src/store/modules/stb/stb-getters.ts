@@ -9,9 +9,11 @@ const getters = {
 
   // Work on market highlights data to fit our dashboard UI specification
   marketHighlights: (state) => {
+    let indexChange = parseFloat(state.marketHighlights.delta)
+
     const data = [
+      { label: 'Index Change', value:indexChange, isIndexChange: true },
       { label: 'All share Index', value: state.marketHighlights.lastTradePrice },
-      { label: 'Index Change', value: state.marketHighlights.delta },
       { label: 'Market Cap', value: state.marketHighlights.refPriceDttm },
       { label: 'Vol. Traded', value: state.marketHighlights.volumeTraded },
       { label: 'Value Traded', value: state.marketHighlights.valueTraded },
@@ -60,6 +62,11 @@ const getters = {
       yAxis: {
         title: {
           text: ''
+        },
+        labels: {
+          formatter: function () {
+            return this.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          }
         },
         min: minimumValue,
         max: maximumValue,
@@ -136,6 +143,25 @@ const getters = {
         return
       } else {
         stbTotalValue += parseFloat(portfolio.currentValuation.amount)
+      }
+    })
+
+    return stbTotalValue
+  },
+
+  /**
+  * Calculate the total sma value of the user's portfolio
+  */
+  getSmaTotalValue: (state) => {
+    const portfolios = state.smaPortfolios
+    let stbTotalValue = 0
+
+    portfolios.forEach((portfolio) => {
+      // DO not sum up non-exchange or SMA portfolios
+      if (portfolio.portfolioClass != "EXCHANGE" || portfolio.label.indexOf('(SMA)') != -1) {
+        stbTotalValue += parseFloat(portfolio.currentValuation.amount)
+      } else {
+       return
       }
     })
 

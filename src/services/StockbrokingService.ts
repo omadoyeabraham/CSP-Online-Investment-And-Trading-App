@@ -231,6 +231,15 @@ import * as ApiUrls from './ApiUrlService';
   */
  let previewTradeOrder = (tradeOrder: object) => {
   console.log(tradeOrder)
+  axios({
+    method: 'POST',
+    url: `${ApiUrls.PreviewTradeOrder}`,
+    data: tradeOrder
+  }).then((response) => {
+    console.log(response)
+  }).catch((error) => {
+    console.log(error)
+  })
  }
 
 

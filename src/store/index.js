@@ -34,6 +34,9 @@
  // The cash store module
  import CashStore from './modules/cash/cash.ts'
 
+ // The error Module
+ import ErrorStore from './modules/errors.ts'
+
  /**
   * VuexPersistence object used to persist data in sessionstorage until the user signs out
   */
@@ -52,7 +55,8 @@
      user: UserDataStore,
      stockbroking: StockbrokingStore,
      fixedIncome: FixedIncomeStore,
-     cash: CashStore
+     cash: CashStore,
+     errors: ErrorStore
    },
    plugins: [vuexSessionStorage.plugin]
  });

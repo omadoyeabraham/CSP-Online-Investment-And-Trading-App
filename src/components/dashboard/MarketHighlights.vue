@@ -14,7 +14,19 @@
     <div class="card-block">
       <ul class="list-group list-group-flush black--text">
         <li class="list-group-item font-weight-bold" v-for="(item, index) in marketHighlights" :key="index">{{item.label}}
-          <span class="ml-auto font-weight-normal">{{item.value | currency('', 0)}}</span>
+
+          <!-- Index Change -->
+          <span class="ml-auto font-weight-normal red--text" v-if="item.isIndexChange">
+            <span v-if="item.value < 0" class="red--text">({{Math.abs(item.value) | currency('', 2)}})</span>
+            <span v-else-if="item.value > 0" class="green--text text--lighthen-4">{{item.value | currency('', 2)}}</span>
+            <span v-else class="">{{item.value | currency('', 2)}}</span>
+          </span>
+
+          <!-- Other Items -->
+          <span class="ml-auto font-weight-normal" v-else>
+            {{item.value | currency('', 0)}}
+          </span>
+
         </li>
       </ul>
     </div>

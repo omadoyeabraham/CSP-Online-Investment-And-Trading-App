@@ -13,6 +13,11 @@ const getters = {
    * Return the number of cash accounts that the user has
    */
   getTotalNumberOfCashAccounts: (state) => {
+
+    if ((state.userData.NGN === undefined)) {
+      return 0
+    }
+
     return (state.userData.NGN.length) + (state.userData.USD.length)
   },
 
@@ -20,6 +25,10 @@ const getters = {
    * Returns the total number of naira cash accounts owned by the user
    */
   getTotalNumberOfNairaCashAccounts: (state) => {
+    if ((state.userData.NGN === undefined)) {
+      return 0
+    }
+
     return (state.userData.NGN.length)
   },
 
@@ -27,6 +36,10 @@ const getters = {
    * Returns the total number of dollar cash accounts owned by the user
    */
   getTotalNumberOfDollarCashAccounts: (state) => {
+    if ((state.userData.USD === undefined)) {
+      return 0
+    }
+
     return (state.userData.USD.length)
   },
 
@@ -34,6 +47,10 @@ const getters = {
    * Returns the naira cash accounts owned by the user
    */
   getNairaCashAccounts: (state) => {
+    if ((state.userData.NGN === undefined)) {
+      return []
+    }
+
     return state.userData.NGN
   },
 
@@ -41,6 +58,10 @@ const getters = {
    * Returns the dollar cash accounts owned by the user
    */
   getDollarCashAccounts: (state) => {
+    if ((state.userData.USD === undefined)) {
+      return []
+    }
+
     return state.userData.USD
   },
 
@@ -48,6 +69,10 @@ const getters = {
    * Returns all cash accounts owned by the user
    */
   getAllCashAccounts: (state) => {
+
+    if ((state.userData.NGN === undefined)) {
+      return []
+    }
     return _.union(state.userData.NGN, state.userData.USD)
   },
 
@@ -258,6 +283,64 @@ const getters = {
       unclearedEffects,
       cashAvailable
     }
+
+  },
+
+  /**
+   * Get the total cash balance Naira Investments, excluding SMA cash accounts
+   *
+   */
+  getTotalNairaCashBalance: (state, getters) => {
+    let nairaCashAccounts = getters.getNairaCashAccounts
+    let totalNairaCashBalance = 0
+
+    nairaCashAccounts.forEach((nairaCashAccount) => {
+
+      // Only add the balances from non SMA accounts
+      if (nairaCashAccount.label.indexOf('(SMA)') === -1) {
+        totalNairaCashBalance += parseFloat(nairaCashAccount.unClearedBalance)
+      }
+
+    })
+
+    return totalNairaCashBalance
+
+  },
+
+  /**
+ * Get the total cash balance for SMA Naira Investments
+ *
+ */
+  getTotalNairaSmaCashBalance: (state, getters) => {
+    let nairaCashAccounts = getters.getNairaCashAccounts
+    let totalNairaSmaCashBalance = 0
+
+    nairaCashAccounts.forEach((nairaCashAccount) => {
+
+      // Only add the balances from non SMA accounts
+      if (nairaCashAccount.label.indexOf('(SMA)') !== -1) {
+        totalNairaSmaCashBalance += parseFloat(nairaCashAccount.unClearedBalance)
+      }
+
+    })
+
+    return totalNairaSmaCashBalance
+
+  },
+
+    /**
+   * Get the total cash balance for Dollar Investments
+   *
+   */
+  getTotalDollarCashBalance: (state, getters) => {
+    let dollarCashAccounts = getters.getDollarCashAccounts
+    let totalDollarCashBalance = 0
+
+    dollarCashAccounts.forEach((dollarCashAccount) => {
+      totalDollarCashBalance += parseFloat(dollarCashAccount.unClearedBalance)
+    })
+
+    return totalDollarCashBalance
 
   }
 

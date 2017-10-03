@@ -38,9 +38,9 @@
         <template slot="items" scope="props">
           <tr id="tradeHistoryTableBody">
             <td class="font-size-10">{{props.item.instrumentTypeLabel}}</td>
-            <td class="font-size-10">{{props.item.faceValue}}</td>
-            <td class="font-size-10">{{props.item.accruedInterest}}</td>
-            <td class="font-size-10">{{props.item.currentValue}}</td>
+            <td class="font-size-10">{{props.item.faceValue | currency('',2)}}</td>
+            <td class="font-size-10">{{props.item.accruedInterest | currency('',2)}}</td>
+            <td class="font-size-10">{{props.item.currentValue | currency('',2)}}</td>
             <td class="font-size-10">
               <button class="button button-blue-csp elevation-2 mb2" @click="selectInvestment(props.item.id)">
                 VIEW
@@ -66,7 +66,7 @@
             v-if="investmentIsSelected">
             <li class="list-group-item font-size-12 white--text">
               <span>Amount Invested</span>
-              <span class="ml-auto font-weight-normal">{{currency}}{{selectedInvestment.faceValue}}</span>
+              <span class="ml-auto font-weight-normal">{{currency}}{{selectedInvestment.faceValue | currency('',2)}}</span>
             </li>
             <li class="list-group-item font-size-12 white--text">
               <span>Date of Investment</span>
@@ -82,7 +82,7 @@
             </li>
             <li class="list-group-item font-size-12 white--text">
               <span>Investment Duration</span>
-              <span class="ml-auto font-weight-normal">{{selectedInvestment.tenure}} days</span>
+              <span class="ml-auto font-weight-normal">{{selectedInvestment.tenure | currency('',2)}} days</span>
             </li>
             <li class="list-group-item font-size-12 white--text">
               <span>Duration till Date</span>
@@ -94,15 +94,15 @@
             </li>
             <li class="list-group-item font-size-12 white--text">
               <span>Return to Date</span>
-              <span class="ml-auto font-weight-normal">{{currency}}{{selectedInvestment.accruedInterest}}</span>
+              <span class="ml-auto font-weight-normal">{{currency}}{{selectedInvestment.accruedInterest | currency('',2)}}</span>
             </li>
             <li class="list-group-item font-size-12 white--text">
               <span>Expected Value at Maturity</span>
-              <span class="ml-auto font-weight-normal">{{currency}}{{selectedInvestment.valueAtMaturity}}</span>
+              <span class="ml-auto font-weight-normal">{{currency}}{{selectedInvestment.valueAtMaturity | currency('',2)}}</span>
             </li>
             <li class="list-group-item font-size-12 white--text">
               <span>Current Value of Investment</span>
-              <span class="ml-auto font-weight-normal">{{currency}}{{selectedInvestment.currentValue}}</span>
+              <span class="ml-auto font-weight-normal">{{currency}}{{selectedInvestment.currentValue | currency('',2)}}</span>
             </li>
 
           </ul>

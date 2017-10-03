@@ -13,7 +13,8 @@ import * as moment from 'moment'
 
 const state = {
   userData: {},
-  totalValue: 0
+  userHasFi: true
+  // totalValue: 0
 }
 
 const getters = {
@@ -28,7 +29,7 @@ const getters = {
     let nairaInvestments =  state.userData.NGN
     let treasuryBills = state.userData.TBills
 
-    if (UtilityService.objectHasNodata(nairaInvestments) || UtilityService.objectHasNodata(treasuryBills)) {
+    if ((nairaInvestments === undefined) || (treasuryBills === undefined)) {
       return []
     }
 
@@ -88,6 +89,11 @@ const getters = {
     let nairaInvestments = state.userData.NGN
     let investments = []
 
+    if ((nairaInvestments === undefined)) {
+      return []
+    }
+
+
     let runningNairaInvestments = nairaInvestments.filter((investment) => {
       return investment.status === 'TERMINATED'
     })
@@ -111,6 +117,10 @@ const getters = {
   getRunningDollarInvestments: (state) => {
     let nairaInvestments = state.userData.USD
     let investments = []
+
+    if ((nairaInvestments === undefined)) {
+      return []
+    }
 
     let runningNairaInvestments = nairaInvestments.filter((investment) => {
       return investment.status === 'RUNNING'
@@ -136,6 +146,11 @@ const getters = {
     let nairaInvestments = state.userData.USD
     let investments = []
 
+    if ((nairaInvestments === undefined)) {
+      return []
+    }
+
+
     let runningNairaInvestments = nairaInvestments.filter((investment) => {
       return investment.status === 'TERMINATED'
     })
@@ -150,6 +165,36 @@ const getters = {
     })
 
     return investments;
+  },
+
+  /**
+   * Get the total value of the user's fixed income portfolio
+   *
+   */
+  getFiTotalValue: (state, getters) => {
+    let runningNairaInvestments = getters.getRunningNairaInvestments
+    let totalFiValue = 0
+
+    runningNairaInvestments.forEach((nairaInvestment) => {
+      totalFiValue += parseFloat(nairaInvestment.currentValue)
+    })
+
+    return totalFiValue
+  },
+
+  /**
+ * Get the total value of the user's dollar investment portfolio
+ *
+ */
+  getDollarInvestmentsTotalValue: (state, getters) => {
+    let runningDollarInvestments = getters.getRunningDollarInvestments
+    let totalDollarValue = 0
+
+    runningDollarInvestments.forEach((dollarInvestment) => {
+      totalDollarValue += parseFloat(dollarInvestment.currentValue)
+    })
+
+    return totalDollarValue
   }
 
 
@@ -158,7 +203,7 @@ const getters = {
 const mutations = {
   [mutationTypes.SAVE_USER_FIXEDINCOME_DATA_TO_STORE] (state, userData) {
     state.userData = userData.FI
-    state.totalValue = UserService.getFixedIncomeTotalValue(state.userData)
+    // state.totalValue = UserService.getFixedIncomeTotalValue(state.userData)
   }
 }
 

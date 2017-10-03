@@ -12,9 +12,43 @@
        <div class="card card-container elevation-24">
             <img id="company-img" class="img-responsive" src="../assets/img/cardinalstone.png" />
             <p id="profile-name" class="profile-name-card"></p>
+
+                  <v-snackbar
+                    :timeout="timeout"
+                    :top="y === 'top'"
+                    :bottom="y === 'bottom'"
+                    :right="x === 'right'"
+                    :left="x === 'left'"
+                    :multi-line="mode === 'multi-line'"
+                    :vertical="mode === 'vertical'"
+                    v-model="snackbar"
+                    class="red darken-4"
+                  >
+                    <v-container fluid class="pl5 pr20">
+                      <v-layout row>
+
+                        <v-flex xs10 class="d-flex align-center">
+                          {{text}}
+                        </v-flex>
+
+                        <v-flex xs2 class="">
+                          <v-btn flat class="white--text" @click.native="snackbar = false">
+                            <v-icon class="white--text">close</v-icon>
+                          </v-btn>
+                        </v-flex>
+
+                      </v-layout>
+                    </v-container>
+                  </v-snackbar>
+
             <form class="form-signin">
-                <!-- <input type="text" id="inputEmail" class="form-control"
-                placeholder="Username" v-model="username"> -->
+
+                 <v-alert error
+                  icon="new_releases" :value="true"
+                  v-if="authError">
+                  Invalid Username or Password
+                 </v-alert>
+
                 <v-text-field
                   label="Username"
                   :append-icon="'account_circle'"
@@ -29,9 +63,6 @@
                   :type="hidePassword ? 'password' : 'text'"
                   :rules="passwordRules">
                 </v-text-field>
-                <!-- <input type="password" id="inputPassword" class="form-control"
-                 placeholder="Password" v-model="password"> -->
-                <!-- <button @click="login" class="btn btn-lg btn-success btn-block" >Sign in</button> -->
 
                 <v-btn info class="blue darken-4 font-size-13 mt10"
                   @click="login">
@@ -57,11 +88,19 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex'
+  import * as mutationTypes from '../store/mutation-types'
   import {AuthenticationService} from '../services/AuthenticationService';
   import { required } from 'vuelidate/lib/validators'
 
   export default
   {
+
+    beforeDestroy () {
+      // Clear the authentication error message incase it's been set
+      this.$store.commit(mutationTypes.CLEAR_AUTHENTICATION_ERROR_MESSAGE)
+    },
+
     data () {
       return {
         name: 'CardinalStone Trade Direct',
@@ -73,8 +112,20 @@
         ],
         passwordRules: [
           (password) => !!password || 'Required'
-        ]
+        ],
+        snackbar: false,
+        y: 'top',
+        x: null,
+        mode: '',
+        timeout: 10,
+        text: 'Invalid Username or Password'
       }
+    },
+
+    computed: {
+      ...mapState({
+        'authError': (store) => store.errors.authenticationErrorMessage
+      })
     },
 
     methods: {

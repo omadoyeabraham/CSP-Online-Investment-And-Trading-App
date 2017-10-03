@@ -15,9 +15,11 @@ export const GetTradeOrderTerms = `${BaseApiUrl}/findActiveTradeOrderTerms`;
 export const GetSecurityNames = `${BaseApiUrl}/getSecurityNames`;
 export const GetSecurityMarketSnapShot = `${BaseApiUrl}/findSecurityOverviewByName`;
 export const GetSecurityStatusInfo = `${BaseApiUrl}/findSecurityOverviewById`;
+export const PreviewTradeOrder = `${BaseApiUrl}/getTradeOrderTotal`;
 
 // Dashboard
 export const GetDashboardDataUrl = `${BaseApiUrl}/getDashboardData`;
 
 // CashAccounts
 export const GetCashAccountStatements = `${BaseApiUrl}/findFiAcctLedgerEntriesByAccountNumber`
+
