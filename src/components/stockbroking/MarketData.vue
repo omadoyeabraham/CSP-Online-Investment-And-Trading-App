@@ -145,7 +145,7 @@
           sortBy: 'name'
         },
         tableheaders: [
-          { text: 'SYMBOL', value: 'orderDate', align: 'left', sortable: true },
+          { text: 'SYMBOL', value: 'name', align: 'left' },
           { text: 'P.CLOSE(₦)', value: 'stock', align: 'left' },
           { text: 'OPEN(₦)', value: 'orderType', align: 'left' },
           { text: 'HIGH(₦)', value: 'orderTerm', align: 'left' },
