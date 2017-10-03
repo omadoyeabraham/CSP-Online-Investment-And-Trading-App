@@ -1,6 +1,6 @@
 <template>
 
-  <v-card class="white lighten-2 card h-100" dark>
+  <v-card class="white elevation-0 lighten-2 card h-100" dark>
 
     <!-- Heading -->
     <!-- <div class="w100p bg-csp-light-blue p10">
@@ -8,16 +8,18 @@
     </div> -->
 
     <!-- Card body -->
-    <div class="card-block" id="sectorPerformanceChartContainer">
+    <div class="white elevation-0 lighten-2 card h-100" id="sectorPerformanceChartContainer">
       <highcharts
         :options="sectorPerformanceChartData"
         ref="highcharts" style="height: 230px;
         max-width: 100%"
         v-if="sectorData">
       </highcharts>
-      <div v-if="!sectorData" class="d-flex">
-         <p  class="font-size-20 blue--text text--darken-4">No holdings in this portfolio</p>
-      </div>
+
+    </div>
+
+    <div v-if="!sectorData" class="d-flex mt40 ml-auto mr-auto elevation-0">
+         <p  class="font-size-15 blue--text text--darken-4">No holdings in this portfolio</p>
     </div>
 
   </v-card>

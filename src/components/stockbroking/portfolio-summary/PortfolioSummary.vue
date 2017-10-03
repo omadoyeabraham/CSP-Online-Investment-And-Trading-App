@@ -12,13 +12,13 @@
 
     <v-layout row wrap class="">
       <!-- Portfolio Summary Box -->
-      <v-flex xs12 md6 lg4 class="mb5">
+      <v-flex xs12 md6 lg4 class="mb5 max-height-245px min-height-245px">
         <PortfolioSummaryBox :currentPortfolio="currentPortfolio">
         </PortfolioSummaryBox>
       </v-flex>
 
        <!-- Sector Overview -->
-      <v-flex xs12 md6 lg4 class="mb5">
+      <v-flex xs12 md6 lg4 class="mb5 max-height-245px min-height-245px">
         <SectorOverview
           :sectorAllocationChartData="sectorAllocationChartData"
           :sectorPerformanceChartData="sectorPerformanceChartData"
@@ -27,16 +27,17 @@
       </v-flex>
 
       <!-- Stock Overview -->
-      <v-flex xs12 md6 lg4 class="mb5">
+      <v-flex xs12 md6 lg4 class="mb5 max-height-245px min-height-245px">
         <stocks-overview
           :stockAllocationChartData="stockAllocationChartData"
           :stockPerformanceChartData="stockPerformanceChartData"
-          :stockData="stockData">
+          :stockData="stockData"
+          :sectorData="sectorData">
         </stocks-overview>
       </v-flex>
 
       <!-- Bond Allocation -->
-      <v-flex xs12 md6 lg4 class="mb5">
+      <v-flex xs12 md6 lg4 class="mb5 max-height-245px min-height-245px">
          <BondAllocationChart
           :bondAllocationChartData="bondAllocationChartData"
           :bondData="bondData">
@@ -44,7 +45,7 @@
       </v-flex>
 
       <!-- Bond Performance -->
-      <v-flex xs12 md6 lg4 class="mb5">
+      <v-flex xs12 md6 lg4 class="mb5 max-height-245px min-height-245px">
         <BondPerformanceChart
           :bondPerformanceChartData="bondPerformanceChartData"
           :bondData="bondData">

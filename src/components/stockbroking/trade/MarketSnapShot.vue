@@ -289,7 +289,7 @@ export default
     border-bottom: 2px solid #EEEEEE
   #securityStatusList
     li:nth-child(even)
-      background: #DDD
+      background: #EEE
     li
       font-size: 12px
       padding-top: 2px

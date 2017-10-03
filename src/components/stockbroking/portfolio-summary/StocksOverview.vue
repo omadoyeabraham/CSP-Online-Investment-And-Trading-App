@@ -39,7 +39,8 @@
     props: [
       'stockAllocationChartData',
       'stockPerformanceChartData',
-      'stockData'
+      'stockData',
+      'sectorData'
     ],
     components: {
       StockAllocationChart,

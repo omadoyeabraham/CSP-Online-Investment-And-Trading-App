@@ -363,13 +363,13 @@ const getters = {
   getPortfolioHoldingsStockData: (state, getters) => {
     // Ensure that a current portfolio is set
     if (getters.currentPortfolioIsNotSet) {
-      return []
+      return null
     }
 
     let portfolioHoldings = getters.getStockPortfolioHoldings
 
     if (portfolioHoldings.length === 0) {
-      return []
+      return null
     }
 
     let stockData = []
@@ -436,13 +436,13 @@ const getters = {
   getPortfolioHoldingsBondData: (state, getters) => {
     // Ensure that a current portfolio is set
     if (getters.currentPortfolioIsNotSet) {
-      return []
+      return null
     }
 
     let portfolioHoldings = getters.getBondPortfolioHoldings
 
     if (portfolioHoldings.length === 0) {
-      return []
+      return null
     }
 
     let bondData = []
