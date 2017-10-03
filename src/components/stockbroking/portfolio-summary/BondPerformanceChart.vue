@@ -8,7 +8,7 @@
 
     <!-- Card body -->
     <div class="card-block" id="bondPerformanceChartContainer">
-      <highcharts :options="bondPerformanceChartData" ref="highcharts" style="height: 230px;
+      <highcharts :options="bondPerformanceChartData" ref="highcharts" style="height: 150px;
           max-width: 100%" v-if="bondData">
       </highcharts>
 

@@ -8,8 +8,8 @@
     </div> -->
 
     <!-- Card body -->
-    <div class="card-block" id="sectorPerformanceChartContainer" v-if="sectorData">
-      <highcharts :options="sectorAllocationChartData" ref="highcharts" style="height: 230px;
+    <div class="card-block p0" id="sectorPerformanceChartContainer" v-if="sectorData">
+      <highcharts :options="sectorAllocationChartData" ref="highcharts" style="height: 200px;
           max-width: 100%" >
       </highcharts>
 

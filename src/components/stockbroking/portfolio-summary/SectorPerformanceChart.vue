@@ -8,10 +8,10 @@
     </div> -->
 
     <!-- Card body -->
-    <div class="white elevation-0 lighten-2 card h-100" id="sectorPerformanceChartContainer">
+    <div class="white p0 elevation-0 lighten-2 card h-100" id="sectorPerformanceChartContainer">
       <highcharts
         :options="sectorPerformanceChartData"
-        ref="highcharts" style="height: 230px;
+        ref="highcharts" style="height: 150px;
         max-width: 100%"
         v-if="sectorData">
       </highcharts>

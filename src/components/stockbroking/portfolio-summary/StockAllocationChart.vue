@@ -7,14 +7,14 @@
     </div> -->
 
     <!-- Card body -->
-    <div class="card-block" id="sectorAllocationChartContainer">
-      <highcharts :options="stockAllocationChartData" ref="highcharts" style="height: 230px;
-            max-width: 100%" v-if="sectorData">
+    <div class="card-block p0" id="sectorAllocationChartContainer">
+      <highcharts :options="stockAllocationChartData" ref="highcharts" style="height: 200px;
+            max-width: 100%" v-if="stockData">
       </highcharts>
 
     </div>
 
-    <div v-if="!sectorData" class="d-flex mt15 ml-auto mr-auto">
+    <div v-if="!stockData" class="d-flex mt15 ml-auto mr-auto">
         <p class="font-size-15 blue--text text--darken-4">No holdings in this portfolio</p>
     </div>
 

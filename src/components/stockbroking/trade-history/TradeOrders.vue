@@ -13,8 +13,9 @@
       <template slot="headers" scope="props">
         <tr class="bg-csp-light-blue " id="tradeHistoryTableHeader">
           <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'white--text',
-                      header.value === pagination.sortBy ? 'active' : ''
-                      ]">
+                     pagination.descending ? 'desc' : 'asc',
+                              header.value === pagination.sortBy ? 'active' : ''
+                              ]" @click="changeSort(header.value)">
             <!-- <v-icon>arrow_upward</v-icon> -->
             {{ header.text }}
           </th>
@@ -28,7 +29,10 @@
           <td class="font-size-10">{{props.item.orderType}}</td>
           <td class="font-size-10">{{props.item.orderTermLabel}}</td>
           <td class="font-size-10">{{props.item.priceType}}</td>
-          <td class="font-size-10">{{props.item.limitPrice}}</td>
+          <td class="font-size-10 ">
+            <span v-if="props.item.limitPrice">{{props.item.limitPrice}}</span>
+            <span v-else>---</span>
+          </td>
           <td class="font-size-10">{{props.item.quantityRequested | currency('', 2)}}</td>
           <td class="font-size-10">{{props.item.quantityFilled | currency('',2)}}</td>
           <td class="font-size-10">{{props.item.fixOrderStatus}}</td>
@@ -50,25 +54,22 @@
     data () {
       return {
         search: '',
-        totalItems: 0,
         pagination: {
-          sync: {
-            sortBy: 'orderDate',
-            descending: true
-          }
+          sortBy: 'orderDate',
+          descending: false
         },
         loading: false,
         noDataText: 'No Trade Orders',
         rowsPerPageItems: [10, 15, 20, { text: 'All', value: -1 }],
         tableheaders: [
-          { text: 'ORDER DATE', value: 'orderDate', align: 'left' },
+          { text: 'ORDER DATE', value: 'orderDate', align: 'left', sortable: false },
           { text: 'STOCK', value: 'stock', align: 'left' },
           { text: 'TYPE', value: 'orderType', align: 'left' },
           { text: 'ORDER TERM', value: 'orderTerm', align: 'left' },
           { text: 'PRICE TYPE', value: 'priceType', align: 'left' },
-          { text: 'UNIT PRICE', value: 'unitPrice', align: 'left' },
+          { text: 'UNIT PRICE', value: 'unitPrice', align: 'right' },
           { text: 'QUANTITY REQ', value: 'quantityReq', align: 'left' },
-          { text: 'QUANTITY EXEC', value: 'quqntityExec', align: 'left' },
+          { text: 'QUANTITY EXEC', value: 'quantityExec', align: 'left' },
           { text: 'STATUS', value: 'status', align: 'left' },
           {text: '', value: 'action', align: 'left'}
         ]

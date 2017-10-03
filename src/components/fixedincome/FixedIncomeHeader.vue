@@ -1,6 +1,6 @@
 <template>
 
-    <div class="mt20">
+    <div class="">
 
       <!-- Page heading and Fund account button -->
       <v-layout row>

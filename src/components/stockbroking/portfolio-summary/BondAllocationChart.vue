@@ -7,8 +7,8 @@
     </div>
 
     <!-- Card body -->
-    <div class="card-block" id="bondAllocationChartContainer">
-      <highcharts :options="bondAllocationChartData" ref="highcharts" style="height: 230px;
+    <div class="card-block p0" id="bondAllocationChartContainer">
+      <highcharts :options="bondAllocationChartData" ref="highcharts" style="height: 200px;
               max-width: 100%" v-if="bondData">
       </highcharts>
       <div v-if="!bondData" class="d-flex mt15 justify-center">

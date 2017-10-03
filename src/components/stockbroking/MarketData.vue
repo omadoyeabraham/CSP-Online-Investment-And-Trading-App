@@ -46,8 +46,7 @@
         class="table-striped elevation-1">
         <template slot="headers" scope="props">
           <tr class="bg-csp-light-blue " id="marketDataTableHeader">
-            <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'white--text',
-                              pagination.descending ? 'desc' : 'asc',
+            <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'white--text',    pagination.descending ? 'desc' : 'asc',
                               header.value === pagination.sortBy ? 'active' : ''
                               ]" @click="changeSort(header.value)">
               <!-- <v-icon>arrow_upward</v-icon> -->

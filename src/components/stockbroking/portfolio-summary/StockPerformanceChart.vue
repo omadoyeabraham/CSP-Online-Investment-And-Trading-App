@@ -8,14 +8,14 @@
 
     <!-- Card body -->
     <div class="card-block" id="stockPerformanceChartContainer">
-      <highcharts :options="stockPerformanceChartData" ref="highcharts" style="height: 230px;
-          max-width: 100%" v-if="sectorData">
+      <highcharts :options="stockPerformanceChartData" ref="highcharts" style="height: 150px;
+          max-width: 100%" v-if="stockData">
       </highcharts>
 
     </div>
 
 
-  <div v-if="!sectorData" class="d-flex mt15 ml-auto mr-auto">
+  <div v-if="!stockData" class="d-flex mt15 ml-auto mr-auto">
     <p class="font-size-15 blue--text text--darken-4">No holdings in this portfolio</p>
   </div>
 

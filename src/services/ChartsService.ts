@@ -100,7 +100,8 @@
     const chartData = {
       chart: {
         type: 'column',
-        verticalAlign: 'middle'
+        verticalAlign: 'middle',
+        height: 190
       },
       title: {
         text: ''

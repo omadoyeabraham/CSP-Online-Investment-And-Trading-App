@@ -46,6 +46,7 @@ export const nairaInvestments: Array<object> = [
   {
     icon: 'account_balance',
      text: 'SMA', totalValue: store.state.stockbroking.totalValue,
+     routeName: 'sma',
      isSma: true
   },
   {

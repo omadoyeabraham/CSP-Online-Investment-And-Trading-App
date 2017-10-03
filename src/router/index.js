@@ -23,6 +23,9 @@ import TerminatedDollarInvestments from '@/components/fixedIncome/TerminatedDoll
 import NairaCashAccounts from '@/components/cash/NairaCashAccounts'
 import DollarCashAccounts from '@/components/cash/DollarCashAccounts'
 
+// SMA
+import Sma from '@/components/sma/Sma'
+
 Vue.use(Router)
 
 export default new Router({
@@ -71,6 +74,11 @@ export default new Router({
       path: '/stb/watchlist',
       name: 'stb-watchlist',
       component: StbWatchList
+    },
+    {
+      path: '/sma',
+      name: 'sma',
+      component: Sma
     },
     {
       path: '/fi/running',
