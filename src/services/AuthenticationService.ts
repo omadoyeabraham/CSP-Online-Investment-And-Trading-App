@@ -46,6 +46,7 @@ import StockbrokingService from './StockbrokingService'
       store.commit(mutationTypes.SET_STOCKBROKING_TOTAL_VALUE, userData);
       store.commit(mutationTypes.SAVE_USER_FIXEDINCOME_DATA_TO_STORE, userData);
       store.commit(mutationTypes.SAVE_USER_CASH_DATA_TO_STORE, userData);
+      store.commit(mutationTypes.SAVE_USER_SMA_DATA_TO_STORE, userData);
 
       // Add authorization header to all future axios requests, until the user logs out
       axios.defaults.headers.common['Authorization'] = userData.customer.portalPasswordToken;

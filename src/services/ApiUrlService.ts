@@ -16,6 +16,7 @@ export const GetSecurityNames = `${BaseApiUrl}/getSecurityNames`;
 export const GetSecurityMarketSnapShot = `${BaseApiUrl}/findSecurityOverviewByName`;
 export const GetSecurityStatusInfo = `${BaseApiUrl}/findSecurityOverviewById`;
 export const PreviewTradeOrder = `${BaseApiUrl}/getTradeOrderTotal`;
+export const CreateTradeOrder = `${BaseApiUrl}/createTradeOrder`;
 
 // Dashboard
 export const GetDashboardDataUrl = `${BaseApiUrl}/getDashboardData`;

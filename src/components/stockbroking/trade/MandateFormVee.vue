@@ -6,76 +6,124 @@
 <template>
   <v-card>
 
-    <v-card-title primary-title class="blue darken-4 white--text p2 d-flex justify-center">
-      <h5 class="headline mb-0 font-size-16">PLACE A MANDATE</h5>
+    <v-card-title primary-title class="bg-csp-blue white--text p2 d-flex justify-start">
+      <h5 class="headline pl15 mb-0 font-size-12 text-uppercase">Cash Available for Trading:
+        {{availableCash | currency('₦') }}
+      </h5>
     </v-card-title>
 
     <v-card-media>
 
-      <v-container fluid class="p0 pt2">
+      <!-- <v-container fluid class="p0 pt0">
         <v-layout row>
 
-          <v-flex sm12 class="blue-grey darken-1 p5 white--text">
+          <v-flex sm12 class=" darken-1 p5 white--text">
             <span class="font-size-12 font-weight-bold p15">
               Cash Available for Trading: {{availableCash | currency('₦') }}
             </span>
           </v-flex>
 
         </v-layout>
-      </v-container>
+      </v-container> -->
 
-      <v-container fluid class="pt0">
+      <v-container fluid class="pt0 pl1 pr1">
         <v-layout row>
           <v-form v-model="valid" ref="form" class="w100p">
 
-            <v-layout row class="p20 pt0">
+            <v-layout row class="pl20 pr20 pt10">
+
               <!-- Order Type -->
-              <v-flex xs6 class="">
-                <v-select class="" :label="'Order Type'" :items="orderTypes" v-model="orderType" v-validate="'required'" prepend-icon="work" name="orderType" :rules="orderTypeRules">
+              <v-flex xs6 class="height-55px mb6">
+                <v-select class="" :label="'Order Type'" :items="orderTypes" v-model="orderType" v-validate="'required'" prepend-icon="work" name="orderType" :rules="orderTypeRules"
+                :disabled="inPreviewState">
                 </v-select>
               </v-flex>
 
               <!-- Price Option -->
-              <v-flex xs6 class="">
-                <v-select class="" :label="'Price Option'" :items="priceOptions" v-model="priceOption" v-validate="'required'" :rules="priceOptionRules" prepend-icon="bookmark" name="priceOption">
+              <v-flex xs6 class="height-55px mb6">
+                <v-select class="" :label="'Price Option'" :items="priceOptions" v-model="priceOption" v-validate="'required'" :rules="priceOptionRules" prepend-icon="bookmark" name="priceOption" :disabled="inPreviewState">
                 </v-select>
               </v-flex>
 
               <!-- Stocks -->
-              <v-flex xs12 class="">
-                <v-select class="" :label="'Stock'" :items="securityNames" v-model="securityName" :rules="securityNameRules" :no-data-text="noStockToSellText" prepend-icon="map" v-validate="'required'" name="securityName">
+              <v-flex xs12 class="height-55px mb6">
+                <v-select class="" :label="'Stock'" :items="securityNames" v-model="securityName" :rules="securityNameRules" :no-data-text="noStockToSellText" prepend-icon="map" v-validate="'required'" name="securityName" :disabled="inPreviewState">
                 </v-select>
               </v-flex>
 
+              <!-- Quantity Held -->
+              <v-flex xs12 v-if="canShowQuantityHeld" class="height-55px mb6">
+                <v-text-field :label="'Quantity Held'" v-model="quantityHeld" :type="'number'"  prepend-icon="add_shopping_cart" :disabled="inPreviewState">
+                </v-text-field>
+              </v-flex>
+
               <!-- Order Term -->
-              <v-flex xs12 class="font-size-10">
-                <v-select class="font-size-10" :label="'Order Term'" :items="tradeOrderTerms" v-model="orderTerm" :rules="orderTermRules" prepend-icon="today" v-validate="'required'" name="orderTerm">
+              <v-flex xs12 class="font-size-10 height-55px mb6">
+                <v-select class="font-size-10" :label="'Order Term'" :items="tradeOrderTerms" v-model="orderTerm" :rules="orderTermRules" prepend-icon="today" v-validate="'required'" name="orderTerm" :disabled="inPreviewState">
                 </v-select>
               </v-flex>
 
               <!-- Limit Price -->
-              <v-flex xs12 class="">
-                <v-text-field v-if="isLimitOrder" :label="'Limit Price'" v-model="limitPrice" :rules="limitPriceRules" prepend-icon="remove_shopping_cart" v-validate="'required'" name="limitPrice">
+              <v-flex xs12 v-if="isLimitOrder" class="height-55px mb6">
+                <v-text-field  :label="'Limit Price'" v-model="limitPrice" :rules="limitPriceRules" prepend-icon="remove_shopping_cart" v-validate="'required'" name="limitPrice" :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
               <!-- Quantity -->
-              <v-flex xs12 class="">
-                <v-text-field :label="'Quantity'" v-model="quantity" :type="'number'" :rules="quantityRules" prepend-icon="add_shopping_cart" v-validate="'required'" name="quantity">
+              <v-flex xs12 class="height-55px mb6">
+                <v-text-field :label="'Quantity'" v-model="quantity" :type="'number'" :rules="quantityRules" prepend-icon="add_shopping_cart" v-validate="'required'" name="quantity" :disabled="inPreviewState">
+                </v-text-field>
+              </v-flex>
+
+              <!-- Consideration -->
+              <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
+                <v-text-field  readonly :label="'Consideration'" v-model="orderConsideration" :type="'number'"  prepend-icon="add_shopping_cart" :disabled="inPreviewState">
+                </v-text-field>
+              </v-flex>
+
+              <!-- Total Fees -->
+              <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
+                <v-text-field :label="'Total Fees'" v-model="orderTotalFees" :type="'number'"  prepend-icon="add_shopping_cart" :disabled="inPreviewState">
+                </v-text-field>
+              </v-flex>
+
+              <!-- Total Estimated Cost / Proceeds -->
+              <v-flex xs12 v-if="inPreviewState" class="height-55px mb6">
+                <v-text-field  :label="orderTotalText" v-model="formattedOrderTotal" :type="'text'"  prepend-icon="add_shopping_cart" :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
             </v-layout>
 
-            <v-layout row>
-              <v-flex xs6 class="d-flex justify-end">
-                <v-btn primary @click="previewOrder()">
+            <!-- Loading Icon when previewing mandates -->
+            <v-layout v-if="gettingPreviewData"  row class=" d-flex justify-center ">
+              <v-flex class="xs6 d-flex justify-center align-center">
+                 <!-- <span class="font-size-10">Calculating Order Cost</span> -->
+                 <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
+                 <span class="font-size-12 ml5">Calculating order cost</span>
+              </v-flex>
+            </v-layout>
+
+            <!-- Loading Icon when placing mandates -->
+            <v-layout v-if="placingMandate"  row class=" d-flex justify-center ">
+              <v-flex class="xs6 d-flex justify-center align-center">
+                 <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
+                 <span class="font-size-12 ml5">Placing Mandate</span>
+              </v-flex>
+            </v-layout>
+
+            <v-layout v-if="!placingMandate" row class="mt20">
+              <v-flex xs6 class="d-flex justify-end ">
+                <v-btn v-if="!inPreviewState" primary @click="previewOrder()">
                   Preview Order
+                </v-btn>
+                <v-btn v-if="inPreviewState" primary @click="placeOrder()">
+                  Submit Order
                 </v-btn>
               </v-flex>
 
               <v-flex xs6>
-                <v-btn error>
+                <v-btn error @click="cancelOrder()">
                   Cancel Order
                 </v-btn>
               </v-flex>
@@ -121,12 +169,22 @@ export default
       priceOption: '',
       limitPrice: '',
       quantity: '',
+      quantityHeld: '',
+      orderConsideration: null,
+      orderTotal: null,
+      formattedOrderTotal: null,
+      orderTotalFees: null,
+      orderTotalText: '',
+      inPreviewState: false,
+      canShowQuantityHeld: false,
+      gettingPreviewData: false,
+      placingMandate: false,
       orderTypeRules: [
         (v) => !!v || 'Required'
       ],
       orderTypes: [
-        { text: 'Buy', value: 'buy' },
-        { text: 'Sell', value: 'sell' }
+        { text: 'Buy', value: 'BUY' },
+        { text: 'Sell', value: 'SELL' }
       ],
       orderTermRules: [
         (v) => !!v || 'Required'
@@ -145,8 +203,8 @@ export default
         (v) => (v % 1) === 0 || 'Whole number required'
       ],
       priceOptions: [
-        { text: 'Market', value: 'market' },
-        { text: 'Limit', value: 'limit' }
+        { text: 'Market', value: 'MARKET' },
+        { text: 'Limit', value: 'LIMIT' }
       ]
     }
   },
@@ -156,22 +214,24 @@ export default
       'tradeOrderTerms': 'getTradeOrderTerms',
       'allSecurityNames': 'getSecurityNames',
       'currentPortfolioSecurityNames': 'getAllSecuritiesInCurrentPortfolio',
+      'currentPortfolioHoldings': 'getStockPortfolioHoldings',
       'availableCash': 'currentPortfolioAvailableCash'
     }),
 
     ...mapState({
       'portfolioName': (store) => store.stockbroking.currentPortfolio.name,
-      'portfolioLabel': (store) => store.stockbroking.currentPortfolio.label
+      'portfolioLabel': (store) => store.stockbroking.currentPortfolio.label,
+      'selectedSecurityStatusInfo': (store) => store.stockbroking.selectedSecurityStatusInfo
     }),
 
     isLimitOrder: function () {
-      return this.priceOption === 'limit'
+      return this.priceOption === 'LIMIT'
     },
 
     securityNames: function () {
-      if (this.orderType === 'sell') {
+      if (this.orderType === 'SELL') {
         return this.currentPortfolioSecurityNames
-      } else if (this.orderType === 'buy') {
+      } else if (this.orderType === 'BUY') {
         return this.allSecurityNames
       } else {
         return []
@@ -183,14 +243,36 @@ export default
   watch: {
     securityName: function (selectedSecurityName) {
       this.$store.commit(mutationTypes.SET_SECURITY_SELECTED_ON_TRADE_PAGE, selectedSecurityName)
+
+      // Check to see if the current portfolio has the currently selected security name
+      let currentSecurity = this.currentPortfolioHoldings.find((portfolioHolding) => {
+        return portfolioHolding.securityName === this.securityName
+      })
+
+      // If the portfolio has the security, set this.quantityHeld
+      if (currentSecurity !== undefined) {
+        this.quantityHeld = currentSecurity.quantityHeld
+        this.canShowQuantityHeld = true
+      } else {
+        // the portfolio does not have the selected security
+        this.quantityHeld = ''
+        this.canShowQuantityHeld = false
+      }
     }
   },
 
   methods: {
-    // Preview a mandate before sending it out
+    /**
+     * Preview a mandate before sending it out
+     *
+     */
     previewOrder: function () {
       this.$validator.validateAll().then((result) => {
         // No form errors..Proceed
+
+        // Show the loading icon for previewing
+        this.gettingPreviewData = true
+
         if (result) {
           let tradeOrder = {
             orderType: this.orderType,
@@ -204,7 +286,50 @@ export default
             portfolioLabel: this.portfolioLabel,
             portfolioName: this.portfolioName
           }
-          StockbrokingService.previewTradeOrder(tradeOrder)
+
+          /**
+           * Api call which returns a promise. The resolved data will return either be a fault string
+           * or an object with the amount(consideration + fees) and currency of the tradeorder
+           */
+          let getTradeOrderTotal = StockbrokingService.previewTradeOrder(tradeOrder)
+
+          getTradeOrderTotal.then((response) => {
+            let responseData = response.data
+
+            // An appropriate value was returned for the getTradeOrderTotal request
+            if (responseData.amount) {
+              // Get the order's total amount as returned from the API call
+              let orderTotal = parseFloat(responseData.amount).toFixed(2)
+              this.orderTotal = orderTotal
+
+              // Format negative order totals properly
+              if (orderTotal < 0) {
+                let absoluteOrderTotal = Math.abs(orderTotal)
+                orderTotal = `(${absoluteOrderTotal})`
+              }
+
+              this.formattedOrderTotal = orderTotal
+
+              // calculate the total consideration for the order
+              this.calculateConsideration()
+
+              // Calculate the total fees for this order
+              this.calculateTotalFees()
+
+              // get the text used in the orderTotal input displayed after previewing
+              this.getOrderTotalDescription()
+
+              this.inPreviewState = true
+
+              // Hide the loading icon for previewing
+              this.gettingPreviewData = false
+            } else {
+              // An error string was returned in response to the getTradeOrderTotal request
+            }
+          }).catch((error) => {
+            console.log('There was an error')
+            console.log(error)
+          })
         } else { // Validation errors occured
           // Used to display the errors to the user, if the preview btn is pressed
           let formComponents = this.$refs.form.$children
@@ -215,6 +340,105 @@ export default
           return
         }
       })
+    },
+
+    /**
+     * Place a mandate, after successfully previewing the mandate
+     *
+     */
+    placeOrder: function () {
+      // Show the loading icon for placing mandates
+      this.placingMandate = true
+
+      // Get the tradeOrder object
+      let tradeOrder = {
+        orderType: this.orderType,
+        priceType: this.priceOption,
+        instrument: this.securityName,
+        orderTermName: this.orderTerm,
+        quantityRequested: this.quantity,
+        limitPrice: this.limitPrice,
+        orderOrigin: 'WEB',
+        orderCurrency: 'NGN',
+        portfolioLabel: this.portfolioLabel,
+        portfolioName: this.portfolioName
+      }
+
+      /**
+       * Api call which returns a promise. This call is used to place the mandate on the floor of the * NSE
+       */
+      let placeTradeOrder = StockbrokingService.createTradeOrder(tradeOrder)
+
+      placeTradeOrder.then((response) => {
+        // Hide the loading icon for placing mandates
+        this.placingMandate = false
+
+        // Redirect to the trade history page
+        this.$router.push({name: 'stb-trade-history'})
+      }).catch((error) => {
+        console.log(`error while placing mandates`)
+        console.log(error)
+      })
+    },
+
+    /**
+     * Calculate the consideration for the trade order being previewed
+     */
+    calculateConsideration: function () {
+      // For limit orders
+      if (this.priceOption === 'LIMIT') {
+        let consideration = parseFloat(this.limitPrice) * parseFloat(this.quantity)
+        this.orderConsideration = consideration.toFixed(2)
+      } else {
+        // For market Orders
+        const lastTradedPrice = parseFloat(this.selectedSecurityStatusInfo.lastPrice)
+        const percentageOfLastTradedPrice = (10 / 100) * lastTradedPrice
+
+        let consideration = (this.quantity) * (lastTradedPrice + percentageOfLastTradedPrice)
+        this.orderConsideration = consideration.toFixed(2)
+      }
+    },
+
+    /**
+     * Calculate the total fees for the trade order being previewed
+     */
+    calculateTotalFees: function () {
+      let totalFees = 0
+      // Buy orders
+      if (this.orderType === 'BUY') {
+        totalFees = this.orderTotal - this.orderConsideration
+      } else {
+        // Sell orders
+        totalFees = this.orderConsideration - this.orderTotal
+      }
+
+      totalFees = totalFees.toFixed(2)
+
+      this.orderTotalFees = totalFees
+    },
+
+    /**
+     * Return the text description for the order being previewed
+     */
+    getOrderTotalDescription: function () {
+      if (this.orderType === 'BUY') {
+        this.orderTotalText = 'Total Estimated Cost'
+      } else {
+        this.orderTotalText = 'Total Estimated Proceeds'
+      }
+    },
+
+    /**
+     * Cancel the current order being worked on and reset all input fields
+     */
+    cancelOrder: function () {
+      this.orderType = null
+      this.priceOption = null
+      this.securityName = null
+      this.orderTerm = null
+      this.limitPrice = null
+      this.quantity = null
+      this.inPreviewState = false
     }
   }
 

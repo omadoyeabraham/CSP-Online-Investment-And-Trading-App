@@ -25,7 +25,7 @@
     <v-layout row>
       <v-flex>
         <h5>
-          VALUE OF PORTFOLIO: {{currency}}{{totalValueOfPortfolio | currency('',2)}}
+          VALUE OF PORTFOLIO: {{smaPortfolioValue | currency('&#8358; ',2)}}
         </h5>
       </v-flex>
     </v-layout>
@@ -38,8 +38,11 @@
 </template>
 
 <script>
-export default {
-
+export default
+{
+  props: [
+    'smaPortfolioValue'
+  ]
 }
 </script>
 

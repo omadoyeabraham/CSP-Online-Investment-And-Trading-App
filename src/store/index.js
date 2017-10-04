@@ -34,6 +34,9 @@
  // The cash store module
  import CashStore from './modules/cash/cash.ts'
 
+ // The sma store module
+ import SmaStore from './modules/sma.ts'
+
  // The error Module
  import ErrorStore from './modules/errors.ts'
 
@@ -56,6 +59,7 @@
      stockbroking: StockbrokingStore,
      fixedIncome: FixedIncomeStore,
      cash: CashStore,
+     sma: SmaStore,
      errors: ErrorStore
    },
    plugins: [vuexSessionStorage.plugin]

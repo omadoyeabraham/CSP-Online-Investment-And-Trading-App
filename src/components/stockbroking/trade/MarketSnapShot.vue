@@ -5,8 +5,8 @@
 <template>
 
   <v-card>
-    <v-card-title primary-title class="blue darken-4 white--text p2 d-flex justify-center">
-       <h5 class="headline mb-0 font-size-16">MARKET SNAPSHOT
+    <v-card-title primary-title class="bg-csp-blue white--text p2 d-flex justify-center">
+       <h5 class="headline mb-0 font-size-12">MARKET SNAPSHOT
          <span v-if="selectedSecurityMarketSnapShot">
            <span v-if="selectedSecurityMarketSnapShot.companyName"> FOR {{selectedSecurityMarketSnapShot.companyName}}</span>
          </span>
@@ -14,7 +14,7 @@
     </v-card-title>
 
     <v-card-media>
-      {{selectedSecurityMarketSnapShot}}
+
       <!-- Bids, Offers and Trades -->
       <v-container fluid >
         <v-layout row>
@@ -36,7 +36,7 @@
                   </v-layout>
 
                   <v-layout row
-                    class="d-flex justify-between align-between pt5 pb5 box-header">
+                    class="d-flex justify-between align-between pt5 pb5 ">
 
                     <!-- No selected stock -->
                     <v-flex
@@ -48,9 +48,17 @@
                     <!-- Stock selected -->
                     <v-flex
                       v-if="selectedSecurityMarketSnapShot">
-                      <div v-if="selectedSecurityMarketSnapShot.bids.length">
-                        {{selectedSecurityMarketSnapShot.bids}}
+
+                        <div v-if="selectedSecurityMarketSnapShot.bids.length">
+                        <v-container fluid class="p0 alternate max-height-180px min-height-180px" style="overflow-y: auto; overflow-x: hidden" >
+                          <v-layout row class="d-flex justify-between pt5 pb5 " v-for="(bid,index) in selectedSecurityMarketSnapShot.bids" :key="index">
+                            <v-flex class=" ml15 ">{{bid.total | currency('', 2)}}</v-flex>
+                            <v-flex class="ml35">{{bid.qty | currency('', 2)}}</v-flex>
+                            <v-flex class="text-right mr15 ">{{bid.price | currency('',2)}}</v-flex>
+                          </v-layout>
+                        </v-container>
                       </div>
+
                       <div v-else class="text-center font-size-12 font-weight-bold">
                         No Bids
                       </div>
@@ -74,13 +82,13 @@
                   fluid class="p0">
                   <v-layout row
                     class="d-flex justify-between align-between pt5 pb5 box-header">
-                    <v-flex class=" ml5 font-weight-bold">TOTAL QTY</v-flex>
-                    <v-flex class=" text-center font-weight-bold">OFFER QTY</v-flex>
-                    <v-flex class=" text-right mr5 font-weight-bold">PRICE</v-flex>
+                    <v-flex class=" font-weight-bold">TOTAL QTY</v-flex>
+                    <v-flex class="  font-weight-bold">OFFER QTY</v-flex>
+                    <v-flex class="   font-weight-bold">PRICE</v-flex>
                   </v-layout>
 
                   <v-layout row
-                    class="d-flex justify-between align-between pt5 pb5 box-header">
+                    class="d-flex justify-between align-between pt5 pb5 ">
 
                     <!-- No selected stock -->
                     <v-flex
@@ -90,10 +98,16 @@
                     </v-flex>
 
                     <!-- Stock selected -->
-                    <v-flex
+                          <v-flex
                       v-if="selectedSecurityMarketSnapShot">
                       <div v-if="selectedSecurityMarketSnapShot.offers.length">
-                        {{selectedSecurityMarketSnapShot.offers}}
+                        <v-container fluid class="p0 alternate max-height-180px min-height-180px" style="overflow-y: auto; overflow-x: hidden">
+                          <v-layout row class="d-flex justify-between pt5 pb5 " v-for="(offer,index) in selectedSecurityMarketSnapShot.offers" :key="index">
+                            <v-flex class="xs4 pl10 ">{{offer.total | currency('', 0)}}</v-flex>
+                            <v-flex class="xs4 text-right">{{offer.qty | currency('', 0)}}</v-flex>
+                            <v-flex class="xs4 pr10 text-right  ">{{offer.price | currency('', 2)}}</v-flex>
+                          </v-layout>
+                        </v-container>
                       </div>
                       <div v-else class="text-center font-size-12 font-weight-bold">
                         No Offers
@@ -120,11 +134,11 @@
                     class="d-flex justify-between align-between pt5 pb5 box-header">
                     <v-flex class=" ml5 font-weight-bold">PRICE</v-flex>
                     <v-flex class=" text-center font-weight-bold">QUANTITY</v-flex>
-                    <v-flex class=" text-right mr5 font-weight-bold">TIME</v-flex>
+                    <v-flex class=" text-right mr20 font-weight-bold">TIME</v-flex>
                   </v-layout>
 
                   <v-layout row
-                    class="d-flex justify-between align-between pt5 pb5 box-header">
+                    class="d-flex justify-between align-between pt5 pb5 ">
 
                     <!-- No selected stock -->
                     <v-flex
@@ -136,9 +150,17 @@
                     <!-- Stock selected -->
                     <v-flex
                       v-if="selectedSecurityMarketSnapShot">
-                      <div v-if="selectedSecurityMarketSnapShot.trades.length">
-                        {{selectedSecurityMarketSnapShot.trades}}
+
+                        <div v-if="selectedSecurityMarketSnapShot.trades.length">
+                        <v-container fluid class="p0 alternate max-height-180px min-height-180px " style="overflow-y: auto; overflow-x: hidden">
+                          <v-layout row class="d-flex justify-between pt5 pb5  " v-for="(trade,index) in selectedSecurityMarketSnapShot.trades" :key="index">
+                            <v-flex class=" ml5 ">{{trade.tradePrice | currency('', 2)}}</v-flex>
+                            <v-flex class="ml20">{{trade.tradeSize | currency('', 2)}}</v-flex>
+                            <v-flex class="text-right mr5 ">{{trade.time | moment('HH:mm:ss')}}</v-flex>
+                          </v-layout>
+                        </v-container>
                       </div>
+
                       <div v-else class="text-center font-size-12 font-weight-bold">
                         No Trades
                       </div>
@@ -223,6 +245,31 @@
                  <h5 class="headline mb-0 font-size-12">PRICE MOVEMENT CHART</h5>
               </v-card-title>
               <v-card-media>
+
+                <!--No stock selected -->
+                 <v-flex
+                      v-if="!selectedSecurityMarketSnapShot"
+                      class=" ml5 mt15 text-center">
+                      No Stock Selected
+                    </v-flex>
+
+                <!-- Stock selected -->
+                <div v-if="selectedSecurityMarketSnapShot">
+
+                  <!-- Price movement Data exists -->
+                  <div v-if="selectedSecurityMarketSnapShot.priceMovements.length">
+                  </div>
+
+                  <!-- No price movement data -->
+                  <v-flex v-else class=" ml5 mt15 text-center font-size-12 font-weight-bold">
+                    No price information available
+                  </v-flex>
+
+                </div>
+
+                <price-movement-chart>
+
+                </price-movement-chart>
               </v-card-media>
             </v-card>
           </v-flex>
@@ -238,9 +285,13 @@
 import {mapState, mapGetters} from 'vuex'
 import StockbrokingService from '../../../services/StockbrokingService'
 
+import PriceMovementChart from './PriceMovementChart'
+
 export default
 {
-
+  components: {
+    PriceMovementChart
+  },
   beforeDestroy () {
     StockbrokingService.resetMarketSnapShot()
   },
@@ -287,6 +338,9 @@ export default
 <style scoped lang="sass">
   .box-header
     border-bottom: 2px solid #EEEEEE
+  .alternate
+    > div:nth-child(even)
+      background: #EEE
   #securityStatusList
     li:nth-child(even)
       background: #EEE

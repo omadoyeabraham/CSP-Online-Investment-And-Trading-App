@@ -237,18 +237,34 @@ import * as ApiUrls from './ApiUrlService';
   * Preview a trade order request and get the tradeorder total
   *
   * @param tradeOrder
+  * @return Promise
   */
  let previewTradeOrder = (tradeOrder: object) => {
   console.log(tradeOrder)
-  axios({
+
+  return axios({
     method: 'POST',
     url: `${ApiUrls.PreviewTradeOrder}`,
     data: tradeOrder
-  }).then((response) => {
-    console.log(response)
-  }).catch((error) => {
-    console.log(error)
   })
+
+ }
+
+
+ /**
+  * Place a trade order on the floor of the NSE
+  *
+  * @param tradeOrder
+  * @return Promise
+  */
+ let createTradeOrder = (tradeOrder: object) => {
+
+  return axios({
+    method: 'POST',
+    url: `${ApiUrls.CreateTradeOrder}`,
+    data: tradeOrder
+  })
+
  }
 
 
@@ -261,5 +277,6 @@ import * as ApiUrls from './ApiUrlService';
    getSecurityMarketSnapShot,
    getSecurityStatusInfo,
    resetMarketSnapShot,
-   previewTradeOrder
+   previewTradeOrder,
+   createTradeOrder
  }
