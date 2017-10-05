@@ -25,7 +25,8 @@
 
       <!-- Asset allocation Chart -->
       <v-flex xs4>
-        <sma-assetallocation-chart>
+        <sma-assetallocation-chart
+          :chartData='smaAllocationChartData'>
 
         </sma-assetallocation-chart>
       </v-flex>
@@ -59,8 +60,9 @@ export default
 
   computed: {
     ...mapGetters({
-      'smaTotalEquityValue': 'getSmaTotalValue',
-      'totalNairaSmaCashBalance': 'getTotalNairaSmaCashBalance'
+      'smaTotalEquityValue': 'getSmaTotalEquityValue',
+      'totalNairaSmaCashBalance': 'getTotalNairaSmaCashBalance',
+      'smaAllocationChartData': 'getSmaAllocationChartData'
     }),
     totalValueOfSmaInvestments: function () {
       return parseFloat(this.smaTotalEquityValue) + parseFloat(this.totalNairaSmaCashBalance)

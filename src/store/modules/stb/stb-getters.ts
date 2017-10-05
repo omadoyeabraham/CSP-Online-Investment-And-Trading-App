@@ -149,24 +149,7 @@ const getters = {
     return stbTotalValue
   },
 
-  /**
-  * Calculate the total sma value of the user's portfolio
-  */
-  getSmaTotalValue: (state) => {
-    const portfolios = state.smaPortfolios
-    let stbTotalValue = 0
 
-    portfolios.forEach((portfolio) => {
-      // DO not sum up non-exchange or SMA portfolios
-      if (portfolio.portfolioClass != "EXCHANGE" || portfolio.label.indexOf('(SMA)') != -1) {
-        stbTotalValue += parseFloat(portfolio.currentValuation.amount)
-      } else {
-       return
-      }
-    })
-
-    return stbTotalValue
-  },
 
   /**
    * Validate that a portfolio is not currently set
