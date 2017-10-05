@@ -55,6 +55,28 @@ const getters = {
   },
 
   /**
+   * Returns the naira cash accounts formatted in the proper way for rendering using v-selects
+   */
+  getNairaCashAccountsForAccountFunding: (state) => {
+    if ((state.userData.NGN === undefined)) {
+      return []
+    }
+
+    let nairaCashAccounts = []
+
+    state.userData.NGN.forEach((cashAccount) => {
+      nairaCashAccounts.push({
+        id: cashAccount.id,
+        companyName: cashAccount.companyName,
+        text: cashAccount.label,
+        value: cashAccount.name
+      })
+    })
+
+    return nairaCashAccounts
+  },
+
+  /**
    * Returns the dollar cash accounts owned by the user
    */
   getDollarCashAccounts: (state) => {

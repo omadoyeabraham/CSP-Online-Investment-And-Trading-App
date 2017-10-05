@@ -26,6 +26,9 @@ import DollarCashAccounts from '@/components/cash/DollarCashAccounts'
 // SMA
 import Sma from '@/components/sma/Sma'
 
+// Fund Account
+import FundAccount from '@/components/fund-account/FundAccount'
+
 Vue.use(Router)
 
 export default new Router({
@@ -74,6 +77,11 @@ export default new Router({
       path: '/stb/watchlist',
       name: 'stb-watchlist',
       component: StbWatchList
+    },
+    {
+      path: '/fund-account',
+      name: 'fund-account',
+      component: FundAccount
     },
     {
       path: '/sma',

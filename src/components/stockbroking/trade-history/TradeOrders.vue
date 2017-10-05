@@ -8,10 +8,10 @@
       :loading="loading"
       :rows-per-page-items="rowsPerPageItems"
       :no-data-text="noDataText"
-      id="tradeHistoryTable"
-      class="table-striped elevation-1">
+      hide-actions
+      class="table-striped elevation-1 tradeHistoryTable">
       <template slot="headers" scope="props">
-        <tr class="bg-csp-light-blue " id="tradeHistoryTableHeader">
+        <tr class="bg-csp-light-blue tradeHistoryTableHeader" >
           <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'white--text',
                      pagination.descending ? 'desc' : 'asc',
                               header.value === pagination.sortBy ? 'active' : ''
@@ -23,19 +23,19 @@
       </template>
 
       <template slot="items" scope="props">
-        <tr id="tradeHistoryTableBody">
-          <td class="font-size-10">{{props.item.orderDate | moment("DD-MMM-YYYY")}}</td>
-          <td class="font-size-10">{{props.item.securityName}}</td>
-          <td class="font-size-10">{{props.item.orderType}}</td>
-          <td class="font-size-10">{{props.item.orderTermLabel}}</td>
-          <td class="font-size-10">{{props.item.priceType}}</td>
-          <td class="font-size-10 ">
+        <tr class="tradeHistoryTableBody">
+          <td class="font-size-10 p5">{{props.item.orderDate | moment("DD-MMM-YYYY")}}</td>
+          <td class="font-size-10 p5">{{props.item.securityName}}</td>
+          <td class="font-size-10 p5">{{props.item.orderType}}</td>
+          <td class="font-size-10 p5">{{props.item.orderTermLabel}}</td>
+          <td class="font-size-10 p5">{{props.item.priceType}}</td>
+          <td class="font-size-10 p5 ">
             <span v-if="props.item.limitPrice">{{props.item.limitPrice}}</span>
             <span v-else>---</span>
           </td>
-          <td class="font-size-10">{{props.item.quantityRequested | currency('', 2)}}</td>
-          <td class="font-size-10">{{props.item.quantityFilled | currency('',2)}}</td>
-          <td class="font-size-10">{{props.item.fixOrderStatus}}</td>
+          <td class="font-size-10 p5">{{props.item.quantityRequested | currency('', 2)}}</td>
+          <td class="font-size-10 p5">{{props.item.quantityFilled | currency('',2)}}</td>
+          <td class="font-size-10 p5">{{props.item.fixOrderStatus}}</td>
           <td>
             <span></span>
           </td>
@@ -80,18 +80,19 @@
 
 <style scoped lang="sass">
 
-  #tradeHistoryTable
+  .tradeHistoryTable
     margin-bottom: 0px !important
 
-  #tradeHistoryTableHeader,
-  #tradeHistoryTableBody
+  .tradeHistoryTableHeader,
+  .tradeHistoryTableBody
     height: 25px
 
-  #tradeHistoryTableHeader
+
+  .tradeHistoryTableHeader
     th
       padding: 0px 5px !important
 
-  #tradeHistoryTableBody
+  tr.tradeHistoryTableBody
     td
       padding: 5px 5px !important
       height: 25px

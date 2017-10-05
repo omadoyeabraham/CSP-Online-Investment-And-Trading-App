@@ -40,11 +40,12 @@
          allowPointSelect: true,
          cursor: 'pointer',
          dataLabels: {
-           enabled: true,
+           enabled: false,
            formatter: function () {
              return Math.round(this.percentage * 100) / 100 + ' %';
            },
-           distance: -50
+           distance: -40,
+           rotation: 10
          },
          showInLegend: true
        }

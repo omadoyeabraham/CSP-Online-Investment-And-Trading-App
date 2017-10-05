@@ -59,9 +59,6 @@
   // Component for the user's account actions
   import UserAccountActionsComponent from './UserAccountActions';
 
-  // Component for the user's naira investments
-  import NairaInvestmentsComponent from './NairaInvestments'
-
   // Getting the user's data from the Sidebar service
   import {nairaInvestments, dollarInvestments, userAccountActions} from '../../services/SidebarService.ts';
 
@@ -75,8 +72,7 @@
   {
     components: {
       UserInvestments,
-      UserAccountActionsComponent,
-      NairaInvestmentsComponent
+      UserAccountActionsComponent
     },
 
     props: [

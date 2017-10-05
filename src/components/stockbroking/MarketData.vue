@@ -42,10 +42,9 @@
         :search="search"
         :loading="loadingDataTable"
         :rows-per-page-items="rowsPerPageItems"
-        id="marketDataTable"
-        class="table-striped elevation-1">
+        class="elevation-1 marketDataTable">
         <template slot="headers" scope="props">
-          <tr class="bg-csp-light-blue " id="marketDataTableHeader">
+          <tr class="bg-csp-light-blue marketDataTableHeader">
             <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'white--text',    pagination.descending ? 'desc' : 'asc',
                               header.value === pagination.sortBy ? 'active' : ''
                               ]" @click="changeSort(header.value)">
@@ -56,7 +55,7 @@
         </template>
 
         <template slot="items" scope="props">
-          <tr id="marketDataTableBody">
+          <tr class="marketDataTableBody">
             <td class="font-size-10">
               <span class="emulate-link"
                 @click="setSelectedSecurity(props.item.name)">{{props.item.name}}
@@ -182,18 +181,18 @@
 </script>
 
 <style scoped lang="sass">
-  #marketDataTable
+  .marketDataTable
     margin-bottom: 0px !important
 
-  #marketDataTableHeader,
-  #marketDataTableBody
+  .marketDataTableHeader,
+  .marketDataTableBody
     height: 25px
 
-  #marketDataTableHeader
+  .marketDataTableHeader
     th
       padding: 0px 5px !important
 
-  #marketDataTableBody
+  .marketDataTableBody
     td
       padding: 5px 5px !important
       height: 25px

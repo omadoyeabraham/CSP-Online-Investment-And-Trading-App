@@ -99,7 +99,13 @@ export const dollarInvestments: Array<object> = [
  * The account actions that are shown on the sidebar
  */
 export const userAccountActions: Array<object> = [
-  { icon: 'credit_card', action: 'Fund My Account', link: '/fund-account', new: true },
+  {
+    icon: 'credit_card',
+    action: 'Fund My Account',
+    link: '/fund-account',
+    routeName: 'fund-account',
+    new: true
+  },
   { icon: 'perm_identity', action: 'Manage Profile', link: '/manage-profile' },
   { icon: 'lock', action: 'Reset Password', link: '/reset-password' },
   { icon: 'contact_phone', action: 'Contact Manager', link: '/contact-manager' },
