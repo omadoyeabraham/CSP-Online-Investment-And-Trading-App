@@ -71,8 +71,8 @@ const mutations = {
    * @param {any} userData
    */
   [mutationTypes.SAVE_USER_SMA_DATA_TO_STORE](state, userData) {
-    state.smaStb = userData.STB.MANAGED
-    state.smaFi = userData.FI.NGNSMA
+    state.smaStb = userData.STB.MANAGED ? userData.STB.MANAGED : []
+    state.smaFi = userData.FI.NGNSMA ? userData.FI.NGNSMA : []
   }
 
 

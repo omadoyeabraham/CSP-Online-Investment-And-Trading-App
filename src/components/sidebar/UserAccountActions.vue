@@ -7,7 +7,7 @@
               <v-icon>{{ item.icon }}</v-icon>
             </div>
             <v-list-tile-content>
-              <v-list-tile-title class="font-size-11">
+              <v-list-tile-title class="font-size-11" style="overflow: hidden">
                 <router-link :to="item.link" >{{ item.action }}</router-link>
                 <v-chip
                   class="red white--text font-size-10"

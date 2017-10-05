@@ -114,16 +114,17 @@
 
             <v-layout v-if="!placingMandate" row class="mt20">
               <v-flex xs6 class="d-flex justify-end ">
-                <v-btn v-if="!inPreviewState" primary @click="previewOrder()">
+                <v-btn v-if="!inPreviewState" style="background: #4c7396; color: #FFFFFF"
+                  @click="previewOrder()">
                   Preview Order
                 </v-btn>
-                <v-btn v-if="inPreviewState" primary @click="placeOrder()">
+                <v-btn v-if="inPreviewState" style="background: #4c7396; color: #FFFFFF" @click="placeOrder()">
                   Submit Order
                 </v-btn>
               </v-flex>
 
               <v-flex xs6>
-                <v-btn error @click="cancelOrder()">
+                <v-btn class="red darken-1 white--text" @click="cancelOrder()">
                   Cancel Order
                 </v-btn>
               </v-flex>

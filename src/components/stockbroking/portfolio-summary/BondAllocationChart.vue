@@ -11,8 +11,8 @@
       <highcharts :options="bondAllocationChartData" ref="highcharts" style="height: 200px;
               max-width: 100%" v-if="bondData">
       </highcharts>
-      <div v-if="!bondData" class="d-flex mt15 justify-center">
-        <p class="font-size-15 blue--text text--darken-4">No holdings in this portfolio</p>
+      <div v-if="!bondData" class="d-flex mt50 justify-center">
+        <p class="font-size-15 black--text">No holdings in this portfolio</p>
       </div>
     </div>
 

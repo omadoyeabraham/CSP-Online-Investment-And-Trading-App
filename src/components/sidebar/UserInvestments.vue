@@ -6,14 +6,14 @@
 -->
 <template>
 
-  <v-list dense>
+  <v-list dense class="p0">
     <template v-for="(item, i) in AccountInvestments">
 
       <!-- For nav-items with dropdown children -->
       <v-list-group v-if="item.children" v-model="item.model" no-action>
-        <v-list-tile  slot="item" style="height: 30pxs"
-         class=" align-center w100p"
->
+
+        <v-list-tile  slot="item" style="height: 30px"
+         class=" align-center w100p ">
           <div class="mr10">
             <v-icon>{{ item.model ? item.icon : item['icon-alt'] }}</v-icon>
           </div>
@@ -40,20 +40,44 @@
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile  v-for="(child, i) in item.children"
-          :key="i" style="height: 30px"
-          class="d-flex align-center justify-between">
-          <v-list-tile-action v-if="child.icon">
-            <v-icon class="font-size-11">{{ child.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <router-link :to="{name: child.routeName}" class="font-size-11">
-              {{ child.text }}
-            </router-link>
-          </v-list-tile-content>
-        </v-list-tile>
+
+        <!-- Only show the STB dropdowns if the user actually has STB -->
+        <template v-if="item.isSTB">
+          <template v-if="userHasStb">
+          <v-list-tile   v-for="(child, i) in item.children"
+            :key="i" style="height: 30px"
+            class="d-flex align-center justify-between">
+            <v-list-tile-action v-if="child.icon">
+              <v-icon class="font-size-11">{{ child.icon }}</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <router-link :to="{name: child.routeName}" class="font-size-11">
+                {{ child.text }}
+              </router-link>
+            </v-list-tile-content>
+          </v-list-tile>
+          </template>
+        </template>
+
+        <!-- render the dropdowns for all non STB categories that have dropdowns -->
+        <template v-else>
+          <v-list-tile   v-for="(child, i) in item.children"
+            :key="i" style="height: 30px"
+            class="d-flex align-center justify-between">
+            <v-list-tile-action v-if="child.icon">
+              <v-icon class="font-size-11">{{ child.icon }}</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <router-link :to="{name: child.routeName}" class="font-size-11">
+                {{ child.text }}
+              </router-link>
+            </v-list-tile-content>
+          </v-list-tile>
+        </template>
+
       </v-list-group>
       <!-- EOF of nav-items with dropdown -->
+
 
       <!-- Nav items without a dropdown -->
       <v-list-tile class="sidebar-item hover" :key="i" v-else style="height: 30pxs"
@@ -62,15 +86,8 @@
           <v-icon>{{ item.icon }}</v-icon>
         </div>
         <v-list-tile-content>
-          <!-- <v-list-tile-title class="font-size-11 hover">
-            <router-link :to="{name: item.routeName}" class="font-size-11 w100p">
-              {{ item.text }}
-              <span style="float:right">{{item.totalValue}}</span>
-            </router-link>
-            <!-- <span style="float: left">{{ item.text }}</span> -->
-          <!-- </v-list-tile-title> -->
 
-          <!-- <v-list-tile-title class="font-size-11 hover"> -->
+
             <router-link :to="{name: item.routeName}" class="font-size-11 hover w100p">
               <span>{{item.text}}</span>
                <span style="float:right" v-if="item.isNairaCashBalance">
@@ -90,8 +107,6 @@
               </span>
               <span style="float:right" v-else>{{item.totalValue}}</span>
             </router-link>
-            <!-- <span style="float: left">{{ item.text }}</span> -->
-          <!-- </v-list-tile-title> -->
 
         </v-list-tile-content>
       </v-list-tile>
@@ -125,7 +140,7 @@
       ...mapGetters({
         'stbTotalValue': 'getStbTotalValue',
         'fiTotalValue': 'getFiTotalValue',
-        'smaTotalValue': 'getSmaTotalValue',
+        'smaTotalValue': 'getSmaTotalEquityValue',
         'dollarInvestmentsTotalValue': 'getDollarInvestmentsTotalValue',
         'totalNairaCashBalance': 'getTotalNairaCashBalance',
         'totalDollarCashBalance': 'getTotalDollarCashBalance',

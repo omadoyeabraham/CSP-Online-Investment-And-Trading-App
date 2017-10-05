@@ -7,14 +7,14 @@
     </div>
 
     <!-- Card body -->
-    <div class="card-block" id="bondPerformanceChartContainer">
+    <div class="card-block p0" id="bondPerformanceChartContainer">
       <highcharts :options="bondPerformanceChartData" ref="highcharts" style="height: 150px;
           max-width: 100%" v-if="bondData">
       </highcharts>
 
 
-  <div v-if="!bondData" class="d-flex mt15 justify-center">
-    <p class="font-size-15 blue--text text--darken-4">No holdings in this portfolio</p>
+  <div v-if="!bondData" class="d-flex mt50 justify-center">
+    <p class="font-size-15 black--text">No holdings in this portfolio</p>
   </div>
 
 

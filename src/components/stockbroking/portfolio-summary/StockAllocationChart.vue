@@ -14,8 +14,8 @@
 
     </div>
 
-    <div v-if="!stockData" class="d-flex mt15 ml-auto mr-auto">
-        <p class="font-size-15 blue--text text--darken-4">No holdings in this portfolio</p>
+    <div v-if="!stockData" class="d-flex mt50 ml-auto mr-auto">
+        <p class="font-size-15 black--text">No holdings in this portfolio</p>
     </div>
 
   </v-card>

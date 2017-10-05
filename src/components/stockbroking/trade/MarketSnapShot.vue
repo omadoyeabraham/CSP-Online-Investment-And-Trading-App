@@ -16,7 +16,7 @@
     <v-card-media>
 
       <!-- Bids, Offers and Trades -->
-      <v-container fluid >
+      <v-container fluid class="pt5 pb5">
         <v-layout row>
 
           <!-- BIDS -->

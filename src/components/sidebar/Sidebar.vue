@@ -23,6 +23,10 @@
         </router-link>
       </div>
       <UserInvestments :AccountInvestments="nairaInvestments"></UserInvestments>
+      <!-- <naira-investments-component
+        :stbOverview="stockbrokingOverview">
+      </naira-investments-component> -->
+
 
       <!-- Dollar Investments -->
       <div
@@ -55,8 +59,13 @@
   // Component for the user's account actions
   import UserAccountActionsComponent from './UserAccountActions';
 
+  // Component for the user's naira investments
+  import NairaInvestmentsComponent from './NairaInvestments'
+
   // Getting the user's data from the Sidebar service
   import {nairaInvestments, dollarInvestments, userAccountActions} from '../../services/SidebarService.ts';
+
+  import {stockbroking} from '../../services/NairaInvestmentsService';
 
   const NairaInvestments = nairaInvestments;
   const DollarInvestments = dollarInvestments;
@@ -66,7 +75,8 @@
   {
     components: {
       UserInvestments,
-      UserAccountActionsComponent
+      UserAccountActionsComponent,
+      NairaInvestmentsComponent
     },
 
     props: [
@@ -76,6 +86,7 @@
     // Component specific data
     data () {
       return {
+        stockbrokingOverview: stockbroking,
         nairaInvestments: NairaInvestments,
         dollarInvestments: DollarInvestments,
         accountActions: accountActions,

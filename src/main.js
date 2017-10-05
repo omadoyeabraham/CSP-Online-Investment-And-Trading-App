@@ -54,7 +54,7 @@ Vue.use(VueHighcharts, { Highcharts })
 import App from './components/App'
 
 // Vuetify CSS
-import '../node_modules/vuetify/dist/vuetify.min.css'
+import '../node_modules/vuetify/dist/vuetify.css'
 
 // Stylesheet import
 import './assets/css/main.scss';

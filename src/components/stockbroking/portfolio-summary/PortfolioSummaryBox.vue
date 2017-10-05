@@ -11,7 +11,7 @@
     </div>
 
     <!-- Card body -->
-    <div class="card-block">
+    <div class="card-block pt0">
       <ul class="list-group list-group-flush black--text">
         <!-- CHN NO -->
         <li class="list-group-item ">

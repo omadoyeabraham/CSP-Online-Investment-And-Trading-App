@@ -55,7 +55,7 @@
       <v-card class="white lighten-2 card h-100" dark>
 
         <div class="w100p bg-csp-light-blue p10">
-          <div class="text-uppercase font-weight-bold">BOND INVESTMENT DETAILS</div>
+          <div class="text-uppercase font-weight-bold"><span class="text-uppercase">{{investmentType}}</span> INVESTMENT DETAILS</div>
         </div>
 
         <!-- Card body -->
@@ -107,7 +107,7 @@
 
           </ul>
           <div
-            class="d-flex justify-center mt20 font-size-12"
+            class="d-flex justify-center align-center font-size-12 min-height-200px"
             v-if="!investmentIsSelected">
             Kindly select an investment to view more information
           </div>
