@@ -17,8 +17,9 @@
       <!-- Fund Account Form -->
       <v-flex xs6>
         <fund-account-form
+          :user="user"
           :username="username"
-          :nairaCashAccounts="nairaCashAccounts"
+          :cashAccounts="nairaCashAccounts"
           :portalUsername="portalUsername">
         </fund-account-form>
       </v-flex>

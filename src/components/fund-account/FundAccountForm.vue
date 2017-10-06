@@ -40,7 +40,7 @@
 
                 <!-- Cash Account -->
                 <v-flex xs12 class="height-55px mb6">
-                 <v-select class="" :label="'Select a cash account'" :items="nairaCashAccounts" v-model="nairaCashAccount" v-validate="'required'" :rules="nairaCashAccountRules" prepend-icon="bookmark" name="paymentMethod" :disabled="inPreviewState">
+                 <v-select class="" :label="'Select a cash account'" :items="cashAccounts" v-model="cashAccount" v-validate="'required'" :rules="cashAccountRules" prepend-icon="bookmark" name="paymentMethod" :disabled="inPreviewState">
                   </v-select>
                 </v-flex>
 
@@ -62,7 +62,7 @@
               <v-layout v-if="!placingFundRequest" row class="mt20">
                 <v-flex xs6 class="d-flex justify-end ">
                   <v-btn v-if="!inPreviewState" style="background: #4c7396; color: #FFFFFF"
-                    @click="previewOrder()">
+                    @click="getPaymentTransactionDetails()">
                     Preview
                   </v-btn>
                   <v-btn v-if="inPreviewState" style="background: #4c7396; color: #FFFFFF" @click="placeOrder()">
@@ -88,21 +88,24 @@
 </template>
 
 <script>
+import {AccountFundingService} from '../../services/AccountFundingService'
 export default
 {
   props: [
+    'user',
     'username',
     'portalUsername',
-    'nairaCashAccounts'
+    'cashAccounts'
   ],
 
   data () {
     return {
       valid: false,
       inPreviewState: false,
+      gettingTransactionDetails: false,
       placingFundRequest: false,
       paymentMethod: 'BANK TRANSFER',
-      nairaCashAccount: '',
+      cashAccount: '',
       currency: 'Naira (NGN)',
       amount: '',
       paymentMethods: [
@@ -112,7 +115,7 @@ export default
       paymentMethodRules: [
         (v) => !!v || 'Required'
       ],
-      nairaCashAccountRules: [
+      cashAccountRules: [
         (v) => !!v || 'Required'
       ],
       amountRules: [
@@ -120,6 +123,55 @@ export default
         (v) => (v < 50000) === false || 'Minimum of ₦50,000',
         (v) => (v > 20000000) === false || 'Maximum of ₦20,000,000'
       ]
+    }
+  },
+
+  methods: {
+    /**
+     * Get transaction details icluding the hash, transactionID
+     */
+    getPaymentTransactionDetails: function () {
+      this.$validator.validateAll().then((result) => {
+        // Form is being validated
+
+        // Show the loading icon when getting transaction data
+        this.gettingTransactionDetails = true
+
+        // Validation errors occured
+        if (!result) {
+          // Used to display the errors to the user, if the preview btn is pressed
+          let formComponents = this.$refs.form.$children
+
+          formComponents.forEach((formComponent) => {
+            formComponent.shouldValidate = true
+          })
+        } else {
+          // No validation errors occured
+
+           // Retrieve details about the user selected cash Account
+          let selectedCashAccount = this.cashAccounts.find((cashAccount) => {
+            return (cashAccount.value = this.cashAccount)
+          })
+
+          let paymentTransaction = {
+            productId: this.cashAccount,
+            productDescription: selectedCashAccount.text,
+            amount: this.amount,
+            currency: 566,
+            clientId: this.user.info.id,
+            companyName: selectedCashAccount.companyName
+          }
+
+          let paymentTransactionDetails = AccountFundingService.getPaymentTransactionDetails(paymentTransaction)
+
+          paymentTransactionDetails.then((response) => {
+            console.log(response)
+          }).catch((error) => {
+            console.log('There was an errror')
+            console.log(error)
+          })
+        }
+      })
     }
   }
 }

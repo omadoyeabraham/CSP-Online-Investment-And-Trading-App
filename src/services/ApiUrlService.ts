@@ -24,3 +24,5 @@ export const GetDashboardDataUrl = `${BaseApiUrl}/getDashboardData`;
 // CashAccounts
 export const GetCashAccountStatements = `${BaseApiUrl}/findFiAcctLedgerEntriesByAccountNumber`
 
+// Account Funding
+export const GetPaymentTransactionDetails = `${BaseApiUrl}/getPaymentTransactionDetails`
