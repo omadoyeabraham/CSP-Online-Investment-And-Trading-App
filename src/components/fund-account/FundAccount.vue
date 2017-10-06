@@ -15,7 +15,7 @@
     <v-layout row>
 
       <!-- Fund Account Form -->
-      <v-flex xs6>
+      <v-flex xs5>
         <fund-account-form
           :user="user"
           :username="username"
@@ -25,7 +25,7 @@
       </v-flex>
 
       <!-- Privacy data -->
-      <v-flex xs6>
+      <v-flex xs7>
       </v-flex>
 
     </v-layout>

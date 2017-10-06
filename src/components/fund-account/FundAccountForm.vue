@@ -3,26 +3,43 @@
   <v-container fluid class="p0">
     <v-card>
 
-      <v-card-title primary-title class="bg-csp-blue white--text p2 d-flex justify-start">
-        <h5 class="headline pl15 mb-0 font-size-12 text-uppercase">......
+      <v-card-title primary-title class="bg-csp-blue white--text height-35px p2 d-flex justify-start">
+        <h5 class="headline pl15 mb-0 font-size-12 text-uppercase">
         </h5>
       </v-card-title>
 
       <v-card-media>
         <v-container fluid class="pt0 pl1 pr1">
           <v-layout row>
-            <v-form v-model="valid" ref="form" class="w100p">
+            <v-form v-model="valid" ref="form" class="w100p"
+              id="paymentForm"
+              name="cpay"
+              method="POST"
+              action="https://staging.nibss-plc.com.ng/CentralPayPlus/pay">
+
+              <!--Hidden Fields sent to Nibbs -->
+              <input type="hidden" name="merchant_id" :value="merchant_id" />
+              <input type="hidden" name="product_id" :value="product_id" />
+              <input type="hidden" name="product_description" :value="product_description" />
+              <input type="hidden" name="customer_id" :value="customer_id" />
+              <input type="hidden" name="amount" :value="nibbs_amount" />
+              <input type="hidden" name="currency" :value="nibbs_currency" />
+              <input type="hidden" name="transaction_id" :value="transaction_id" />
+              <input type="hidden" name="response_url" :value="response_url" />
+              <input type="hidden" name="hash" :value="hash" />
+              <!-- End of Hidden fields -->
+
               <v-layout row class="pl20 pr20 pt10">
 
                 <!-- Customer Name -->
                 <v-flex xs12 class="height-55px mb6">
-                  <v-text-field :label="'Customer Name'" v-model="username" :type="'text'" prepend-icon="add_shopping_cart" :disabled="inPreviewState">
+                  <v-text-field :label="'Customer Name'" v-model="username" :type="'text'" prepend-icon="account_box" disabled>
                   </v-text-field>
                 </v-flex>
 
                 <!-- Username -->
                 <v-flex xs6 class="height-55px mb6">
-                  <v-text-field :label="'Username'" v-model="portalUsername" :type="'text'"  prepend-icon="add_shopping_cart"  name="username" readonly>
+                  <v-text-field :label="'Username'" v-model="portalUsername" :type="'text'"  prepend-icon="account_circle"  name="username" disabled>
                   </v-text-field>
                 </v-flex>
 
@@ -34,28 +51,63 @@
 
                 <!-- Payment Method -->
                 <v-flex xs6 class="height-55px mb6">
-                   <v-text-field :label="'Payment Method'" v-model="paymentMethod" :type="'text'"  prepend-icon="add_shopping_cart"  name="paymentMethod" readonly>
+                   <v-text-field :label="'Payment Method'" v-model="paymentMethod" :type="'text'"  prepend-icon="account_balance"  name="paymentMethod" disabled>
                   </v-text-field>
                 </v-flex>
 
                 <!-- Cash Account -->
                 <v-flex xs12 class="height-55px mb6">
-                 <v-select class="" :label="'Select a cash account'" :items="cashAccounts" v-model="cashAccount" v-validate="'required'" :rules="cashAccountRules" prepend-icon="bookmark" name="paymentMethod" :disabled="inPreviewState">
+                 <v-select class="" :label="'Select a cash account'" :items="cashAccounts" v-model="cashAccount" v-validate="'required'" :rules="cashAccountRules" prepend-icon="reorder" name="paymentMethod" :disabled="inPreviewState">
                   </v-select>
                 </v-flex>
 
                 <!-- Currency -->
                 <v-flex xs6 class="height-55px mb6">
-                  <v-text-field :label="'Currency'" v-model="currency" :type="'text'"  prepend-icon="add_shopping_cart" v-validate="'required'" name="currency" :disabled="inPreviewState" readonly>
+                  <v-text-field :label="'Currency'" v-model="currency" :type="'text'"  prepend-icon="fa-money fa-2x" v-validate="'required'" name="currency " :disabled="inPreviewState" disabled>
                   </v-text-field>
                 </v-flex>
 
-                <!-- Amount -->
-                <v-flex xs6 class="height-55px mb6">
-                  <v-text-field :label="'Amount'" v-model="amount" :type="'number'" :rules="amountRules" prepend-icon="add_shopping_cart" v-validate="'required'" name="amount" :disabled="inPreviewState">
+                <!-- Amount to be shown only when not previwing the form -->
+                <v-flex xs6 class="height-55px mb6" v-if="!inPreviewState">
+                  <v-text-field :label="'Amount'" v-model="clientAmount" :type="'number'" :rules="amountRules" prepend-icon="fa-money fa-2x" v-validate="'required'" name="amount" :disabled="inPreviewState">
                   </v-text-field>
                 </v-flex>
 
+              <!-- Customer Amount to be shown only when previewing -->
+              <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
+                <v-text-field  :label="'Customer Amount'" :value="clientAmount | currency('',0)" :type="'text'"  prepend-icon="fa-credit-card fa-2x" :disabled="inPreviewState">
+                </v-text-field>
+              </v-flex>
+
+              <!-- Total Charges -->
+              <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
+                <v-text-field  :label="'Total Charges'" v-model="transactionCharge" :type="'text'"  prepend-icon="fa-building fa-2x" :disabled="inPreviewState">
+                </v-text-field>
+              </v-flex>
+
+              <!-- Total Amount -->
+              <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
+                <v-text-field  :label="'Total Amount'" :value="totalAmount | currency('',0)" :type="'text'"  prepend-icon="fa-plus-square-o fa-2x" :disabled="inPreviewState">
+                </v-text-field>
+              </v-flex>
+
+              <!-- Transaction Code -->
+              <v-flex xs12 v-if="inPreviewState" class="height-55px mb20">
+                <v-text-field  :label="'Transaction Code'" v-model="transaction_id"
+                hint="Please take note of your unique transaction id" persistent-hint
+                :type="'text'"  prepend-icon="fa-code fa-2x" :disabled="inPreviewState">
+                </v-text-field>
+              </v-flex>
+
+              </v-layout>
+
+              <!-- Loading Icon when previewing mandates -->
+              <v-layout v-if="gettingTransactionDetails"  row class=" d-flex justify-center ">
+                <v-flex class="xs6 d-flex justify-center align-center mt20">
+                  <!-- <span class="font-size-10">Calculating Order Cost</span> -->
+                  <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
+                  <span class="font-size-12 ml5">Obtaining transaction details</span>
+                </v-flex>
               </v-layout>
 
               <!-- Buttons -->
@@ -65,7 +117,7 @@
                     @click="getPaymentTransactionDetails()">
                     Preview
                   </v-btn>
-                  <v-btn v-if="inPreviewState" style="background: #4c7396; color: #FFFFFF" @click="placeOrder()">
+                  <v-btn v-if="inPreviewState" style="background: #4c7396; color: #FFFFFF" @click="submitPaymentTransaction()">
                     Proceed
                   </v-btn>
                 </v-flex>
@@ -75,6 +127,7 @@
                     Cancel
                   </v-btn>
                 </v-flex>
+
               </v-layout>
 
             </v-form>
@@ -107,7 +160,18 @@ export default
       paymentMethod: 'BANK TRANSFER',
       cashAccount: '',
       currency: 'Naira (NGN)',
-      amount: '',
+      clientAmount: '',
+      merchant_id: '',
+      product_id: '',
+      product_description: '',
+      customer_id: '',
+      nibbs_amount: '',
+      nibbs_currency: '',
+      transaction_id: '',
+      response_url: '',
+      hash: '',
+      transactionCharge: '',
+      totalAmount: '',
       paymentMethods: [
         { text: 'Bank Transfer', value: 'BANK' },
         { text: 'Card Payment', value: 'CARD' }
@@ -156,7 +220,7 @@ export default
           let paymentTransaction = {
             productId: this.cashAccount,
             productDescription: selectedCashAccount.text,
-            amount: this.amount,
+            amount: this.clientAmount,
             currency: 566,
             clientId: this.user.info.id,
             companyName: selectedCashAccount.companyName
@@ -165,13 +229,45 @@ export default
           let paymentTransactionDetails = AccountFundingService.getPaymentTransactionDetails(paymentTransaction)
 
           paymentTransactionDetails.then((response) => {
-            console.log(response)
+            let transactionDetails = response.data
+            console.log(transactionDetails)
+
+            this.product_id = this.cashAccount
+            this.product_description = paymentTransaction.productDescription
+            this.customer_id = paymentTransaction.clientId
+            this.nibbs_amount = transactionDetails.amountInKobo
+            this.nibbs_currency = 566
+            this.transaction_id = transactionDetails.transactionId
+            this.merchant_id = transactionDetails.merchantId
+            this.response_url = transactionDetails.responseURL
+            this.hash = transactionDetails.hash
+            this.transactionCharge = transactionDetails.charge
+
+            // because the total amount is returned in kobo
+            this.totalAmount = (parseFloat(transactionDetails.amountInKobo) / 100)
+
+            // Show the loading icon when getting transaction data
+            this.gettingTransactionDetails = false
+
+            // Change the form's state to previewing
+            this.inPreviewState = true
+
+            // Submit the payment form
+            // document.getElementById('paymentForm').submit()
           }).catch((error) => {
-            console.log('There was an errror')
             console.log(error)
           })
         }
       })
+    },
+
+    submitPaymentTransaction: function () {
+      // Submit the payment form
+      document.getElementById('paymentForm').submit()
+    },
+
+    cancelPaymentTransaction: function () {
+      this.inPreviewState = false
     }
   }
 }

@@ -269,7 +269,7 @@ export default
      */
     previewOrder: function () {
       this.$validator.validateAll().then((result) => {
-        // No form errors..Proceed
+        // Form is being validated
 
         // Show the loading icon for previewing
         this.gettingPreviewData = true
