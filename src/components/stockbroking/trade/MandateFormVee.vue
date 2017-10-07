@@ -53,7 +53,7 @@
 
               <!-- Quantity Held -->
               <v-flex xs12 v-if="canShowQuantityHeld" class="height-55px mb6">
-                <v-text-field :label="'Quantity Held'" v-model="quantityHeld" :type="'number'"  prepend-icon="add_shopping_cart" :disabled="inPreviewState">
+                <v-text-field :label="'Quantity Held'" v-model="quantityHeld" :type="'number'"  prepend-icon="add_shopping_cart" disabled>
                 </v-text-field>
               </v-flex>
 
@@ -65,7 +65,7 @@
 
               <!-- Limit Price -->
               <v-flex xs12 v-if="isLimitOrder" class="height-55px mb6">
-                <v-text-field  :label="'Limit Price'" v-model="limitPrice" :rules="limitPriceRules" prepend-icon="remove_shopping_cart" v-validate="'required'" name="limitPrice" :disabled="inPreviewState">
+                <v-text-field  :label="'Limit Price'" v-model="limitPrice" :type="'number'" :rules="limitPriceRules" prepend-icon="remove_shopping_cart" v-validate="'required'" name="limitPrice" :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
@@ -328,7 +328,6 @@ export default
               // An error string was returned in response to the getTradeOrderTotal request
             }
           }).catch((error) => {
-            console.log('There was an error')
             console.log(error)
           })
         } else { // Validation errors occured

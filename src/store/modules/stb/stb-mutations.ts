@@ -74,6 +74,7 @@ const mutations = {
 
   /**
    * Set the total value of the stb portfolio
+   * UNUSED
    *
    * @param {any} state
    * @param {any} stbTotalValue

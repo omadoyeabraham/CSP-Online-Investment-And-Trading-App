@@ -10,7 +10,7 @@ import StbPortfolioSummary from '@/components/stockbroking/portfolio-summary/Por
 import StbTradeHistory from '@/components/stockbroking/trade-history/TradeHistory'
 import StbPortfolioHoldings from '@/components/stockbroking/portfolio-holdings/PortfolioHoldings'
 import StbMarketData from '@/components/stockbroking/MarketData'
-import StbWatchList from '@/components/stockbroking/WatchList'
+import StbWatchList from '@/components/stockbroking/watchlist/WatchList'
 import StbTrade from '@/components/stockbroking/trade/Trade'
 
 // FixedIncome Components

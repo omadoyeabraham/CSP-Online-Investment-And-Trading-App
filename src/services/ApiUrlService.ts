@@ -18,6 +18,12 @@ export const GetSecurityStatusInfo = `${BaseApiUrl}/findSecurityOverviewById`;
 export const PreviewTradeOrder = `${BaseApiUrl}/getTradeOrderTotal`;
 export const CreateTradeOrder = `${BaseApiUrl}/createTradeOrder`;
 
+// WatchList
+export const GetWatchListUrl = `${BaseApiUrl}/getWatchList`;
+export const CreateWatchListUrl = `${BaseApiUrl}/createWatchList`;
+export const UpdateWatchListUrl = `${BaseApiUrl}/updateWatchList`;
+export const DeleteWatchListUrl = `${BaseApiUrl}/deleteWatchList`;
+
 // Dashboard
 export const GetDashboardDataUrl = `${BaseApiUrl}/getDashboardData`;
 
