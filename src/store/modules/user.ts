@@ -20,7 +20,7 @@ const state: object = {
 const getters = {
   // Return the full username
   getUsername: (state) => {
-    return `${state.info.firstName} ${state.info.lastName}`
+    return `${state.info.firstName} ${state.info.lastName}`.toLowerCase()
   }
 
 }

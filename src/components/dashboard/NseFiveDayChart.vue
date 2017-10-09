@@ -1,6 +1,8 @@
 <template>
 
-    <v-card class="white lighten-2 card" dark>
+    <v-card class="white lighten-2
+      height-250px
+      card" dark>
 
     <!-- Heading -->
     <div class="w100p bg-csp-light-blue p10">
@@ -12,7 +14,7 @@
       <highcharts
         :options="chartData"
         ref="highcharts"
-        style="height: 230px; max-width: 100%">
+        style="height: 200px; max-width: 100%">
       </highcharts>
     </div>
 

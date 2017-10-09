@@ -5,7 +5,7 @@
 -->
 <template>
 
-    <v-card class="white lighten-2 card h-100" dark>
+    <v-card class="white lighten-2 card h-100 height-250px" dark>
 
     <!-- Heading -->
     <div class="w100p bg-csp-light-blue p10">

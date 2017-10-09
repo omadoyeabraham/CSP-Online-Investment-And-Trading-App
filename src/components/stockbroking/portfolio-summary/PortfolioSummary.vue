@@ -4,7 +4,7 @@
   @author Omadoye Abraham
 -->
 <template>
-  <v-container fluid>
+  <v-container fluid class="pt0">
 
     <PortfolioSwitchingHeader
        :title="'Stockbroking - Portfolio Summary'">

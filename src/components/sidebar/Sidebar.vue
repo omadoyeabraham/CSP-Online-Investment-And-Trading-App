@@ -19,7 +19,7 @@
         v-if="mini===false">
         <span >Naira Investments</span>
         <router-link to="/dashboard">
-          <i class="fa fa-home" aria-hidden="true"></i>
+          <i class="fa fa-home sidebar-icon" aria-hidden="true"></i>
         </router-link>
       </div>
       <UserInvestments :AccountInvestments="nairaInvestments"></UserInvestments>
@@ -122,5 +122,8 @@
     margin-top: 10px
     margin-bottom: 0
     border-bottom: 1px solid rgb(204,204,204)
+
+    .sidebar-icon
+      color: #428bca
 
 </style>

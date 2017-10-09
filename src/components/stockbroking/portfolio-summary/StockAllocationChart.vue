@@ -1,11 +1,6 @@
 <template>
   <v-card class="white elevation-0 lighten-2 card h-100" dark>
 
-    <!-- Heading -->
-    <!-- <div class="w100p bg-csp-light-blue p10">
-      <div>STOCK ALLOCATION</div>
-    </div> -->
-
     <!-- Card body -->
     <div class="card-block p0" id="sectorAllocationChartContainer">
       <highcharts :options="stockAllocationChartData" ref="highcharts" style="height: 200px;

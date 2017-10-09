@@ -16,17 +16,20 @@
          class="blue--text text--darken-4">
         </v-toolbar-side-icon>
         <v-btn icon>
-          <v-icon x-large>account_circle</v-icon>
+          <v-icon class="fa fa-user fa-5x"></v-icon>
         </v-btn>
       </v-toolbar-title>
       <v-layout column>
         <v-flex>
-          <span class="body-1 blue--text text--darken-4">Welcome, </span>
-          <span class=" font-size-20">{{username}}</span>
+          <span class="body-1 welcome">Welcome, </span>
+          <span class=" username">
+            {{user.info.firstName.toLowerCase() | capitalize}}
+            {{user.info.lastName.toLowerCase() | capitalize}}
+          </span>
         </v-flex>
         <v-flex>
           <v-icon class="logout-btn">lock</v-icon>
-          <span class="red--text"
+          <span class="red--text logout-link"
             @click="logout()">
             Logout
           </span>
@@ -127,5 +130,17 @@
 
   .logout-btn
     font-size: 11px
+
+  .username
+    font-size: 30px
+    font-family: "Verdana"
+    color: #666
+
+  .logout-link
+    &:hover
+      cursor: pointer
+
+  .welcome
+    color: #a6a4be
 
 </style>

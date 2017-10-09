@@ -121,7 +121,24 @@
   export default
   {
     beforeCreate () {
-      StockbrokingService.getMarketData();
+      let gettingMarketData = StockbrokingService.getMarketData()
+
+      gettingMarketData.then((response) => {
+        let allMarketData = response.data
+
+        allMarketData.forEach((stockData) => {
+          let priceChange = stockData.lastTradePrice - stockData.previousClose
+          let priceChangePercent = (priceChange / stockData.previousClose) * 100
+
+          stockData.priceChange = priceChange
+          stockData.percentChange = priceChangePercent
+        })
+
+        // commit the market data to the stockbroking module of our vue store
+        this.$store.commit(mutationTypes.SAVE_MARKET_DATA_TO_STORE, response.data)
+      }).catch((error) => {
+        console.log(error)
+      })
     },
 
     computed: mapState({

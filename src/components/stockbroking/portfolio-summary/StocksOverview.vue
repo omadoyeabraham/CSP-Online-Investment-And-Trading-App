@@ -9,16 +9,16 @@
        <vue-tabs
         activeTabColor="#4c7396"
         activeTextColor="#FFFFFF"
-        class="">
+        class="abro1">
 
-         <v-tab title="STOCK ALLOCATION" class="">
+         <v-tab title="STOCK ALLOCATION" class="abro2">
            <stock-allocation-chart
             :stockAllocationChartData="stockAllocationChartData"
             :stockData="stockData">
            </stock-allocation-chart>
          </v-tab>
 
-        <v-tab title="STOCK PERFORMANCE" class="">
+        <v-tab title="STOCK PERFORMANCE" class="abro3" style="width: 60%">
           <stock-performance-chart
              :stockPerformanceChartData="stockPerformanceChartData"
             :stockData="stockData">

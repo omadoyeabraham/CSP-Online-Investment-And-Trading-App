@@ -1,6 +1,6 @@
 <template>
 
-    <v-card class="white lighten-2 card h-100" dark>
+    <v-card class="white lighten-2 card h-100 height-250px" dark>
 
     <!-- Heading -->
     <div class="w100p bg-csp-light-blue p10">
@@ -16,7 +16,7 @@
             <span>Gainers</span>
             <span>Change(%)</span>
           </div>
-          <div class="content w100p d-flex justify-content-between p5 pt10 pb10" v-for="(gainer, index) in topGainers" :key="index">
+          <div class="content w100p d-flex justify-content-between p5 pt6 pb6" v-for="(gainer, index) in topGainers" :key="index">
             <span>{{gainer.symbol}}</span>
             <span class="green--text">{{gainer.change}}</span>
           </div>
@@ -28,7 +28,7 @@
             <span>Losers</span>
             <span>Change(%)</span>
           </div>
-          <div class="content w100p d-flex justify-content-between p5 pt10 pb10" v-for="(loser, index) in topLosers" :key="index">
+          <div class="content w100p d-flex justify-content-between p5 pt6 pb6" v-for="(loser, index) in topLosers" :key="index">
             <span>{{loser.symbol}}</span>
             <span class="red--text">({{loser.change}})</span>
           </div>

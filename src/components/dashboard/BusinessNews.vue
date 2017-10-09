@@ -5,11 +5,11 @@
 -->
 <template>
 
-    <v-card class="white lighten-2 card h-100"
+    <v-card class="white lighten-2 card h-100 height-250px"
        dark>
 
     <div class="w100p bg-csp-light-blue p10">
-      <div class="text-uppercase">BUSINESS NEWS for 23-AUG-2017</div>
+      <div class="text-uppercase">BUSINESS NEWS </div>
     </div>
 
     <!-- Card body -->
@@ -22,7 +22,7 @@
       <table class="table table-striped mb0">
         <tbody>
           <tr v-for="(newsItem, index) in newsFeed" :key="index">
-            <td class="">
+            <td class="pt1 pb1">
               <a :href="newsItem.link" target="_blank"
                 class="font-size-11 black--text">
                 {{newsItem.title}}

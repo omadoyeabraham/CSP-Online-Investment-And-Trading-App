@@ -48,7 +48,7 @@
   }
 </script>
 
-<style lang="sass">
+<style scoped lang="sass">
   .title
     font-size: 11px !important
 </style>

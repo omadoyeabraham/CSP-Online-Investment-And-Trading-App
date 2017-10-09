@@ -15,11 +15,11 @@
         <v-list-tile  slot="item" style="height: 30px"
          class=" align-center w100p ">
           <div class="mr10">
-            <v-icon>{{ item.model ? item.icon : item['icon-alt'] }}</v-icon>
+            <v-icon class="sidebar-icon">{{ item.model ? item.icon : item['icon-alt'] }}</v-icon>
           </div>
           <v-list-tile-content class="w100p">
             <v-list-tile-title class="font-size-11 w100p">
-              <span style="float:left;">{{ item.text }}</span>
+              <span style="float:left;" >{{ item.text }}</span>
 
               <!-- Stockbroking -->
               <span style="float: right" class="mr0" v-if="item.isSTB">
@@ -47,12 +47,13 @@
           <v-list-tile   v-for="(child, i) in item.children"
             :key="i" style="height: 30px"
             class="d-flex align-center justify-between">
-            <v-list-tile-action v-if="child.icon">
+            <!-- <v-list-tile-action v-if="child.icon">
               <v-icon class="font-size-11">{{ child.icon }}</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <router-link :to="{name: child.routeName}" class="font-size-11">
-                {{ child.text }}
+            </v-list-tile-action> -->
+            <v-list-tile-content class="pt0 pb0">
+              <router-link :to="{name: child.routeName}" class="font-size-11 pt0 pb0 ml25">
+               <v-icon class="font-size-11 fa fa-chevron-right mr10 sidebar-icon" v-if="child.icon"></v-icon>
+               {{ child.text }}
               </router-link>
             </v-list-tile-content>
           </v-list-tile>
@@ -64,11 +65,12 @@
           <v-list-tile   v-for="(child, i) in item.children"
             :key="i" style="height: 30px"
             class="d-flex align-center justify-between">
-            <v-list-tile-action v-if="child.icon">
+            <!-- <v-list-tile-action v-if="child.icon">
               <v-icon class="font-size-11">{{ child.icon }}</v-icon>
-            </v-list-tile-action>
+            </v-list-tile-action> -->
             <v-list-tile-content>
-              <router-link :to="{name: child.routeName}" class="font-size-11">
+              <router-link :to="{name: child.routeName}" class="font-size-11 ml25">
+                <v-icon class="font-size-11 fa fa-chevron-right mr10 sidebar-icon"></v-icon>
                 {{ child.text }}
               </router-link>
             </v-list-tile-content>
@@ -83,7 +85,7 @@
       <v-list-tile class="sidebar-item hover" :key="i" v-else style="height: 30pxs"
         >
         <div class="mr10">
-          <v-icon>{{ item.icon }}</v-icon>
+          <v-icon class="sidebar-icon">{{ item.icon }}</v-icon>
         </div>
         <v-list-tile-content>
 
@@ -189,4 +191,8 @@
       a
         &:hover, &:focus
           text-decoration: none
+
+  .sidebar-icon
+    color: #8fb0cc
+
 </style>

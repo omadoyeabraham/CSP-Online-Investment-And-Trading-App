@@ -4,7 +4,7 @@
         <template v-for="(item, i) in accountActions">
           <v-list-tile :key="i" v-if="item.action" >
             <div class="mr10">
-              <v-icon>{{ item.icon }}</v-icon>
+              <v-icon class="sidebar-icon">{{ item.icon }}</v-icon>
             </div>
             <v-list-tile-content>
               <v-list-tile-title class="font-size-11" style="overflow: hidden">
@@ -32,6 +32,8 @@
   }
 </script>
 
-<style>
+<style scoped lang="sass">
+    .sidebar-icon
+      color: #8fb0cc
 
 </style>

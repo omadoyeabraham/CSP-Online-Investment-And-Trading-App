@@ -2,9 +2,9 @@
   <v-container fluid class="p0">
 
   <!-- Page heading and Fund account button -->
-  <v-layout row>
+  <v-layout row class="align-end">
     <v-flex d-flex align-center>
-      <h3 class="font-size-20 csp-light-blue-text">{{title}}</h3>
+      <h3 class="font-size-20 csp-light-blue-text mb0">{{title}}</h3>
     </v-flex>
     <v-flex d-flex justify-end align-start>
       <v-btn info  class="blue darken-4 font-size-10 p0 ml-auto mb0 mr0">
@@ -14,7 +14,7 @@
   </v-layout>
 
     <!-- Number of accounts and account switching -->
-    <v-layout row  class="mb20">
+    <v-layout row  class="mb10">
       <v-flex d-flex align-end>
         <h3 class="font-size-12 csp-blue-text font-weight-bold">NUMBER OF ACCOUNTS IN PORTFOLIO: {{numberOfAccountsInPortfolio}}</h3>
       </v-flex>
@@ -27,6 +27,7 @@
           <option v-for="(item, index) in portfolios"
             :key="index"
             v-bind:value="item.accountNo">{{item.label}}</option>
+
         </select>
         </form>
 
@@ -73,6 +74,10 @@ export default
 }
 </script>
 
-<style>
+<style scoped lang="sass">
+  #selectAccount
+    background: #4c7396
+    color: #FFFFFF
+    border: 2px solid transparent
 
 </style>
