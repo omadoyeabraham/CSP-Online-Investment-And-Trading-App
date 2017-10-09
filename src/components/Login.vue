@@ -64,7 +64,18 @@
                   :rules="passwordRules">
                 </v-text-field>
 
-                <v-btn info class="blue darken-4 font-size-13 mt10"
+
+                <!-- Loading Icon when signing in-->
+                <v-layout v-if="isAuthenticating"  row class=" d-flex justify-center ">
+                  <v-flex class="xs6 d-flex justify-center align-center">
+                    <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
+                    <span class="font-size-12 ml5">Signing in</span>
+                  </v-flex>
+                </v-layout>
+
+                <v-btn info
+                  class="blue darken-4 font-size-13 mt10"
+                  :loading="false"
                   @click="login">
                 SIGN IN
                 </v-btn>
@@ -89,8 +100,10 @@
 
 <script>
   import {mapState} from 'vuex'
+  import axios from 'axios'
   import * as mutationTypes from '../store/mutation-types'
   import {AuthenticationService} from '../services/AuthenticationService';
+  import StockbrokingService from '../services/StockbrokingService';
   import { required } from 'vuelidate/lib/validators'
 
   export default
@@ -107,6 +120,7 @@
         username: '',
         password: '',
         hidePassword: true,
+        isAuthenticating: false,
         usernameRules: [
           (username) => !!username || 'Required'
         ],
@@ -132,7 +146,46 @@
 
       // Login the user
       login: function () {
-        AuthenticationService.login(this.username, this.password)
+        // Show the sign-in loading spinner
+        this.isAuthenticating = true;
+
+        let authenticateUser = AuthenticationService.login(this.username, this.password)
+        authenticateUser.then((response) => {
+          let userData = response.data;
+
+          // Commit the authenticated user's data to the vue store.
+          this.$store.commit(mutationTypes.SAVE_AUTHENTICATED_USER_TO_STORE, userData);
+          this.$store.commit(mutationTypes.SAVE_USER_STOCKBROKING_DATA_TO_STORE, userData);
+          this.$store.commit(mutationTypes.SET_STOCKBROKING_TOTAL_VALUE, userData);
+          this.$store.commit(mutationTypes.SAVE_USER_FIXEDINCOME_DATA_TO_STORE, userData);
+          this.$store.commit(mutationTypes.SAVE_USER_CASH_DATA_TO_STORE, userData);
+          this.$store.commit(mutationTypes.SAVE_USER_SMA_DATA_TO_STORE, userData);
+
+          // Add authorization header to all future axios requests, until the user logs out
+          axios.defaults.headers.common['Authorization'] = userData.customer.portalPasswordToken;
+
+          // Store the access token in session, so users who reload can still access resources
+          window.sessionStorage.setItem('accessToken', userData.customer.portalPasswordToken)
+
+          StockbrokingService.getActiveTradeOrderTerms()
+          StockbrokingService.getSecurityNames()
+
+          // Hide the sign-in loading spinner
+          this.isAuthenticating = false
+
+          // Redirect to the dashboard after successful authetication
+          this.$router.push({ name: 'Dashboard' })
+        }).catch((error) => {
+          // return 'Invalid username or password';
+          console.log(error)
+
+          // Hide the sign-in loading spinner
+          this.isAuthenticating = false
+
+          this.$store.commit(mutationTypes.SET_AUTHENTICATION_ERROR_MESSAGE, 'We do not recognise this username or password')
+
+          this.$router.push({ name: 'Login' })
+        });
       }
 
     },
