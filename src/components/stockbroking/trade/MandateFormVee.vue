@@ -6,8 +6,8 @@
 <template>
   <v-card>
 
-    <v-card-title primary-title class="bg-csp-blue white--text p2 d-flex justify-start">
-      <h5 class="headline pl15 mb-0 font-size-12 text-uppercase">Cash Available for Trading:
+    <v-card-title primary-title class="font-weight-bold p2 d-flex justify-start">
+      <h5 class=" pt10 font-weight-bold pl5 mb-0 font-size-12 text-uppercase">Cash Available for Trading:
         {{availableCash | currency('₦') }}
       </h5>
     </v-card-title>
@@ -34,62 +34,64 @@
 
               <!-- Order Type -->
               <v-flex xs6 class="height-55px mb6">
-                <v-select class="" :label="'Order Type'" :items="orderTypes" v-model="orderType" v-validate="'required'" prepend-icon="work" name="orderType" :rules="orderTypeRules"
+                <v-select class="" :label="'Order Type'" :items="orderTypes" v-model="orderType" v-validate="'required'" name="orderType" :rules="orderTypeRules"
                 :disabled="inPreviewState">
                 </v-select>
               </v-flex>
 
-              <!-- Price Option -->
-              <v-flex xs6 class="height-55px mb6">
-                <v-select class="" :label="'Price Option'" :items="priceOptions" v-model="priceOption" v-validate="'required'" :rules="priceOptionRules" prepend-icon="bookmark" name="priceOption" :disabled="inPreviewState">
-                </v-select>
-              </v-flex>
-
               <!-- Stocks -->
-              <v-flex xs12 class="height-55px mb6">
-                <v-select class="" :label="'Stock'" :items="securityNames" v-model="securityName" :rules="securityNameRules" :no-data-text="noStockToSellText" prepend-icon="map" v-validate="'required'" name="securityName" :disabled="inPreviewState">
+              <v-flex xs6 class="height-55px mb6">
+                <v-select class="" :label="'Stock'" :items="securityNames" v-model="securityName" :rules="securityNameRules" :no-data-text="noStockToSellText" v-validate="'required'" name="securityName" :disabled="inPreviewState">
                 </v-select>
               </v-flex>
 
-              <!-- Quantity Held -->
-              <v-flex xs12 v-if="canShowQuantityHeld" class="height-55px mb6">
-                <v-text-field :label="'Quantity Held'" v-model="quantityHeld" :type="'number'"  prepend-icon="add_shopping_cart" disabled>
+
+              <!-- Quantity -->
+              <v-flex xs6 class="height-55px mb6">
+                <v-text-field :label="'Quantity'" v-model="quantity" :type="'number'" :rules="quantityRules"  v-validate="'required'" name="quantity" :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
+
+              <!-- Quantity Held -->
+              <v-flex xs6 v-if="canShowQuantityHeld" class="height-55px mb6">
+                <v-text-field :label="'Quantity Held'" v-model="quantityHeld" :type="'number'"   disabled>
+                </v-text-field>
+              </v-flex>
+
+              <!-- Price Option -->
+              <v-flex xs6 class="height-55px mb6">
+                <v-select class="" :label="'Price Option'" :items="priceOptions" v-model="priceOption" v-validate="'required'" :rules="priceOptionRules"  name="priceOption" :disabled="inPreviewState">
+                </v-select>
+              </v-flex>
+
               <!-- Order Term -->
-              <v-flex xs12 class="font-size-10 height-55px mb6">
-                <v-select class="font-size-10" :label="'Order Term'" :items="tradeOrderTerms" v-model="orderTerm" :rules="orderTermRules" prepend-icon="today" v-validate="'required'" name="orderTerm" :disabled="inPreviewState">
+              <v-flex xs6 class="font-size-10 height-55px mb6">
+                <v-select class="font-size-10" :label="'Order Term'" :items="tradeOrderTerms" v-model="orderTerm" :rules="orderTermRules"  v-validate="'required'" name="orderTerm" :disabled="inPreviewState">
                 </v-select>
               </v-flex>
 
               <!-- Limit Price -->
-              <v-flex xs12 v-if="isLimitOrder" class="height-55px mb6">
-                <v-text-field  :label="'Limit Price'" v-model="limitPrice" :type="'number'" :rules="limitPriceRules" prepend-icon="remove_shopping_cart" v-validate="'required'" name="limitPrice" :disabled="inPreviewState">
-                </v-text-field>
-              </v-flex>
-
-              <!-- Quantity -->
-              <v-flex xs12 class="height-55px mb6">
-                <v-text-field :label="'Quantity'" v-model="quantity" :type="'number'" :rules="quantityRules" prepend-icon="add_shopping_cart" v-validate="'required'" name="quantity" :disabled="inPreviewState">
+              <v-flex xs6 v-if="isLimitOrder" class="height-55px mb6">
+                <v-text-field  :label="'Limit Price'" v-model="limitPrice" :type="'number'" :rules="limitPriceRules"  v-validate="'required'" name="limitPrice" :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
               <!-- Consideration -->
               <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
-                <v-text-field  readonly :label="'Consideration'" v-model="orderConsideration" :type="'number'"  prepend-icon="add_shopping_cart" :disabled="inPreviewState">
+                <v-text-field  readonly :label="'Consideration'" v-model="orderConsideration" :type="'number'"   :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
               <!-- Total Fees -->
               <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
-                <v-text-field :label="'Total Fees'" v-model="orderTotalFees" :type="'number'"  prepend-icon="add_shopping_cart" :disabled="inPreviewState">
+                <v-text-field :label="'Total Fees'" v-model="orderTotalFees" :type="'number'"  :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
               <!-- Total Estimated Cost / Proceeds -->
               <v-flex xs12 v-if="inPreviewState" class="height-55px mb6">
-                <v-text-field  :label="orderTotalText" v-model="formattedOrderTotal" :type="'text'"  prepend-icon="add_shopping_cart" :disabled="inPreviewState">
+                <v-text-field  :label="orderTotalText" v-model="formattedOrderTotal" :type="'text'"  :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
@@ -132,6 +134,17 @@
 
           </v-form>
 
+          <v-snackbar error
+            :timeout="snackbarTimeout"
+            :top="true"
+            :multi-line="snackbarMode === 'multi-line'"
+            :vertical="snackbarMode === 'vertical'"
+            :color="'error'"
+            v-model="showMandateErrorSnackbar"
+            >
+            {{ mandateErrorSnackbarText }}
+          </v-snackbar>
+
         </v-layout>
       </v-container>
 
@@ -155,6 +168,7 @@ export default
     if (this.redirectedOrderType && this.redirectedSecurityName) {
       this.orderType = this.redirectedOrderType
       this.securityName = this.redirectedSecurityName
+      console.log(this.redirectedOrderType, this.redirectedSecurityName)
     }
 
     this.$store.commit(mutationTypes.SET_SECURITY_SELECTED_ON_TRADE_PAGE, this.securityName)
@@ -162,11 +176,16 @@ export default
 
   data () {
     return {
+      showMandateErrorSnackbar: false,
+      mandateErrorSnackbarText: null,
+      snackbarTimeout: 3000,
+      snackbarMode: '',
+      mandateErrorSnackbarColor: 'red lighten-2',
       noStockToSellText: 'No stock to sell',
       valid: false,
       orderTerm: '',
-      orderType: '',
-      securityName: '',
+      orderType: null,
+      securityName: null,
       priceOption: '',
       limitPrice: '',
       quantity: '',
@@ -326,9 +345,21 @@ export default
               this.gettingPreviewData = false
             } else {
               // An error string was returned in response to the getTradeOrderTotal request
+              console.log(responseData)
+
+              // Handle mandate errors here
+              this.mandateErrorSnackbarText = responseData.status
+              this.showMandateErrorSnackbar = true
+
+              // Hide the loading icon for previewing
+              this.gettingPreviewData = false
             }
           }).catch((error) => {
+            // Handle errors here
             console.log(error)
+
+            // Hide the loading icon for previewing
+            this.gettingPreviewData = false
           })
         } else { // Validation errors occured
           // Used to display the errors to the user, if the preview btn is pressed
@@ -336,6 +367,9 @@ export default
           formComponents.forEach((formComponent) => {
             formComponent.shouldValidate = true
           })
+
+          // Hide the loading icon for previewing
+          this.gettingPreviewData = false
 
           return
         }

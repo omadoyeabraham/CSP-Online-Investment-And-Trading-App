@@ -5,13 +5,13 @@
 
     <v-layout row>
 
-      <v-flex xs6 class="">
+      <v-flex xs12 sm6 class="mb20">
         <add-watch-list
           :user="user">
         </add-watch-list>
       </v-flex>
 
-      <v-flex xs6 class="">
+      <v-flex xs12 sm6 class="p0">
         <watch-list-table
           :userWatchList="formattedUserWatchList"
           >

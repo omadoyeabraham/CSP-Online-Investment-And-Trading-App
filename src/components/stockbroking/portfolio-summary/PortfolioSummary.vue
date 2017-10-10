@@ -52,12 +52,19 @@
         </BondPerformanceChart>
       </v-flex>
 
+       <!-- Recent Orders -->
+      <v-flex xs12 md6 lg4 class="mb5 max-height-245px min-height-245px">
+        <recent-orders :currentPortfolio="currentPortfolio">
+        </recent-orders>
+      </v-flex>
+
     </v-layout>
   </v-container>
 </template>
 
 <script>
 import PortfolioSummaryBox from './PortfolioSummaryBox'
+import RecentOrders from './RecentOrders'
 import SectorOverview from './SectorOverview'
 import StocksOverview from './StocksOverview'
 import SectorPerformanceChart from './SectorPerformanceChart'
@@ -75,6 +82,7 @@ export default
 {
   components: {
     PortfolioSummaryBox,
+    RecentOrders,
     SectorOverview,
     StocksOverview,
     SectorPerformanceChart,

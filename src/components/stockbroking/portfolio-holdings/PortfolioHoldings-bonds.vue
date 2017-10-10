@@ -17,12 +17,13 @@
       <v-flex xs12 sm8 class="mb20">
         <!-- Table -->
         <v-data-table
+        hide-actions
         v-bind:headers="tableheaders"
         :items="bondHoldings"
         :search="search"
         :no-data-text="noDataText"
         id="tradeHistoryTable"
-        class="table-striped elevation-1">
+        class="table-striped table-bordered elevation-1">
           <template slot="headers" scope="props">
             <tr class="bg-csp-light-blue " id="tradeHistoryTableHeader">
               <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'white--text',
@@ -130,7 +131,7 @@
 
             <!-- If no bond is selected -->
             <v-card
-              class="d-flex justify-center align-center font-size-12 min-height-150px indigo darken-4 white--text"
+              class="d-flex justify-center align-center font-size-12 min-height-150px no-bond-selected white--text"
               v-if="!bondIsSelected"
               >
               Kindly select an investment to view more information
@@ -234,4 +235,6 @@ export default
     td
       padding: 5px 5px !important
       height: 25px
+  .no-bond-selected
+    background: #4c7396
 </style>

@@ -5,8 +5,8 @@
 <template>
 
   <v-card>
-    <v-card-title primary-title class="bg-csp-blue white--text p2 d-flex justify-center">
-       <h5 class="headline mb-0 font-size-12">MARKET SNAPSHOT
+    <v-card-title primary-title class="p2 d-flex justify-center">
+       <h5 class="pt10 mb-0 font-size-12 font-weight-bold">MARKET SNAPSHOT
          <span v-if="selectedSecurityMarketSnapShot">
            <span v-if="selectedSecurityMarketSnapShot.companyName"> FOR {{selectedSecurityMarketSnapShot.companyName}}</span>
          </span>
@@ -16,55 +16,54 @@
     <v-card-media>
 
       <!-- Bids, Offers and Trades -->
-      <v-container fluid class="pt5 pb5">
+      <v-container fluid class="pt5 pb5 p0">
         <v-layout row>
 
           <!-- BIDS -->
           <v-flex xs4>
-            <v-card class="min-height-260px">
+            <v-card class="">
               <v-card-title primary-title class="bg-csp-light-blue white--text p0 pl20">
                  <h5 class="headline mb-0 font-size-12">BIDS</h5>
               </v-card-title>
               <v-card-media>
                 <v-container
-                  fluid class="p0">
-                  <v-layout row
-                    class="d-flex justify-between align-between pt5 pb5 box-header">
-                    <v-flex class=" ml5 font-weight-bold">TOTAL QTY</v-flex>
-                    <v-flex class=" text-center font-weight-bold">BID QTY</v-flex>
-                    <v-flex class=" text-right mr5 font-weight-bold">PRICE</v-flex>
-                  </v-layout>
+                  fluid class="p0 min-height-240px max-height-240px" style="overflow-y: auto">
 
-                  <v-layout row
-                    class="d-flex justify-between align-between pt5 pb5 ">
+                  <!-- BIDS TABLE -->
+                  <table class="table table-striped" id="bidsTable">
+                    <thead>
+                      <th>TOTAL QTY</th>
+                      <th class="text-center">BID QTY</th>
+                      <th class="text-right">PRICE</th>
+                    </thead>
 
-                    <!-- No selected stock -->
-                    <v-flex
-                      v-if="!selectedSecurityMarketSnapShot"
-                      class=" ml5 text-center">
-                      No Stock Selected
-                    </v-flex>
+                    <!-- NO STOCK SELECTED -->
+                    <tbody v-if="!selectedSecurityMarketSnapShot">
+                      <tr class="text-center">
+                        <td colspan="3">No Stock Selected</td>
+                      </tr>
+                    </tbody>
 
-                    <!-- Stock selected -->
-                    <v-flex
-                      v-if="selectedSecurityMarketSnapShot">
+                    <template v-if="selectedSecurityMarketSnapShot">
 
-                        <div v-if="selectedSecurityMarketSnapShot.bids.length">
-                        <v-container fluid class="p0 alternate max-height-180px min-height-180px" style="overflow-y: auto; overflow-x: hidden" >
-                          <v-layout row class="d-flex justify-between pt5 pb5 " v-for="(bid,index) in selectedSecurityMarketSnapShot.bids" :key="index">
-                            <v-flex class=" ml15 ">{{bid.total | currency('', 2)}}</v-flex>
-                            <v-flex class="ml35">{{bid.qty | currency('', 2)}}</v-flex>
-                            <v-flex class="text-right mr15 ">{{bid.price | currency('',2)}}</v-flex>
-                          </v-layout>
-                        </v-container>
-                      </div>
+                      <!-- BIDS EXIST -->
+                      <tbody v-if="selectedSecurityMarketSnapShot.bids.length">
+                        <tr v-for="(bid,index) in selectedSecurityMarketSnapShot.bids" :key="index">
+                          <td>{{bid.total | currency('', 0)}}</td>
+                          <td class="text-center">{{bid.qty | currency('', 0)}}</td>
+                          <td class="text-right">{{bid.price | currency('',2)}}</td>
+                        </tr>
+                      </tbody>
 
-                      <div v-else class="text-center font-size-12 font-weight-bold">
-                        No Bids
-                      </div>
-                    </v-flex>
+                      <!-- NO BIDS -->
+                      <tbody v-if="!selectedSecurityMarketSnapShot.bids.length">
+                        <tr class="text-center">
+                          <td colspan="3">No Bids</td>
+                        </tr>
+                      </tbody>
+                    </template>
 
-                  </v-layout>
+                  </table>
 
                 </v-container>
               </v-card-media>
@@ -73,48 +72,49 @@
 
           <!-- OFFERS -->
           <v-flex xs4>
-            <v-card class="min-height-260px">
+            <v-card class="">
               <v-card-title primary-title class="bg-csp-light-blue white--text p0 pl20">
                  <h5 class="headline mb-0 font-size-12">OFFERS</h5>
               </v-card-title>
               <v-card-media>
                 <v-container
-                  fluid class="p0">
-                  <v-layout row
-                    class="d-flex justify-between align-between pt5 pb5 box-header">
-                    <v-flex class=" font-weight-bold">TOTAL QTY</v-flex>
-                    <v-flex class="  font-weight-bold">OFFER QTY</v-flex>
-                    <v-flex class="   font-weight-bold">PRICE</v-flex>
-                  </v-layout>
+                  fluid class="p0 min-height-240px max-height-240px" style="overflow-y: auto">
 
-                  <v-layout row
-                    class="d-flex justify-between align-between pt5 pb5 ">
+                   <!-- OFFERS TABLE -->
+                  <table class="table table-striped" id="offersTable">
+                    <thead>
+                      <th>TOTAL QTY</th>
+                      <th class="text-center">OFFER QTY</th>
+                      <th class="text-right">PRICE</th>
+                    </thead>
 
-                    <!-- No selected stock -->
-                    <v-flex
-                      v-if="!selectedSecurityMarketSnapShot"
-                      class=" ml5 text-center">
-                      No Stock Selected
-                    </v-flex>
+                    <!-- NO STOCK SELECTED -->
+                    <tbody v-if="!selectedSecurityMarketSnapShot">
+                      <tr class="text-center">
+                        <td colspan="3">No Stock Selected</td>
+                      </tr>
+                    </tbody>
 
-                    <!-- Stock selected -->
-                          <v-flex
-                      v-if="selectedSecurityMarketSnapShot">
-                      <div v-if="selectedSecurityMarketSnapShot.offers.length">
-                        <v-container fluid class="p0 alternate max-height-180px min-height-180px" style="overflow-y: auto; overflow-x: hidden">
-                          <v-layout row class="d-flex justify-between pt5 pb5 " v-for="(offer,index) in selectedSecurityMarketSnapShot.offers" :key="index">
-                            <v-flex class="xs4 pl10 ">{{offer.total | currency('', 0)}}</v-flex>
-                            <v-flex class="xs4 text-right">{{offer.qty | currency('', 0)}}</v-flex>
-                            <v-flex class="xs4 pr10 text-right  ">{{offer.price | currency('', 2)}}</v-flex>
-                          </v-layout>
-                        </v-container>
-                      </div>
-                      <div v-else class="text-center font-size-12 font-weight-bold">
-                        No Offers
-                      </div>
-                    </v-flex>
+                    <template v-if="selectedSecurityMarketSnapShot">
 
-                  </v-layout>
+                      <!-- OFFERS EXIST -->
+                      <tbody v-if="selectedSecurityMarketSnapShot.offers.length">
+                        <tr v-for="(offer,index) in selectedSecurityMarketSnapShot.offers" :key="index">
+                          <td>{{offer.total | currency('', 0)}}</td>
+                          <td class="text-center">{{offer.qty | currency('', 0)}}</td>
+                          <td class="text-right">{{offer.price | currency('',2)}}</td>
+                        </tr>
+                      </tbody>
+
+                      <!-- NO OFFERS -->
+                      <tbody v-if="!selectedSecurityMarketSnapShot.offers.length">
+                        <tr class="text-center">
+                          <td colspan="3">No OFFERS</td>
+                        </tr>
+                      </tbody>
+                    </template>
+
+                  </table>
 
                 </v-container>
               </v-card-media>
@@ -123,50 +123,50 @@
 
           <!-- TRADES -->
           <v-flex xs4>
-            <v-card class="min-height-260px">
+            <v-card class="">
               <v-card-title primary-title class="bg-csp-light-blue white--text p0 pl20">
                  <h5 class="headline mb-0 font-size-12">TRADES</h5>
               </v-card-title>
               <v-card-media>
                 <v-container
-                  fluid class="p0">
-                  <v-layout row
-                    class="d-flex justify-between align-between pt5 pb5 box-header">
-                    <v-flex class=" ml5 font-weight-bold">PRICE</v-flex>
-                    <v-flex class=" text-center font-weight-bold">QUANTITY</v-flex>
-                    <v-flex class=" text-right mr20 font-weight-bold">TIME</v-flex>
-                  </v-layout>
+                  fluid class="p0 min-height-240px max-height-240px" style="overflow-y: auto">
 
-                  <v-layout row
-                    class="d-flex justify-between align-between pt5 pb5 ">
+                   <!-- TRADES TABLE -->
+                  <table class="table table-striped" id="tradesTable">
+                    <thead>
+                      <th>PRICE</th>
+                      <th class="text-center">QUANTITY</th>
+                      <th class="text-right">TIME</th>
+                    </thead>
 
-                    <!-- No selected stock -->
-                    <v-flex
-                      v-if="!selectedSecurityMarketSnapShot"
-                      class=" ml5 text-center">
-                      No Stock Selected
-                    </v-flex>
+                    <!-- NO STOCK SELECTED -->
+                    <tbody v-if="!selectedSecurityMarketSnapShot">
+                      <tr class="text-center">
+                        <td colspan="3">No Stock Selected</td>
+                      </tr>
+                    </tbody>
 
-                    <!-- Stock selected -->
-                    <v-flex
-                      v-if="selectedSecurityMarketSnapShot">
+                    <template v-if="selectedSecurityMarketSnapShot">
 
-                        <div v-if="selectedSecurityMarketSnapShot.trades.length">
-                        <v-container fluid class="p0 alternate max-height-180px min-height-180px " style="overflow-y: auto; overflow-x: hidden">
-                          <v-layout row class="d-flex justify-between pt5 pb5  " v-for="(trade,index) in selectedSecurityMarketSnapShot.trades" :key="index">
-                            <v-flex class=" ml5 ">{{trade.tradePrice | currency('', 2)}}</v-flex>
-                            <v-flex class="ml20">{{trade.tradeSize | currency('', 2)}}</v-flex>
-                            <v-flex class="text-right mr5 ">{{trade.time | moment('HH:mm:ss')}}</v-flex>
-                          </v-layout>
-                        </v-container>
-                      </div>
+                      <!-- TRADES EXIST -->
+                      <tbody v-if="selectedSecurityMarketSnapShot.trades.length">
+                        <tr v-for="(trade,index) in selectedSecurityMarketSnapShot.trades" :key="index">
+                          <td>{{trade.tradePrice | currency('', 2)}}</td>
+                          <td class="text-center">{{trade.tradeSize | currency('', 2)}}</td>
+                          <td class="text-right">{{trade.time | moment('HH:mm:ss')}}</td>
+                        </tr>
+                      </tbody>
 
-                      <div v-else class="text-center font-size-12 font-weight-bold">
-                        No Trades
-                      </div>
-                    </v-flex>
+                      <!-- NO TRADES -->
+                      <tbody v-if="!selectedSecurityMarketSnapShot.trades.length">
+                        <tr class="text-center">
+                          <td colspan="3">No Trades</td>
+                        </tr>
+                      </tbody>
+                    </template>
 
-                  </v-layout>
+                  </table>
+
 
                 </v-container>
               </v-card-media>
@@ -176,7 +176,7 @@
       </v-container>
 
       <!-- Status and Price movement chart -->
-      <v-container fluid class="pt0">
+      <v-container fluid class="p0 ">
         <v-layout row>
           <!-- STATUS -->
           <v-flex xs4>
@@ -326,7 +326,7 @@ export default
         return security.value === newlySelectedStock
       })
 
-      let selectedStockID = (selectedStockObject.id) ? parseFloat(selectedStockObject.id) : 1
+      let selectedStockID = (selectedStockObject) ? parseFloat(selectedStockObject.id) : 1
 
       StockbrokingService.getSecurityMarketSnapShot(newlySelectedStock)
       StockbrokingService.getSecurityStatusInfo(selectedStockID)
@@ -353,4 +353,11 @@ export default
         font-weight: bold
       span.right
         margin-right: 10px
+  #bidsTable,
+  #offersTable,
+  #tradesTable
+    tbody
+      tr
+        td
+          font-size: 11px
 </style>

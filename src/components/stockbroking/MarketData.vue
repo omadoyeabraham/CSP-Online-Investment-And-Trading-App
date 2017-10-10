@@ -42,7 +42,7 @@
         :search="search"
         :loading="loadingDataTable"
         :rows-per-page-items="rowsPerPageItems"
-        class="elevation-1 marketDataTable">
+        class="elevation-1 marketDataTable table-striped">
         <template slot="headers" scope="props">
           <tr class="bg-csp-light-blue marketDataTableHeader">
             <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'white--text',    pagination.descending ? 'desc' : 'asc',
@@ -83,11 +83,11 @@
             <td class="font-size-10">{{props.item.valueTraded | currency('',2)}}</td>
             <td class="font-size-10">
               <button class="button button-blue-csp elevation-2 mb2"
-                 @click="tradeStock('buy', props.item.name)">
+                 @click="tradeStock('BUY', props.item.name)">
                 BUY
               </button>
               <button class="button button-blue-csp elevation-2 mb2"
-                 @click="tradeStock('sell', props.item.name)">
+                 @click="tradeStock('SELL', props.item.name)">
                 SELL
               </button>
               <button class="button button-blue-csp elevation-2">
@@ -213,6 +213,7 @@
     td
       padding: 5px 5px !important
       height: 25px
+      color: #31708f
   .btn__content
     padding: 0px !important
   .emulate-link

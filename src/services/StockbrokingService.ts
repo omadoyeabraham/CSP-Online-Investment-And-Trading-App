@@ -65,49 +65,9 @@ import * as ApiUrls from './ApiUrlService';
      method: 'GET',
      url: ApiUrls.GetMarketDataUrl
    })
-    //  .then((response) => {
-    //    let allMarketData = response.data
-
-    //    allMarketData.forEach((stockData) => {
-    //      let priceChange = stockData.lastTradePrice - stockData.previousClose
-    //      let priceChangePercent = (priceChange / stockData.previousClose) * 100
-
-    //      stockData.priceChange = priceChange
-    //      stockData.percentChange = priceChangePercent
-    //    })
-
-    //    // commit the market data to the stockbroking module of our vue store
-    //    store.commit(mutationTypes.SAVE_MARKET_DATA_TO_STORE, response.data)
-
-    //  })
 
  }
-//  let getMarketData = () => {
 
-//   // obtain current market data
-//   const marketData = StbMockData.marketData;
-
-//   axios({
-//     method: 'GET',
-//     url: ApiUrls.GetMarketDataUrl
-//   })
-//   .then((response) => {
-//     let allMarketData = response.data
-
-//     allMarketData.forEach((stockData) => {
-//       let priceChange = stockData.lastTradePrice - stockData.previousClose
-//       let priceChangePercent = (priceChange / stockData.previousClose ) * 100
-
-//       stockData.priceChange = priceChange
-//       stockData.percentChange = priceChangePercent
-//     })
-
-//     // commit the market data to the stockbroking module of our vue store
-//     store.commit(mutationTypes.SAVE_MARKET_DATA_TO_STORE, response.data)
-
-//   })
-
-//  }
 
 /**
  * Used to calculate the changes instocks and commit market data to the store

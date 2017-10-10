@@ -54,7 +54,7 @@
     <v-flex xs12 sm4>
       <v-card class="white lighten-2 card h-100" dark>
 
-        <div class="w100p bg-csp-light-blue p10">
+        <div class="w100p bg-csp-light-blue p10" v-if="investmentIsSelected">
           <div class="text-uppercase font-weight-bold"><span class="text-uppercase">{{investmentType}}</span> INVESTMENT DETAILS</div>
         </div>
 
@@ -107,7 +107,7 @@
 
           </ul>
           <div
-            class="d-flex justify-center align-center font-size-12 min-height-200px"
+            class="d-flex no-investment-selected justify-center align-center font-size-12 min-height-200px"
             v-if="!investmentIsSelected">
             Kindly select an investment to view more information
           </div>
@@ -208,4 +208,6 @@ export default
       td
         padding: 5px 5px !important
         height: 25px
+    .no-investment-selected
+      background: #4c7396
 </style>

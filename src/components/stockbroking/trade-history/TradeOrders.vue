@@ -1,47 +1,40 @@
 <template>
   <v-container fluid class="p0">
 
-    <v-data-table
-      v-bind:headers="tableheaders"
-      :items="orders"
-      :search="search"
-      :loading="loading"
-      :rows-per-page-items="rowsPerPageItems"
-      :no-data-text="noDataText"
-      hide-actions
-      class="table-striped elevation-1 tradeHistoryTable">
-      <template slot="headers" scope="props">
-        <tr class="bg-csp-light-blue tradeHistoryTableHeader" >
-          <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'white--text',
-                     pagination.descending ? 'desc' : 'asc',
-                              header.value === pagination.sortBy ? 'active' : ''
-                              ]" @click="changeSort(header.value)">
-            <!-- <v-icon>arrow_upward</v-icon> -->
-            {{ header.text }}
-          </th>
-        </tr>
-      </template>
+    <table class="table table-bordered table-striped  elevation-1 tradeHistoryTable">
+      <thead class="bg-csp-light-blue white--text tradeHistoryTableHeader">
+        <th>ORDER DATE</th>
+        <th>STOCK</th>
+        <th>TYPE</th>
+        <th>ORDER TERM</th>
+        <th>PRICE TYPE</th>
+        <th>UNIT PRICE</th>
+        <th>QUANTITY REQ</th>
+        <th>QUANTITY EXEC</th>
+        <th>STATUS</th>
+        <th></th>
+      </thead>
 
-      <template slot="items" scope="props">
-        <tr class="tradeHistoryTableBody">
-          <td class="font-size-10 p5">{{props.item.orderDate | moment("DD-MMM-YYYY")}}</td>
-          <td class="font-size-10 p5">{{props.item.securityName}}</td>
-          <td class="font-size-10 p5">{{props.item.orderType}}</td>
-          <td class="font-size-10 p5">{{props.item.orderTermLabel}}</td>
-          <td class="font-size-10 p5">{{props.item.priceType}}</td>
-          <td class="font-size-10 p5 ">
-            <span v-if="props.item.limitPrice">{{props.item.limitPrice}}</span>
+      <tbody>
+        <tr class="tradeHistoryTableBody" v-for="(item, index) in orders" :key="index">
+          <td class="font-size-11 p5">{{item.orderDate | moment("DD-MMM-YYYY")}}</td>
+          <td class="font-size-11 p5">{{item.securityName}}</td>
+          <td class="font-size-11 p5">{{item.orderType}}</td>
+          <td class="font-size-11 p5">{{item.orderTermLabel}}</td>
+          <td class="font-size-11 p5">{{item.priceType}}</td>
+          <td class="font-size-11 p5 ">
+            <span v-if="item.limitPrice">{{item.limitPrice}}</span>
             <span v-else>---</span>
           </td>
-          <td class="font-size-10 p5">{{props.item.quantityRequested | currency('', 2)}}</td>
-          <td class="font-size-10 p5">{{props.item.quantityFilled | currency('',2)}}</td>
-          <td class="font-size-10 p5">{{props.item.fixOrderStatus}}</td>
+          <td class="font-size-11 p5">{{item.quantityRequested | currency('', 2)}}</td>
+          <td class="font-size-11 p5">{{item.quantityFilled | currency('',2)}}</td>
+          <td class="font-size-11 p5">{{item.fixOrderStatus}}</td>
           <td>
             <span></span>
           </td>
         </tr>
-      </template>
-    </v-data-table>
+      </tbody>
+    </table>
 
   </v-container>
 </template>
@@ -86,11 +79,14 @@
   .tradeHistoryTableHeader,
   .tradeHistoryTableBody
     height: 25px
+    td
+      color: #31708f
 
 
   .tradeHistoryTableHeader
     th
-      padding: 0px 5px !important
+      padding: 3px 5px !important
+      color: #FFFFFF !important
 
   tr.tradeHistoryTableBody
     td

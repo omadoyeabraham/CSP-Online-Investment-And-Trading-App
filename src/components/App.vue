@@ -20,20 +20,25 @@
         </v-btn>
       </v-toolbar-title>
       <v-layout column>
-        <v-flex>
-          <span class="body-1 welcome">Welcome, </span>
-          <span class=" username">
-            {{user.info.firstName.toLowerCase() | capitalize}}
-            {{user.info.lastName.toLowerCase() | capitalize}}
+        <v-flex style="margin-top: -10px">
+          <span class="body-1 welcome">Welcome,
+             <span class=" username">
+              {{user.info.firstName.toLowerCase() | capitalize}}
+              {{user.info.lastName.toLowerCase() | capitalize}}
+             </span>
           </span>
+
+
+  <span class="d-flex" style="margin-top: -2px">
+    <v-icon class="logout-btn">lock</v-icon>
+    <span class="red--text logout-link" @click="logout()">
+      Logout
+    </span>
+  </span>
+
+
         </v-flex>
-        <v-flex>
-          <v-icon class="logout-btn">lock</v-icon>
-          <span class="red--text logout-link"
-            @click="logout()">
-            Logout
-          </span>
-        </v-flex>
+
       </v-layout>
       <img src="https://portal.cardinalstone.com/broker/desktop/public/img/mainlogo.png"
       alt="" class="ml-auto">

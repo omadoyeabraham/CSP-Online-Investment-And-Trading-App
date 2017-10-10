@@ -11,14 +11,14 @@
         activeTextColor="#FFFFFF"
         class="abro1">
 
-         <v-tab title="STOCK ALLOCATION" class="abro2">
+         <v-tab title="STOCK ALLOCATION" >
            <stock-allocation-chart
             :stockAllocationChartData="stockAllocationChartData"
             :stockData="stockData">
            </stock-allocation-chart>
          </v-tab>
 
-        <v-tab title="STOCK PERFORMANCE" class="abro3" style="width: 60%">
+        <v-tab title="STOCK PERFORMANCE">
           <stock-performance-chart
              :stockPerformanceChartData="stockPerformanceChartData"
             :stockData="stockData">

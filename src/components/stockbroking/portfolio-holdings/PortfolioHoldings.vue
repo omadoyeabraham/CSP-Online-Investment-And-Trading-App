@@ -11,8 +11,8 @@
 
     <!-- TABS -->
     <vue-tabs
-      activeTabColor="#1a2155"
-      activeTextColor="#FFFFFF"
+      activeTabColor="#EEE"
+      activeTextColor="#428bca"
       class="">
 
       <v-tab title="STOCKS" class="">

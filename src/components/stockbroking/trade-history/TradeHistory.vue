@@ -10,78 +10,30 @@
       :title="'Stockbroking - Trade History'">
     </PortfolioSwitchingHeader>
 
-    <!-- <v-layout row class="mb5">
-      <v-flex row class="align-items-center" sm8>
-        <span class="ml10">Showing Trade orders from 01-AUG-2017 to 16-SEPT-2017</span>
-      </v-flex>
 
-      <v-flex row class="red align-items-center justify-content-end" sm4>
-        <span class="mr20">Specify date range</span>
-        <v-form class="d-flex">
+    <!-- TABS -->
+    <vue-tabs activeTabColor="#EEE" activeTextColor="#428bca" class="">
 
+      <v-tab title="COMPLETED" class="">
+        <TradeOrders
+          class="mt20"
+          :orders="completedTradeOrders">
+        </TradeOrders>
+      </v-tab>
 
-           <v-menu
-            lazy
-            :close-on-content-click="false"
-            v-model="startDateMenu"
-            transition="scale-transition"
-            offset-y
-            full-width
-            :nudge-left="40"
-            max-width="290px"
-            >
-            <v-text-field
-              slot="activator"
-              label="Start Date"
-              v-model="startDate"
-              prepend-icon="event"
-              readonly
-            ></v-text-field>
-            <v-date-picker v-model="startDate" no-title scrollable actions>
-              <template scope="{ save, cancel }">
-                <v-card-actions>
-                  <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
-                  <v-btn flat primary @click.native="save()">Save</v-btn>
-                </v-card-actions>
-              </template>
-            </v-date-picker>
-           </v-menu>
+      <v-tab title="OUTSTANDING" class="">
+        <TradeOrders
+          class="mt20"
+          :orders="outstandingTradeOrders">
+        </TradeOrders>
+      </v-tab>
 
-           <v-menu
-            lazy
-            :close-on-content-click="false"
-            v-model="endDateMenu"
-            transition="scale-transition"
-            offset-y
-            full-width
-            :nudge-left="40"
-            max-width="290px"
-            >
-            <v-text-field
-              slot="activator"
-              label="End Date"
-              v-model="endDate"
-              prepend-icon="event"
-              readonly
-            ></v-text-field>
-            <v-date-picker v-model="endDate" no-title scrollable actions>
-              <template scope="{ save, cancel }">
-                <v-card-actions>
-                  <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
-                  <v-btn flat primary @click.native="save()">Save</v-btn>
-                </v-card-actions>
-              </template>
-            </v-date-picker>
-           </v-menu>
-
-
-        </v-form>
-      </v-flex>
-    </v-layout> -->
+    </vue-tabs>
+    <!-- EOF TABS -->
 
 
     <!-- Tabs -->
-    <div>
+    <!-- <div>
       <v-tabs dark v-model="active">
         <v-tabs-bar class="indigo darken-4" style="height: 40px; overflow-x: none">
           <v-tabs-item
@@ -116,7 +68,7 @@
 
         </v-tabs-items>
       </v-tabs>
-    </div>
+    </div> -->
 
     <!-- <TradeOrders
       :orders="tradeOrders">

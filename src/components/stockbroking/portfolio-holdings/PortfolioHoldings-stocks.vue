@@ -14,13 +14,14 @@
     </v-layout> -->
 
     <v-data-table
+      hide-actions
       v-bind:headers="tableheaders"
       :items="stockHoldings"
       :search="search"
       :no-data-text="noDataText"
-      id="tradeHistoryTable" class="table-striped elevation-1">
+      id="portfolioHoldingsTable" class="table-striped table-bordered elevation-1">
       <template slot="headers" scope="props">
-        <tr class="bg-csp-light-blue " id="tradeHistoryTableHeader">
+        <tr class="bg-csp-light-blue " id="portfolioHoldingsTableHeader">
           <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'white--text',
                         pagination.descending ? 'desc' : 'asc',
                         header.value === pagination.sortBy ? 'active' : ''
@@ -32,29 +33,41 @@
       </template>
 
       <template slot="items" scope="props">
-        <tr id="tradeHistoryTableBody" class="indigo--text text--darken-4">
-          <td class="font-size-10">{{props.item.securityName}}</td>
-          <td class="font-size-10">{{props.item.marketValue}}</td>
-          <td class="font-size-10">{{props.item.quantityHeld | currency('',0)}}</td>
-          <td class="font-size-10">{{props.item.valuation | currency('',2)}}</td>
-          <td class="font-size-10">{{props.item.percentageOfPortfolio | currency('',2)}}</td>
-          <td class="font-size-10">{{props.item.costBasis | currency('',2)}}</td>
-          <td class="font-size-10">{{props.item.totalCost | currency('',2)}}</td>
-          <td class="font-size-10">{{props.item.gainOrLoss | currency('',2)}}</td>
+        <tr id="portfolioHoldingsTableBody" class="indigo--text text--darken-4">
+          <td class="font-size-11">{{props.item.securityName}}</td>
+          <td class="font-size-11">{{props.item.marketValue}}</td>
+          <td class="font-size-11">{{props.item.quantityHeld | currency('',0)}}</td>
+          <td class="font-size-11">{{props.item.valuation | currency('',2)}}</td>
+          <td class="font-size-11">{{props.item.percentageOfPortfolio | currency('',2)}}</td>
+          <td class="font-size-11">{{props.item.costBasis | currency('',2)}}</td>
+          <td class="font-size-11">{{props.item.totalCost | currency('',2)}}</td>
+          <td class="font-size-11">
+            <span v-if="props.item.lost" class="d-inline-flex h-100">
+              ({{Math.abs(props.item.gainOrLoss) | currency('',2)}})
+            </span>
+            <span v-if="props.item.gained" class="d-inline-flex h-100">
+              {{props.item.gainOrLoss | currency('',2)}}
+            </span>
+          </td>
           <td class="">
-            {{props.item.percentageGainOrLoss | currency('',2)}}
-            <v-icon v-if="props.item.lost" class="text-danger h-100">fa-arrow-down</v-icon>
-            <v-icon v-if="props.item.gained" class="text-success h-100">fa-arrow-up</v-icon>
+            <span v-if="props.item.lost" class="d-inline-flex h-100">
+              <span class="d-inline-flex align-center">({{Math.abs(props.item.percentageGainOrLoss) | currency('',2)}})</span>
+              <v-icon class="text-danger ml5 d-inline-flex align-center ">fa-long-arrow-down</v-icon>
+            </span>
+            <span v-if="props.item.gained" class="d-inline-flex h-100">
+              <span class="d-inline-flex align-center">{{props.item.percentageGainOrLoss | currency('',2)}}</span>
+              <v-icon class="text-success ml5 d-inline-flex align-center ">fa-long-arrow-up</v-icon>
+            </span>
           </td>
           <td>
             <button
               class="button button-blue-csp elevation-2 mb2"
-              @click="tradeStock('buy', props.item.securityName)">
+              @click="tradeStock('BUY', props.item.securityName)">
                 BUY
               </button>
               <button
                 class="button button-blue-csp elevation-2 mb2"
-                @click="tradeStock('sell', props.item.securityName)">
+                @click="tradeStock('SELL', props.item.securityName)">
                 SELL
               </button>
           </td>
@@ -124,20 +137,20 @@ export default
 </script>
 
 <style scoped lang="sass">
-  #tradeHistoryTable
+  #portfolioHoldingsTable
     margin-bottom: 0px !important
 
-  #tradeHistoryTableHeader,
-  #tradeHistoryTableBody
+  #portfolioHoldingsTableHeader,
+  #portfolioHoldingsTableBody
     height: 25px
 
-  #tradeHistoryTableHeader
+  #portfolioHoldingsTableHeader
     th
       padding: 0px 5px !important
 
-  #tradeHistoryTableBody
+  #portfolioHoldingsTableBody
     td
       padding: 5px 5px !important
       height: 25px
-      color: #000000
+      color: #31708f
 </style>
