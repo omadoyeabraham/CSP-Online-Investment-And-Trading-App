@@ -207,7 +207,7 @@
     background: red
   }
   #loginWrapper {
-    background-image: url('../assets/img/login-background.jpg');
+    background-image: url('../../static/img/login-background.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

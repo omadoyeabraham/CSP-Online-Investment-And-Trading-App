@@ -62,7 +62,7 @@
         marketData.then((response) => {
           StockbrokingService.commitMarketData(response.data)
         })
-
+        console.log(responseData)
         this.userWatchList = responseData
       })
     },

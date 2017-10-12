@@ -50,7 +50,7 @@
 </template>
 
 <script>
-  import { mapState, mapMutations } from 'vuex';
+  import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
   // import StockbrokingService from '../../services/StockbrokingService'
 
   // Component for the user's account summary
@@ -79,9 +79,19 @@
       'isVisible'
     ],
 
+    created () {
+      // Continously poll the server every 5 seconds for updated user data
+      this.getUpdatedCustomerData = setInterval(this.obtainUpdatedCustomerData, 10000)
+    },
+
+    beforeDestroy () {
+      clearInterval(this.getUpdatedCustomerData)
+    },
+
     // Component specific data
     data () {
       return {
+        getUpdatedCustomerData: null,
         stockbrokingOverview: stockbroking,
         nairaInvestments: NairaInvestments,
         dollarInvestments: DollarInvestments,
@@ -99,14 +109,28 @@
     },
 
     // Computed properties gotten mainly from the global application store
-    computed: mapState({
-      'sidebarVisibility': (store) => store.state.dashboard.sidebarVisibility
-    }),
+    computed: {
+      ...mapState({
+        'user': (store) => store.user
+      }),
+
+      ...mapGetters({
+        'userId': 'getUserId'
+      })
+    },
 
     methods: {
+      ...mapActions({
+        updateCustomerData: 'updateCustomerData'
+      }),
+
       ...mapMutations([
         'TOGGLE_SIDEBAR'
-      ])
+      ]),
+
+      obtainUpdatedCustomerData: function () {
+        this.updateCustomerData(this.userId)
+      }
     }
 
   }

@@ -36,7 +36,6 @@ const actions = {
    * @param {any} context
    */
   updateMarketData ({commit, state}) {
-    console.log('Updated the market data using actions')
     let gettingMarketData = StockbrokingService.getMarketData()
 
     gettingMarketData.then((response) => {
@@ -55,7 +54,8 @@ const actions = {
     }).catch((error) => {
       console.log(error)
     })
-  }
+  },
+
 }
 
 

@@ -251,7 +251,7 @@ export default
         this.showWatchlistSnackbar = true
 
         // Close and clear the update popup upon successful updating
-        this.cancelWatchListUpdateForm
+        this.cancelWatchListUpdateForm()
       }).catch((error) => {
         console.log(error)
       })

@@ -23,8 +23,8 @@
         <v-flex style="margin-top: -10px">
           <span class="body-1 welcome">Welcome,
              <span class=" username">
-              {{user.info.firstName.toLowerCase() | capitalize}}
-              {{user.info.lastName.toLowerCase() | capitalize}}
+              {{firstName.toLowerCase() | capitalize}}
+              {{lastName.toLowerCase() | capitalize}}
              </span>
           </span>
 
@@ -86,7 +86,8 @@
       }),
 
       ...mapGetters({
-        'username': 'getUsername'
+        'firstName': 'getFirstName',
+        'lastName': 'getLastName'
       })
     },
 

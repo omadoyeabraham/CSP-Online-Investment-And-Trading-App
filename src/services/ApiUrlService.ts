@@ -33,3 +33,6 @@ export const GetCashAccountStatements = `${BaseApiUrl}/findFiAcctLedgerEntriesBy
 
 // Account Funding
 export const GetPaymentTransactionDetails = `${BaseApiUrl}/getPaymentTransactionDetails`
+
+// Customer data
+export const GetCustomerData = `${BaseApiUrl}/findCustomerById`
