@@ -37,6 +37,8 @@
    import MandateForm from './MandateFormVee'
    import MarketSnapShot from './MarketSnapShot'
 
+   import {mapActions} from 'vuex'
+
 export default
 {
   created () {
@@ -45,13 +47,29 @@ export default
          this.redirectedInstrument = this.$route.params.instrument
          this.redirectedOrderType = this.$route.params.orderType
        }
+
+       // Continously poll the server every 5 seconds for updated market data
+       this.getUpdatedMarketData = setInterval(this.updateMarketData, 5000)
   },
+
+  beforeDestroy () {
+       clearInterval(this.getUpdatedMarketData)
+  },
+
   data () {
        return {
+         getUpdatedMarketData: null,
          redirectedInstrument: null,
          redirectedOrderType: null
        }
   },
+
+  methods: {
+       ...mapActions({
+         updateMarketData: 'updateMarketData'
+       })
+  },
+
   components: {
        PortfolioSwitchingHeader,
        MandateForm,

@@ -41,7 +41,7 @@
               <td class="text-center">
                 <!-- Edit icon -->
                 <v-icon class="blue--text delete-btn"
-                  @click.native.stop="showUpdateWatchListDialog = true">
+                  @click="showUpdateWatchListForm(item, $event)">
                   edit
                 </v-icon>
                 <!-- Delete -->
@@ -86,20 +86,66 @@
     </v-snackbar>
 
     <!-- Dialog for updating watchlists -->
+
     <v-dialog v-model="showUpdateWatchListDialog" lazy absolute>
-      <!-- <v-btn color="primary" dark slot="activator">Open Dialog</v-btn> -->
+      <v-btn id="openUpdateWatchListDialog"
+        style="display: none" color="primary" dark slot="activator"></v-btn>
       <v-card>
-        <v-card-title>
-          <div class="headline">Use Google's location service?</div>
+        <v-card-title class="d-flex justify-center bg-csp-light-blue p5 pt10">
+          <h5 class="white--text font-size-20px">UPDATE WATCHLIST</h5>
         </v-card-title>
-        <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="green darken-1" flat="flat" @click.native="showUpdateWatchListDialog = false">Disagree</v-btn>
-          <v-btn color="green darken-1" flat="flat" @click.native="showUpdateWatchListDialog = false">Agree</v-btn>
-        </v-card-actions>
+        <!-- Form -->
+        <v-card-text>
+          <v-form v-model="valid" ref="form" class="w100p pl5">
+
+            <!-- Stock -->
+            <v-flex xs12 class="height-55px mb6">
+             <v-text-field
+              :label="'Stock'"x
+              v-model="selectedWatchList.name"
+              :type="'text'"
+              name="Name"
+              disabled>
+             </v-text-field>
+            </v-flex>
+
+            <!-- Condition -->
+            <v-flex xs12 class="height-55px mb6">
+              <v-select class="" :label="'Condition'" :items="conditions" v-model="selectedWatchList.condition" v-validate="'required'" :rules="conditionRules"  name="condition" >
+              </v-select>
+            </v-flex>
+
+            <!-- Price -->
+            <v-flex xs12  class="height-55px mb6">
+              <v-text-field  :label="'Price'" v-model="selectedWatchList.notify_price" :rules="priceRules" :type="'number'"  v-validate="'required'" name="price" >
+              </v-text-field>
+            </v-flex>
+
+            <!-- Buttons -->
+            <v-container fluid class="p0 ">
+              <v-layout  row class="mt20">
+                <v-flex xs6 class="d-flex justify-end ">
+                  <v-btn small style="background: #4c7396; color: #FFFFFF"
+                    @click="updateWatchList()">
+                    UPDATE
+                  </v-btn>
+                </v-flex>
+
+                <v-flex xs6>
+                  <v-btn small class="red darken-1 white--text"
+                    @click="cancelWatchListUpdateForm">
+                    CANCEL
+                  </v-btn>
+                </v-flex>
+              </v-layout>
+            </v-container>
+
+          </v-form>
+        </v-card-text>
+
       </v-card>
     </v-dialog>
+
 
   </v-container>
 </template>
@@ -113,13 +159,25 @@ export default
 
   data () {
     return {
+      valid: false,
+      selectedWatchList: {},
       showUpdateWatchListDialog: false,
       showSuccessWatchListSnackbar: false,
       showWatchlistSnackbar: false,
       watchlistSnackbarText: null,
       snackbarTimeout: 3000,
       snackbarMode: '',
-      watchlistSnackbarColor: 'red lighten-2'
+      watchlistSnackbarColor: 'red lighten-2',
+      conditions: [
+        { text: 'LESS THAN OR EQUAL TO', value: '<=' },
+        { text: 'GREATER THAN OR EQUAL TO', value: '>=' }
+      ],
+      conditionRules: [
+        (v) => !!v || 'Required'
+      ],
+      priceRules: [
+        (v) => !!v || 'Required'
+      ]
     }
   },
 
@@ -153,6 +211,50 @@ export default
       }).catch((error) => {
         console.log(error)
       })
+    },
+
+    // Show the form for updating a watchlist
+    showUpdateWatchListForm: function (watchList, event) {
+      // Set the selected watchlist so the popup dialog can be populated with the selected watchlist
+      this.selectedWatchList = watchList
+      console.log(this.selectedWatchList)
+
+      // Display the edit popup modal/dialog
+      document.querySelector('#openUpdateWatchListDialog').click()
+
+      /**
+       * Stopping the event propagation because of the auto-close quirk that vuetify's dialog
+       * popup has if the click event is not triggered from within the activator slot of the
+       * dialog component
+       */
+      event.stopPropagation()
+    },
+
+    // Close and clear the form for updating watchlists
+    cancelWatchListUpdateForm: function () {
+      // Close the dialog modal
+      this.showUpdateWatchListDialog = false
+
+      // Clear the selected watchlist
+      this.selectedWatchList = {}
+    },
+
+    // Update a watchlist item
+    updateWatchList: function () {
+      let updatingWatchList = WatchListService.updateWatchList(this.selectedWatchList)
+
+      updatingWatchList.then((response) => {
+        // Refresh the watchlist data to reflect the now deleted watchlist
+        this.$parent.retreiveUpdatedWatchListData()
+
+        this.watchlistSnackbarText = 'Watchlist successfully updated'
+        this.showWatchlistSnackbar = true
+
+        // Close and clear the update popup upon successful updating
+        this.cancelWatchListUpdateForm
+      }).catch((error) => {
+        console.log(error)
+      })
     }
   }
 }
@@ -173,4 +275,5 @@ export default
     .delete-btn
       &:hover
         cursor: pointer
+
 </style>

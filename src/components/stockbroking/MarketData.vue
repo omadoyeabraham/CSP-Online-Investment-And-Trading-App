@@ -116,7 +116,7 @@
 
   import MarketDataPageSnapShot from '../stockbroking/trade/MarketDataPageSnapShot'
 
-  import { mapState } from 'vuex';
+  import { mapState, mapActions } from 'vuex';
 
   export default
   {
@@ -141,6 +141,14 @@
       })
     },
 
+    created () {
+      this.getUpdatedMarketData = setInterval(this.updateMarketData, 5000)
+    },
+
+    beforeDestroy () {
+      clearInterval(this.getUpdatedMarketData)
+    },
+
     computed: mapState({
       'marketData': (store) => store.stockbroking.marketData
     }),
@@ -151,6 +159,7 @@
 
     data () {
       return {
+        getUpdatedMarketData: null,
         startDate: '',
         show: true,
         search: '',
@@ -178,6 +187,10 @@
     },
 
     methods: {
+      ...mapActions({
+        updateMarketData: 'updateMarketData'
+      }),
+
       setSelectedSecurity: function (selectedSecurityName) {
         this.$store.commit(mutationTypes.SET_SECURITY_SELECTED_ON_TRADE_PAGE, selectedSecurityName)
       },

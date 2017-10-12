@@ -37,8 +37,12 @@ let createWatchList = (newWatchListItem: object) => {
 /**
  * Update the selected watchlist
  */
-let updateWatchList = () => {
-
+let updateWatchList = (watchlist: object) => {
+  return axios({
+    method: 'POST',
+    url: ApiUrls.UpdateWatchListUrl,
+    data: watchlist
+  })
 }
 
 /**
