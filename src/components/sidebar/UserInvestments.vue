@@ -98,10 +98,10 @@
               <span style="float:right" v-else-if="item.isDollarCashBalance">
                  {{totalDollarCashBalance | currency('&#36;',2)}}
               </span>
-              <span style="float:right" v-else-if="item.isTotalForDollarInvestments">
+              <span style="float:right" v-else-if="item.isTotalForDollarInvestments" class="font-weight-bold">
                  {{totalForDollarInvestments | currency('&#36;',2)}}
               </span>
-              <span style="float:right" v-else-if="item.isTotalForNairaInvestments">
+              <span style="float:right" v-else-if="item.isTotalForNairaInvestments" class="font-weight-bold">
                  {{totalForNairaInvestments | currency('&#8358;',2)}}
               </span>
               <span style="float:right" v-else-if="item.isSma">

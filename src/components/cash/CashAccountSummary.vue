@@ -20,32 +20,75 @@
             <ul class="list-group list-group-flush black--text">
               <li class="list-group-item font-weight-bold">
                 Opening Balance
-                <span class="ml-auto font-weight-normal">{{currency}}
-                  {{cashStatementSummary.openingBalance}}</span>
+                <span class="ml-auto font-weight-normal">
+                  {{currency}}
+                  <span v-if="cashStatementSummary.openingBalance < 0">
+                    ({{Math.abs(cashStatementSummary.openingBalance) | currency('',2)}})
+                  </span>
+                  <span v-else>
+                    {{cashStatementSummary.openingBalance | currency('',2)}}
+                  </span>
+                </span>
               </li>
               <li class="list-group-item">
                 Total Credit
-                <span class="ml-auto ">{{currency}} {{cashStatementSummary.totalCreditAmount}}</span>
+                <span class="ml-auto font-weight-normal">
+                  {{currency}}
+                  <span v-if="cashStatementSummary.totalCreditAmount < 0">
+                    ({{Math.abs(cashStatementSummary.totalCreditAmount) | currency('',2)}})
+                  </span>
+                  <span v-else>
+                    {{cashStatementSummary.totalCreditAmount | currency('',2)}}
+                  </span>
+                </span>
               </li>
               <li class="list-group-item ">
                 Total Debit
                 <span class="ml-auto font-weight-normal">
-                  {{currency}} {{cashStatementSummary.totalDebitAmount}}</span>
+                  {{currency}}
+                  <span v-if="cashStatementSummary.totalDebitAmount < 0">
+                    ({{Math.abs(cashStatementSummary.totalDebitAmount) | currency('',2)}})
+                  </span>
+                  <span v-else>
+                    {{cashStatementSummary.totalDebitAmount | currency('',2)}}
+                  </span>
+                </span>
               </li>
               <li class="list-group-item font-weight-bold">
                 Closing Balance
-                <span class="ml-auto font-weight-normal">{{currency}}
-                  {{cashStatementSummary.closingBalance}}</span>
+                <span class="ml-auto font-weight-normal">
+                  {{currency}}
+                  <span v-if="cashStatementSummary.closingBalance < 0">
+                    ({{Math.abs(cashStatementSummary.closingBalance) | currency('',2)}})
+                  </span>
+                  <span v-else>
+                    {{cashStatementSummary.closingBalance | currency('',2)}}
+                  </span>
+                </span>
               </li>
               <li class="list-group-item">
                 Uncleared Effects
-                <span class="ml-auto font-weight-normal">{{currency}}
-                  {{cashStatementSummary.unclearedEffects}}</span>
+                <span class="ml-auto font-weight-normal">
+                  {{currency}}
+                  <span v-if="cashStatementSummary.unclearedEffects < 0">
+                    ({{Math.abs(cashStatementSummary.unclearedEffects) | currency('',2)}})
+                  </span>
+                  <span v-else>
+                    {{cashStatementSummary.unclearedEffects | currency('',2)}}
+                  </span>
+                </span>
               </li>
               <li class="list-group-item font-weight-bold">
                 Cash Available
-                <span class="ml-auto font-weight-normal">{{currency}}
-                  {{cashStatementSummary.cashAvailable}}</span>
+                <span class="ml-auto font-weight-normal">
+                  {{currency}}
+                  <span v-if="cashStatementSummary.cashAvailable < 0">
+                    ({{Math.abs(cashStatementSummary.cashAvailable) | currency('',2)}})
+                  </span>
+                  <span v-else>
+                    {{cashStatementSummary.cashAvailable | currency('',2)}}
+                  </span>
+                </span>
               </li>
             </ul>
           </div>
@@ -65,22 +108,25 @@
           <div class="card-block p0">
             <!-- Uncleared effects -->
             <table
-              v-if="unclearedEffects"
-              class="table table-striped">
-              <thead>
-                <tr>
+              class="table table-striped table-bordered" id="unclearedEffectsTable">
+              <thead v-if="unclearedEffects.length" id="unclearedEffectsTableHeader" class="">
                   <th class="font-weight-bold">VALUE DATE</th>
                   <th>DESCRIPTION</th>
                   <th>AMOUNT</th>
-                </tr>
               </thead>
-              <tbody>
+              <tbody v-if="unclearedEffects.length" id="unclearedEffectsTableBody">
                 <tr
                   v-for="(item, index) in unclearedEffects"
                   :key="index">
                     <td>{{item.valueDate | moment("DD-MMM-YYYY") }} </td>
                     <td>{{item.description}}</td>
-                    <td>{{currency}} {{item.unclearedAmount}}</td>
+                    <td>{{currency}} {{item.unclearedAmount | currency('',2)}}</td>
+                </tr>
+              </tbody>
+
+              <tbody v-if="!unclearedEffects.length">
+                <tr>
+                  <td colspan="3" class="text-center">No uncleared effects for this period</td>
                 </tr>
               </tbody>
             </table>
@@ -121,21 +167,24 @@
 </script>
 
 <style scoped lang="sass">
-  #marketDataTable
+  #unclearedEffectsTable
     margin-bottom: 0px !important
 
-  #marketDataTableHeader,
-  #marketDataTableBody
+  #unclearedEffectsTableHeader,
+  #unclearedEffectsTableBody
     height: 25px
 
-  #marketDataTableHeader
+  #unclearedEffectsTableHeader
     th
       padding: 0px 5px !important
+      color: #31708f
+      font-weight: bold
 
-  #marketDataTableBody
-    td
-      padding: 5px 5px !important
-      height: 25px
-  .btn__content
-    padding: 0px !important
+  #unclearedEffectsTableBody
+    tr
+      td
+        padding: 5px 5px !important
+        height: 25px
+        color: #31708f
+        font-size: 11px
 </style>

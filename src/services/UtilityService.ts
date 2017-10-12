@@ -25,13 +25,9 @@
  }
 
  let objectHasNodata = (objectToTest) => {
-
      let keys = Object.keys(objectToTest)
      return (keys.length == 0)
  }
-
-
-
 
 
  export default {

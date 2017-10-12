@@ -7,7 +7,7 @@
         <h3 class="font-size-20 csp-light-blue-text">{{title}}</h3>
       </v-flex>
       <v-flex d-flex justify-end align-start>
-        <v-btn info class="blue darken-1 font-size-10 p0 ml-auto mb0 mr0">
+        <v-btn info class="blue darken-4 font-size-10 p0 ml-auto mb0 mr0">
           Fund Account
         </v-btn>
       </v-flex>
@@ -24,10 +24,10 @@
         </select>
       </v-flex>
     </v-layout>
-    <hr>
+    <hr class="mb1">
 
     <!-- Period and date range search -->
-    <v-layout row class=" mb0">
+    <v-layout row class=" mb0 height-60px">
       <!-- period -->
       <v-flex d-flex align-center>
         <h4 class="font-size-12">
@@ -65,7 +65,7 @@
           </v-flex>
           <!-- EOF END DATE -->
 
-          <v-btn class="mr5 ml-auto blue darken-1" fab dark small primary xs1 @click="search">
+          <v-btn class="mr5 ml-auto blue darken-4" fab dark small primary xs1 @click="search">
             <v-icon>search</v-icon>
           </v-btn>
 

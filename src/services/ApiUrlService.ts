@@ -23,6 +23,7 @@ export const GetWatchListUrl = `${BaseApiUrl}/getWatchList`;
 export const CreateWatchListUrl = `${BaseApiUrl}/createWatchList`;
 export const UpdateWatchListUrl = `${BaseApiUrl}/updateWatchList`;
 export const DeleteWatchListUrl = `${BaseApiUrl}/deleteWatchList`;
+export const ToggleWatchListUrl = `${BaseApiUrl}/toggleWatchList`;
 
 // Dashboard
 export const GetDashboardDataUrl = `${BaseApiUrl}/getDashboardData`;

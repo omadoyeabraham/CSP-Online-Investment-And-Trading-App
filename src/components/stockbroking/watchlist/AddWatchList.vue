@@ -18,23 +18,23 @@
             <v-layout row>
               <!-- Form to add a watchlist -->
               <v-flex xs7 class="">
-                <v-form v-model="valid" ref="form" class="w100p">
+                <v-form v-model="valid" ref="form" class="w100p pl5">
 
                   <!-- Stocks -->
                   <v-flex xs12 class="height-55px mb6">
-                    <v-select class="" :label="'Stock'" :items="securityNames" v-model="securityName" :rules="securityNameRules"  prepend-icon="map" v-validate="'required'" name="securityName">
+                    <v-select class="" :label="'Stock'" :items="securityNames" v-model="securityName" :rules="securityNameRules"  v-validate="'required'" name="securityName">
                     </v-select>
                   </v-flex>
 
                 <!-- Conditions -->
                 <v-flex xs12 class="height-55px mb6">
-                  <v-select class="" :label="'Condition'" :items="conditions" v-model="condition" v-validate="'required'" :rules="conditionRules" prepend-icon="bookmark" name="condition" >
+                  <v-select class="" :label="'Condition'" :items="conditions" v-model="condition" v-validate="'required'" :rules="conditionRules"  name="condition" >
                   </v-select>
                 </v-flex>
 
                 <!-- Price -->
                 <v-flex xs12  class="height-55px mb6">
-                  <v-text-field  :label="'Price'" v-model="price" :rules="priceRules" :type="'number'" prepend-icon="remove_shopping_cart" v-validate="'required'" name="price" >
+                  <v-text-field  :label="'Price'" v-model="price" :rules="priceRules" :type="'number'"  v-validate="'required'" name="price" >
                   </v-text-field>
                 </v-flex>
 
@@ -62,58 +62,62 @@
 
               <!-- Display details of the security selected by the user -->
               <v-flex xs5 class="">
-                <v-card class="min-height-260px">
-                  <v-card-title primary-title class="bg-csp-light-blue white--text p0 pl20">
+                <v-card class="" v-if="securityIsSelected">
+                  <!-- <v-card-title primary-title class="bg-csp-light-blue white--text p0 pl20">
                     <h5 class="headline mb-0 font-size-12">
                       MARKET DATA
                       <span v-if="securityIsSelected">FOR {{securityName}}</span>
                     </h5>
-                  </v-card-title>
+                  </v-card-title> -->
                   <v-card-media>
                     <v-container fluid class="p0">
                       <v-layout row
                           class="d-flex justify-between align-between pt5 pb5 ">
 
-                        <v-flex
+                        <!-- <v-flex
                           v-if="!securityIsSelected"
                           class=" ml5 mt10 text-center">
                           No Stock Selected
-                        </v-flex>
+                        </v-flex> -->
 
                         <v-flex v-if="securityIsSelected">
-                          <ul class="pl0" id="securityStatusList">
-                            <li class="">
-                              <span class="left">Last trade Price</span>
-                              <span class="right">{{selectedSecurityStatusInfo.lastPrice}}</span>
+                          <ul class="pl0 list-group" id="securityStatusList">
+                            <li class="p10">
+                              <span class="left">CURRENT PRICE (&#8358;):</span>
+                              <span class="right">{{selectedSecurityStatusInfo.lastPrice | currency('',2)}}</span>
                             </li>
-                            <li class="">
-                              <span class="left">Price Change</span>
-                              <span class="right">{{selectedSecurityStatusInfo.todaysChange}}</span>
+                            <li class="p10">
+                              <span class="left">PRICE CHANGE (&#8358;):</span>
+                              <span class="right">{{selectedSecurityStatusInfo.todaysChange| currency('',2)}}</span>
                             </li>
-                            <li class="">
-                              <span class="left">Price Change(%)</span>
-                              <span class="right">{{selectedSecurityStatusInfo.todaysChangeP}}</span>
+                            <li class="p10">
+                              <span class="left">Price Change (%):</span>
+                              <span class="right">{{selectedSecurityStatusInfo.todaysChangeP| currency('',2)}}</span>
                             </li>
-                            <li class="">
-                              <span class="left">Opening Price</span>
+                            <li class="p10">
+                              <span class="left">OPEN PRICE (&#8358;):</span>
+                              <span class="right">{{selectedSecurityStatusInfo.todaysOpen| currency('',2)}}</span>
+                            </li>
+                            <!-- <li class="p5">
+                              <span class="left">CLOSE PRICE (&#8358;)</span>
                               <span class="right">{{selectedSecurityStatusInfo.todaysOpen}}</span>
-                            </li>
-                            <li class="">
+                            </li> -->
+                            <!-- <li class="">
                               <span class="left">High Price</span>
                               <span class="right">{{selectedSecurityStatusInfo.todaysHigh}}</span>
                             </li>
                             <li class="">
                               <span class="left">Low Price</span>
                               <span class="right">{{selectedSecurityStatusInfo.todaysLow}}</span>
-                            </li>
-                            <li class="">
+                            </li> -->
+                            <!-- <li class="">
                               <span class="left">Volume Traded</span>
                               <span class="right">{{selectedSecurityStatusInfo.volume | currency('',0)}}</span>
                             </li>
                             <li class="">
                               <span class="left">Value Traded</span>
-                              <span class="right">{{selectedSecurityStatusInfo.lastPrice}}</span>
-                            </li>
+                              <span class="right">{{selectedSecurityStatusInfo.lastPrice}}</span> -->
+                            <!-- </li> -->
                           </ul>
                         </v-flex>
 
@@ -183,17 +187,25 @@ export default
 
   watch: {
     securityName: function (newlySelectedStock) {
-      if ((newlySelectedStock !== '') || (newlySelectedStock !== null)) {
+      if ((newlySelectedStock !== '') && (newlySelectedStock !== null)) {
         this.securityIsSelected = true
       } else {
         this.securityIsSelected = false
+
+        // Used so the form inputs are not validated and consequently show errors when the form is cleared
+        let formComponents = this.$refs.form.$children
+        formComponents.forEach((formComponent) => {
+          formComponent.shouldValidate = false
+          console.log('Watching')
+        })
+        return
       }
 
       let selectedStockObject = this.allSecurities.find(function (security) {
         return security.value === newlySelectedStock
       })
 
-      let selectedStockID = (selectedStockObject.id) ? parseFloat(selectedStockObject.id) : 1
+      let selectedStockID = (selectedStockObject) ? parseFloat(selectedStockObject.id) : 1
 
       StockbrokingService.getSecurityMarketSnapShot(newlySelectedStock)
       StockbrokingService.getSecurityStatusInfo(selectedStockID)
@@ -227,9 +239,25 @@ export default
           let createWatchListItem = WatchListService.createWatchList(newWatchListItem)
 
           createWatchListItem.then((response) => {
-            console.log(response)
+            // The watchlist was successfully created
+
+            // Show the snackbar with the success message
             this.$parent.showWatchlistCreatedSnackbar = true
+
+            // Refresh the watchlist items to reflect the newly added watchlist
             this.$parent.retreiveUpdatedWatchListData()
+
+            // Used so the form inputs are not validated and consequently show errors when the form is cleared
+            let formComponents = this.$refs.form.$children
+            formComponents.forEach((formComponent) => {
+              formComponent.shouldValidate = false
+              console.log(formComponent)
+            })
+
+            // Clear the add watchlist form
+            this.securityName = ''
+            this.condition = ''
+            this.price = ''
           }).catch((error) => {
             console.log(error)
           })
@@ -256,7 +284,12 @@ export default
       background: #EEE
   #securityStatusList
     li:nth-child(even)
-      background: #EEE
+      background: white
+      border-bottom: 1px solid #EEE
+    li:nth-child(odd)
+      border-bottom: 1px solid #EEE
+    li:last-child
+      border-bottom: none
     li
       font-size: 12px
       padding-top: 2px

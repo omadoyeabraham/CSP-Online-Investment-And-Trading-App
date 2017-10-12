@@ -15,7 +15,7 @@
         <th></th>
       </thead>
 
-      <tbody>
+      <tbody v-if="orders">
         <tr class="tradeHistoryTableBody" v-for="(item, index) in orders" :key="index">
           <td class="font-size-11 p5">{{item.orderDate | moment("DD-MMM-YYYY")}}</td>
           <td class="font-size-11 p5">{{item.securityName}}</td>
@@ -32,6 +32,12 @@
           <td>
             <span></span>
           </td>
+        </tr>
+      </tbody>
+
+      <tbody v-if="orders === null">
+        <tr>
+          <td colspan="9" class="text-center">Loading Trade History ...</td>
         </tr>
       </tbody>
     </table>

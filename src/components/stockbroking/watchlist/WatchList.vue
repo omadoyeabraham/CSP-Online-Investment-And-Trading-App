@@ -3,15 +3,16 @@
 
     <watch-list-header></watch-list-header>
 
-    <v-layout row>
+    <v-container fluid grid-list-xl class="pt0">
+          <v-layout row>
 
-      <v-flex xs12 sm6 class="mb20">
+      <v-flex xs12 sm6 class="pl0">
         <add-watch-list
           :user="user">
         </add-watch-list>
       </v-flex>
 
-      <v-flex xs12 sm6 class="p0">
+      <v-flex xs12 sm6 class="pr0">
         <watch-list-table
           :userWatchList="formattedUserWatchList"
           >
@@ -31,6 +32,7 @@
       </v-snackbar>
 
     </v-layout>
+    </v-container>
 
   </v-container>
 </template>
@@ -121,12 +123,6 @@
         let userWatchList = WatchListService.getWatchList()
         userWatchList.then((response) => {
           let responseData = response.data
-
-          // let marketData = StockbrokingService.getMarketData()
-
-          // marketData.then((response) => {
-          //   StockbrokingService.commitMarketData(response.data)
-          // })
 
           this.userWatchList = responseData
         })

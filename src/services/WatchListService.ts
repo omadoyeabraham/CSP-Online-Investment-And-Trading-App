@@ -48,7 +48,22 @@ let deleteWatchList = (watchlistId: number, customerId: number) => {
   return axios({
     method: 'POST',
     url: ApiUrls.DeleteWatchListUrl,
-    data: {id: watchlistId, userId: customerId}
+    data: {watchlistId: watchlistId, customerId: customerId}
+  })
+}
+
+/**
+ * Toggle the status of a watchlist between enabled and disabled
+ *
+ * @param watchlistStatus 0 == disabled, 1 == enabled
+ * @param customerId
+ */
+let toggleWatchList = (watchListStatus: any, customerId: number, watchlistId: number) => {
+  console.log(watchListStatus, watchlistId, customerId)
+  return axios ({
+    method: 'POST',
+    url: ApiUrls.ToggleWatchListUrl,
+    data: {status: watchListStatus, customerId: customerId, watchlistId: watchlistId}
   })
 }
 
@@ -57,5 +72,6 @@ export default {
   getWatchList,
   createWatchList,
   updateWatchList,
+  toggleWatchList,
   deleteWatchList
 }

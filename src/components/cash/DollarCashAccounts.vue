@@ -12,9 +12,9 @@
 
     <!-- TABS -->
     <div class="container-fluid">
-      <v-tabs dark v-model="selectedTab">
+      <!-- <v-tabs dark v-model="selectedTab">
 
-        <!-- Tabs bar -->
+        Tabs bar
         <v-tabs-bar class="blue darken-4 mb20">
           <v-tabs-item :key="tabs[0]" :href="'#' + tabs[0]">
             <span class="font-size-14">{{tabs[0]}}</span>
@@ -26,7 +26,7 @@
           </v-tabs-slider>
         </v-tabs-bar>
 
-        <!-- Tabs content -->
+        Tabs content
         <v-tabs-content :id="tabs[0]">
           <cash-account-summary :cashStatements="dollarCashStatements" :cashStatementSummary="dollarCashStatementSummary" :unclearedEffects="dollarUnclearedEffects"
           :currency="'$'">
@@ -38,7 +38,24 @@
           </cash-account-details>
         </v-tabs-content>
 
-      </v-tabs>
+      </v-tabs> -->
+
+      <!-- TABS -->
+      <vue-tabs activeTabColor="#EEE" activeTextColor="#428bca" class="">
+
+        <v-tab title="SUMMARY" class="mt20">
+          <cash-account-summary :cashStatements="dollarCashStatements"      :cashStatementSummary="dollarCashStatementSummary"  :unclearedEffects="dollarUnclearedEffects"
+          :currency="'$'">
+          </cash-account-summary>
+        </v-tab>
+
+        <v-tab title="DETAILS" class="mt20">
+          <cash-account-details :cashStatements="dollarCashStatements" :currency="'$'">
+          </cash-account-details>
+        </v-tab>
+
+      </vue-tabs>
+      <!-- EOF TABS -->
     </div>
 
   </v-container>

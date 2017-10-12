@@ -2,12 +2,12 @@
   <v-container fluid class="pb0">
 
   <!-- Page heading and Fund account button -->
-  <v-layout row>
-    <v-flex d-flex align-center>
-      <h3 class="font-size-20 csp-light-blue-text">{{title}}</h3>
+  <v-layout row class="">
+    <v-flex d-flex align-end >
+      <h3 class="font-size-20 csp-light-blue-text mb0">{{title}}</h3>
     </v-flex>
     <v-flex d-flex justify-end align-start>
-      <v-btn info class="blue darken-1 font-size-10 p0 ml-auto mb0 mr0">
+      <v-btn info class="blue darken-4 font-size-10 p0 ml-auto mb0 mr0">
         Fund Account
       </v-btn>
     </v-flex>
@@ -15,11 +15,12 @@
 
 
     <!-- Number of accounts and account switching -->
-    <v-layout row  class="mb10">
+    <v-layout row  class="">
       <v-flex d-flex align-end>
         <h3 class="font-size-11 csp-blue-text font-weight-bold">NUMBER OF CASH ACCOUNTS: {{totalNumberOfCashAccounts}} ACCOUNTS</h3>
       </v-flex>
       <v-flex d-flex justify-end>
+         <label class="mr-sm-2 d-flex align-end font-size-11 font-weight-bold mt10" for="selectAccount">SELECT ACCOUNT:</label>
         <select class="custom-select mt10"
           v-model="selectedNairaCashAccountID"
           >
@@ -29,10 +30,10 @@
         </select>
       </v-flex>
     </v-layout>
-    <hr>
+    <hr class="mb1">
 
     <!-- Period and date range search -->
-    <v-layout row class=" mb0">
+    <v-layout row class="mb0 height-60px">
       <!-- period -->
       <v-flex d-flex align-center>
         <h4 class="font-size-12">
@@ -108,7 +109,7 @@
           <!-- EOF END DATE -->
 
           <v-btn
-            class="mr5 ml-auto blue darken-1"
+            class="mr5 ml-auto blue darken-4"
             fab dark small primary xs1
             @click="search">
             <v-icon>search</v-icon>
