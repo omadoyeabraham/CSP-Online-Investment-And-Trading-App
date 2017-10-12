@@ -6,7 +6,6 @@
 
 <template>
 
-
   <div class="h-100" id="loginWrapper">
     <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
        <div class="card card-container elevation-24">
