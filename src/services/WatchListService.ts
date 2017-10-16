@@ -11,7 +11,7 @@ import axios from 'axios'
 // The vuex store instance
 import store from '../store';
 
-let userID = store.state.user.info.id;
+let userID = store.state.user.userID;
 
 /**
  * Get a user's entire watchlist

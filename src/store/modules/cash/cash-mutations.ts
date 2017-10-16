@@ -33,6 +33,17 @@ const mutations = {
   },
 
   /**
+   * Update the user cash account data in the vuex store
+   *
+   * @param {any} state
+   * @param {any} userData
+   */
+  [mutationTypes.UPDATE_USER_CASH_DATA_IN_STORE](state, userData) {
+    state.userData = userData.CA
+
+  },
+
+  /**
    * Change the selected cash naira account in the entire application
    *
    * @param {any} state

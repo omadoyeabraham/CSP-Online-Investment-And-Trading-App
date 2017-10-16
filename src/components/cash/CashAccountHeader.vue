@@ -7,8 +7,8 @@
       <h3 class="font-size-20 csp-light-blue-text mb0">{{title}}</h3>
     </v-flex>
     <v-flex d-flex justify-end align-start>
-      <v-btn info class="blue darken-4 font-size-10 p0 ml-auto mb0 mr0">
-        Fund Account
+      <v-btn :to="'/fund-account'" info  class="fund-account-btn font-size-10 p0 ml-auto mb0 mr0">
+        Fund My Account
       </v-btn>
     </v-flex>
   </v-layout>
@@ -185,6 +185,10 @@
   }
 </script>
 
-<style>
-
+<style scoped lang="sass">
+  .fund-account-btn
+    background: #324e85 !important
+    border-radius: 5px
+    border: none
+    padding: 5px 10px !important
 </style>

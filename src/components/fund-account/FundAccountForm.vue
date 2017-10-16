@@ -75,19 +75,19 @@
 
               <!-- Customer Amount to be shown only when previewing -->
               <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
-                <v-text-field  :label="'Customer Amount'" :value="clientAmount | currency('',0)" :type="'text'"  prepend-icon="fa-credit-card fa-2x" :disabled="inPreviewState">
+                <v-text-field  :label="'Customer Amount'" :value="clientAmount | currency('',0)" :type="'text'"   :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
               <!-- Total Charges -->
               <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
-                <v-text-field  :label="'Total Charges'" v-model="transactionCharge" :type="'text'"  prepend-icon="fa-building fa-2x" :disabled="inPreviewState">
+                <v-text-field  :label="'Total Charges'" v-model="transactionCharge" :type="'text'"   :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
               <!-- Total Amount -->
               <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
-                <v-text-field  :label="'Total Amount'" :value="totalAmount | currency('',0)" :type="'text'"  prepend-icon="fa-plus-square-o fa-2x" :disabled="inPreviewState">
+                <v-text-field  :label="'Total Amount'" :value="totalAmount | currency('',0)" :type="'text'"   :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
@@ -95,7 +95,7 @@
               <v-flex xs12 v-if="inPreviewState" class="height-55px mb20">
                 <v-text-field  :label="'Transaction Code'" v-model="transaction_id"
                 hint="Please take note of your unique transaction id" persistent-hint
-                :type="'text'"  prepend-icon="fa-code fa-2x" :disabled="inPreviewState">
+                :type="'text'"  :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 

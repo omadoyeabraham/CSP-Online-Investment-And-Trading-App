@@ -55,7 +55,7 @@
 
               <!-- Quantity Held -->
               <v-flex xs6 v-if="canShowQuantityHeld" class="height-55px mb6">
-                <v-text-field :label="'Quantity Held'" v-model="quantityHeld" :type="'number'"   disabled>
+                <v-text-field :label="'Quantity Held'" :value="quantityHeld | currency('',0)" :type="'text'"   disabled>
                 </v-text-field>
               </v-flex>
 
@@ -65,8 +65,14 @@
                 </v-select>
               </v-flex>
 
-              <!-- Order Term -->
-              <v-flex xs6 class="font-size-10 height-55px mb6">
+              <!-- Order Term for Market -->
+              <v-flex v-if="isMarketOrder" xs6 class="font-size-10 height-55px mb6">
+                <v-text-field  label="Order Term" placeholder="GOOD FOR A DAY"  :type="'text'" name="orderTerm" disabled>
+                </v-text-field>
+              </v-flex>
+
+              <!-- Order Term for Limit -->
+              <v-flex v-if="!isMarketOrder" xs6 class="font-size-10 height-55px mb6">
                 <v-select class="font-size-10" :label="'Order Term'" :items="tradeOrderTerms" v-model="orderTerm" :rules="orderTermRules"  v-validate="'required'" name="orderTerm" :disabled="inPreviewState">
                 </v-select>
               </v-flex>
@@ -168,7 +174,6 @@ export default
     if (this.redirectedOrderType && this.redirectedSecurityName) {
       this.orderType = this.redirectedOrderType
       this.securityName = this.redirectedSecurityName
-      console.log(this.redirectedOrderType, this.redirectedSecurityName)
     }
 
     this.$store.commit(mutationTypes.SET_SECURITY_SELECTED_ON_TRADE_PAGE, this.securityName)
@@ -248,6 +253,10 @@ export default
       return this.priceOption === 'LIMIT'
     },
 
+    isMarketOrder: function () {
+      return this.priceOption === 'MARKET'
+    },
+
     securityNames: function () {
       if (this.orderType === 'SELL') {
         return this.currentPortfolioSecurityNames
@@ -293,12 +302,20 @@ export default
         // Show the loading icon for previewing
         this.gettingPreviewData = true
 
+        // Ensure that the order term for market orders is good for a day
+        let orderTerm = ''
+        if (this.isMarketOrder) {
+          orderTerm = '0000000000'
+        } else {
+          orderTerm = this.orderTerm
+        }
+
         if (result) {
           let tradeOrder = {
             orderType: this.orderType,
             priceType: this.priceOption,
             instrument: this.securityName,
-            orderTermName: this.orderTerm,
+            orderTermName: orderTerm,
             quantityRequested: this.quantity,
             limitPrice: this.limitPrice,
             orderOrigin: 'WEB',

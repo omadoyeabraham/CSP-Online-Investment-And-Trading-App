@@ -49,7 +49,7 @@ export default
        }
 
        // Continously poll the server every 5 seconds for updated market data
-       this.getUpdatedMarketData = setInterval(this.updateMarketData, 5000)
+       this.getUpdatedMarketData = setInterval(this.updateMarketData, 10000)
   },
 
   beforeDestroy () {

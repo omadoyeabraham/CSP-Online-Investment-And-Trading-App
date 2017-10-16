@@ -33,6 +33,27 @@ const mutations = {
 
   },
 
+  /**
+   * Update the user's stockbroking data (portfolios) when the API is polled in the background
+   *
+   * @param {any} state
+   * @param {any} userData
+   */
+  [mutationTypes.UPDATE_USER_STOCKBROKING_DATA_IN_STORE](state, userData) {
+    state.userData = userData.STB;
+
+    // If the user has at least 1 STB portfolio
+    if (userData.STB.hasOwnProperty('EXCHANGE')) {
+      state.portfolios = userData.STB.EXCHANGE
+      state.smaPortfolios = userData.STB.MANAGED ? (userData.STB.MANAGED) : []
+
+      // The user has a stockbroking portfolio
+      state.userHasStb = true
+
+    }
+
+  },
+
   [mutationTypes.SAVE_TRADE_ORDERS_TO_STORE](state, tradeOrders: Array<object>) {
     state.tradeOrders = tradeOrders
   },

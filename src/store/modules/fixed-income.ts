@@ -203,7 +203,6 @@ const getters = {
 const mutations = {
   [mutationTypes.SAVE_USER_FIXEDINCOME_DATA_TO_STORE] (state, userData) {
     state.userData = userData.FI
-    // state.totalValue = UserService.getFixedIncomeTotalValue(state.userData)
   }
 }
 

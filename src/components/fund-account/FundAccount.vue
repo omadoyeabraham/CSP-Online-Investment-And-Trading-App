@@ -20,7 +20,7 @@
           :user="user"
           :username="username"
           :cashAccounts="nairaCashAccounts"
-          :portalUsername="portalUsername">
+          :portalUsername="username">
         </fund-account-form>
       </v-flex>
 

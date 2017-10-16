@@ -18,7 +18,8 @@ const state: object = {
   info: {},
   userID: null,
   firstName: null,
-  lastName: null
+  lastName: null,
+  portalUsername: null
 }
 
  // Getters
@@ -30,6 +31,14 @@ const getters = {
 
   getLastName: (state) => {
     return state.lastName
+  },
+
+  getUsername: (state) => {
+    return `${state.firstName} ${state.lastName}`
+  },
+
+  getPortalUsername: (state) => {
+    return `${state.portalUsername}`
   },
 
   getUserId: (state) => {
@@ -47,9 +56,10 @@ const mutations = {
 
     state.firstName = (userData.customer) ? `${userData.customer.firstName}`.toLowerCase() : state.firstName
     state.lastName = (userData.customer) ? `${userData.customer.lastName}`.toLowerCase() : state.lastName
+    state.portalUsername = (userData.customer) ? `${userData.customer.portalUsername}`.toLowerCase() : state.portalUsername
 
 
-    state.info = userData.customer;
+    state.info = (userData.customer) ? userData.customer : state.info;
 
   }
 
@@ -69,9 +79,7 @@ const actions = {
       let userData = response.data
 
       // Commit the authenticated user's data to the vue store.
-      commit(mutationTypes.SAVE_AUTHENTICATED_USER_TO_STORE, userData);
-      commit(mutationTypes.SAVE_USER_STOCKBROKING_DATA_TO_STORE, userData);
-      commit(mutationTypes.SET_STOCKBROKING_TOTAL_VALUE, userData);
+      commit(mutationTypes.UPDATE_USER_STOCKBROKING_DATA_IN_STORE, userData);
       commit(mutationTypes.SAVE_USER_FIXEDINCOME_DATA_TO_STORE, userData);
       commit(mutationTypes.SAVE_USER_CASH_DATA_TO_STORE, userData);
       commit(mutationTypes.SAVE_USER_SMA_DATA_TO_STORE, userData);

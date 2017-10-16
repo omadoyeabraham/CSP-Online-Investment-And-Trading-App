@@ -30,37 +30,55 @@
                   fluid class="p0 min-height-240px max-height-240px" style="overflow-y: auto">
 
                   <!-- BIDS TABLE -->
-                  <table class="table table-striped" id="bidsTable">
+                  <table class="table table-striped" id="bidsTable" >
                     <thead>
                       <th>TOTAL QTY</th>
                       <th class="text-center">BID QTY</th>
                       <th class="text-right">PRICE</th>
                     </thead>
 
-                    <!-- NO STOCK SELECTED -->
-                    <tbody v-if="!selectedSecurityMarketSnapShot">
-                      <tr class="text-center">
-                        <td colspan="3">No Stock Selected</td>
-                      </tr>
-                    </tbody>
-
-                    <template v-if="selectedSecurityMarketSnapShot">
-
-                      <!-- BIDS EXIST -->
-                      <tbody v-if="selectedSecurityMarketSnapShot.bids.length">
-                        <tr v-for="(bid,index) in selectedSecurityMarketSnapShot.bids" :key="index">
-                          <td>{{bid.total | currency('', 0)}}</td>
-                          <td class="text-center">{{bid.qty | currency('', 0)}}</td>
-                          <td class="text-right">{{bid.price | currency('',2)}}</td>
+                    <!-- Show Loader when loading data -->
+                    <template v-if="loadingStockData">
+                      <tbody>
+                        <tr>
+                          <td colspan="3" class="text-center">
+                            <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
+                            <span class="font-size-12 ml5">Loading data</span>
+                          </td>
                         </tr>
                       </tbody>
+                    </template>
 
-                      <!-- NO BIDS -->
-                      <tbody v-if="!selectedSecurityMarketSnapShot.bids.length">
+                    <!-- Show data when not loading new data -->
+                    <template v-if="!loadingStockData">
+
+                      <!-- NO STOCK SELECTED -->
+                      <tbody v-if="!selectedSecurityMarketSnapShot">
                         <tr class="text-center">
-                          <td colspan="3">No Bids</td>
+                          <td colspan="3">No Stock Selected</td>
                         </tr>
                       </tbody>
+
+                      <!-- STOCK WAS SELECTED -->
+                      <template v-if="selectedSecurityMarketSnapShot">
+
+                        <!-- BIDS EXIST -->
+                        <tbody v-if="selectedSecurityMarketSnapShot.bids.length">
+                          <tr v-for="(bid,index) in selectedSecurityMarketSnapShot.bids" :key="index">
+                            <td>{{bid.total | currency('', 0)}}</td>
+                            <td class="text-center">{{bid.qty | currency('', 0)}}</td>
+                            <td class="text-right">{{bid.price | currency('',2)}}</td>
+                          </tr>
+                        </tbody>
+
+                        <!-- NO BIDS -->
+                        <tbody v-if="!selectedSecurityMarketSnapShot.bids.length">
+                          <tr class="text-center">
+                            <td colspan="3">No Bids</td>
+                          </tr>
+                        </tbody>
+                      </template>
+
                     </template>
 
                   </table>
@@ -88,30 +106,46 @@
                       <th class="text-right">PRICE</th>
                     </thead>
 
-                    <!-- NO STOCK SELECTED -->
-                    <tbody v-if="!selectedSecurityMarketSnapShot">
-                      <tr class="text-center">
-                        <td colspan="3">No Stock Selected</td>
-                      </tr>
-                    </tbody>
-
-                    <template v-if="selectedSecurityMarketSnapShot">
-
-                      <!-- OFFERS EXIST -->
-                      <tbody v-if="selectedSecurityMarketSnapShot.offers.length">
-                        <tr v-for="(offer,index) in selectedSecurityMarketSnapShot.offers" :key="index">
-                          <td>{{offer.total | currency('', 0)}}</td>
-                          <td class="text-center">{{offer.qty | currency('', 0)}}</td>
-                          <td class="text-right">{{offer.price | currency('',2)}}</td>
+                    <!-- Show loading icon when loading data -->
+                    <template v-if="loadingStockData">
+                      <tbody>
+                        <tr>
+                          <td colspan="3" class="text-center">
+                            <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
+                            <span class="font-size-12 ml5">Loading data</span>
+                          </td>
                         </tr>
                       </tbody>
+                    </template>
 
-                      <!-- NO OFFERS -->
-                      <tbody v-if="!selectedSecurityMarketSnapShot.offers.length">
+                    <!-- Show data when not loading data -->
+                    <template v-if="!loadingStockData">
+                      <!-- NO STOCK SELECTED -->
+                      <tbody v-if="!selectedSecurityMarketSnapShot">
                         <tr class="text-center">
-                          <td colspan="3">No OFFERS</td>
+                          <td colspan="3">No Stock Selected</td>
                         </tr>
                       </tbody>
+
+                      <template v-if="selectedSecurityMarketSnapShot">
+
+                        <!-- OFFERS EXIST -->
+                        <tbody v-if="selectedSecurityMarketSnapShot.offers.length">
+                          <tr v-for="(offer,index) in selectedSecurityMarketSnapShot.offers" :key="index">
+                            <td>{{offer.total | currency('', 0)}}</td>
+                            <td class="text-center">{{offer.qty | currency('', 0)}}</td>
+                            <td class="text-right">{{offer.price | currency('',2)}}</td>
+                          </tr>
+                        </tbody>
+
+                        <!-- NO OFFERS -->
+                        <tbody v-if="!selectedSecurityMarketSnapShot.offers.length">
+                          <tr class="text-center">
+                            <td colspan="3">No Offers</td>
+                          </tr>
+                        </tbody>
+                      </template>
+
                     </template>
 
                   </table>
@@ -139,12 +173,26 @@
                       <th class="text-right">TIME</th>
                     </thead>
 
-                    <!-- NO STOCK SELECTED -->
-                    <tbody v-if="!selectedSecurityMarketSnapShot">
-                      <tr class="text-center">
-                        <td colspan="3">No Stock Selected</td>
-                      </tr>
-                    </tbody>
+                    <!-- Show loading icon when pulling data -->
+                    <template v-if="loadingStockData">
+                      <tbody>
+                        <tr>
+                          <td colspan="3" class="text-center">
+                            <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
+                            <span class="font-size-12 ml5">Loading data</span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </template>
+
+                    <!-- Show data when available -->
+                    <template v-if="!loadingStockData">
+                      <!-- NO STOCK SELECTED -->
+                      <tbody v-if="!selectedSecurityMarketSnapShot">
+                        <tr class="text-center">
+                          <td colspan="3">No Stock Selected</td>
+                        </tr>
+                      </tbody>
 
                     <template v-if="selectedSecurityMarketSnapShot">
 
@@ -163,6 +211,8 @@
                           <td colspan="3">No Trades</td>
                         </tr>
                       </tbody>
+                    </template>
+
                     </template>
 
                   </table>
@@ -186,53 +236,73 @@
               </v-card-title>
               <v-card-media>
                 <v-container fluid class="p0">
-                  <v-layout row
-                      class="d-flex justify-between align-between pt5 pb5 ">
 
-                    <v-flex
-                      v-if="!selectedSecurityStatusInfo"
-                      class=" ml5 mt10 text-center">
-                      No Stock Selected
-                    </v-flex>
+                  <!-- Show loader when loading data -->
+                  <template v-if="loadingStockData">
+                    <v-layout row class="d-flex justify-center align-center text-center pt5 pb5">
+                      <v-flex>
+                         <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
+                        <span class="font-size-12 ml5">Loading data</span>
+                      </v-flex>
+                    </v-layout>
+                  </template>
 
-                    <v-flex v-if="selectedSecurityStatusInfo">
-                      <ul class="pl0" id="securityStatusList">
-                        <li class="">
-                          <span class="left">Last trade Price</span>
-                          <span class="right">{{selectedSecurityStatusInfo.lastPrice}}</span>
-                        </li>
-                        <li class="">
-                          <span class="left">Price Change</span>
-                          <span class="right">{{selectedSecurityStatusInfo.todaysChange}}</span>
-                        </li>
-                        <li class="">
-                          <span class="left">Price Change(%)</span>
-                          <span class="right">{{selectedSecurityStatusInfo.todaysChangeP}}</span>
-                        </li>
-                        <li class="">
-                          <span class="left">Opening Price</span>
-                          <span class="right">{{selectedSecurityStatusInfo.todaysOpen}}</span>
-                        </li>
-                        <li class="">
-                          <span class="left">High Price</span>
-                          <span class="right">{{selectedSecurityStatusInfo.todaysHigh}}</span>
-                        </li>
-                        <li class="">
-                          <span class="left">Low Price</span>
-                          <span class="right">{{selectedSecurityStatusInfo.todaysLow}}</span>
-                        </li>
-                        <li class="">
-                          <span class="left">Volume Traded</span>
-                          <span class="right">{{selectedSecurityStatusInfo.volume | currency('',0)}}</span>
-                        </li>
-                        <li class="">
-                          <span class="left">Value Traded</span>
-                          <span class="right">{{selectedSecurityStatusInfo.lastPrice}}</span>
-                        </li>
-                      </ul>
-                    </v-flex>
+                  <!-- Show data when available -->
+                  <template v-if="!loadingStockData">
+                    <v-layout row class="d-flex justify-between align-between pt5 pb5 ">
 
-                  </v-layout>
+                      <v-flex
+                        v-if="!selectedSecurityStatusInfo"
+                        class=" ml5 mt10 text-center">
+                        No Stock Selected
+                      </v-flex>
+
+                      <v-flex v-if="selectedSecurityStatusInfo">
+                        <ul class="pl0" id="securityStatusList">
+                          <li class="">
+                            <span class="left">Last trade Price</span>
+                            <span class="right">{{selectedSecurityStatusInfo.lastPrice | currency('&#8358;',2)}}</span>
+                          </li>
+                          <li class="">
+                            <span class="left">Price Change</span>
+                            <span class="right" v-if="selectedSecurityStatusInfo.todaysChange < 0">
+                              ({{Math.abs(selectedSecurityStatusInfo.todaysChange)}})
+                            </span>
+                            <span class="right" v-else>{{selectedSecurityStatusInfo.todaysChange}}</span>
+                          </li>
+                          <li class="">
+                            <span class="left">Price Change(%)</span>
+                            <span class="right" v-if="selectedSecurityStatusInfo.todaysChangeP < 0">
+                              ({{Math.abs(selectedSecurityStatusInfo.todaysChangeP)}})
+                            </span>
+                            <span class="right" v-else>{{selectedSecurityStatusInfo.todaysChangeP}}</span>
+                          </li>
+                          <li class="">
+                            <span class="left">Opening Price</span>
+                            <span class="right">{{selectedSecurityStatusInfo.todaysOpen| currency('&#8358;',2)}}</span>
+                          </li>
+                          <li class="">
+                            <span class="left">High Price</span>
+                            <span class="right">{{selectedSecurityStatusInfo.todaysHigh| currency('&#8358;',2)}}</span>
+                          </li>
+                          <li class="">
+                            <span class="left">Low Price</span>
+                            <span class="right">{{selectedSecurityStatusInfo.todaysLow| currency('&#8358;',2)}}</span>
+                          </li>
+                          <li class="">
+                            <span class="left">Volume Traded</span>
+                            <span class="right">{{selectedSecurityStatusInfo.volume | currency('',0)}}</span>
+                          </li>
+                          <li class="">
+                            <span class="left">Value Traded</span>
+                            <span class="right">{{selectedSecurityStatusInfo.lastPrice| currency('&#8358;',2)}}</span>
+                          </li>
+                        </ul>
+                      </v-flex>
+
+                    </v-layout>
+                  </template>
+
                 </v-container>
               </v-card-media>
             </v-card>
@@ -258,6 +328,12 @@
 
                   <!-- Price movement Data exists -->
                   <div v-if="selectedSecurityMarketSnapShot.priceMovements.length">
+                    <highcharts
+                      :options="priceMovementChartData"
+                      ref="highcharts"
+                      style="height: 200px; max-width: 100%">
+                    </highcharts>
+
                   </div>
 
                   <!-- No price movement data -->
@@ -284,6 +360,7 @@
 <script>
 import {mapState, mapGetters} from 'vuex'
 import StockbrokingService from '../../../services/StockbrokingService'
+import {ChartService} from '../../../services/ChartsService'
 
 import PriceMovementChart from './PriceMovementChart'
 
@@ -299,7 +376,8 @@ export default
     return {
       marketSnapShot: null,
       bidLevels: null,
-      securityIsSelected: false
+      securityIsSelected: false,
+      loadingStockData: false
     }
   },
 
@@ -311,24 +389,44 @@ export default
     }),
     ...mapGetters({
       'allSecurities': 'getSecurityNames'
-    })
+    }),
+
+    priceMovementChartData: function () {
+      let chartData = ChartService.getCspAreaChart(this.selectedSecurityMarketSnapShot.priceMovements)
+
+      return chartData
+    }
   },
 
   watch: {
     selectedStock: function (newlySelectedStock) {
+      // Check whether or not a security is selected
       if ((newlySelectedStock !== '') || (newlySelectedStock !== null)) {
         this.securityIsSelected = true
       } else {
         this.securityIsSelected = false
       }
 
+      // get the particular stock that was selected
       let selectedStockObject = this.allSecurities.find(function (security) {
         return security.value === newlySelectedStock
       })
 
-      let selectedStockID = (selectedStockObject) ? parseFloat(selectedStockObject.id) : 1
+      // Get the ID for the selected stock
+      let selectedStockID = (selectedStockObject) ? parseFloat(selectedStockObject.id) : 0
 
-      StockbrokingService.getSecurityMarketSnapShot(newlySelectedStock)
+       // Show the loading spinner for stock data
+      this.loadingStockData = true;
+
+      // Make API calls to get the market snapshot (BIDS, TRADES and OFFERS) for the selected stock
+      let gettingSecurityMarketSnapShot = StockbrokingService.getSecurityMarketSnapShot(newlySelectedStock)
+      gettingSecurityMarketSnapShot.then((response) => {
+        // Set the market data for the stock that was selected.
+        StockbrokingService.setSecurityMarketSnapShot(response.data)
+
+        this.loadingStockData = false;
+      })
+
       StockbrokingService.getSecurityStatusInfo(selectedStockID)
     }
   }
@@ -345,17 +443,22 @@ export default
     li:nth-child(even)
       background: #EEE
     li
-      font-size: 12px
-      padding-top: 2px
-      padding-bottom: 2px
+      font-size: 11px
+      padding-top: 5px
+      padding-bottom: 5px
       span.left
         margin-left: 10px
-        font-weight: bold
+        font-weight: normal
       span.right
         margin-right: 10px
   #bidsTable,
   #offersTable,
   #tradesTable
+    thead
+      th
+        font-weight: bold
+        color: #000000
+        font-size: 11px
     tbody
       tr
         td

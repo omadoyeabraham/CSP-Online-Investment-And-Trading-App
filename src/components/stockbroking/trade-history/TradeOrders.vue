@@ -8,9 +8,9 @@
         <th>TYPE</th>
         <th>ORDER TERM</th>
         <th>PRICE TYPE</th>
-        <th>UNIT PRICE</th>
-        <th>QUANTITY REQ</th>
-        <th>QUANTITY EXEC</th>
+        <th class="text-right">UNIT PRICE</th>
+        <th class="text-right">QUANTITY REQ</th>
+        <th class="text-right">QUANTITY EXEC</th>
         <th>STATUS</th>
         <th></th>
       </thead>
@@ -22,12 +22,12 @@
           <td class="font-size-11 p5">{{item.orderType}}</td>
           <td class="font-size-11 p5">{{item.orderTermLabel}}</td>
           <td class="font-size-11 p5">{{item.priceType}}</td>
-          <td class="font-size-11 p5 ">
+          <td class="font-size-11 p5 text-right">
             <span v-if="item.limitPrice">{{item.limitPrice}}</span>
             <span v-else>---</span>
           </td>
-          <td class="font-size-11 p5">{{item.quantityRequested | currency('', 2)}}</td>
-          <td class="font-size-11 p5">{{item.quantityFilled | currency('',2)}}</td>
+          <td class="font-size-11 p5 text-right">{{item.quantityRequested | currency('', 2)}}</td>
+          <td class="font-size-11 p5 text-right">{{item.quantityFilled | currency('',2)}}</td>
           <td class="font-size-11 p5">{{item.fixOrderStatus}}</td>
           <td>
             <span></span>
