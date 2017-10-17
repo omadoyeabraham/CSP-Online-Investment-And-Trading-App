@@ -31,49 +31,16 @@
     </vue-tabs>
     <!-- EOF TABS -->
 
+      <v-snackbar success
+        :top="true"
+        :multi-line="snackbarMode === 'multi-line'"
+        :vertical="snackbarMode === 'vertical'"
+        :color="'success'"
+        v-model="mandateHasBeenPlaced"
+        >
+        Mandate Placement Successful
 
-    <!-- Tabs -->
-    <!-- <div>
-      <v-tabs dark v-model="active">
-        <v-tabs-bar class="indigo darken-4" style="height: 40px; overflow-x: none">
-          <v-tabs-item
-            v-for="tab in tabs"
-            :key="tab"
-            :href="'#' + tab"
-            ripple
-          >
-            {{ tab }}
-          </v-tabs-item>
-          <v-tabs-slider class="white"></v-tabs-slider>
-        </v-tabs-bar>
-        <v-tabs-items>
-
-          <v-tabs-content
-            :id="tabs[0]">
-            <v-card flat>
-              <TradeOrders
-                :orders="completedTradeOrders">
-              </TradeOrders>
-            </v-card>
-          </v-tabs-content>
-
-          <v-tabs-content
-            :id="tabs[1]">
-            <v-card flat>
-              <TradeOrders
-                :orders="outstandingTradeOrders">
-              </TradeOrders>
-            </v-card>
-          </v-tabs-content>
-
-        </v-tabs-items>
-      </v-tabs>
-    </div> -->
-
-    <!-- <TradeOrders
-      :orders="tradeOrders">
-    </TradeOrders> -->
-
+      </v-snackbar>
 
   </v-container>
 </template>
@@ -81,6 +48,7 @@
 <script>
   // The stockbroking service
   import StockbrokingService from '../../../services/StockbrokingService';
+  import * as mutationTypes from '../../../store/mutation-types'
 
   import PortfolioSwitchingHeader from '../PortfolioSwitchingHeader'
   import TradeOrders from './TradeOrders'
@@ -101,8 +69,15 @@
       StockbrokingService.getTradeOrders(0);
     },
 
+    beforeDestroy () {
+      // Clear the popup for mandate placement successful
+      this.$store.commit(mutationTypes.CLEAR_MANDATE_PLACEMENT_STATE)
+    },
+
     data () {
       return {
+        snackbarTimeout: 1000,
+        snackbarMode: '',
         startDateMenu: false,
         startDate: null,
         endDateMenu: false,
@@ -117,7 +92,8 @@
     computed: {
 
       ...mapState({
-        'user': (store) => store.user
+        'user': (store) => store.user,
+        'mandateHasBeenPlaced': (store) => store.messages.mandateHasBeenPlaced
       }),
       ...mapGetters({
         'completedTradeOrders': 'getCompletedTradeOrders',

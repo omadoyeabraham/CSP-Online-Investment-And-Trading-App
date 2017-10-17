@@ -4,7 +4,7 @@
   @author Omadoye Abraham <omadoyeabraham@gmail.com>
   -->
 <template>
-  <v-container fluid class="p0 pt10">
+  <v-container fluid class="p0 pt20">
     <!-- <v-layout class="mb10">
       <v-flex xs8 offset-xs4 sm6 offset-sm6 lg4 offset-lg8>
         <v-text-field append-icon="search" label="Search Bond Holdings" single-line hide-details v-model="search">
@@ -230,6 +230,7 @@ export default
   #tradeHistoryTableHeader
     th
       padding: 0px 5px !important
+      font-weight: bold
 
   #tradeHistoryTableBody
     td

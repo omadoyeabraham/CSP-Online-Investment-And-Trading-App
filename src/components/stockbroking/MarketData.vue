@@ -82,17 +82,20 @@
             <td class="font-size-10">{{props.item.quantityTraded | currency('',2)}}</td>
             <td class="font-size-10">{{props.item.valueTraded | currency('',2)}}</td>
             <td class="font-size-10">
-              <button class="button button-blue-csp elevation-2 mb2"
-                 @click="tradeStock('BUY', props.item.name)">
-                BUY
-              </button>
-              <button class="button button-blue-csp elevation-2 mb2"
-                 @click="tradeStock('SELL', props.item.name)">
-                SELL
-              </button>
-              <button class="button button-blue-csp elevation-2">
-                WATCH
-              </button>
+              <v-tooltip top>
+                <v-btn icon slot="activator">
+                  <v-icon class="green--text" @click="tradeStock('BUY', props.item.name)">
+                    call_received
+                  </v-icon>
+                </v-btn>
+                <span>Top tooltip</span>
+              </v-tooltip>
+              <v-icon class="blue--text" @click="tradeStock('SELL', props.item.name)">
+                call_made
+              </v-icon>
+              <v-icon class="color-csp-blue ml4 fa fa-eye fa-2x">
+                <!-- remove_red_eye -->
+              </v-icon>
             </td>
           </tr>
         </template>

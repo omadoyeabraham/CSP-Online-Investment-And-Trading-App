@@ -162,7 +162,7 @@ let commitMarketData = (allMarketData) => {
    })
 
    // Calculating offers
-   let offerLevels = (marketSnapShot && marketSnapShot.bidLevels) ? marketSnapShot.offerLevels : []
+   let offerLevels = (marketSnapShot && marketSnapShot.offerLevels) ? marketSnapShot.offerLevels : []
    let offers = []
    let offersTotal = 0
 
@@ -174,7 +174,7 @@ let commitMarketData = (allMarketData) => {
    })
 
    // Getting trades and price movements
-   let trades = (marketSnapShot && marketSnapShot.bidLevels) ? marketSnapShot.trades : []
+   let trades = (marketSnapShot && marketSnapShot.trades) ? marketSnapShot.trades : []
    let priceMovements = []
 
    trades.forEach((trade, index) => {
@@ -200,7 +200,7 @@ let commitMarketData = (allMarketData) => {
      priceMovements,
      companyName
    }
-
+   console.log(currentMarketData)
    store.commit(mutationTypes.SAVE_SELECTED_SECURITY_MARKET_SNAPSHOT, currentMarketData)
  }
 

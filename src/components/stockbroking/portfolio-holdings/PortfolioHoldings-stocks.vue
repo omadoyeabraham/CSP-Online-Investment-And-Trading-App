@@ -4,7 +4,7 @@
   @author Omadoye Abraham <omadoyeabraham@gmail.com>
   -->
 <template>
-  <v-container fluid class="p0 pt10">
+  <v-container fluid class="p0 pt20">
 
     <!-- <v-layout class="mb5 pt0">
       <v-flex xs8 offset-xs4 sm6 offset-sm6 lg4 offset-lg8 class="pt0 mt0">
@@ -21,27 +21,38 @@
       :no-data-text="noDataText"
       id="portfolioHoldingsTable" class="table-striped table-bordered elevation-1">
       <template slot="headers" scope="props">
-        <tr class="bg-csp-light-blue " id="portfolioHoldingsTableHeader">
-          <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'white--text',
+        <!-- <tr class="bg-csp-light-blue " id="portfolioHoldingsTableHeader">
+          <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'text-right', 'white--text',
                         pagination.descending ? 'desc' : 'asc',
                         header.value === pagination.sortBy ? 'active' : ''
                         ]" @click="changeSort(header.value)">
-            <!-- <v-icon>arrow_upward</v-icon> -->
-            {{ header.text }}
+
           </th>
-        </tr>
+        </tr> -->
+          <tr class="bg-csp-light-blue white--text" id="portfolioHoldingsTableHeader">
+            <th>SYMBOL</th>
+            <th class="text-right">CUR.PRICE(₦)</th>
+            <th class="text-right">UNITS</th>
+            <th class="text-right">CUR.VALUE(₦)</th>
+            <th class="text-right">% OF PORTFOLIO</th>
+            <th class="text-right">W.A.C.(₦)</th>
+            <th class="text-right">TOTAL COST(₦)</th>
+            <th class="text-right">GAIN/LOSS(₦)</th>
+            <th class="text-right">GAIN/LOSS(%)</th>
+            <th class="text-center">ACTION</th>
+          </tr>
       </template>
 
       <template slot="items" scope="props">
         <tr id="portfolioHoldingsTableBody" class="indigo--text text--darken-4">
           <td class="font-size-11">{{props.item.securityName}}</td>
-          <td class="font-size-11">{{props.item.marketValue}}</td>
-          <td class="font-size-11">{{props.item.quantityHeld | currency('',0)}}</td>
-          <td class="font-size-11">{{props.item.valuation | currency('',2)}}</td>
-          <td class="font-size-11">{{props.item.percentageOfPortfolio | currency('',2)}}</td>
-          <td class="font-size-11">{{props.item.costBasis | currency('',2)}}</td>
-          <td class="font-size-11">{{props.item.totalCost | currency('',2)}}</td>
-          <td class="font-size-11">
+          <td class="font-size-11 text-right">{{props.item.marketValue}}</td>
+          <td class="font-size-11 text-right">{{props.item.quantityHeld | currency('',0)}}</td>
+          <td class="font-size-11 text-right">{{props.item.valuation | currency('',2)}}</td>
+          <td class="font-size-11 text-right">{{props.item.percentageOfPortfolio | currency('',2)}}</td>
+          <td class="font-size-11 text-right">{{props.item.costBasis | currency('',2)}}</td>
+          <td class="font-size-11 text-right">{{props.item.totalCost | currency('',2)}}</td>
+          <td class="font-size-11 text-right">
             <span v-if="props.item.lost" class="d-inline-flex h-100">
               ({{Math.abs(props.item.gainOrLoss) | currency('',2)}})
             </span>
@@ -49,17 +60,18 @@
               {{props.item.gainOrLoss | currency('',2)}}
             </span>
           </td>
-          <td class="">
+          <td class="font-size-11 text-right">
             <span v-if="props.item.lost" class="d-inline-flex h-100">
-              <span class="d-inline-flex align-center">({{Math.abs(props.item.percentageGainOrLoss) | currency('',2)}})</span>
-              <v-icon class="text-danger ml5 d-inline-flex align-center ">fa-long-arrow-down</v-icon>
+              <span class="">({{Math.abs(props.item.percentageGainOrLoss) | currency('',2)}})</span>
+              <i class=" ml4 fa fa-arrow-down red--text mt4"></i>
             </span>
             <span v-if="props.item.gained" class="d-inline-flex h-100">
-              <span class="d-inline-flex align-center">{{props.item.percentageGainOrLoss | currency('',2)}}</span>
-              <v-icon class="text-success ml5 d-inline-flex align-center ">fa-long-arrow-up</v-icon>
+              <span class="">{{props.item.percentageGainOrLoss | currency('',2)}}</span>
+              <i class=" ml4 fa fa-arrow-up green--text mt2"></i>
+              </span>
             </span>
           </td>
-          <td>
+          <td class="text-center">
             <button
               class="button button-blue-csp elevation-2 mb2"
               @click="tradeStock('BUY', props.item.securityName)">
@@ -147,6 +159,8 @@ export default
   #portfolioHoldingsTableHeader
     th
       padding: 0px 5px !important
+      color: #FFFFFF
+      font-weight: bold
 
   #portfolioHoldingsTableBody
     td

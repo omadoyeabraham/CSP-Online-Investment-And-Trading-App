@@ -401,12 +401,20 @@ export default
       // Show the loading icon for placing mandates
       this.placingMandate = true
 
+      // Ensure that the order term for market orders is good for a day
+      let orderTerm = ''
+      if (this.isMarketOrder) {
+        orderTerm = '0000000000'
+      } else {
+        orderTerm = this.orderTerm
+      }
+
       // Get the tradeOrder object
       let tradeOrder = {
         orderType: this.orderType,
         priceType: this.priceOption,
         instrument: this.securityName,
-        orderTermName: this.orderTerm,
+        orderTermName: orderTerm,
         quantityRequested: this.quantity,
         limitPrice: this.limitPrice,
         orderOrigin: 'WEB',
@@ -423,6 +431,9 @@ export default
       placeTradeOrder.then((response) => {
         // Hide the loading icon for placing mandates
         this.placingMandate = false
+
+        // Set and show the mandate placed message on the trade history page
+        this.$store.commit(mutationTypes.SET_MANDATE_PLACEMENT_STATE, true)
 
         // Redirect to the trade history page
         this.$router.push({name: 'stb-trade-history'})

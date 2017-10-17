@@ -40,6 +40,9 @@
  // The error Module
  import ErrorStore from './modules/errors.ts'
 
+ // The messages module
+ import MessageStore from './modules/messages.ts'
+
  /**
   * VuexPersistence object used to persist data in sessionstorage until the user signs out
   */
@@ -60,7 +63,8 @@
      fixedIncome: FixedIncomeStore,
      cash: CashStore,
      sma: SmaStore,
-     errors: ErrorStore
+     errors: ErrorStore,
+     messages: MessageStore
    },
    plugins: [vuexSessionStorage.plugin]
  });
