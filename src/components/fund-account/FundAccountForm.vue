@@ -69,7 +69,12 @@
 
                 <!-- Amount to be shown only when not previwing the form -->
                 <v-flex xs6 class="height-55px mb6" v-if="!inPreviewState">
-                  <v-text-field :label="'Amount'" v-model="clientAmount" :type="'number'" :rules="amountRules"  v-validate="'required'" name="amount" :disabled="inPreviewState">
+                  <v-text-field
+                    :label="'Amount'" v-model="clientAmount"
+                    :type="'number'" :rules="amountRules"
+                    v-validate="'required|min_value:50000|max_value:20000000'" name="amount"
+                    :disabled="inPreviewState"
+                    min=50000>
                   </v-text-field>
                 </v-flex>
 
@@ -123,7 +128,7 @@
                 </v-flex>
 
                 <v-flex xs6>
-                  <v-btn class="red darken-1 white--text" @click="cancelOrder()">
+                  <v-btn class="red darken-1 white--text" @click="cancelPaymentTransaction()">
                     Cancel
                   </v-btn>
                 </v-flex>
@@ -150,6 +155,8 @@ export default
     'portalUsername',
     'cashAccounts'
   ],
+
+  $$validates: true,
 
   data () {
     return {
@@ -198,9 +205,6 @@ export default
       this.$validator.validateAll().then((result) => {
         // Form is being validated
 
-        // Show the loading icon when getting transaction data
-        this.gettingTransactionDetails = true
-
         // Validation errors occured
         if (!result) {
           // Used to display the errors to the user, if the preview btn is pressed
@@ -209,8 +213,14 @@ export default
           formComponents.forEach((formComponent) => {
             formComponent.shouldValidate = true
           })
+
+          // Terminate processing because of the errors
+          return
         } else {
           // No validation errors occured
+
+          // Show the loading icon when getting transaction data
+          this.gettingTransactionDetails = true
 
            // Retrieve details about the user selected cash Account
           let selectedCashAccount = this.cashAccounts.find((cashAccount) => {
@@ -230,7 +240,6 @@ export default
 
           paymentTransactionDetails.then((response) => {
             let transactionDetails = response.data
-            console.log(transactionDetails)
 
             this.product_id = this.cashAccount
             this.product_description = paymentTransaction.productDescription
@@ -267,7 +276,22 @@ export default
     },
 
     cancelPaymentTransaction: function () {
+      // Hide the loading icon when getting transaction data
+      this.gettingTransactionDetails = false
+
+      // Used to display the errors to the user, if the preview btn is pressed
+      let formComponents = this.$refs.form.$children
+
+      formComponents.forEach((formComponent) => {
+        console.log(formComponent)
+        formComponent.shouldValidate = false
+        formComponent.shouldValidate = false
+      })
+
       this.inPreviewState = false
+      this.cashAccount = ''
+      this.clientAmount = ''
+      this.$validator.reset()
     }
   }
 }

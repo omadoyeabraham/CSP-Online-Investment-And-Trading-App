@@ -34,7 +34,10 @@ const getters = {
   },
 
   getUsername: (state) => {
-    return `${state.firstName} ${state.lastName}`
+    let firstName = state.firstName[0].toUpperCase() + state.firstName.slice(1)
+    let lastName = state.lastName[0].toUpperCase() + state.lastName.slice(1)
+
+    return `${firstName} ${lastName}`
   },
 
   getPortalUsername: (state) => {

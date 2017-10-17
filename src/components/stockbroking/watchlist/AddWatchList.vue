@@ -145,13 +145,21 @@ import WatchListService from '../../../services/WatchListService'
 
 export default
 {
-  props: ['user'],
+  props: ['user', 'redirectedInstrument'],
+
+  mounted () {
+     // Set the selected security, when redirecting from the watchlist btn
+    if (this.redirectedInstrument) {
+      this.securityName = this.redirectedInstrument
+    }
+  },
+
   data () {
     return {
       valid: false,
       securityIsSelected: false,
       creatingWatchList: false,
-      securityName: '',
+      securityName: null,
       condition: '',
       price: '',
       securityNameRules: [

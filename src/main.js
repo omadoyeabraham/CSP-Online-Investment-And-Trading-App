@@ -8,6 +8,11 @@ import Vue from 'vue'
 import Vuetify from 'vuetify'
 Vue.use(Vuetify);
 
+// Boostrap JS and Tether JS (for tooltip positioning)
+import tether from 'tether'
+window.tether = tether
+// Vue.use(tether)
+
 // Map components for highcharts
 import VueHighcharts from 'vue-highcharts';
 import Highcharts from 'highcharts/highstock';

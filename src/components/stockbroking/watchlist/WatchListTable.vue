@@ -202,11 +202,16 @@ export default
       let togglingWatchList = WatchListService.toggleWatchList(watchListStatus, customerId, watchListId)
 
       togglingWatchList.then((response) => {
-        console.log(response)
         // Refresh the watchlist data to reflect the now deleted watchlist
         this.$parent.retreiveUpdatedWatchListData()
 
-        this.watchlistSnackbarText = 'Watchlist status successfully updated'
+        // Set the status message based on the change made
+        if (watchListStatus === '0') {
+          this.watchlistSnackbarText = 'Watchlist successfully enabled'
+        } else {
+          this.watchlistSnackbarText = 'Watchlist successfully disabled'
+        }
+
         this.showSuccessWatchListSnackbar = true
       }).catch((error) => {
         console.log(error)
@@ -217,7 +222,6 @@ export default
     showUpdateWatchListForm: function (watchList, event) {
       // Set the selected watchlist so the popup dialog can be populated with the selected watchlist
       this.selectedWatchList = watchList
-      console.log(this.selectedWatchList)
 
       // Display the edit popup modal/dialog
       document.querySelector('#openUpdateWatchListDialog').click()

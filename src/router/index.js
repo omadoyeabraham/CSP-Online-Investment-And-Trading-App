@@ -79,6 +79,11 @@ export default new Router({
       component: StbWatchList
     },
     {
+      path: '/stb/watchlist/:instrument',
+      name: 'stb-watchlist-redirected',
+      component: StbWatchList
+    },
+    {
       path: '/fund-account',
       name: 'fund-account',
       component: FundAccount

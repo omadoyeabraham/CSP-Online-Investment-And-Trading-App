@@ -642,7 +642,6 @@ const getters = {
     })
 
     // completedTradeOrders.reverse()
-    console.log(completedTradeOrders)
 
     return completedTradeOrders
   },

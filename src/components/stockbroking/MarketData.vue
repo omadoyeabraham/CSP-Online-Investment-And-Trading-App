@@ -42,15 +42,29 @@
         :search="search"
         :loading="loadingDataTable"
         :rows-per-page-items="rowsPerPageItems"
-        class="elevation-1 marketDataTable table-striped">
+        class="elevation-1 marketDataTable table-striped table-bordered">
         <template slot="headers" scope="props">
-          <tr class="bg-csp-light-blue marketDataTableHeader">
+          <!-- <tr class="bg-csp-light-blue marketDataTableHeader">
             <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'white--text',    pagination.descending ? 'desc' : 'asc',
                               header.value === pagination.sortBy ? 'active' : ''
                               ]" @click="changeSort(header.value)">
-              <!-- <v-icon>arrow_upward</v-icon> -->
-              {{ header.text }}
             </th>
+          </tr> -->
+
+
+          <tr class="bg-csp-light-blue marketDataTableHeader">
+            <th>SYMBOL</th>
+            <th class="text-right">P.CLOSE(₦)</th>
+            <th class="text-right">OPEN(₦)</th>
+            <th class="text-right">HIGH(₦)</th>
+            <th class="text-right">LOW(₦)</th>
+            <th class="text-right">CUR.PRICE(₦)</th>
+            <th class="text-right">CLOSE(₦)</th>
+            <th class="text-right">CHANGE(₦)</th>
+            <th class="text-right">CHANGE(%)</th>
+            <th class="text-right">VOLUME</th>
+            <th class="text-right">VALUE(₦)</th>
+            <th class="text-center white--text">ACTION</th>
           </tr>
         </template>
 
@@ -61,13 +75,13 @@
                 @click="setSelectedSecurity(props.item.name)">{{props.item.name}}
               </span>
             </td>
-            <td class="font-size-10">{{props.item.previousClose}}</td>
-            <td class="font-size-10">{{props.item.openingPrice}}</td>
-            <td class="font-size-10">{{props.item.highPrice}}</td>
-            <td class="font-size-10">{{props.item.lowPrice}}</td>
-            <td class="font-size-10">{{props.item.currentPrice}}</td>
-            <td class="font-size-10">{{props.item.closingPrice}}</td>
-            <td class="font-size-10">
+            <td class="font-size-10 text-right">{{props.item.previousClose}}</td>
+            <td class="font-size-10 text-right">{{props.item.openingPrice}}</td>
+            <td class="font-size-10 text-right">{{props.item.highPrice}}</td>
+            <td class="font-size-10 text-right">{{props.item.lowPrice}}</td>
+            <td class="font-size-10 text-right">{{props.item.currentPrice}}</td>
+            <td class="font-size-10 text-right">{{props.item.closingPrice}}</td>
+            <td class="font-size-10 text-right">
               <span v-if="props.item.priceChange < 0" class="">
                 ({{Math.abs(props.item.priceChange) | currency('',2)}})<i class=" ml4 fa fa-arrow-down red--text"></i>
               </span>
@@ -78,24 +92,39 @@
                 {{props.item.priceChange | currency('',2)}}<i class=" ml4 fa fa-window-minimize csp-light-blue-text"></i>
               </span>
             </td>
-            <td class="font-size-10">{{props.item.percentChange | currency('',2)}}</td>
-            <td class="font-size-10">{{props.item.quantityTraded | currency('',2)}}</td>
-            <td class="font-size-10">{{props.item.valueTraded | currency('',2)}}</td>
-            <td class="font-size-10">
-              <v-tooltip top>
-                <v-btn icon slot="activator">
-                  <v-icon class="green--text" @click="tradeStock('BUY', props.item.name)">
+            <td class="font-size-10 text-right">{{props.item.percentChange | currency('',2)}}</td>
+            <td class="font-size-10 text-right">{{props.item.quantityTraded | currency('',2)}}</td>
+            <td class="font-size-10 text-right">{{props.item.valueTraded | currency('',2)}}</td>
+            <td class="font-size-10 text-center" style="padding: 0px">
+
+                <!-- BUY -->
+                <v-btn
+                  data-toggle="tooltip" data-placement="top" title="BUY" icon class="m0 p0 width-30px height-30px"
+                  @click="tradeStock('BUY', props.item.name)">
+                  <v-icon class="green--text" >
                     call_received
                   </v-icon>
                 </v-btn>
-                <span>Top tooltip</span>
-              </v-tooltip>
-              <v-icon class="blue--text" @click="tradeStock('SELL', props.item.name)">
-                call_made
-              </v-icon>
-              <v-icon class="color-csp-blue ml4 fa fa-eye fa-2x">
-                <!-- remove_red_eye -->
-              </v-icon>
+
+                <!-- SELL -->
+               <v-btn
+                data-toggle="tooltip" data-placement="top" title="SELL" icon class="m0 p0 width-30px height-30px"
+                @click="tradeStock('SELL', props.item.name)">
+                <v-icon  class="blue--text" >
+                  call_made
+                </v-icon>
+               </v-btn>
+
+               <!-- WATCH -->
+                <v-btn
+                  data-toggle="tooltip" data-placement="top" title="WATCH"
+                  icon class="m0 p0 width-30px height-30px"
+                  @click="watchStock(props.item.name)">
+                  <v-icon class="color-csp-blue ml4 fa fa-eye fa-2x btn-icon">
+                    <!-- remove_red_eye -->
+                  </v-icon>
+                </v-btn>
+
             </td>
           </tr>
         </template>
@@ -199,13 +228,21 @@
       },
 
       /**
-       * Called when a user clicks on the buy/sell btn from the portfolio holdings
+       * Called when a user clicks on the buy/sell btn from the market data
        *
        * @param orderType {string} The type of order intended. (Either a buy or sell)
        * @param instrument {string} The security to be traded
        * */
       tradeStock: function (orderType, instrument) {
         this.$router.push(`/stb/trade/${orderType}/${instrument}`)
+      },
+
+      /**
+       * Called when a user clicks on the watchlist btn from the market data
+       *
+       */
+      watchStock: function (instrument) {
+        this.$router.push(`/stb/watchlist/${instrument}`)
       }
 
     }
@@ -223,7 +260,10 @@
 
   .marketDataTableHeader
     th
-      padding: 0px 5px !important
+      padding: 5px 5px !important
+      color: #FFFFFF !important
+      font-weight: bold
+      font-size: 11px
 
   .marketDataTableBody
     td

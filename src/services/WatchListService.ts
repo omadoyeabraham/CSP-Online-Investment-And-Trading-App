@@ -63,7 +63,6 @@ let deleteWatchList = (watchlistId: number, customerId: number) => {
  * @param customerId
  */
 let toggleWatchList = (watchListStatus: any, customerId: number, watchlistId: number) => {
-  console.log(watchListStatus, watchlistId, customerId)
   return axios ({
     method: 'POST',
     url: ApiUrls.ToggleWatchListUrl,

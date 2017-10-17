@@ -28,7 +28,7 @@ export const nairaInvestments: Array<object> = [
       { icon: 'keyboard_arrow_right', text: 'Portfolio Holdings', routeName:'stb-portfolio-holdings' },
       { icon: 'keyboard_arrow_right', text: 'Market Data', routeName:'stb-market-data' },
       { icon: 'keyboard_arrow_right', text: 'My Watchlist', routeName:'stb-watchlist' },
-      { icon: 'keyboard_arrow_right', text: 'Tools', routeName:'stb-portfolio-summary' }
+      { icon: 'keyboard_arrow_right', text: 'Investment Tools', routeName:'stb-portfolio-summary' }
     ]
   },
   {

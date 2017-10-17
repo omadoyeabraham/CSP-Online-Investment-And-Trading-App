@@ -59,7 +59,7 @@
         </div>
 
         <!-- Card body -->
-        <div class="card-block indigo darken-4 p0">
+        <div class="card-block bg-csp-light-blue p0">
           <ul
             class="list-group list-group-flush black--text"
             id="selectedInvestmentList"

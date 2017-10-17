@@ -8,7 +8,8 @@
 
       <v-flex xs12 sm6 class="pl0">
         <add-watch-list
-          :user="user">
+          :user="user"
+          :redirectedInstrument = "redirectedInstrument">
         </add-watch-list>
       </v-flex>
 
@@ -67,6 +68,13 @@
       })
     },
 
+    created () {
+      // Assign the instrument if the user is being redirected to this component from clciking the watchlist button from other pages
+      if (this.$route.params.instrument) {
+        this.redirectedInstrument = this.$route.params.instrument
+      }
+    },
+
     components: {
       WatchListHeader,
       AddWatchList,
@@ -79,7 +87,8 @@
         showWatchlistCreatedSnackbar: false,
         watchlistCreatedSnackbarText: 'Watchlist successfully created',
         snackbarTimeout: 3000,
-        snackbarMode: ''
+        snackbarMode: '',
+        redirectedInstrument: null
       }
     },
 
