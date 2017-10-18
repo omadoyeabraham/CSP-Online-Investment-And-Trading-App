@@ -42,6 +42,18 @@
 
       </v-snackbar>
 
+          <!--Snackbar to show when order is successfully cancelled, commented out until issue with snackbar still showing after reload is resolved -->
+        <!-- <v-snackbar success
+          :timeout="snackbarTimeout"
+          :top="true"
+          :multi-line="snackbarMode === 'multi-line'"
+          :vertical="snackbarMode === 'vertical'"
+          :color="'success'"
+          v-model="showTradeCancelledSnackbar"
+          >
+          Trade order successfully cancelled
+        </v-snackbar> -->
+
   </v-container>
 </template>
 
@@ -93,7 +105,8 @@
 
       ...mapState({
         'user': (store) => store.user,
-        'mandateHasBeenPlaced': (store) => store.messages.mandateHasBeenPlaced
+        'mandateHasBeenPlaced': (store) => store.messages.mandateHasBeenPlaced,
+        'showTradeCancelledSnackbar': (store) => store.stockbroking.showTradeCancelledSnackbar
       }),
       ...mapGetters({
         'completedTradeOrders': 'getCompletedTradeOrders',

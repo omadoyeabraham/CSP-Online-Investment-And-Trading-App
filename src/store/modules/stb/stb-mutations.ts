@@ -92,6 +92,20 @@ const mutations = {
     state.selectedSecurityOnTradePage = newlySelectedSecurity
   },
 
+  [mutationTypes.SET_TRADE_ORDER_TO_CANCEL] (state, tradeOrderToCancel) {
+    state.tradeOrderToCancel = tradeOrderToCancel
+  },
+
+  [mutationTypes.SET_SHOW_TRADE_CANCELLED_SNACKBAR] (state, status) {
+    state.showTradeCancelledSnackbar = status
+
+    // Remove after 3 seconds
+    setTimeout(function () {
+      state.showTradeCancelledSnackbar = false;
+      console.log('cancelled')
+    }, 3000);
+  },
+
 
   /**
    * Set the total value of the stb portfolio

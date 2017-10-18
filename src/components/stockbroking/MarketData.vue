@@ -69,7 +69,9 @@
         </template>
 
         <template slot="items" scope="props">
-          <tr class="marketDataTableBody">
+          <tr
+             v-bind:class="[{'selectedRow': isSelectedStock(props.item.name)}, 'marketDataTableBody']"
+            @click="setSelectedSecurity(props.item.name)" >
             <td class="font-size-10">
               <span class="emulate-link"
                 @click="setSelectedSecurity(props.item.name)">{{props.item.name}}
@@ -174,16 +176,19 @@
     },
 
     created () {
-      this.getUpdatedMarketData = setInterval(this.updateMarketData, 5000)
+      this.getUpdatedMarketData = setInterval(this.updateMarketData, 30000)
     },
 
     beforeDestroy () {
       clearInterval(this.getUpdatedMarketData)
     },
 
-    computed: mapState({
-      'marketData': (store) => store.stockbroking.marketData
-    }),
+    computed: {
+      ...mapState({
+        'marketData': (store) => store.stockbroking.marketData,
+        'selectedStock': (store) => store.stockbroking.selectedSecurityOnTradePage
+      })
+    },
 
     components: {
       MarketDataPageSnapShot
@@ -227,6 +232,10 @@
         this.$store.commit(mutationTypes.SET_SECURITY_SELECTED_ON_TRADE_PAGE, selectedSecurityName)
       },
 
+      isSelectedStock: function (name) {
+        return (name === this.selectedStock)
+      },
+
       /**
        * Called when a user clicks on the buy/sell btn from the market data
        *
@@ -266,13 +275,18 @@
       font-size: 11px
 
   .marketDataTableBody
+    &:hover
+      *background: #DDD !important
+      cursor: pointer
+
+  .marketDataTableBody
     td
       padding: 5px 5px !important
       height: 25px
       color: #31708f
   .btn__content
     padding: 0px !important
-  .emulate-link
+  .eemulate-link
     &:hover
       transition: all .2s
       text-decorations: underline
@@ -280,4 +294,8 @@
       padding-bottom: 2px
       cursor: pointer
       background: #EEEEEE
+
+  .selectedRow
+    background: #b0bed9 !important
+    font-weight: bold
 </style>

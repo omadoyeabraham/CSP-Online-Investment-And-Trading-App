@@ -29,37 +29,55 @@
                 <v-container fluid class="p0 min-height-240px max-height-240px" style="overflow-y: auto">
 
                   <!-- BIDS TABLE -->
-                  <table class="table table-striped" id="bidsTable">
+                  <table class="table table-striped" id="bidsTable" >
                     <thead>
                       <th>TOTAL QTY</th>
                       <th class="text-center">BID QTY</th>
                       <th class="text-right">PRICE</th>
                     </thead>
 
-                    <!-- NO STOCK SELECTED -->
-                    <tbody v-if="!selectedSecurityMarketSnapShot">
-                      <tr class="text-center">
-                        <td colspan="3">No Stock Selected</td>
-                      </tr>
-                    </tbody>
-
-                    <template v-if="selectedSecurityMarketSnapShot">
-
-                      <!-- BIDS EXIST -->
-                      <tbody v-if="selectedSecurityMarketSnapShot.bids.length">
-                        <tr v-for="(bid,index) in selectedSecurityMarketSnapShot.bids" :key="index">
-                          <td>{{bid.total | currency('', 0)}}</td>
-                          <td class="text-center">{{bid.qty | currency('', 0)}}</td>
-                          <td class="text-right">{{bid.price | currency('',2)}}</td>
+                    <!-- Show Loader when loading data -->
+                    <template v-if="loadingStockData">
+                      <tbody>
+                        <tr>
+                          <td colspan="3" class="text-center">
+                            <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
+                            <span class="font-size-12 ml5">Loading data</span>
+                          </td>
                         </tr>
                       </tbody>
+                    </template>
 
-                      <!-- NO BIDS -->
-                      <tbody v-if="!selectedSecurityMarketSnapShot.bids.length">
+                    <!-- Show data when not loading new data -->
+                    <template v-if="!loadingStockData">
+
+                      <!-- NO STOCK SELECTED -->
+                      <tbody v-if="!selectedSecurityMarketSnapShot">
                         <tr class="text-center">
-                          <td colspan="3">No Bids</td>
+                          <td colspan="3">No Stock Selected</td>
                         </tr>
                       </tbody>
+
+                      <!-- STOCK WAS SELECTED -->
+                      <template v-if="selectedSecurityMarketSnapShot">
+
+                        <!-- BIDS EXIST -->
+                        <tbody v-if="selectedSecurityMarketSnapShot.bids.length">
+                          <tr v-for="(bid,index) in selectedSecurityMarketSnapShot.bids" :key="index">
+                            <td>{{bid.total | currency('', 0)}}</td>
+                            <td class="text-center">{{bid.qty | currency('', 0)}}</td>
+                            <td class="text-right">{{bid.price | currency('',2)}}</td>
+                          </tr>
+                        </tbody>
+
+                        <!-- NO BIDS -->
+                        <tbody v-if="!selectedSecurityMarketSnapShot.bids.length">
+                          <tr class="text-center">
+                            <td colspan="3">No Bids</td>
+                          </tr>
+                        </tbody>
+                      </template>
+
                     </template>
 
                   </table>
@@ -79,7 +97,7 @@
               <v-card-media>
                 <v-container fluid class="p0 min-height-240px max-height-240px" style="overflow-y: auto">
 
-                  <!-- OFFERS TABLE -->
+                   <!-- OFFERS TABLE -->
                   <table class="table table-striped" id="offersTable">
                     <thead>
                       <th>TOTAL QTY</th>
@@ -87,30 +105,46 @@
                       <th class="text-right">PRICE</th>
                     </thead>
 
-                    <!-- NO STOCK SELECTED -->
-                    <tbody v-if="!selectedSecurityMarketSnapShot">
-                      <tr class="text-center">
-                        <td colspan="3">No Stock Selected</td>
-                      </tr>
-                    </tbody>
-
-                    <template v-if="selectedSecurityMarketSnapShot">
-
-                      <!-- OFFERS EXIST -->
-                      <tbody v-if="selectedSecurityMarketSnapShot.offers.length">
-                        <tr v-for="(offer,index) in selectedSecurityMarketSnapShot.offers" :key="index">
-                          <td>{{offer.total | currency('', 0)}}</td>
-                          <td class="text-center">{{offer.qty | currency('', 0)}}</td>
-                          <td class="text-right">{{offer.price | currency('',2)}}</td>
+                    <!-- Show loading icon when loading data -->
+                    <template v-if="loadingStockData">
+                      <tbody>
+                        <tr>
+                          <td colspan="3" class="text-center">
+                            <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
+                            <span class="font-size-12 ml5">Loading data</span>
+                          </td>
                         </tr>
                       </tbody>
+                    </template>
 
-                      <!-- NO OFFERS -->
-                      <tbody v-if="!selectedSecurityMarketSnapShot.offers.length">
+                    <!-- Show data when not loading data -->
+                    <template v-if="!loadingStockData">
+                      <!-- NO STOCK SELECTED -->
+                      <tbody v-if="!selectedSecurityMarketSnapShot">
                         <tr class="text-center">
-                          <td colspan="3">No OFFERS</td>
+                          <td colspan="3">No Stock Selected</td>
                         </tr>
                       </tbody>
+
+                      <template v-if="selectedSecurityMarketSnapShot">
+
+                        <!-- OFFERS EXIST -->
+                        <tbody v-if="selectedSecurityMarketSnapShot.offers.length">
+                          <tr v-for="(offer,index) in selectedSecurityMarketSnapShot.offers" :key="index">
+                            <td>{{offer.total | currency('', 0)}}</td>
+                            <td class="text-center">{{offer.qty | currency('', 0)}}</td>
+                            <td class="text-right">{{offer.price | currency('',2)}}</td>
+                          </tr>
+                        </tbody>
+
+                        <!-- NO OFFERS -->
+                        <tbody v-if="!selectedSecurityMarketSnapShot.offers.length">
+                          <tr class="text-center">
+                            <td colspan="3">No Offers</td>
+                          </tr>
+                        </tbody>
+                      </template>
+
                     </template>
 
                   </table>
@@ -130,7 +164,7 @@
               <v-card-media>
                 <v-container fluid class="p0 min-height-240px max-height-240px" style="overflow-y: auto">
 
-                  <!-- TRADES TABLE -->
+                   <!-- TRADES TABLE -->
                   <table class="table table-striped" id="tradesTable">
                     <thead>
                       <th>PRICE</th>
@@ -138,12 +172,26 @@
                       <th class="text-right">TIME</th>
                     </thead>
 
-                    <!-- NO STOCK SELECTED -->
-                    <tbody v-if="!selectedSecurityMarketSnapShot">
-                      <tr class="text-center">
-                        <td colspan="3">No Stock Selected</td>
-                      </tr>
-                    </tbody>
+                    <!-- Show loading icon when pulling data -->
+                    <template v-if="loadingStockData">
+                      <tbody>
+                        <tr>
+                          <td colspan="3" class="text-center">
+                            <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
+                            <span class="font-size-12 ml5">Loading data</span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </template>
+
+                    <!-- Show data when available -->
+                    <template v-if="!loadingStockData">
+                      <!-- NO STOCK SELECTED -->
+                      <tbody v-if="!selectedSecurityMarketSnapShot">
+                        <tr class="text-center">
+                          <td colspan="3">No Stock Selected</td>
+                        </tr>
+                      </tbody>
 
                     <template v-if="selectedSecurityMarketSnapShot">
 
@@ -164,6 +212,8 @@
                       </tbody>
                     </template>
 
+                    </template>
+
                   </table>
 
                 </v-container>
@@ -174,81 +224,6 @@
         </v-layout>
       </v-container>
 
-      <!-- Status and Price movement chart -->
-      <!-- <v-container fluid class="pt0">
-        <v-layout row>
-          STATUS
-          <v-flex xs4>
-            <v-card class="min-height-260px">
-              <v-card-title primary-title class="bg-csp-light-blue white--text p0 pl20">
-                 <h5 class="headline mb-0 font-size-12">STATUS</h5>
-              </v-card-title>
-              <v-card-media>
-                <v-container fluid class="p0">
-                  <v-layout row
-                      class="d-flex justify-between align-between pt5 pb5 ">
-
-                    <v-flex
-                      v-if="!selectedSecurityStatusInfo"
-                      class=" ml5 mt10 text-center">
-                      No Stock Selected
-                    </v-flex>
-
-                    <v-flex v-if="selectedSecurityStatusInfo">
-                      <ul class="pl0" id="securityStatusList">
-                        <li class="">
-                          <span class="left">Last trade Price</span>
-                          <span class="right">{{selectedSecurityStatusInfo.lastPrice}}</span>
-                        </li>
-                        <li class="">
-                          <span class="left">Price Change</span>
-                          <span class="right">{{selectedSecurityStatusInfo.todaysChange}}</span>
-                        </li>
-                        <li class="">
-                          <span class="left">Price Change(%)</span>
-                          <span class="right">{{selectedSecurityStatusInfo.todaysChangeP}}</span>
-                        </li>
-                        <li class="">
-                          <span class="left">Opening Price</span>
-                          <span class="right">{{selectedSecurityStatusInfo.todaysOpen}}</span>
-                        </li>
-                        <li class="">
-                          <span class="left">High Price</span>
-                          <span class="right">{{selectedSecurityStatusInfo.todaysHigh}}</span>
-                        </li>
-                        <li class="">
-                          <span class="left">Low Price</span>
-                          <span class="right">{{selectedSecurityStatusInfo.todaysLow}}</span>
-                        </li>
-                        <li class="">
-                          <span class="left">Volume Traded</span>
-                          <span class="right">{{selectedSecurityStatusInfo.volume | currency('',0)}}</span>
-                        </li>
-                        <li class="">
-                          <span class="left">Value Traded</span>
-                          <span class="right">{{selectedSecurityStatusInfo.lastPrice}}</span>
-                        </li>
-                      </ul>
-                    </v-flex>
-
-                  </v-layout>
-                </v-container>
-              </v-card-media>
-            </v-card>
-          </v-flex>
-
-          PRICE MOVEMENT CHART
-          <v-flex xs8>
-            <v-card class="min-height-260px">
-              <v-card-title primary-title class="bg-csp-light-blue white--text p0 pl20">
-                 <h5 class="headline mb-0 font-size-12">PRICE MOVEMENT CHART</h5>
-              </v-card-title>
-              <v-card-media>
-              </v-card-media>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-container> -->
 
     </v-card-media>
   </v-card>
@@ -269,7 +244,8 @@ export default
     return {
       marketSnapShot: null,
       bidLevels: null,
-      securityIsSelected: false
+      securityIsSelected: false,
+      loadingStockData: false
     }
   },
 
@@ -296,9 +272,20 @@ export default
         return security.value === newlySelectedStock
       })
 
-      let selectedStockID = (selectedStockObject.id) ? parseFloat(selectedStockObject.id) : 1
+      let selectedStockID = (selectedStockObject.id) ? parseFloat(selectedStockObject.id) : 0
 
-      StockbrokingService.getSecurityMarketSnapShot(newlySelectedStock)
+      // Show the loading spinner for stock data
+      this.loadingStockData = true;
+
+      // Make API calls to get the market snapshot (BIDS, TRADES and OFFERS) for the selected stock
+      let gettingSecurityMarketSnapShot = StockbrokingService.getSecurityMarketSnapShot(newlySelectedStock)
+      gettingSecurityMarketSnapShot.then((response) => {
+        // Set the market data for the stock that was selected.
+        StockbrokingService.setSecurityMarketSnapShot(response.data)
+
+        this.loadingStockData = false;
+      })
+
       StockbrokingService.getSecurityStatusInfo(selectedStockID)
     }
   }

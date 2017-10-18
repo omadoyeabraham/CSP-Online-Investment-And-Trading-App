@@ -41,6 +41,11 @@ import * as ApiUrls from './ApiUrlService';
 
     if(response.data.item !== undefined) {
       tradeOrders = response.data.item
+
+      // Loop through each trade order and determine if it can be cancelled
+      tradeOrders.forEach((tradeOrder) => {
+        tradeOrder.canBeCancelled = tradeOrderCanBeCancelled(tradeOrder)
+      })
     }
 
     // Commit the tradeOrders to the stockbroking module of our vuex store
@@ -48,6 +53,20 @@ import * as ApiUrls from './ApiUrlService';
   })
 
 
+ }
+
+ /**
+  * Determine if a trade order can be cancelled or not.
+
+  * @param tradeOrder | Object
+  * @return Boolean
+  */
+ let tradeOrderCanBeCancelled = (tradeOrder) => {
+   return tradeOrder.orderStatus == "BOOKED" ||
+     (tradeOrder.fixOrderStatus == "NEW" && tradeOrder.orderStatus == "EXECUTING") ||
+     (tradeOrder.fixOrderStatus == "REPLACED" && tradeOrder.orderStatus == "EXECUTING") ||
+     (tradeOrder.fixOrderStatus == "REJECTED" && tradeOrder.orderStatus == "EXECUTING") ||
+     (tradeOrder.fixOrderStatus == "NA" && tradeOrder.orderStatus == "EXECUTING");
  }
 
  /**
@@ -265,6 +284,19 @@ let commitMarketData = (allMarketData) => {
 
  }
 
+ /**
+  * Cancel a trade order
+  *
+  * @param tradeOrderID
+  */
+ let cancelTradeOrder = (tradeOrderID) => {
+  return axios({
+    method: 'POST',
+    url: ApiUrls.CancelTradeOrder,
+    data: {id: tradeOrderID}
+  })
+ }
+
 
  export default {
    getTradeOrders,
@@ -278,5 +310,6 @@ let commitMarketData = (allMarketData) => {
    getSecurityStatusInfo,
    resetMarketSnapShot,
    previewTradeOrder,
-   createTradeOrder
+   createTradeOrder,
+   cancelTradeOrder
  }

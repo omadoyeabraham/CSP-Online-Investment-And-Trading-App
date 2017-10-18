@@ -86,7 +86,6 @@
     </v-snackbar>
 
     <!-- Dialog for updating watchlists -->
-
     <v-dialog v-model="showUpdateWatchListDialog" lazy absolute>
       <v-btn id="openUpdateWatchListDialog"
         style="display: none" color="primary" dark slot="activator"></v-btn>
@@ -145,7 +144,6 @@
 
       </v-card>
     </v-dialog>
-
 
   </v-container>
 </template>

@@ -21,6 +21,8 @@ const state = {
   selectedSecurityOnTradePage: null,
   selectedSecurityMarketSnapShot: null,
   selectedSecurityStatusInfo: null,
+  tradeOrderToCancel: null,
+  showTradeCancelledSnackbar: false,
   marketData: {},
   portfolios: [],
   smaPortfolios: [],

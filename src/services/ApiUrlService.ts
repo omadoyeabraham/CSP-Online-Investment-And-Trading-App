@@ -17,6 +17,7 @@ export const GetSecurityMarketSnapShot = `${BaseApiUrl}/findSecurityOverviewByNa
 export const GetSecurityStatusInfo = `${BaseApiUrl}/findSecurityOverviewById`;
 export const PreviewTradeOrder = `${BaseApiUrl}/getTradeOrderTotal`;
 export const CreateTradeOrder = `${BaseApiUrl}/createTradeOrder`;
+export const CancelTradeOrder = `${BaseApiUrl}/cancelTradeOrder`;
 
 // WatchList
 export const GetWatchListUrl = `${BaseApiUrl}/getWatchList`;
