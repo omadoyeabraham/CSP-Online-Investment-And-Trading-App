@@ -36,6 +36,12 @@
         </stocks-overview>
       </v-flex>
 
+      <!-- Recent Orders -->
+      <v-flex xs12 md6 lg4 class="mb5 max-height-245px min-height-245px">
+        <recent-orders :currentPortfolio="currentPortfolio">
+        </recent-orders>
+      </v-flex>
+
       <!-- Bond Allocation -->
       <v-flex xs12 md6 lg4 class="mb5 max-height-245px min-height-245px">
          <BondAllocationChart
@@ -50,12 +56,6 @@
           :bondPerformanceChartData="bondPerformanceChartData"
           :bondData="bondData">
         </BondPerformanceChart>
-      </v-flex>
-
-       <!-- Recent Orders -->
-      <v-flex xs12 md6 lg4 class="mb5 max-height-245px min-height-245px">
-        <recent-orders :currentPortfolio="currentPortfolio">
-        </recent-orders>
       </v-flex>
 
     </v-layout>

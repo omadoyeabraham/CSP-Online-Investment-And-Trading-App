@@ -26,6 +26,8 @@
 
       <!-- Privacy data -->
       <v-flex xs7>
+        <fund-account-policy>
+        </fund-account-policy>
       </v-flex>
 
     </v-layout>
@@ -36,12 +38,14 @@
 
 <script>
 import FundAccountForm from './FundAccountForm'
+import FundAccountPolicy from './FundAccountPolicy'
 import {mapState, mapGetters} from 'vuex'
 
 export default
 {
   components: {
-    FundAccountForm
+    FundAccountForm,
+    FundAccountPolicy
   },
 
   computed: {

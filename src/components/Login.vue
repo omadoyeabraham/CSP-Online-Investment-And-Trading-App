@@ -166,8 +166,10 @@
           // Store the access token in session, so users who reload can still access resources
           window.sessionStorage.setItem('accessToken', userData.customer.portalPasswordToken)
 
+          // Async calls to data needed by the application
           StockbrokingService.getActiveTradeOrderTerms()
           StockbrokingService.getSecurityNames()
+          StockbrokingService.getTradeOrders(0)
 
           // Hide the sign-in loading spinner
           this.isAuthenticating = false

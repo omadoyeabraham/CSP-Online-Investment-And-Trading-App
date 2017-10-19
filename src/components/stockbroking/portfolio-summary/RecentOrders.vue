@@ -10,63 +10,29 @@
 
     <!-- Card body -->
     <div class="card-block pt0">
-      <ul class="list-group list-group-flush black--text">
-        <!-- CHN NO -->
-        <li class="list-group-item ">
-          CLEARING HOUSE NO
-          <span class="ml-auto font-weight-normal">{{currentPortfolio.clearingHouseNo}}</span>
-        </li>
-        <!-- CSCS NO -->
-        <li class="list-group-item ">
-          CSCS NO
-          <span class="ml-auto font-weight-normal">{{currentPortfolio.accountNo}}</span>
-        </li>
-        <!-- Current Value -->
-        <li class="list-group-item ">
-          CURRENT VALUE
-          <span class="ml-auto font-weight-normal">{{currentPortfolioTotalValue | currency('&#8358;', 2)}}</span>
-        </li>
-        <!-- Acquisition Cost -->
-        <li class="list-group-item ">
-          ACQUISITION COST
-          <span class="ml-auto font-weight-normal">{{currentPortfolioAcquisitionCost | currency('&#8358;', 2)}}</span>
-        </li>
-        <!-- Gain or Loss -->
-        <li class="list-group-item ">
-          GAIN/LOSS
-          <span class="ml-auto font-weight-normal">
+     <!-- {{ recentTradeOrders }} -->
+     <table class="table mb20" id="recentOrdersTable">
+       <thead>
+         <th></th>
+         <th class="">TYPE</th>
+         <th class="text-right">UNITS</th>
+         <th class="text-right">EXEC</th>
+         <th class="text-right pl10">STATUS</th>
+       </thead>
+       <tbody>
+         <tr v-for="(order,index) in recentTradeOrders" :key="index">
+           <td>{{order.instrument}}</td>
+           <td>{{order.orderType}}</td>
+           <td class="text-right">{{order.quantityRequested | currency('',0)}}</td>
+           <td class="text-right">{{order.quantityFilled | currency('',0)}}</td>
+           <td class="text-right pl10">{{order.orderStatus}}</td>
+         </tr>
+       </tbody>
+     </table>
 
-            <span class="red--text" v-if="currentPortfolioGainOrLoss < 0">
-              &#8358; ({{Math.abs(currentPortfolioGainOrLoss) | currency('', 2)}})
-            </span>
-            <span class="green--text" v-else-if="currentPortfolioGainOrLoss > 0">
-              {{currentPortfolioGainOrLoss | currency('&#8358;', 2)}}
-            </span>
-            <span class="" v-else>
-              {{currentPortfolioGainOrLoss | currency('&#8358;', 2)}}
-            </span>
-
-          </span>
-        </li>
-        <!-- Gain or Loss percentage -->
-        <li class="list-group-item">
-          GAIN/LOSS (%)
-          <span class="ml-auto font-weight-normal">
-
-            <span class="red--text" v-if="currentPortfolioGainOrLossPercentage < 0">
-              ({{Math.abs(currentPortfolioGainOrLossPercentage) | currency('', 2)}}) %
-            </span>
-            <span class="green--text" v-else-if="currentPortfolioGainOrLossPercentage > 0">
-              {{currentPortfolioGainOrLossPercentage | currency('', 2)}} %
-            </span>
-            <span class="" v-else>
-              {{currentPortfolioGainOrLossPercentage | currency('', 2)}} %
-            </span>
-
-          </span>
-
-        </li>
-      </ul>
+     <router-link class="blue--text mt30 font-size-11 emulate-link" :to="'/stb/trade-history'">
+       <i class="fa fa-chevron-right"></i> More Orders
+     </router-link>
     </div>
 
   </v-card>
@@ -83,13 +49,22 @@ export default
       'currentPortfolioTotalValue': 'currentPortfolioTotalValue',
       'currentPortfolioGainOrLoss': 'currentPortfolioGainOrLoss',
       'currentPortfolioGainOrLossPercentage': 'currentPortfolioGainOrLossPercentage',
-      'currentPortfolioAcquisitionCost': 'currentPortfolioAcquisitionCost'
+      'currentPortfolioAcquisitionCost': 'currentPortfolioAcquisitionCost',
+      'recentTradeOrders': 'getRecentTradeOrders'
     })
   }
 }
 </script>
 
-<style>
-
+<style scoped lang="sass">
+  #recentOrdersTable
+    thead
+      th
+        color: #000000
+        font-weight: bold !important
+  .emulate-link
+    &:hover
+      cursor: pointer
+      text-decoration: underline
 </style>
 

@@ -41,7 +41,8 @@
 
               <!-- Stocks -->
               <v-flex xs6 class="height-55px mb6">
-                <v-select class="" :label="'Stock'" :items="securityNames" v-model="securityName" :rules="securityNameRules" :no-data-text="noStockToSellText" v-validate="'required'" name="securityName" :disabled="inPreviewState">
+                <v-select class=""
+                label="Stock" :items="securityNames" v-model="securityName" :rules="securityNameRules" :no-data-text="noStockToSellText" v-validate="'required'" name="securityName" :disabled="inPreviewState" autocomplete clearable>
                 </v-select>
               </v-flex>
 
@@ -79,25 +80,33 @@
 
               <!-- Limit Price -->
               <v-flex xs6 v-if="isLimitOrder" class="height-55px mb6">
-                <v-text-field  :label="'Limit Price'" v-model="limitPrice" :type="'number'" :rules="limitPriceRules"  v-validate="'required'" name="limitPrice" :disabled="inPreviewState">
+                <!-- When not Previewing -->
+                <v-text-field v-if="!inPreviewState"  :label="'Limit Price'" v-model="limitPrice" :type="'number'" :rules="limitPriceRules"  v-validate="'required'" name="limitPrice" :disabled="inPreviewState">
+                </v-text-field>
+                <!-- When previewing -->
+                <v-text-field v-if="inPreviewState"  :label="'Limit Price'" :value="limitPrice | currency('',2)" :type="'text'" :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
               <!-- Consideration -->
               <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
-                <v-text-field  readonly :label="'Consideration'" v-model="orderConsideration" :type="'number'"   :disabled="inPreviewState">
+                <!-- <v-text-field  readonly :label="'Consideration'" v-model="orderConsideration" :type="'number'"   :disabled="inPreviewState">
+                </v-text-field> -->
+                <v-text-field  readonly :label="'Consideration'" :value="orderConsideration | currency('', 2)" :type="'text'"   :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
               <!-- Total Fees -->
               <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
-                <v-text-field :label="'Total Fees'" v-model="orderTotalFees" :type="'number'"  :disabled="inPreviewState">
+                <v-text-field :label="'Total Fees'" :value="orderTotalFees | currency('',2)" :type="'text'"  :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
               <!-- Total Estimated Cost / Proceeds -->
               <v-flex xs12 v-if="inPreviewState" class="height-55px mb6">
-                <v-text-field  :label="orderTotalText" v-model="formattedOrderTotal" :type="'text'"  :disabled="inPreviewState">
+                <!-- <v-text-field  :label="orderTotalText" v-model="formattedOrderTotal" :type="'text'"  :disabled="inPreviewState">
+                </v-text-field> -->
+                <v-text-field  :label="orderTotalText" :value="formattedOrderTotal | currency('',2)" :type="'text'"  :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 

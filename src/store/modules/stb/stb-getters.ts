@@ -150,7 +150,6 @@ const getters = {
   },
 
 
-
   /**
    * Validate that a portfolio is not currently set
    *
@@ -630,6 +629,21 @@ const getters = {
   },
 
   /**
+   * Return the 5 most recent trades by the user
+   *
+   */
+  getRecentTradeOrders: (state, getters) => {
+
+    let tradeOrders = state.tradeOrders
+
+    if (UtilityService.objectHasNodata(tradeOrders)) {
+      return []
+    }
+
+    return tradeOrders.slice(0, 4)
+  },
+
+  /**
    * Return completed trades for the selected portfolio
    *
    */
@@ -725,11 +739,6 @@ const getters = {
 
     return stockNames
   },
-
-
-
-
-
 
 }
 
