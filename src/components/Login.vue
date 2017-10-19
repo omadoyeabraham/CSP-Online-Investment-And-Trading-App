@@ -209,10 +209,58 @@
     background: red
   }
   #loginWrapper {
-    background-image: url('../../static/img/login.jpg');
+    *background-image: url('../../static/img/login.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+
+
+background: -moz-linear-gradient(
+  4deg,
+  #3679ff 0%,
+  #1f3378 53%,
+  #1a2155 67%
+); /* ff3.6+ */
+background: -webkit-gradient(
+  linear,
+  left top,
+  right top,
+  color-stop(0%, #3679ff),
+  color-stop(53%, #1f3378),
+  color-stop(67%, #1a2155)
+); /* safari4+,chrome */
+background: -webkit-linear-gradient(
+  4deg,
+  #3679ff 0%,
+  #1f3378 53%,
+  #1a2155 67%
+); /* safari5.1+,chrome10+ */
+background: -o-linear-gradient(
+  4deg,
+  #3679ff 0%,
+  #1f3378 53%,
+  #1a2155 67%
+); /* opera 11.10+ */
+background: -ms-linear-gradient(
+  4deg,
+  #3679ff 0%,
+  #1f3378 53%,
+  #1a2155 67%
+); /* ie10+ */
+background: linear-gradient(
+  86deg,
+  #3679ff 0%,
+  #1f3378 53%,
+  #1a2155 67%
+); /* w3c */
+filter: progid:DXImageTransform.Microsoft.gradient(
+    startColorstr="#3679FF",
+    endColorstr="#1A2155",
+    GradientType=1
+  ); /* ie6-9 */
+
+
+
   }
   .card-container.card {
     max-width: 450px;

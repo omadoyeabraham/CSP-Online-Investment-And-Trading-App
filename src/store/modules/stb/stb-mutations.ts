@@ -4,6 +4,8 @@ import * as mutationTypes from '../../mutation-types.js';
 
 import UserService from '../../../services/UserService';
 
+import StbState from './stockbroking'
+
 
 // Mutations to this module's store state
 const mutations = {
@@ -11,8 +13,8 @@ const mutations = {
   [mutationTypes.SAVE_DASHBOARD_DATA_TO_STORE](state, dashboardData) {
     state.marketHighlights = dashboardData.MARKETHIGHLIGHTS
     state.nseAsi = dashboardData.NSEASI
-    state.topGainers = dashboardData.TOPGAINERS.item
-    state.topLosers = dashboardData.TOPLOSERS.item
+    state.topGainers = dashboardData.TOPGAINERS
+    state.topLosers = dashboardData.TOPLOSERS
   },
 
   [mutationTypes.SAVE_USER_STOCKBROKING_DATA_TO_STORE](state, userData) {
@@ -102,7 +104,6 @@ const mutations = {
     // Remove after 3 seconds
     setTimeout(function () {
       state.showTradeCancelledSnackbar = false;
-      console.log('cancelled')
     }, 3000);
   },
 
@@ -148,7 +149,7 @@ const mutations = {
   [mutationTypes.RESET_MARKET_SNAPSHOT](state) {
     state.selectedSecurityMarketSnapShot = null
     state.selectedSecurityStatusInfo = null
-  }
+  },
 
 }
 

@@ -7,6 +7,7 @@
 export const BaseApiUrl = 'https://restserver.cardinalstone.com/api';
 
 export const AuthenticationUrl = `${BaseApiUrl}/findCustomerByName`;
+export const LogoutUrl = `${BaseApiUrl}/logout`
 
 // Stockbroking
 export const GetTradeOrdersUrl = `${BaseApiUrl}/findCustomerOrders`;

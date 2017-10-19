@@ -64,6 +64,11 @@ export default new Router({
       component: StbTradeHistory
     },
     {
+      path: '/stb/trade-history?',
+      name: 'stb-trade-history-ignore-check',
+      component: StbTradeHistory
+    },
+    {
       path: '/stb/portfolio-holdings',
       name: 'stb-portfolio-holdings',
       component: StbPortfolioHoldings

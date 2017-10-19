@@ -14,18 +14,6 @@
 
     <v-card-media>
 
-      <!-- <v-container fluid class="p0 pt0">
-        <v-layout row>
-
-          <v-flex sm12 class=" darken-1 p5 white--text">
-            <span class="font-size-12 font-weight-bold p15">
-              Cash Available for Trading: {{availableCash | currency('₦') }}
-            </span>
-          </v-flex>
-
-        </v-layout>
-      </v-container> -->
-
       <v-container fluid class="pt0 pl1 pr1">
         <v-layout row>
           <v-form v-model="valid" ref="form" class="w100p">
@@ -81,11 +69,11 @@
               <!-- Limit Price -->
               <v-flex xs6 v-if="isLimitOrder" class="height-55px mb6">
                 <!-- When not Previewing -->
-                <v-text-field v-if="!inPreviewState"  :label="'Limit Price'" v-model="limitPrice" :type="'number'" :rules="limitPriceRules"  v-validate="'required'" name="limitPrice" :disabled="inPreviewState">
+                <v-text-field   :label="'Limit Price'" v-model="limitPrice" :type="'number'" :rules="limitPriceRules"  v-validate="'required'" name="limitPrice" :disabled="inPreviewState">
                 </v-text-field>
-                <!-- When previewing -->
-                <v-text-field v-if="inPreviewState"  :label="'Limit Price'" :value="limitPrice | currency('',2)" :type="'text'" :disabled="inPreviewState">
-                </v-text-field>
+                <!-- When previewing v-if="!inPreviewState" -->
+                <!-- <v-text-field v-else  :label="'Limit Price'" :value="limitPrice | currency('',2)" :type="'text'" disabled>
+                </v-text-field> -->
               </v-flex>
 
               <!-- Consideration -->
@@ -106,7 +94,7 @@
               <v-flex xs12 v-if="inPreviewState" class="height-55px mb6">
                 <!-- <v-text-field  :label="orderTotalText" v-model="formattedOrderTotal" :type="'text'"  :disabled="inPreviewState">
                 </v-text-field> -->
-                <v-text-field  :label="orderTotalText" :value="formattedOrderTotal | currency('',2)" :type="'text'"  :disabled="inPreviewState">
+                <v-text-field  :label="orderTotalText" :value="formattedOrderTotal" :type="'text'"  :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
@@ -345,13 +333,16 @@ export default
             // An appropriate value was returned for the getTradeOrderTotal request
             if (responseData.amount) {
               // Get the order's total amount as returned from the API call
-              let orderTotal = parseFloat(responseData.amount).toFixed(2)
+              let orderTotal = Number(parseFloat(responseData.amount).toFixed(2))
               this.orderTotal = orderTotal
 
               // Format negative order totals properly
               if (orderTotal < 0) {
                 let absoluteOrderTotal = Math.abs(orderTotal)
+                orderTotal = absoluteOrderTotal.toLocaleString()
                 orderTotal = `(${absoluteOrderTotal})`
+              } else {
+                orderTotal = orderTotal.toLocaleString('en-IN')
               }
 
               this.formattedOrderTotal = orderTotal
@@ -445,7 +436,7 @@ export default
         this.$store.commit(mutationTypes.SET_MANDATE_PLACEMENT_STATE, true)
 
         // Redirect to the trade history page
-        this.$router.push({name: 'stb-trade-history'})
+        this.$router.push({name: 'stb-trade-history-ignore-check'})
       }).catch((error) => {
         console.log(`error while placing mandates`)
         console.log(error)

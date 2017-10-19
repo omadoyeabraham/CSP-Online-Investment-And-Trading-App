@@ -9,7 +9,7 @@ import StockbrokingService from '../../../services/StockbrokingService'
 import * as mutationTypes from '../../mutation-types'
 
 // Initial Store State
-const state = {
+const state = () => ({
   userHasStb: false,
   marketHighlights: {},
   nseAsi: [],
@@ -28,6 +28,22 @@ const state = {
   smaPortfolios: [],
   currentPortfolio: {},
   totalValue: 0
+})
+
+/**
+ * Using this all mutations object to merge all mutations and the mutation to reset the store state.
+ */
+const allMutations = {
+  ...mutations,
+
+  /**
+   * Reset the stockbroking store to its initial state when logging out a user
+   * @param state
+   */
+    [mutationTypes.CLEAR_STOCKBROKING_STORE](currentState) {
+      const initialState = state()
+      Object.keys(initialState).forEach(key => { currentState[key] = initialState[key] })
+    }
 }
 
 const actions = {
@@ -62,8 +78,8 @@ const actions = {
 
 
 export default {
-  state,
+  state: state(),
   getters,
-  mutations,
+  mutations: allMutations,
   actions
 }

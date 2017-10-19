@@ -9,7 +9,7 @@ const getters = {
 
   // Work on market highlights data to fit our dashboard UI specification
   marketHighlights: (state) => {
-    let indexChange = parseFloat(state.marketHighlights.delta)
+    let indexChange = parseFloat(state.marketHighlights.priceChangeP)
 
     const data = [
       { label: 'Index Change', value:indexChange, isIndexChange: true },
@@ -98,7 +98,7 @@ const getters = {
     state.topGainers.forEach((gainer) => {
       data.push({
         symbol: gainer.symbol,
-        change: gainer.percentPriceChange.toFixed(2)
+        change: parseFloat(gainer.percentPriceChange).toFixed(2)
       })
     })
 

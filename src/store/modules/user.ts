@@ -14,13 +14,13 @@ import * as mutationTypes from '../mutation-types.js';
 import UserService from '../../services/UserService'
 
  // Initial store state
-const state: object = {
+const state = () => ({
   info: {},
   userID: null,
   firstName: null,
   lastName: null,
   portalUsername: null
-}
+})
 
  // Getters
 const getters = {
@@ -64,6 +64,12 @@ const mutations = {
 
     state.info = (userData.customer) ? userData.customer : state.info;
 
+  },
+
+  // Clear the entire store when the user logs out
+  [mutationTypes.CLEAR_USER_STORE] (currentState) {
+    const initialState = state()
+    Object.keys(initialState).forEach(key => { currentState[key] = initialState[key] })
   }
 
 } // End Of MUTATIONS
@@ -94,7 +100,7 @@ const actions = {
 }
 
 export default {
-  state,
+  state: state(),
   getters,
   actions,
   mutations

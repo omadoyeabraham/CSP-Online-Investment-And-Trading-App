@@ -47,7 +47,7 @@ import * as ApiUrls from './ApiUrlService';
         tradeOrder.canBeCancelled = tradeOrderCanBeCancelled(tradeOrder)
       })
     }
-    console.log(tradeOrders)
+
     // Commit the tradeOrders to the stockbroking module of our vuex store
     store.commit(mutationTypes.SAVE_TRADE_ORDERS_TO_STORE, tradeOrders);
   })

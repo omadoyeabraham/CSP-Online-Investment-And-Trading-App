@@ -55,6 +55,8 @@
 <script>
   // The state management store used that houses application wide state
   import store from '../store';
+  // import * as mutationTypes from '../store/mutation-types'
+  // import {AuthenticationService} from '../services/AuthenticationService'
 
   import {mapState, mapGetters} from 'vuex'
 
@@ -122,11 +124,13 @@
 
     methods: {
       logout: function () {
-        // Clear the data saved in local storage
-        window.sessionStorage.clear()
+        // AuthenticationService.logout(this.user.userID)
+
+        // // Reset the various stores to their default states
+        // store.commit(mutationTypes.CLEAR_STOCKBROKING_STORE)
 
         // Redirect to the login page
-        this.$router.push({name: 'Login'})
+        this.$router.push({ name: 'Login' })
       }
     }
   }

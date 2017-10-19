@@ -11,11 +11,11 @@ import UtilityService from '../../services/UtilityService';
 // Moment.js
 import * as moment from 'moment'
 
-const state = {
+const state = () => ({
   userData: {},
   userHasFi: true
   // totalValue: 0
-}
+})
 
 const getters = {
 
@@ -203,6 +203,16 @@ const getters = {
 const mutations = {
   [mutationTypes.SAVE_USER_FIXEDINCOME_DATA_TO_STORE] (state, userData) {
     state.userData = userData.FI
+  },
+
+  /**
+   * Clear the Fixed income store
+   *
+   * @param {any} currentState
+   */
+  [mutationTypes.CLEAR_FI_STORE] (currentState) {
+    const initialState = state()
+    Object.keys(initialState).forEach(key => { currentState[key] = initialState[key] })
   }
 }
 
@@ -210,7 +220,7 @@ const mutations = {
 
 
 export default {
-  state,
+  state: state(),
   getters,
   mutations
 }
