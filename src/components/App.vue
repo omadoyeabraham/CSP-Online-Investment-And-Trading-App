@@ -19,6 +19,7 @@
           <v-icon class="fa fa-user fa-5x"></v-icon>
         </v-btn>
       </v-toolbar-title>
+
       <v-layout column>
         <v-flex style="margin-top: -10px">
           <span class="body-1 welcome">Welcome,
@@ -28,18 +29,17 @@
              </span>
           </span>
 
-
-  <span class="d-flex" style="margin-top: -2px">
-    <v-icon class="logout-btn">lock</v-icon>
-    <span class="red--text logout-link" @click="logout()">
-      Logout
-    </span>
-  </span>
-
+          <span class="d-flex" style="margin-top: -2px">
+            <v-icon class="logout-btn">lock</v-icon>
+            <span class="red--text logout-link" @click="logout()">
+              Logout
+            </span>
+          </span>
 
         </v-flex>
 
       </v-layout>
+
       <img src="https://portal.cardinalstone.com/broker/desktop/public/img/mainlogo.png"
       alt="" class="ml-auto">
     </v-toolbar>
@@ -47,7 +47,14 @@
     <main class="h-100">
         <router-view></router-view>
         <vue-progress-bar></vue-progress-bar>
+
+         <Ticker
+          v-if="['Login'].indexOf($route.name) !== 0"
+          class="height-55px">
+
+         </Ticker>
     </main>
+
 
   </v-app>
 </template>
@@ -63,6 +70,7 @@
   // Import the components that are rendered by the application base
   import Sidebar from './sidebar/Sidebar';
   import Navbar from './Navbar';
+  import Ticker from './Ticker';
 
   export default
   {
@@ -72,7 +80,8 @@
 
     components: {
       Navbar,
-      Sidebar
+      Sidebar,
+      Ticker
     },
 
     data () {

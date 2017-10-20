@@ -107,6 +107,14 @@ export default
          // Set the next function to be used
          this.nextFunction = next
 
+         // let btnClickEvent = null
+
+         // Register the event handler for the click event
+         document.querySelector('#openLeaveTradePageDialog').onclick = function (event) {
+           // btnClickEvent = event
+           // event.stopPropagation()
+         }
+
         // Display the cancel popup modal/dialog
          document.querySelector('#openLeaveTradePageDialog').click()
 
@@ -115,6 +123,7 @@ export default
          * popup has if the click event is not triggered from within the activator slot of the
          * dialog component
          */
+         console.log('The click event', event)
          event.stopPropagation()
 
         //  if (answer) {

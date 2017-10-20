@@ -46,6 +46,10 @@
 
       <UserAccountActionsComponent :accountActions="accountActions"></UserAccountActionsComponent>
 
+      <MarketTime
+        class="height-55px">
+      </MarketTime>
+
     </v-navigation-drawer>
 </template>
 
@@ -63,6 +67,7 @@
   import {nairaInvestments, dollarInvestments, userAccountActions} from '../../services/SidebarService.ts';
 
   import {stockbroking} from '../../services/NairaInvestmentsService';
+  import MarketTime from '../MarketTime'
 
   const NairaInvestments = nairaInvestments;
   const DollarInvestments = dollarInvestments;
@@ -72,7 +77,8 @@
   {
     components: {
       UserInvestments,
-      UserAccountActionsComponent
+      UserAccountActionsComponent,
+      MarketTime
     },
 
     props: [
