@@ -45,8 +45,9 @@
     </v-toolbar>
 
     <main class="h-100">
-        <router-view></router-view>
+        <router-view class="mb30"></router-view>
         <vue-progress-bar></vue-progress-bar>
+
 
          <Ticker
           v-if="['Login'].indexOf($route.name) !== 0"

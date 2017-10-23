@@ -29,12 +29,13 @@
 
     </v-layout>
 
+      <v-btn id="openLeaveTradePageDialog"
+        style="display: none" color="primary" dark @click.native.stop="showLeaveTradePageDialog = true"></v-btn>
         <!-- Dialog before leaving trade page -->
     <v-dialog v-model="showLeaveTradePageDialog"
       lazy absolute
       :max-width='500'>
-      <v-btn id="openLeaveTradePageDialog"
-        style="display: none" color="primary" dark slot="activator"></v-btn>
+
       <v-card>
         <v-card-title class="d-flex justify-center  p15 pt20">
           <h4 class="font-size-20">Are you sure you want to discard your changes?</h4>
@@ -103,18 +104,8 @@ export default
 
        // Perform the check only if we are not redirecting to the route called after placing a mandate
        if (to.path !== '/stb/trade-history?') {
-         console.log(this)
          // Set the next function to be used
          this.nextFunction = next
-
-         // let btnClickEvent = null
-
-         // Register the event handler for the click event
-         document.querySelector('#openLeaveTradePageDialog').onclick = function (event) {
-           // btnClickEvent = event
-           // event.stopPropagation()
-           console.log('Click event: ', event)
-         }
 
         // Display the cancel popup modal/dialog
          document.querySelector('#openLeaveTradePageDialog').click()
@@ -124,14 +115,7 @@ export default
          * popup has if the click event is not triggered from within the activator slot of the
          * dialog component
          */
-         console.log('The external event', event)
          event.stopPropagation()
-
-        //  if (answer) {
-        //    next()
-        //  } else {
-        //    next(false)
-        //  }
        } else {
          // Continue on to the trade history page
          next()
