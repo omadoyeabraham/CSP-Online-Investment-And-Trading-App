@@ -113,6 +113,7 @@ export default
          document.querySelector('#openLeaveTradePageDialog').onclick = function (event) {
            // btnClickEvent = event
            // event.stopPropagation()
+           console.log('Click event: ', event)
          }
 
         // Display the cancel popup modal/dialog
@@ -123,7 +124,7 @@ export default
          * popup has if the click event is not triggered from within the activator slot of the
          * dialog component
          */
-         console.log('The click event', event)
+         console.log('The external event', event)
          event.stopPropagation()
 
         //  if (answer) {

@@ -147,7 +147,7 @@
     border-bottom: 1px solid #ccc
   .sidebar-header
     font-size: 2rem
-    color: #4c7396
+    color: #4c7396 !important
     margin: 5px
     margin-top: 10px
     margin-bottom: 0

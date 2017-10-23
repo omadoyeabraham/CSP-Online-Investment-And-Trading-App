@@ -43,11 +43,9 @@
         </BusinessNews>
       </v-flex>
 
-      <!-- Business News -->
+      <!-- Foreign exchange -->
       <v-flex xs12 md4 lg4 class="mb5">
-         <BusinessNews
-          :newsFeed="newsFeed">
-        </BusinessNews>
+        <ForeignExchange></ForeignExchange>
       </v-flex>
 
     </v-layout>
@@ -63,6 +61,7 @@
   import TopGainersLosers from './TopGainersLosers';
   import FixedIncome from './FixedIncome';
   import BusinessNews from './BusinessNews';
+  import ForeignExchange from './ForeignExchange'
 
   import {getDashboardData} from '../../services/DashboardService'
 
@@ -77,7 +76,8 @@
       NseFiveDayChart,
       TopGainersLosers,
       FixedIncome,
-      BusinessNews
+      BusinessNews,
+      ForeignExchange
     },
 
     computed: {
