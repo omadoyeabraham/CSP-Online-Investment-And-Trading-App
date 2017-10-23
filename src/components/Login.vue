@@ -52,7 +52,8 @@
                   label="Username"
                   :append-icon="'account_circle'"
                   v-model="username"
-                  :rules="usernameRules">
+                  :rules="usernameRules"
+                  autocomplete="nope">
                 </v-text-field>
                 <v-text-field
                   label="Password"
@@ -60,7 +61,8 @@
                   :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
                   :append-icon-cb="() => (hidePassword = !hidePassword)"
                   :type="hidePassword ? 'password' : 'text'"
-                  :rules="passwordRules">
+                  :rules="passwordRules"
+                  autocomplete="nope">
                 </v-text-field>
 
 

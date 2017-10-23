@@ -8,7 +8,8 @@
 
 // Initial state
 const state = {
-  newsFeed: []
+  newsFeed: [],
+  foreignExchange: {}
 }
 
 // Getters
@@ -27,6 +28,20 @@ const getters = {
     })
 
     return data
+  },
+
+  /**
+   *
+   */
+  foreignExchange: (state) => {
+    const data = [
+      { label: 'NGN/USD', value: state.foreignExchange.USDRate },
+      { label: 'NGN/GBP', value: state.foreignExchange.GBPRate },
+      { label: 'NGN/EUR', value: state.foreignExchange.EURRate },
+      { label: 'NGN/CNY', value: state.foreignExchange.CNYRate },
+      { label: 'NGN/AUD', value: state.foreignExchange.AUDRate }
+    ]
+    return data;
   }
 
 }
@@ -35,6 +50,7 @@ const getters = {
 const mutations = {
   [mutationTypes.SAVE_NEWSFEED_TO_STORE] (state, dashboardData) {
      state.newsFeed = dashboardData.BUSINESSNEWS.item
+     state.foreignExchange = dashboardData.FOREIGNEXCHANGE
    }
 }
 

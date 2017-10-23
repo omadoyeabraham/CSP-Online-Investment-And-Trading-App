@@ -62,6 +62,10 @@ export default
       th
         color: #000000
         font-weight: bold !important
+    tbody
+      tr
+        td
+          font-size: 11px !important
   .emulate-link
     &:hover
       cursor: pointer

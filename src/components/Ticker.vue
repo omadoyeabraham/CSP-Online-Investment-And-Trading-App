@@ -73,7 +73,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  $duration: 1050s;
+  $duration: 500s;
 
   @-webkit-keyframes ticker {
     0% {
@@ -134,6 +134,13 @@ export default {
       color: white;
       border-right: 1px dotted #FFFFFF
     }
+
+    &:hover {
+      -webkit-animation-play-state:paused;
+      animation-play-state:paused;
+      cursor: pointer
+    }
+
 
   }
 

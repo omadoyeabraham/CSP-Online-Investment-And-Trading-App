@@ -13,32 +13,18 @@
     </div>
 
 
-      <div class="d-flex black--text">
+    <!-- Card body -->
+    <div class="card-block">
+      <ul class="list-group list-group-flush black--text">
+        <li class="list-group-item font-weight-bold pt5 pb5" v-for="(item, index) in foreignExchange" :key="index">{{item.label}}
 
-        <!-- Treasury bills -->
-        <!-- <div id="topGainers" class=" w50p">
-          <div class="header w100p d-flex justify-content-between p5 pt15 pb15 font-weight-bold">
-            <span>Tenor</span>
-            <span>Yield(%)</span>
-          </div>
-          <div class="content w100p d-flex justify-content-between p5 pb15 pt15" v-for="(tbill, index) in treasuryBills" :key="index">
-            <span>{{tbill.name}}</span>
-            <span class="red--text">{{tbill.yield}}</span>
-          </div>
-        </div> -->
+          <!-- Other Items -->
+          <span class="ml-auto font-weight-normal">
+            &#8358; {{item.value | currency('', 2)}}
+          </span>
 
-        <!-- Bonds-->
-        <!-- <div id="topLosers" class="w50p">
-          <div class="header w100p d-flex justify-content-between p5 pt15 pb15 font-weight-bold">
-            <span>Tenor</span>
-            <span>Yield(%)</span>
-          </div>
-          <div class="content w100p d-flex justify-content-between p5 pb15 pt15" v-for="(bond, index) in bonds" :key="index">
-            <span>{{bond.name}}</span>
-            <span class="green--text">{{bond.yield}}</span>
-          </div>
-        </div> -->
-
+        </li>
+      </ul>
     </div>
 
   </v-card>
@@ -50,6 +36,7 @@
 
   export default
   {
+    props: ['foreignExchange']
     // computed: mapState({
     //   'treasuryBills': (store) => store.marketData.treasuryBills,
     //   'bonds': (store) => store.marketData.bonds

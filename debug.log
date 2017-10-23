@@ -29,3 +29,6 @@
 [1022/094744.240:ERROR:process_info.cc(632)] range at 0x881f9af400000000, size 0x186 fully unreadable
 [1022/094744.240:ERROR:process_info.cc(632)] range at 0x0, size 0x186 fully unreadable
 [1023/084659.386:ERROR:settings.cc(263)] Settings version is not 1
+[1023/152821.988:ERROR:process_info.cc(632)] range at 0xebe99aa800000000, size 0x29b fully unreadable
+[1023/152822.014:ERROR:process_info.cc(632)] range at 0xebe99b0e00000000, size 0x29b fully unreadable
+[1023/152822.014:ERROR:process_info.cc(632)] range at 0x0, size 0x29b fully unreadable

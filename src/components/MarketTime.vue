@@ -3,19 +3,32 @@
 -->
 <template>
   <div class="ticker-wrap">
-    <span class="time pl10 pr5">{{date | moment("HH:m")}}</span>
+    <span class="time pl10 pr5">{{date | moment("HH:mm")}}</span>
     <span class="date">{{date | moment("MMMM DD YYYY")}}</span>
   </div>
 </template>
 
 <script>
-import * as moment from 'moment'
-export default {
-  computed: {
-    date: function () {
-      let today = new Date()
 
-      return moment(today, 'YYYY-MM-DD')
+export default {
+  created () {
+    this.getUpdatedDate = setInterval(this.getDate, 30000)
+  },
+
+  beforeDestroy () {
+    clearInterval(this.getUpdatedDate)
+  },
+
+  data: {
+    date: '',
+    getUpdatedDate: ''
+  },
+
+  methods: {
+    getDate: function () {
+      let today = new Date()
+      console.log('Called')
+      this.date = today
     }
   }
 

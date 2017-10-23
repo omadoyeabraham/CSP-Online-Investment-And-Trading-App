@@ -34,6 +34,6 @@
 
 <style scoped lang="sass">
     .sidebar-icon
-      color: #8fb0cc
+      color: #8fb0cc !important
 
 </style>

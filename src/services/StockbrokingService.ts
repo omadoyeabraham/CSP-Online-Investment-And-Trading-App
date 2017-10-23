@@ -172,6 +172,7 @@ let commitMarketData = (allMarketData) => {
    let bids = []
    let bidsTotal = 0
    let companyName = marketSnapShot ? (marketSnapShot.companyName) : ''
+   let valueTraded = marketSnapShot ? marketSnapShot.valueTraded : ''
 
    bidLevels.forEach((bidLevel, index) => {
      bidLevel.id = ++index
@@ -217,7 +218,8 @@ let commitMarketData = (allMarketData) => {
      offers,
      trades,
      priceMovements,
-     companyName
+     companyName,
+     valueTraded
    }
    console.log(currentMarketData)
    store.commit(mutationTypes.SAVE_SELECTED_SECURITY_MARKET_SNAPSHOT, currentMarketData)
@@ -234,8 +236,9 @@ let commitMarketData = (allMarketData) => {
       method: 'GET',
       url: `${ApiUrls.GetSecurityStatusInfo}/${securityID}`
     }).then((response) => {
-      let statusInfo = response.data
 
+      let statusInfo = response.data
+      console.log(statusInfo)
       store.commit(mutationTypes.SAVE_SELECTED_SECURITY_STATUS_INFO, statusInfo)
     }).catch((error) => {
       console.log(error)

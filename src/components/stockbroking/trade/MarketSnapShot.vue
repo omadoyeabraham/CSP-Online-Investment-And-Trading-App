@@ -295,7 +295,7 @@
                           </li>
                           <li class="">
                             <span class="left">Value Traded</span>
-                            <span class="right">{{selectedSecurityStatusInfo.lastPrice| currency('&#8358;',2)}}</span>
+                            <span class="right">{{selectedSecurityMarketSnapShot.valueTraded| currency('&#8358;',2)}}</span>
                           </li>
                         </ul>
                       </v-flex>

@@ -154,6 +154,6 @@
     border-bottom: 1px solid rgb(204,204,204)
 
     .sidebar-icon
-      color: #428bca
+      color: #428bca !important
 
 </style>

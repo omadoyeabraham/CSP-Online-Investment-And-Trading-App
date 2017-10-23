@@ -15,6 +15,7 @@ const state = () => ({
   nseAsi: [],
   topGainers: [],
   topLosers: [],
+  foreignExchange: {},
   tradeOrders: {},
   tradeOrderTerms: [],
   securityNames: [],

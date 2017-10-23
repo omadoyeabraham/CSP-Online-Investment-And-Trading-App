@@ -45,7 +45,10 @@
 
       <!-- Foreign exchange -->
       <v-flex xs12 md4 lg4 class="mb5">
-        <ForeignExchange></ForeignExchange>
+        <ForeignExchange
+          :foreignExchange="foreignExchange">
+
+        </ForeignExchange>
       </v-flex>
 
     </v-layout>
@@ -87,7 +90,8 @@
         chartData: 'chartData',
         topGainers: 'topGainers',
         topLosers: 'topLosers',
-        newsFeed: 'newsFeed'
+        newsFeed: 'newsFeed',
+        foreignExchange: 'foreignExchange'
       })
 
     },
