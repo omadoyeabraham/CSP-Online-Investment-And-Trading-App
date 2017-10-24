@@ -259,7 +259,6 @@ export default
             let formComponents = this.$refs.form.$children
             formComponents.forEach((formComponent) => {
               formComponent.shouldValidate = false
-              console.log(formComponent)
             })
 
             // Clear the add watchlist form

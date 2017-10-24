@@ -54,7 +54,16 @@
      * Called to calculate changes and get the user's data
      */
     beforeCreate () {
-      let userWatchList = WatchListService.getWatchList()
+
+    },
+
+    created () {
+      // Assign the instrument if the user is being redirected to this component from clciking the watchlist button from other pages
+      if (this.$route.params.instrument) {
+        this.redirectedInstrument = this.$route.params.instrument
+      }
+
+      let userWatchList = WatchListService.getWatchList(this.user.userID)
       userWatchList.then((response) => {
         let responseData = response.data
 
@@ -63,16 +72,9 @@
         marketData.then((response) => {
           StockbrokingService.commitMarketData(response.data)
         })
-        console.log(responseData)
+        // console.log(responseData)
         this.userWatchList = responseData
       })
-    },
-
-    created () {
-      // Assign the instrument if the user is being redirected to this component from clciking the watchlist button from other pages
-      if (this.$route.params.instrument) {
-        this.redirectedInstrument = this.$route.params.instrument
-      }
     },
 
     components: {
@@ -129,7 +131,7 @@
        * or an old item is deleted
        */
       retreiveUpdatedWatchListData: function () {
-        let userWatchList = WatchListService.getWatchList()
+        let userWatchList = WatchListService.getWatchList(this.user.userID)
         userWatchList.then((response) => {
           let responseData = response.data
 

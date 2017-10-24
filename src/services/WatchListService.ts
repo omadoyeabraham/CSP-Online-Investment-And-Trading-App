@@ -11,12 +11,12 @@ import axios from 'axios'
 // The vuex store instance
 import store from '../store';
 
-let userID = store.state.user.userID;
+// let userID = store.state.user.userID;
 
 /**
  * Get a user's entire watchlist
  */
-let getWatchList = () => {
+let getWatchList = (userID) => {
   return axios({
     method: 'GET',
     url: `${ApiUrls.GetWatchListUrl}/${userID}`

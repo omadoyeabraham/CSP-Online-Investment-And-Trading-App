@@ -26,7 +26,7 @@ export default {
       var self = this
       this.datenow = new Date()
 
-      setInterval(self.time, 1000)
+      setInterval(self.time, 60000)
     }
   }
 

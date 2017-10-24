@@ -238,7 +238,6 @@ let commitMarketData = (allMarketData) => {
     }).then((response) => {
 
       let statusInfo = response.data
-      console.log(statusInfo)
       store.commit(mutationTypes.SAVE_SELECTED_SECURITY_STATUS_INFO, statusInfo)
     }).catch((error) => {
       console.log(error)
