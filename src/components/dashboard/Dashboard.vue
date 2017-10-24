@@ -36,19 +36,18 @@
         <FixedIncome></FixedIncome>
       </v-flex>
 
+      <!-- Foreign exchange -->
+      <v-flex xs12 md4 lg4 class="mb5">
+        <ForeignExchange
+          :foreignExchange="foreignExchange">
+        </ForeignExchange>
+      </v-flex>
+
       <!-- Business News -->
       <v-flex xs12 md4 lg4 class="mb5">
         <BusinessNews
           :newsFeed="newsFeed">
         </BusinessNews>
-      </v-flex>
-
-      <!-- Foreign exchange -->
-      <v-flex xs12 md4 lg4 class="mb5">
-        <ForeignExchange
-          :foreignExchange="foreignExchange">
-
-        </ForeignExchange>
       </v-flex>
 
     </v-layout>

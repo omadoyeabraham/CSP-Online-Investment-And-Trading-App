@@ -14,6 +14,8 @@
       <v-toolbar-title>
         <v-toolbar-side-icon @click.stop="sidebarIsVisible = !sidebarIsVisible"
          class="blue--text text--darken-4">
+         <v-icon v-if="sidebarIsVisible" class="fa fa-arrow-left fa-2x"></v-icon>
+          <v-icon v-else class="fa fa-arrow-right fa-2x"></v-icon>
         </v-toolbar-side-icon>
         <v-btn icon>
           <v-icon class="fa fa-user fa-5x"></v-icon>
