@@ -28,7 +28,7 @@
           </td>
           <td class="font-size-11 p5 text-right">{{item.quantityRequested | currency('', 2)}}</td>
           <td class="font-size-11 p5 text-right">{{item.quantityFilled | currency('',2)}}</td>
-          <td class="font-size-11 p5">{{item.fixOrderStatus}}</td>
+          <td class="font-size-11 p5">{{item.cspOrderStatus}}</td>
           <td class="text-center">
             <span v-if="item.canBeCancelled"
               class="emulate-link"
@@ -40,9 +40,9 @@
         </tr>
       </tbody>
 
-      <tbody v-if="orders === null">
+      <tbody v-if="orders.length === 0">
         <tr>
-          <td colspan="9" class="text-center">Loading Trade History ...</td>
+          <td colspan="9" class="text-center"><i class="font-size-11" style="color: #31708f">No {{category}} trade orders on this account</i></td>
         </tr>
       </tbody>
     </table>
@@ -108,7 +108,7 @@
   import * as mutationTypes from '../../../store/mutation-types'
   export default
   {
-    props: ['orders'],
+    props: ['orders', 'category'],
 
     data () {
       return {

@@ -660,7 +660,7 @@ const getters = {
     let tradeOrders = getters.getCurrentPortfolioTradeOrders
 
     let completedTradeOrders = tradeOrders.filter((tradeOrder) => {
-      return tradeOrder.fixOrderStatus === 'FILLED'
+      return (tradeOrder.fixOrderStatus === 'FILLED') || (tradeOrder.cspOrderStatus === 'EXECUTED')
     })
 
     // completedTradeOrders.reverse()
@@ -678,10 +678,39 @@ const getters = {
 
     let outstandingTradeOrders = tradeOrders.filter((tradeOrder) => {
 
-      return tradeOrder.fixOrderStatus !== 'FILLED'
+      return tradeOrder.cspOrderStatus === 'PENDING'
     })
 
     return outstandingTradeOrders
+  },
+
+  /**
+   * Return partially filled trade orders
+   *
+   */
+  getPartiallyFilledTradeOrders: (state, getters) => {
+    let tradeOrders = getters.getCurrentPortfolioTradeOrders
+
+    let partiallyFilledTradeOrders = tradeOrders.filter((tradeOrder) => {
+
+      return tradeOrder.fixOrderStatus === 'PARTIALLY_FILLED'
+    })
+
+    return partiallyFilledTradeOrders
+  },
+
+  /**
+   * Return the pending trade orders
+   */
+  getCancelledTradeOrders: (state, getters) => {
+    let tradeOrders = getters.getCurrentPortfolioTradeOrders
+
+    let cancelledTradeOrders = tradeOrders.filter((tradeOrder) => {
+
+      return (tradeOrder.fixOrderStatus === 'REJECTED') || (tradeOrder.fixOrderStatus === 'EXPIRED') || tradeOrder.orderStatus === 'CANCELLED'
+    })
+
+    return cancelledTradeOrders
   },
 
   /**

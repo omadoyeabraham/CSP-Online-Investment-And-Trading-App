@@ -25,7 +25,7 @@
            <td>{{order.orderType}}</td>
            <td class="text-right">{{order.quantityRequested | currency('',0)}}</td>
            <td class="text-right">{{order.quantityFilled | currency('',0)}}</td>
-           <td class="text-right pl10">{{order.orderStatus}}</td>
+           <td class="text-right pl10">{{order.cspOrderStatus}}</td>
          </tr>
        </tbody>
      </table>

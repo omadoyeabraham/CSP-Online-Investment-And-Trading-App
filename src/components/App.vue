@@ -48,7 +48,7 @@
     </v-toolbar>
 
     <main class="h-100">
-        <router-view class="mb30"></router-view>
+        <router-view class="mb30 main-view"></router-view>
         <vue-progress-bar></vue-progress-bar>
 
 
@@ -150,7 +150,9 @@
 </script>
 
 <style scoped lang="sass">
-
+  .main-view
+    background-image: url('../../static/img/bg-5.jpg')
+    background-repeat: repeat
   .logout-btn
     font-size: 11px
 

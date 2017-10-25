@@ -14,17 +14,35 @@
     <!-- TABS -->
     <vue-tabs activeTabColor="#EEE" activeTextColor="#428bca" class="">
 
-      <v-tab title="COMPLETED" class="">
-        <TradeOrders
-          class="mt20"
-          :orders="completedTradeOrders">
-        </TradeOrders>
-      </v-tab>
-
       <v-tab title="OUTSTANDING" class="">
         <TradeOrders
           class="mt20"
-          :orders="outstandingTradeOrders">
+          :orders="outstandingTradeOrders"
+          :category="'outstanding'">
+        </TradeOrders>
+      </v-tab>
+
+      <v-tab title="PARTIALLY FILLED" class="">
+        <TradeOrders
+          class="mt20"
+          :orders="partiallyFilledTradeOrders"
+          :category="'partially filled'">
+        </TradeOrders>
+      </v-tab>
+
+      <v-tab title="CANCELLED" class="">
+        <TradeOrders
+          class="mt20"
+          :orders="cancelledTradeOrders"
+          :category="'cancelled'">
+        </TradeOrders>
+      </v-tab>
+
+      <v-tab title="COMPLETED" class="">
+        <TradeOrders
+          class="mt20"
+          :orders="completedTradeOrders"
+          :category="'completed'">
         </TradeOrders>
       </v-tab>
 
@@ -110,7 +128,9 @@
       }),
       ...mapGetters({
         'completedTradeOrders': 'getCompletedTradeOrders',
-        'outstandingTradeOrders': 'getOutstandingTradeOrders'
+        'outstandingTradeOrders': 'getOutstandingTradeOrders',
+        'partiallyFilledTradeOrders': 'getPartiallyFilledTradeOrders',
+        'cancelledTradeOrders': 'getCancelledTradeOrders'
       })
     }
 

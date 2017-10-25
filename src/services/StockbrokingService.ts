@@ -45,6 +45,8 @@ import * as ApiUrls from './ApiUrlService';
       // Loop through each trade order and determine if it can be cancelled
       tradeOrders.forEach((tradeOrder) => {
         tradeOrder.canBeCancelled = tradeOrderCanBeCancelled(tradeOrder)
+        tradeOrder.isBooked = tradeOrderIsBooked(tradeOrder)
+        tradeOrder.cspOrderStatus = getTradeOrderCspStatus(tradeOrder)
       })
     }
 
@@ -67,6 +69,34 @@ import * as ApiUrls from './ApiUrlService';
      (tradeOrder.fixOrderStatus == "REPLACED" && tradeOrder.orderStatus == "EXECUTING") ||
      (tradeOrder.fixOrderStatus == "REJECTED" && tradeOrder.orderStatus == "EXECUTING") ||
      (tradeOrder.fixOrderStatus == "NA" && tradeOrder.orderStatus == "EXECUTING");
+ }
+
+ /**
+  * Determine if a trade order has been booked
+  *
+  * @param tradeOrder | Object
+  */
+ let tradeOrderIsBooked = (tradeOrder) => {
+   return tradeOrder.orderStatus == "BOOKED" ||
+     (tradeOrder.fixOrderStatus == "NA" && tradeOrder.orderStatus == "EXECUTING") ||
+     (tradeOrder.fixOrderStatus == "REJECTED" && tradeOrder.orderStatus == "EXECUTING")
+ }
+
+ /**
+  * Return an order Status for a trade order based on Zanibal's trade order status and the fix order status
+  * @param tradeOrder | Object
+  * @return string
+  */
+ let getTradeOrderCspStatus = (tradeOrder) => {
+   if (tradeOrder.isBooked) {
+     return 'PENDING'
+   }
+
+   if ((tradeOrder.orderStatus == "EXECUTING") && (tradeOrder.fixOrderStatus == "FILLED")) {
+     return "EXECUTED"
+   }
+
+   return tradeOrder.orderStatus
  }
 
  /**
