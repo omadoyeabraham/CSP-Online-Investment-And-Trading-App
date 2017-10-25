@@ -261,7 +261,7 @@ export default
   },
 
   watch: {
-    selectedStock: function (newlySelectedStock) {
+    selectedStock: function (newlySelectedStock, oldStock) {
       if ((newlySelectedStock !== '') || (newlySelectedStock !== null)) {
         this.securityIsSelected = true
       } else {
@@ -272,7 +272,7 @@ export default
         return security.value === newlySelectedStock
       })
 
-      let selectedStockID = (selectedStockObject.id) ? parseFloat(selectedStockObject.id) : 0
+      let selectedStockID = (selectedStockObject) ? parseFloat(selectedStockObject.id) : 0
 
       // Show the loading spinner for stock data
       this.loadingStockData = true;

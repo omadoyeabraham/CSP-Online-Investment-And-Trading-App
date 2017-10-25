@@ -652,6 +652,17 @@ const getters = {
   },
 
   /**
+ * Return all trades for the selected portfolio
+ *
+ */
+  getAllTradeOrders: (state, getters) => {
+
+    let allTradeOrders = getters.getCurrentPortfolioTradeOrders
+
+    return allTradeOrders
+  },
+
+  /**
    * Return completed trades for the selected portfolio
    *
    */
@@ -678,7 +689,7 @@ const getters = {
 
     let outstandingTradeOrders = tradeOrders.filter((tradeOrder) => {
 
-      return tradeOrder.cspOrderStatus === 'PENDING'
+      return (tradeOrder.cspOrderStatus === 'PENDING') || (tradeOrder.cspOrderStatus === 'EXECUTING') || (tradeOrder.fixOrderStatus === 'PARTIALLY_FILLED')
     })
 
     return outstandingTradeOrders
@@ -707,7 +718,7 @@ const getters = {
 
     let cancelledTradeOrders = tradeOrders.filter((tradeOrder) => {
 
-      return (tradeOrder.fixOrderStatus === 'REJECTED') || (tradeOrder.fixOrderStatus === 'EXPIRED') || tradeOrder.orderStatus === 'CANCELLED'
+      return (tradeOrder.fixOrderStatus === 'REJECTED') || (tradeOrder.fixOrderStatus === 'EXPIRED') || (tradeOrder.orderStatus === 'CANCELLED' && (parseFloat(tradeOrder.quantityFilled) === 0))
     })
 
     return cancelledTradeOrders

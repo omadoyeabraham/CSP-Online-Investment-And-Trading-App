@@ -14,7 +14,7 @@
     <!-- TABS -->
     <vue-tabs activeTabColor="#EEE" activeTextColor="#428bca" class="">
 
-      <v-tab title="OUTSTANDING" class="">
+      <v-tab title="OUTSTANDING ORDERS" class="">
         <TradeOrders
           class="mt20"
           :orders="outstandingTradeOrders"
@@ -22,29 +22,39 @@
         </TradeOrders>
       </v-tab>
 
-      <v-tab title="PARTIALLY FILLED" class="">
+      <v-tab title="ALL ORDERS" class="">
+        <TradeOrders
+          class="mt20"
+          :orders="allTradeOrders"
+          :category="''">
+        </TradeOrders>
+      </v-tab>
+
+
+<!--
+       <v-tab title="PARTIALLY FILLED" class="">
         <TradeOrders
           class="mt20"
           :orders="partiallyFilledTradeOrders"
           :category="'partially filled'">
         </TradeOrders>
-      </v-tab>
+      </v-tab> -->
 
-      <v-tab title="CANCELLED" class="">
+      <!-- <v-tab title="CANCELLED" class="">
         <TradeOrders
           class="mt20"
           :orders="cancelledTradeOrders"
           :category="'cancelled'">
         </TradeOrders>
-      </v-tab>
+      </v-tab>  -->
 
-      <v-tab title="COMPLETED" class="">
+      <!-- <v-tab title="COMPLETED" class="">
         <TradeOrders
           class="mt20"
           :orders="completedTradeOrders"
           :category="'completed'">
         </TradeOrders>
-      </v-tab>
+      </v-tab> -->
 
     </vue-tabs>
     <!-- EOF TABS -->
@@ -130,7 +140,8 @@
         'completedTradeOrders': 'getCompletedTradeOrders',
         'outstandingTradeOrders': 'getOutstandingTradeOrders',
         'partiallyFilledTradeOrders': 'getPartiallyFilledTradeOrders',
-        'cancelledTradeOrders': 'getCancelledTradeOrders'
+        'cancelledTradeOrders': 'getCancelledTradeOrders',
+        'allTradeOrders': 'getAllTradeOrders'
       })
     }
 

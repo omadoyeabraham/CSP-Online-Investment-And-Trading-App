@@ -91,7 +91,15 @@ const mutations = {
   },
 
   [mutationTypes.SET_SECURITY_SELECTED_ON_TRADE_PAGE](state, newlySelectedSecurity) {
+
+    if (state.selectedSecurityOnTradePage === newlySelectedSecurity) {
+      state.selectedSecurityOnTradePage = null
+    }
     state.selectedSecurityOnTradePage = newlySelectedSecurity
+  },
+
+  [mutationTypes.CLEAR_SECURITY_SELECTED_ON_TRADE_PAGE](state) {
+    state.selectedSecurityOnTradePage = null
   },
 
   [mutationTypes.SET_TRADE_ORDER_TO_CANCEL] (state, tradeOrderToCancel) {

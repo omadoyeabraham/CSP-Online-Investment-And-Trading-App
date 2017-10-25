@@ -59,7 +59,7 @@ const actions = {
 
     gettingMarketData.then((response) => {
       let allMarketData = response.data
-
+      console.log(`Updated Market Data at ${Date.now()}`)
       allMarketData.forEach((stockData) => {
         let priceChange = stockData.lastTradePrice - stockData.previousClose
         let priceChangePercent = (priceChange / stockData.previousClose) * 100

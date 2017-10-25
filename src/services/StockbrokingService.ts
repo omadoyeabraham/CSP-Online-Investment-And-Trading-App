@@ -88,6 +88,14 @@ import * as ApiUrls from './ApiUrlService';
   * @return string
   */
  let getTradeOrderCspStatus = (tradeOrder) => {
+   if ((tradeOrder.orderStatus == "EXECUTING") && (tradeOrder.fixOrderStatus == "PARTIALLY_FILLED")) {
+    return 'PARTIALLY FILLED'
+   }
+
+   if (((tradeOrder.fixOrderStatus == 'NEW') || (tradeOrder.fixOrderStatus == 'REPLACED')) && (tradeOrder.orderStatus == 'EXECUTING')) {
+      return 'EXECUTING'
+   }
+
    if (tradeOrder.isBooked) {
      return 'PENDING'
    }

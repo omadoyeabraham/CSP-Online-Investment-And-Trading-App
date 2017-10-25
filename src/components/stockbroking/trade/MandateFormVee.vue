@@ -166,7 +166,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState, mapActions } from 'vuex'
 
 import * as mutationTypes from '../../../store/mutation-types'
 import StockbrokingService from '../../../services/StockbrokingService'
@@ -246,7 +246,8 @@ export default
       'allSecurityNames': 'getSecurityNames',
       'currentPortfolioSecurityNames': 'getAllSecuritiesInCurrentPortfolio',
       'currentPortfolioHoldings': 'getStockPortfolioHoldings',
-      'availableCash': 'currentPortfolioAvailableCash'
+      'availableCash': 'currentPortfolioAvailableCash',
+      'userId': 'getUserId'
     }),
 
     ...mapState({
@@ -297,6 +298,15 @@ export default
   },
 
   methods: {
+    ...mapActions({
+      updateCustomerData: 'updateCustomerData'
+    }),
+
+    obtainUpdatedCustomerData: function () {
+      console.log('Called update from mandate form')
+      this.updateCustomerData(this.userId)
+    },
+
     /**
      * Preview a mandate before sending it out
      *
@@ -443,6 +453,9 @@ export default
 
         // Set and show the mandate placed message on the trade history page
         this.$store.commit(mutationTypes.SET_MANDATE_PLACEMENT_STATE, true)
+
+        // Make a call to update the user's data after an interval of 3 seconds
+        setTimeout(this.obtainUpdatedCustomerData, 3000)
 
         // Redirect to the trade history page
         this.$router.push({name: 'stb-trade-history-ignore-check'})

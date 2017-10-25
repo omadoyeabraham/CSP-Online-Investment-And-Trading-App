@@ -103,7 +103,7 @@
                 <v-btn
                   data-toggle="tooltip" data-placement="top" title="BUY" icon class="m0 p0 width-30px height-30px"
                   @click="tradeStock('BUY', props.item.name)">
-                  <v-icon class="green--text" >
+                  <v-icon class="green--text font-weight-bold" >
                     call_received
                   </v-icon>
                 </v-btn>
@@ -112,17 +112,17 @@
                <v-btn
                 data-toggle="tooltip" data-placement="top" title="SELL" icon class="m0 p0 width-30px height-30px"
                 @click="tradeStock('SELL', props.item.name)">
-                <v-icon  class="blue--text" >
+                <v-icon  class="blue--text font-weight-bold" >
                   call_made
                 </v-icon>
                </v-btn>
 
                <!-- WATCH -->
                 <v-btn
-                  data-toggle="tooltip" data-placement="top" title="WATCH"
+                  data-toggle="tooltip" data-placement="top" title="WATCHLIST"
                   icon class="m0 p0 width-30px height-30px"
                   @click="watchStock(props.item.name)">
-                  <v-icon class="color-csp-blue ml4 fa fa-eye fa-2x btn-icon">
+                  <v-icon class="color-csp-blue ml4 fa fa-eye fa-2x btn-icon font-weight-bold">
                     <!-- remove_red_eye -->
                   </v-icon>
                 </v-btn>
@@ -176,11 +176,12 @@
     },
 
     created () {
-      this.getUpdatedMarketData = setInterval(this.updateMarketData, 30000)
+      this.getUpdatedMarketData = setInterval(this.updateMarketData, 10000)
     },
 
     beforeDestroy () {
       clearInterval(this.getUpdatedMarketData)
+      this.$store.commit(mutationTypes.CLEAR_SECURITY_SELECTED_ON_TRADE_PAGE)
     },
 
     computed: {
@@ -229,7 +230,12 @@
       }),
 
       setSelectedSecurity: function (selectedSecurityName) {
-        this.$store.commit(mutationTypes.SET_SECURITY_SELECTED_ON_TRADE_PAGE, selectedSecurityName)
+        this.$store.commit(mutationTypes.CLEAR_SECURITY_SELECTED_ON_TRADE_PAGE)
+
+        let componentThis = this
+        setTimeout(function () {
+          componentThis.$store.commit(mutationTypes.SET_SECURITY_SELECTED_ON_TRADE_PAGE, selectedSecurityName)
+        }, 400);
       },
 
       isSelectedStock: function (name) {
