@@ -15,7 +15,8 @@
         class="mb10">
         <mandate-form
           :redirectedOrderType = "redirectedOrderType"
-          :redirectedSecurityName = "redirectedInstrument">
+          :redirectedSecurityName = "redirectedInstrument"
+          ref="mandateForm">
         </mandate-form>
       </v-flex>
 
@@ -95,15 +96,19 @@ export default
        clearInterval(this.getUpdatedMarketData)
   },
 
-  beforeRouteLeave (to, from, next) {
     /**
     * Function called when a user tires to leave the trade page
     * Should display a popup if the user has already entered some data in the trade form
     *
     */
-
+  beforeRouteLeave (to, from, next) {
        // Perform the check only if we are not redirecting to the route called after placing a mandate
        if (to.path !== '/stb/trade-history?') {
+        // Do not show the popup if the mandate form has not yet been touched
+         if (this.$refs.mandateForm.mandateFormHasNotBeenTouched()) {
+           next()
+         }
+
          // Set the next function to be used
          this.nextFunction = next
 

@@ -3,8 +3,8 @@
 -->
 <template>
   <div class="ticker-wrap">
-    <span class="time pl10 pr5">{{datenow | moment("HH:mm")}}</span>
-    <span class="date">{{datenow | moment("MMMM DD YYYY")}}</span>
+    <!-- <span class="time pl10 pr5">{{datenow | moment("HH:mm")}}</span>
+    <span class="date">{{datenow | moment("MMMM DD YYYY")}}</span> -->
   </div>
 </template>
 
@@ -23,10 +23,10 @@ export default {
 
   methods: {
     time () {
-      var self = this
+      // var self = this
       this.datenow = new Date()
 
-      setInterval(self.time, 60000)
+      // setInterval(self.time, 60000)
     }
   }
 

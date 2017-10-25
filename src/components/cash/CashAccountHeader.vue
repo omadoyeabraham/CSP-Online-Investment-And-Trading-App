@@ -21,7 +21,7 @@
       </v-flex>
       <v-flex d-flex justify-end>
          <label class="mr-sm-2 d-flex align-end font-size-11 font-weight-bold mt10" for="selectAccount">SELECT ACCOUNT:</label>
-        <select class="custom-select mt10"
+        <select class="custom-select mt10" id="selectAccount"
           v-model="selectedNairaCashAccountID"
           >
           <option v-for="(item, index) in cashAccounts"
@@ -191,4 +191,9 @@
     border-radius: 5px
     border: none
     padding: 5px 10px !important
+
+  #selectAccount
+    *background: #4c7396
+    color: #000000
+    border: 1px solid #4c7396
 </style>

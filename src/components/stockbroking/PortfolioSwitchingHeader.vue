@@ -76,9 +76,9 @@ export default
 
 <style scoped lang="sass">
   #selectAccount
-    background: #4c7396
-    color: #FFFFFF
-    border: 2px solid transparent
+    *background: #4c7396
+    color: #000000
+    border: 1px solid #4c7396
 
   .fund-account-btn
     background: #324e85 !important

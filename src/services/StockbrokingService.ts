@@ -221,7 +221,7 @@ let commitMarketData = (allMarketData) => {
      companyName,
      valueTraded
    }
-   console.log(currentMarketData)
+
    store.commit(mutationTypes.SAVE_SELECTED_SECURITY_MARKET_SNAPSHOT, currentMarketData)
  }
 
@@ -259,7 +259,6 @@ let commitMarketData = (allMarketData) => {
   * @return Promise
   */
  let previewTradeOrder = (tradeOrder: object) => {
-  console.log(tradeOrder)
 
   return axios({
     method: 'POST',

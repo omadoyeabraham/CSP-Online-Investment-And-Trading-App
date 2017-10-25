@@ -13,9 +13,10 @@
       v-if="['Login', 'Register', 'PageNotFound'].indexOf($route.name) !== 0">
       <v-toolbar-title>
         <v-toolbar-side-icon @click.stop="sidebarIsVisible = !sidebarIsVisible"
-         class="blue--text text--darken-4">
-         <v-icon v-if="sidebarIsVisible" class="fa fa-arrow-left fa-2x"></v-icon>
-          <v-icon v-else class="fa fa-arrow-right fa-2x"></v-icon>
+         class="
+         ">
+         <v-icon v-if="sidebarIsVisible" class="sidebar-arrow">keyboard_arrow_left</v-icon>
+          <v-icon v-else class="sidebar-arrow">keyboard_arrow_right</v-icon>
         </v-toolbar-side-icon>
         <v-btn icon>
           <v-icon class="fa fa-user fa-5x"></v-icon>
@@ -164,5 +165,10 @@
 
   .welcome
     color: #a6a4be
+
+  .sidebar-arrow
+    color: #1a2155 !important
+    font-size: 45px
+    font-weight: 900
 
 </style>

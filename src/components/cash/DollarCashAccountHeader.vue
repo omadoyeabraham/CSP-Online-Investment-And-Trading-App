@@ -19,7 +19,8 @@
         <h3 class="font-size-11 csp-blue-text font-weight-bold">NUMBER OF CASH ACCOUNTS: {{totalNumberOfCashAccounts}} ACCOUNTS</h3>
       </v-flex>
       <v-flex d-flex justify-end>
-        <select class="custom-select mt10" v-model="selectedDollarCashAccountID">
+         <label class="mr-sm-2 d-flex align-end font-size-11 font-weight-bold mt10" for="selectAccount">SELECT ACCOUNT:</label>
+        <select class="custom-select mt10" id="selectAccount" v-model="selectedDollarCashAccountID">
           <option v-for="(item, index) in cashAccounts" :key="index" v-bind:value="item.id">{{item.label}}</option>
         </select>
       </v-flex>
@@ -145,4 +146,10 @@ export default
     border-radius: 5px
     border: none
     padding: 5px 10px !important
+
+  #selectAccount
+    *background: #4c7396
+    color: #000000
+    border: 1px solid #4c7396
+
 </style>

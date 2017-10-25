@@ -22,8 +22,8 @@
             <span>Yield(%)</span>
           </div>
           <div class="content w100p d-flex justify-content-between p5 pb15 pt15" v-for="(tbill, index) in treasuryBills" :key="index">
-            <span>{{tbill.name}}</span>
-            <span class="red--text">{{tbill.yield}}</span>
+            <span class="font-weight-bold">{{tbill.name}}</span>
+            <span class="text-csp-light-blue">{{tbill.yield}}</span>
           </div>
         </div>
 
@@ -34,8 +34,8 @@
             <span>Yield(%)</span>
           </div>
           <div class="content w100p d-flex justify-content-between p5 pb15 pt15" v-for="(bond, index) in bonds" :key="index">
-            <span>{{bond.name}}</span>
-            <span class="green--text">{{bond.yield}}</span>
+            <span class="font-weight-bold">{{bond.name}}</span>
+            <span class="text-csp-light-blue">{{bond.yield}}</span>
           </div>
         </div>
 

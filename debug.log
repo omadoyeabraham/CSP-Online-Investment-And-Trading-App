@@ -33,3 +33,5 @@
 [1023/152822.014:ERROR:process_info.cc(632)] range at 0xebe99b0e00000000, size 0x29b fully unreadable
 [1023/152822.014:ERROR:process_info.cc(632)] range at 0x0, size 0x29b fully unreadable
 [1024/103610.377:ERROR:settings.cc(263)] Settings version is not 1
+[1024/113556.812:ERROR:settings.cc(263)] Settings version is not 1
+[1024/124704.651:ERROR:settings.cc(263)] Settings version is not 1

@@ -30,8 +30,8 @@ const getters = {
     // Loop through state data and properly format the dates and values
     state.nseAsi.forEach((dayData) => {
       // Remove the timestamp from the date returned
-      const date = dayData.createdDttm.split(' ')[0]
-
+      let date = dayData.createdDttm.split(' ')[0]
+      date = moment(date).format('DD/MM/YYYY')
       dates.push(date)
       values.push(parseFloat(dayData.closingPrice))
     });
@@ -57,7 +57,12 @@ const getters = {
         text: ''
       },
       xAxis: {
-        categories: dates
+        categories: dates,
+        labels: {
+          style: {
+            fontSize: '10px'
+          }
+        }
       },
       yAxis: {
         title: {
@@ -66,6 +71,9 @@ const getters = {
         labels: {
           formatter: function () {
             return this.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          },
+          style: {
+            fontSize: '10px'
           }
         },
         min: minimumValue,

@@ -35,11 +35,11 @@ const getters = {
    */
   foreignExchange: (state) => {
     const data = [
-      { label: 'NGN/USD', value: state.foreignExchange.USDRate },
-      { label: 'NGN/GBP', value: state.foreignExchange.GBPRate },
-      { label: 'NGN/EUR', value: state.foreignExchange.EURRate },
-      { label: 'NGN/CNY', value: state.foreignExchange.CNYRate },
-      { label: 'NGN/AUD', value: state.foreignExchange.AUDRate }
+      { label: 'NGN/USD', value: state.foreignExchange.USDRate, imgClass: 'usd-flag' },
+      { label: 'NGN/GBP', value: state.foreignExchange.GBPRate, imgClass: 'gbp-flag' },
+      { label: 'NGN/EUR', value: state.foreignExchange.EURRate, imgClass: 'eur-flag' },
+      { label: 'NGN/CNY', value: state.foreignExchange.CNYRate, imgClass: 'cny-flag' },
+      { label: 'NGN/AUD', value: state.foreignExchange.AUDRate, imgClass: 'aud-flag' }
     ]
     return data;
   }

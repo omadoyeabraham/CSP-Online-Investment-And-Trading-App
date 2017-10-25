@@ -8,14 +8,14 @@
 
  // Treasury bills data
  export const treasuryBills = [
-  {name: '360 DAY TBILL', yield: 22.23},
-  {name: '180 DAY TBILL', yield: 20.23},
-  {name: '90 DAY TBILL', yield: 18.23}
+  {name: '360DAY TBILL', yield: 22.23},
+  {name: '180DAY TBILL', yield: 20.23},
+  {name: '90DAY TBILL', yield: 18.23}
  ];
 
  // Bonds data
  export const bonds = [
-  {name: '20 YR BOND', yield: 22.23},
-  {name: '10 YR BOND', yield: 20.23},
-  {name: '5 YR BOND', yield: 18.23}
+  {name: '20YR BOND', yield: 22.23},
+  {name: '10YR BOND', yield: 20.23},
+  {name: '5YR BOND', yield: 18.23}
  ];

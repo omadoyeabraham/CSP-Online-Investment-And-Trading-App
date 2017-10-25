@@ -1,7 +1,7 @@
 html,body{
   height: 100%;
   font-size: 11px;
-  font-family: 'verdana', 'Helvetica', 'Mukta Mahee', 'Typo-round-bold'; // 'Verdana','Convergence','Quicksand',
+  font-family: 'verdana','Helvetica', 'Mukta Mahee', 'Typo-round-bold'; // 'Verdana','Convergence','Quicksand',
   font-weight: 400;
 }
 
@@ -34,4 +34,8 @@ a:focus, a:hover {
 
 .page-header {
   border-bottom: 1px solid #DAD3D3
+}
+
+.text-csp-light-blue {
+  color: #428bca !important
 }

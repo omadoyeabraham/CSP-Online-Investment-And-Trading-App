@@ -80,13 +80,13 @@
               <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
                 <!-- <v-text-field  readonly :label="'Consideration'" v-model="orderConsideration" :type="'number'"   :disabled="inPreviewState">
                 </v-text-field> -->
-                <v-text-field  readonly :label="'Consideration'" :value="orderConsideration | currency('', 2)" :type="'text'"   :disabled="inPreviewState">
+                <v-text-field  readonly :label="'Consideration'" :value="orderConsideration | currency('₦', 2)" :type="'text'"   :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
               <!-- Total Fees -->
               <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
-                <v-text-field :label="'Total Fees'" :value="orderTotalFees | currency('',2)" :type="'text'"  :disabled="inPreviewState">
+                <v-text-field :label="'Total Fees'" :value="orderTotalFees | currency('₦',2)" :type="'text'"  :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
@@ -96,6 +96,12 @@
                 </v-text-field> -->
                 <v-text-field  :label="orderTotalText" :value="formattedOrderTotal" :type="'text'"  :disabled="inPreviewState">
                 </v-text-field>
+              </v-flex>
+
+
+              <!-- FIX Status -->
+              <v-flex xs12 v-if="inPreviewState" class="height-55px mb6">
+                <p class="red--text font-size-12 mt20"><i>*Orders placed on this platform will be effected immediately on the NSE.</i></p>
               </v-flex>
 
             </v-layout>
@@ -129,7 +135,10 @@
               </v-flex>
 
               <v-flex xs6>
-                <v-btn class="red darken-1 white--text" @click="cancelOrder()">
+                <v-btn v-if="!inPreviewState" class="red darken-1 white--text" @click="cancelOrder()">
+                  Cancel Order
+                </v-btn>
+                <v-btn v-if="inPreviewState" class="red darken-1 white--text" @click="cancelPreview()">
                   Cancel Order
                 </v-btn>
               </v-flex>
@@ -345,7 +354,7 @@ export default
                 orderTotal = orderTotal.toLocaleString('en-IN')
               }
 
-              this.formattedOrderTotal = orderTotal
+              this.formattedOrderTotal = '₦' + orderTotal
 
               // calculate the total consideration for the order
               this.calculateConsideration()
@@ -494,13 +503,30 @@ export default
      * Cancel the current order being worked on and reset all input fields
      */
     cancelOrder: function () {
-      this.orderType = null
-      this.priceOption = null
-      this.securityName = null
-      this.orderTerm = null
-      this.limitPrice = null
-      this.quantity = null
+      // this.orderType = null
+      // this.priceOption = null
+      // this.securityName = null
+      // this.orderTerm = null
+      // this.limitPrice = null
+      // this.quantity = null
+      // this.inPreviewState = false
+      this.$router.push({name: 'stb-trade-history'})
+    },
+
+    /**
+     * Cancel the preview on the mandate page
+     */
+    cancelPreview: function () {
       this.inPreviewState = false
+    },
+
+    /**
+     * Determine if the user has inputted any data into the mandate form
+     *
+     * @return Boolean
+     */
+    mandateFormHasNotBeenTouched: function () {
+      return ((this.orderTerm === '') && (this.orderType === null) && (this.securityName === null) && (this.priceOption === '') && (this.limitPrice === '') && (this.quantity === '') && (this.quantityHeld === ''))
     }
   }
 

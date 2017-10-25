@@ -9,18 +9,19 @@
 
     <!-- Heading -->
     <div class="w100p bg-csp-light-blue p10">
-      <div class="text-uppercase">FOREIGN EXCHANGE</div>
+      <div class="text-uppercase">FOREIGN EXCHANGE (OFFICIAL RATES)</div>
     </div>
 
 
     <!-- Card body -->
     <div class="card-block">
       <ul class="list-group list-group-flush black--text">
-        <li class="list-group-item font-weight-bold pt5 pb5" v-for="(item, index) in foreignExchange" :key="index">{{item.label}}
+        <li class="list-group-item font-weight-bold pt5 pb5" v-for="(item, index) in foreignExchange" :key="index">
+          <span :class="['flag', item.imgClass]"></span>
+        {{item.label}}
 
-          <!-- Other Items -->
-          <span class="ml-auto font-weight-normal">
-            &#8358; {{item.value | currency('', 2)}}
+          <span class="ml-auto font-weight-bold text-csp-light-blue">
+            &#8358;{{item.value | currency('', 2)}}
           </span>
 
         </li>
@@ -51,4 +52,20 @@
     padding: 10px 10px
   .content:last-of-type
     border-bottom: none
+  .flag
+    width: 50px
+    height: 25px
+    margin-right: 20px
+    background-size: cover
+  .usd-flag
+    background-image: url('../../../static/img/usd.png')
+  .gbp-flag
+    background-image: url('../../../static/img/gbp.png')
+  .eur-flag
+    background-image: url('../../../static/img/eur.png')
+  .cny-flag
+    background-image: url('../../../static/img/cn.png')
+  .aud-flag
+    background-image: url('../../../static/img/au.png')
+
 </style>

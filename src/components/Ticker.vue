@@ -6,7 +6,7 @@
   <ul class="ticker">
     <li
       v-for="(item, index) in marketData" :key="index"
-      class="ticker__item width-150px">
+      class="ticker__item width-180px">
       <div class="height-20px ">
         {{item.name}}
       </div>
