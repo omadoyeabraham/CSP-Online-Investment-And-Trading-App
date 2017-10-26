@@ -268,11 +268,11 @@ let commitMarketData = (allMarketData) => {
   *
   * @param securityID
   */
- let getSecurityStatusInfo = (securityID: number) => {
+ let getSecurityStatusInfo = (securityName: any) => {
 
     axios({
       method: 'GET',
-      url: `${ApiUrls.GetSecurityStatusInfo}/${securityID}`
+      url: `${ApiUrls.GetSecurityStatusInfo}/${securityName}`
     }).then((response) => {
 
       let statusInfo = response.data

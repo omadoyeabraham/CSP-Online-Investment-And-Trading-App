@@ -59,7 +59,7 @@ const actions = {
 
     gettingMarketData.then((response) => {
       let allMarketData = response.data
-      console.log(`Updated Market Data at ${Date.now()}`)
+      // console.log(`Updated Market Data at ${Date.now()}`)
       allMarketData.forEach((stockData) => {
         let priceChange = stockData.lastTradePrice - stockData.previousClose
         let priceChangePercent = (priceChange / stockData.previousClose) * 100
@@ -75,6 +75,42 @@ const actions = {
     })
   },
 
+  /**
+   * Update the data for the selected security
+   *
+   * @param param0
+   */
+  updateMarketDataForSelectedSecurity ({commit, state, getters}) {
+    // Do nothing if no security is selected
+    if (!state.selectedSecurityOnTradePage) {
+      return
+    } else {
+      // Update the market data for the selected security
+
+      let selectedSecurity = state.selectedSecurityOnTradePage
+
+      // get the particular stock that was selected
+      // let allSecurities = getters.getSecurityNames
+
+      // let selectedStockObject = allSecurities.find(function (security) {
+      //   return security.value === selectedSecurity
+      // })
+
+      // // Get the ID for the selected stock
+      // let selectedStockID = (selectedStockObject) ? parseFloat(selectedStockObject.id) : 0
+
+      // Make API calls to get the market snapshot (BIDS, TRADES and OFFERS) for the selected stock
+      let gettingSecurityMarketSnapShot = StockbrokingService.getSecurityMarketSnapShot(selectedSecurity)
+
+      gettingSecurityMarketSnapShot.then((response) => {
+        // Set the market data for the stock that was selected.
+        StockbrokingService.setSecurityMarketSnapShot(response.data)
+      })
+
+      StockbrokingService.getSecurityStatusInfo(selectedSecurity)
+
+    }
+  }
 }
 
 

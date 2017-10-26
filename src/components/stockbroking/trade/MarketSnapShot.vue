@@ -265,17 +265,17 @@
                           </li>
                           <li class="">
                             <span class="left">Price Change</span>
-                            <span class="right" v-if="selectedSecurityStatusInfo.todaysChange < 0">
-                              ({{Math.abs(selectedSecurityStatusInfo.todaysChange)}})
+                            <span class="right" v-if="selectedSecurityStatusInfo.priceChange < 0">
+                              ({{Math.abs(selectedSecurityStatusInfo.priceChange) | currency('',2)}})
                             </span>
-                            <span class="right" v-else>{{selectedSecurityStatusInfo.todaysChange}}</span>
+                            <span class="right" v-else>{{selectedSecurityStatusInfo.priceChange | currency('',2)}}</span>
                           </li>
                           <li class="">
                             <span class="left">Price Change(%)</span>
-                            <span class="right" v-if="selectedSecurityStatusInfo.todaysChangeP < 0">
-                              ({{Math.abs(selectedSecurityStatusInfo.todaysChangeP)}})
+                            <span class="right" v-if="selectedSecurityStatusInfo.priceChangeP < 0">
+                              ({{Math.abs(selectedSecurityStatusInfo.priceChangeP) | currency('',2)}})
                             </span>
-                            <span class="right" v-else>{{selectedSecurityStatusInfo.todaysChangeP}}</span>
+                            <span class="right" v-else>{{selectedSecurityStatusInfo.priceChangeP | currency('',2)}}</span>
                           </li>
                           <li class="">
                             <span class="left">Opening Price</span>
@@ -291,7 +291,7 @@
                           </li>
                           <li class="">
                             <span class="left">Volume Traded</span>
-                            <span class="right">{{selectedSecurityStatusInfo.volume | currency('',0)}}</span>
+                            <span class="right">{{selectedSecurityStatusInfo.volumeTraded | currency('',0)}}</span>
                           </li>
                           <li class="">
                             <span class="left">Value Traded</span>
@@ -358,7 +358,7 @@
 </template>
 
 <script>
-import {mapState, mapGetters} from 'vuex'
+import {mapState, mapGetters, mapActions} from 'vuex'
 import StockbrokingService from '../../../services/StockbrokingService'
 import {ChartService} from '../../../services/ChartsService'
 
@@ -369,11 +369,20 @@ export default
   components: {
     PriceMovementChart
   },
+
   beforeDestroy () {
     StockbrokingService.resetMarketSnapShot()
+    clearInterval(this.getUpdatedDataForSelectedSecurity)
   },
+
+  created () {
+    // Update the data for the selected security on the trade page every 1 minute
+    this.getUpdatedDataForSelectedSecurity = setInterval(this.obtainUpdatedDataForSelectedSecurity, 30000)
+  },
+
   data () {
     return {
+      getUpdatedDataForSelectedSecurity: null,
       marketSnapShot: null,
       bidLevels: null,
       securityIsSelected: false,
@@ -398,6 +407,16 @@ export default
     }
   },
 
+  methods: {
+    ...mapActions({
+      'updateDataForSelectedSecurity': 'updateMarketDataForSelectedSecurity'
+    }),
+
+    obtainUpdatedDataForSelectedSecurity: function () {
+      this.updateDataForSelectedSecurity()
+    }
+  },
+
   watch: {
     selectedStock: function (newlySelectedStock) {
       // Check whether or not a security is selected
@@ -408,12 +427,12 @@ export default
       }
 
       // get the particular stock that was selected
-      let selectedStockObject = this.allSecurities.find(function (security) {
-        return security.value === newlySelectedStock
-      })
+      // let selectedStockObject = this.allSecurities.find(function (security) {
+      //   return security.value === newlySelectedStock
+      // })
 
-      // Get the ID for the selected stock
-      let selectedStockID = (selectedStockObject) ? parseFloat(selectedStockObject.id) : 0
+      // // Get the ID for the selected stock
+      // let selectedStockID = (selectedStockObject) ? parseFloat(selectedStockObject.id) : 0
 
        // Show the loading spinner for stock data
       this.loadingStockData = true;
@@ -427,7 +446,7 @@ export default
         this.loadingStockData = false;
       })
 
-      StockbrokingService.getSecurityStatusInfo(selectedStockID)
+      StockbrokingService.getSecurityStatusInfo(newlySelectedStock)
     }
   }
 }

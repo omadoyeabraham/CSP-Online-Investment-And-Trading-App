@@ -231,7 +231,7 @@
 </template>
 
 <script>
-import {mapState, mapGetters} from 'vuex'
+import {mapState, mapGetters, mapActions} from 'vuex'
 import StockbrokingService from '../../../services/StockbrokingService'
 
 export default
@@ -239,14 +239,22 @@ export default
 
   beforeDestroy () {
     StockbrokingService.resetMarketSnapShot()
+    clearInterval(this.getUpdatedDataForSelectedSecurity)
   },
+
   data () {
     return {
+      getUpdatedDataForSelectedSecurity: null,
       marketSnapShot: null,
       bidLevels: null,
       securityIsSelected: false,
       loadingStockData: false
     }
+  },
+
+  created () {
+    // Update the data for the selected security on the trade page every 1 minute
+    this.getUpdatedDataForSelectedSecurity = setInterval(this.obtainUpdatedDataForSelectedSecurity, 30000)
   },
 
   computed: {
@@ -260,6 +268,16 @@ export default
     })
   },
 
+  methods: {
+    ...mapActions({
+      'updateDataForSelectedSecurity': 'updateMarketDataForSelectedSecurity'
+    }),
+
+    obtainUpdatedDataForSelectedSecurity: function () {
+      this.updateDataForSelectedSecurity()
+    }
+  },
+
   watch: {
     selectedStock: function (newlySelectedStock, oldStock) {
       if ((newlySelectedStock !== '') || (newlySelectedStock !== null)) {
@@ -268,11 +286,11 @@ export default
         this.securityIsSelected = false
       }
 
-      let selectedStockObject = this.allSecurities.find(function (security) {
-        return security.value === newlySelectedStock
-      })
+      // let selectedStockObject = this.allSecurities.find(function (security) {
+      //   return security.value === newlySelectedStock
+      // })
 
-      let selectedStockID = (selectedStockObject) ? parseFloat(selectedStockObject.id) : 0
+      // let selectedStockID = (selectedStockObject) ? parseFloat(selectedStockObject.id) : 0
 
       // Show the loading spinner for stock data
       this.loadingStockData = true;
@@ -286,7 +304,7 @@ export default
         this.loadingStockData = false;
       })
 
-      StockbrokingService.getSecurityStatusInfo(selectedStockID)
+      StockbrokingService.getSecurityStatusInfo(newlySelectedStock)
     }
   }
 }

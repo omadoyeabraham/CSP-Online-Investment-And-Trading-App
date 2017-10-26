@@ -786,7 +786,7 @@ const getters = {
     })
 
     return stockNames
-  },
+  }
 
 }
 
