@@ -38,3 +38,6 @@ export const GetPaymentTransactionDetails = `${BaseApiUrl}/getPaymentTransaction
 
 // Customer data
 export const GetCustomerData = `${BaseApiUrl}/findCustomerById`
+
+// Reset Password
+export const ResetPassword = `${BaseApiUrl}/resetPassword`

@@ -283,7 +283,6 @@ export default
       let formComponents = this.$refs.form.$children
 
       formComponents.forEach((formComponent) => {
-        console.log(formComponent)
         formComponent.shouldValidate = false
         formComponent.shouldValidate = false
       })

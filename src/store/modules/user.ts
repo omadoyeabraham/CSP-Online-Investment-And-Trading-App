@@ -86,6 +86,8 @@ const actions = {
 
     updatingCustomerData.then((response) => {
       let userData = response.data
+      // console.log(`Updated userdata`)
+      // console.log(userData)
 
       // Commit the authenticated user's data to the vue store.
       commit(mutationTypes.UPDATE_USER_STOCKBROKING_DATA_IN_STORE, userData);

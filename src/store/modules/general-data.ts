@@ -20,7 +20,8 @@ const getters = {
     const data = []
 
     // Get the first 5 news items, and pick only necessary fields
-    state.newsFeed.slice(0, 5).forEach((newsItem) => {
+    // state.newsFeed.slice(0, 8).forEach((newsItem) => {
+    state.newsFeed.forEach((newsItem) => {
       data.push({
         title: newsItem.title,
         link: newsItem.link

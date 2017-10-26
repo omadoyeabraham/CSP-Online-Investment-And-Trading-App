@@ -51,7 +51,6 @@ const mutations = {
 
       // The user has a stockbroking portfolio
       state.userHasStb = true
-
     }
 
   },

@@ -13,7 +13,7 @@
     </div>
 
     <!-- Card body -->
-    <div class="card-block p0">
+    <div class="card-block p0" style="overflow-y: auto">
       <!-- <ul class="list-group list-group-flush black--text">
         <li class="list-group-item" v-for="(newsItem, index) in newsFeed" :key="index">
           <a :href="newsItem.link" target="_blank">{{newsItem.title}}</a>

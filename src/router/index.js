@@ -29,6 +29,9 @@ import Sma from '@/components/sma/Sma'
 // Fund Account
 import FundAccount from '@/components/fund-account/FundAccount'
 
+// Reset Password
+import ResetPassword from '@/components/reset-password/ResetPassword'
+
 Vue.use(Router)
 
 export default new Router({
@@ -92,6 +95,11 @@ export default new Router({
       path: '/fund-account',
       name: 'fund-account',
       component: FundAccount
+    },
+    {
+      path: '/reset-password',
+      name: 'reset-password',
+      component: ResetPassword
     },
     {
       path: '/sma',
