@@ -1,5 +1,7 @@
+<!--
+  Form for contact manager
+-->
 <template>
-
   <v-container fluid class="p0">
     <v-card>
 
@@ -15,49 +17,59 @@
 
              <v-layout row class="pl20 pr20 pt10">
 
-                <!-- Current Password -->
+                <!-- Manager Name -->
                 <v-flex xs12 class="height-55px mb6 pl10 pr10" >
                   <v-text-field
-                    :label="'Current Password'" v-model="oldPassword"
-                    :type="'password'" :rules="oldPasswordRules" class=""
-                    v-validate="'required'" name="oldPassword">
+                    :label="'Manager Name'" v-model="accountManagerName"
+                    :type="'text'" class=""
+                    disabled>
                   </v-text-field>
                 </v-flex>
 
-                <!-- New Password -->
+                <!-- Manager Email -->
                 <v-flex xs12 class="height-55px mb6 pl10 pr10" >
                   <v-text-field
-                    :label="'New Password'" v-model="newPassword"
-                    :type="'password'" :rules="newPasswordRules"
-                    v-validate="'required'" name="newPassword">
+                    :label="'Manager Email'" v-model="accountManagerEmail"
+                    :type="'text'" class=""
+                    disabled>
                   </v-text-field>
                 </v-flex>
 
-                <!-- Confirm Password -->
+                <!-- Subject -->
                 <v-flex xs12 class="height-55px mb6 pl10 pr10" >
                   <v-text-field
-                    :label="'Confirm Password'" v-model="confirmPassword"
-                    :type="'password'" :rules="confirmPasswordRules"
-                    v-validate="'required'" name="confirmPassword">
+                    :label="'Subject'" v-model="subject"
+                    :type="'text'" :rules="subjectRules"
+                    v-validate="'required'" name="subject">
+                  </v-text-field>
+                </v-flex>
+
+                <!-- Message -->
+                <v-flex xs12 class="height-55px mb6 pl10 pr10" >
+                  <v-text-field
+                    :label="'Message'" v-model="message"
+                    :type="'text'" :rules="messageRules"
+                    v-validate="'required'" name="message">
                   </v-text-field>
                 </v-flex>
 
               </v-layout>
 
               <!-- Loading Icon when resetting password -->
-              <v-layout v-if="changingPassword"  row class=" d-flex justify-center ">
+              <v-layout v-if="sendingEmail"  row class=" d-flex justify-center ">
                 <v-flex class="xs6 d-flex justify-center align-center mt20">
                   <!-- <span class="font-size-10">Calculating Order Cost</span> -->
                   <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
-                  <span class="font-size-12 ml5">Resetting Password</span>
+                  <span class="font-size-12 ml5">Sending Email</span>
                 </v-flex>
               </v-layout>
 
               <!-- Buttons -->
               <v-layout row class="mt20 ml2">
                 <v-flex xs6 class="d-flex justify-start">
-                  <v-btn style="background: #4c7396; color: #FFFFFF" @click="resetPassword()">
-                    Reset Password
+                  <v-btn style="background: #4c7396; color: #FFFFFF" @click="sendMessage()"
+                    :disabled="sendingEmail">
+                    Send Message
                   </v-btn>
                 </v-flex>
               </v-layout>
@@ -73,22 +85,20 @@
         :timeout="snackbarTimeout"
         :top="true"
         :color="'success'"
-        v-model="showPasswordChangedSnackbar"
+        v-model="showEmailSentSnackbar"
         >
-        Password Successfully Changed
+        Your message has been sent to your account manager.
       </v-snackbar>
 
       <v-snackbar error
         :timeout="snackbarTimeout"
         :top="true"
         :color="'error'"
-        v-model="showErrorDialog"
-        >
+        v-model="showErrorDialog">
         {{errorMessage}}
       </v-snackbar>
 
   </v-container>
-
 </template>
 
 <script>
@@ -100,20 +110,16 @@ export default
     return {
       errorMessage: null,
       showErrorDialog: false,
-      showPasswordChangedSnackbar: false,
+      showEmailSentSnackbar: false,
       snackbarTimeout: 4000,
       valid: true,
-      oldPassword: null,
-      newPassword: null,
-      confirmPassword: null,
-      changingPassword: false,
-      oldPasswordRules: [
+      subject: null,
+      message: null,
+      sendingEmail: false,
+      subjectRules: [
         (v) => !!v || 'Required'
       ],
-      newPasswordRules: [
-        (v) => !!v || 'Required'
-      ],
-      confirmPasswordRules: [
+      messageRules: [
         (v) => !!v || 'Required'
       ]
     }
@@ -121,7 +127,8 @@ export default
 
   computed: {
     ...mapGetters({
-      'userID': 'getUserId'
+      'accountManagerName': 'getAccountManagerName',
+      'accountManagerEmail': 'getAccountManagerEmail'
     })
   },
 
@@ -129,62 +136,39 @@ export default
     /**
     * Reset the user's password
      */
-    resetPassword: function () {
+    sendMessage: function () {
       this.$validator.validateAll().then((result) => {
       // Form is being validated
 
         // Show the loading icon for previewing
-        this.changingPassword = true
+        this.sendingEmail = true
 
         // No validation errors
         if (result) {
-          // Check to ensure the new password and confirm passwords match
-          if (this.newPassword !== this.confirmPassword) {
-            // Set the error message
-            this.errorMessage = 'Passwords do not match. Please try again'
+          // Send the email out
+          let sendingMessage = UserService.contactManager()
 
-            // Show the error popup
-            this.showErrorDialog = true
+          sendingMessage.then((response) => {
+            console.log(response)
 
-             // Hide the loading icon for previewing
-            this.changingPassword = false
+            // Hide the loading icon for previewing
+            this.sendingEmail = false
 
-            return
-          }
+            // Show the success popup
+            this.showEmailSentSnackbar = true
 
-          // Check to ascertain the minimum length of the new password
-          if (this.newPassword.length < 6) {
-            // Set the error message
-            this.errorMessage = 'The new password must be at least 6 characters long'
-
-            // Show the error popup
-            this.showErrorDialog = true
-
-             // Hide the loading icon for previewing
-            this.changingPassword = false
-
-            return
-          }
-
-          let resettingPassword = UserService.resetPassword(this.userID, this.oldPassword, this.newPassword)
-
-          resettingPassword.then((response) => {
-            // Show the popup with the success message
-            this.showPasswordChangedSnackbar = true
-
-            // Hide the loading icon for changing Password
-            this.changingPassword = false
-
-            // Clear the form after changing the password
+            // Reset the Form
             this.$refs.form.reset()
           }).catch((error) => {
-            console.log(error.response)
+            console.log(error)
+            // Hide the loading icon for previewing
+            this.sendingEmail = false
 
-            this.errorMessage = error.response.data.status
+            // Set the error popup message
+            this.errorMessage = error.message
+
+            // Show the error popup
             this.showErrorDialog = true
-
-            // Hide the loading icon for changing Password
-            this.changingPassword = false
           })
         } else {
         // Validation errors occured
@@ -196,7 +180,7 @@ export default
           })
 
           // Hide the loading icon for changing Password
-          this.changingPassword = false
+          this.sendingEmail = false
 
           return
         }
@@ -206,6 +190,6 @@ export default
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

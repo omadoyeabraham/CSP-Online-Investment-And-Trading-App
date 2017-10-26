@@ -53,8 +53,44 @@ const resetPassword = (userID,oldPassword, newPassword) => {
   })
 }
 
+/**
+ * Send out the contact manager email from the portal
+ * @param subject
+ * @param message
+ * @param accountManagerEmail
+ * @return Promise
+ */
+const contactManager = (subject, message, accountManagerEmail) => {
+  let emailIsSent = false
+
+  let willSendEmail = new Promise(
+    (resolve, reject) => {
+      if (emailIsSent) {
+        const response = {
+          status: 200,
+          message: 'Email Successfully Sent'
+        }
+
+        setTimeout(function () {
+          resolve(response)
+        }, 3000)
+      } else {
+        const error = new Error('An error occured while sending the email')
+
+        setTimeout(function () {
+          reject(error)
+        }, 3000)
+
+      }
+    }
+  )
+
+  return willSendEmail
+}
+
 
  export default {
    getUserData,
-   resetPassword
+   resetPassword,
+   contactManager
  }

@@ -32,6 +32,9 @@ import FundAccount from '@/components/fund-account/FundAccount'
 // Reset Password
 import ResetPassword from '@/components/reset-password/ResetPassword'
 
+// Contact Manager
+import ContactManager from '@/components/contact-manager/ContactManager'
+
 Vue.use(Router)
 
 export default new Router({
@@ -100,6 +103,11 @@ export default new Router({
       path: '/reset-password',
       name: 'reset-password',
       component: ResetPassword
+    },
+    {
+      path: '/contact-manager',
+      name: 'contact-manager',
+      component: ContactManager
     },
     {
       path: '/sma',

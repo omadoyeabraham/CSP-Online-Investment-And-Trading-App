@@ -41,3 +41,6 @@ export const GetCustomerData = `${BaseApiUrl}/findCustomerById`
 
 // Reset Password
 export const ResetPassword = `${BaseApiUrl}/resetPassword`
+
+// Contact Manager
+export const ContactManager = `${BaseApiUrl}/contactManager`

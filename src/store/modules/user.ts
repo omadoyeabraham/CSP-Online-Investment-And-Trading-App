@@ -46,6 +46,14 @@ const getters = {
 
   getUserId: (state) => {
     return (state.userID) ? state.userID : 0
+  },
+
+  getAccountManagerName: (state) => {
+    return (state.accountManager) ? state.accountManager : 'Cardinal Stone Partners'
+  },
+
+  getAccountManagerEmail: (state) => {
+    return (state.accountManagerEmail) ? state.accountManagerEmail : 'info@cardinalstone.com'
   }
 
 }
