@@ -15,7 +15,7 @@
             <th></th>
           </thead>
 
-          <!-- User has watchlist -->
+          <!-- User has a watchlist -->
           <tbody v-if="userWatchList">
             <tr
               v-for="(item, index) in userWatchList"
@@ -23,7 +23,17 @@
               <td>{{item.name}}</td>
               <td>{{item.condition}} {{item.notify_price}}</td>
               <td>{{item.currentPrice}}</td>
-              <td>{{item.priceChange | currency('',2)}}</td>
+              <td>
+                <span v-if="item.priceChange > 0" class="green--text">
+                  {{item.priceChange | currency('',2)}}
+                </span>
+                <span v-else-if="item.priceChange < 0" class="red--text">
+                  ({{Math.abs(item.priceChange) | currency('',2)}})
+                </span>
+                <span v-else class="">
+                   {{item.priceChange | currency('',2)}}
+                </span>
+              </td>
               <td>
                  <button v-if="item.status === '0'"
                     class="button button-blue-csp elevation-2 mb2"

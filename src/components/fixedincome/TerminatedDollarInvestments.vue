@@ -1,5 +1,6 @@
 <template>
   <RunningInvestments
+   :showTotalValue="false"
     :currency="'$'"
     :headerText="'Terminated Dollar Investments'"
     :investmentType="'terminated'"

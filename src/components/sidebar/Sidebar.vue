@@ -32,7 +32,7 @@
       <div
         class="sidebar-header d-flex justify-content-between mt20"
         v-if="mini===false">
-        <span>Dollar Investments</span>
+        <span>FX Investments</span>
       </div>
       <UserInvestments :AccountInvestments="dollarInvestments"></UserInvestments>
 
@@ -46,9 +46,9 @@
 
       <UserAccountActionsComponent :accountActions="accountActions"></UserAccountActionsComponent>
 
-      <MarketTime
+      <!-- <MarketTime
         class="height-55px">
-      </MarketTime>
+      </MarketTime> -->
 
     </v-navigation-drawer>
 </template>

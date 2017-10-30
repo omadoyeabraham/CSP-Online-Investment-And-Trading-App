@@ -194,6 +194,7 @@ let commitMarketData = (allMarketData) => {
   return axios({
     method: 'GET',
     url: `${ApiUrls.GetSecurityMarketSnapShot}/${newlySelectedSecurity}`
+
   })
  }
 

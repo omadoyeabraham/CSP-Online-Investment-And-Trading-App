@@ -207,7 +207,9 @@ const getters = {
       return 0
     }
 
-    const totalValue = parseFloat(state.currentPortfolio.availableCash.amount) + parseFloat(state.currentPortfolio.currentValuation.amount)
+    // const totalValue = parseFloat(state.currentPortfolio.availableCash.amount) + parseFloat(state.currentPortfolio.currentValuation.amount)
+
+    const totalValue = parseFloat(state.currentPortfolio.currentValuation.amount)
 
     return totalValue
   },

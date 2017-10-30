@@ -2,7 +2,7 @@
   Component displaying market time
 -->
 <template>
-  <div class="ticker-wrap">
+  <div class="time-wrap">
     <!-- <span class="time pl10 pr5">{{datenow | moment("HH:mm")}}</span>
     <span class="date">{{datenow | moment("MMMM DD YYYY")}}</span> -->
   </div>
@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .ticker-wrap {
+  .time-wrap {
     position: fixed;
     bottom: 0;
     left: 0;

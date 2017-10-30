@@ -36,3 +36,7 @@
 [1024/113556.812:ERROR:settings.cc(263)] Settings version is not 1
 [1024/124704.651:ERROR:settings.cc(263)] Settings version is not 1
 [1026/090835.528:ERROR:settings.cc(263)] Settings version is not 1
+[1027/080054.709:ERROR:settings.cc(263)] Settings version is not 1
+[1027/094328.705:ERROR:process_info.cc(632)] range at 0x5b769aaa00000000, size 0x2e8 fully unreadable
+[1027/094328.705:ERROR:process_info.cc(632)] range at 0x5b769b0e00000000, size 0x2e8 fully unreadable
+[1027/094328.705:ERROR:process_info.cc(632)] range at 0x0, size 0x2e8 fully unreadable

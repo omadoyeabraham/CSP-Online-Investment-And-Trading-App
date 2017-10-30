@@ -75,51 +75,51 @@
                 id="selectedBondList"
                  >
                 <li class="list-group-item font-size-12 white--text">
-                  <span>SECURITY</span>
+                  <span>Security</span>
                   <span class="ml-auto font-weight-normal">{{selectedBond.securityName}}</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
-                  <span>MATURITY DATE</span>
+                  <span>Maturity Date</span>
                   <span class="ml-auto font-weight-normal">{{selectedBond.maturityDate | moment('DD-MMM-YYYY')}}</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
-                   <span>LAST COUPON DATE</span>
+                   <span>Last Coupon Date</span>
                    <span class="ml-auto font-weight-normal">{{selectedBond.lastCouponDate | moment('DD-MMM-YYYY')}}</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
-                  <span>NEXT COUPON DATE</span>
+                  <span>Next Coupon Date</span>
                   <span class="ml-auto font-weight-normal">{{selectedBond.nextCouponDate | moment('DD-MMM-YYYY')}}</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
-                  <span>COUPON RATE</span>
+                  <span>Coupon Rate</span>
                   <span class="ml-auto font-weight-normal">{{selectedBond.couponRate}}%</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
-                   <span>CLEAN PRICE</span>
+                   <span>Clean Price</span>
                    <span class="ml-auto font-weight-normal">{{selectedBond.marketPrice}}</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
-                  <span>DIRTY PRICE</span>
+                  <span>Dirty Price</span>
                   <span class="ml-auto font-weight-normal">{{selectedBond.dirtyPrice | currency('',2)}}</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
-                  <span>UNITS</span>
+                  <span>Units</span>
                   <span class="ml-auto font-weight-normal">{{selectedBond.quantityHeld}}</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
-                  <span>FACE VALUE</span>
+                  <span>Face Value</span>
                   <span class="ml-auto font-weight-normal">{{selectedBond.faceValue}}</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
-                  <span>ACCRUED COUPON</span>
+                  <span>Accrued Coupon</span>
                   <span class="ml-auto font-weight-normal">{{selectedBond.accruedCoupon | currency('',2)}}</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
-                  <span>CHANGE</span>
+                  <span>Change</span>
                   <span class="ml-auto font-weight-normal">{{selectedBond.gain | currency('',2)}}</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
-                 <span>CHANGE(%)</span>
+                 <span>Change(%)</span>
                  <span class="ml-auto font-weight-normal">{{selectedBond.percentGain}}</span>
                 </li>
 
@@ -216,6 +216,9 @@ export default
     li
       background: #1a2155
       border-bottom: 1px solid #FFFFFF
+
+      span:first-child
+        text-transform: capitalize
   .form-element > label
     font-size: 10px !important
     color: green

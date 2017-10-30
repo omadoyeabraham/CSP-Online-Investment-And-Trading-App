@@ -17,7 +17,7 @@
 
       <v-layout row class="pl7">
         <v-flex>
-          <h5>
+          <h5 v-if="showTotalValue" class="font-weight-bold">
             VALUE OF PORTFOLIO: {{currency}}{{totalValueOfPortfolio | currency('',2)}}
           </h5>
         </v-flex>
@@ -30,7 +30,7 @@
 <script>
   export default
   {
-    props: ['headerText', 'totalValueOfPortfolio', 'currency']
+    props: ['headerText', 'totalValueOfPortfolio', 'currency', 'showTotalValue']
   }
 </script>
 

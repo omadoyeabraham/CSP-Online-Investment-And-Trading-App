@@ -27,6 +27,9 @@
        align: 'right',
        verticalAlign: 'middle',
        layout: 'vertical',
+       itemStyle: {
+         'fontWeight': 'normal'
+       }
      },
      title: {
        text: ''

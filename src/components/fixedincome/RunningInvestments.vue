@@ -2,6 +2,7 @@
   <v-container fluid class="">
 
   <FixedIncomeHeader
+     :showTotalValue="showTotalValue"
     :headerText="headerText"
     :totalValueOfPortfolio="totalValueOfPortfolio"
     :currency="currency"
@@ -127,7 +128,7 @@ import FixedIncomeHeader from './FixedIncomeHeader'
 export default
 {
 
-  props: ['currency', 'headerText', 'investments', 'investmentType', 'investmentTitle'],
+  props: ['currency', 'headerText', 'investments', 'investmentType', 'investmentTitle', 'showTotalValue'],
 
   data () {
     return {

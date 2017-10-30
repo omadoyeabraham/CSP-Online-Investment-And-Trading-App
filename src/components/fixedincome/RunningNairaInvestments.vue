@@ -1,6 +1,7 @@
 <template>
 
   <RunningInvestments
+   :showTotalValue="true"
     :currency="'₦'"
     :headerText="'Fixed Income - Active Investments'"
     :investmentType="'active'"

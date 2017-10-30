@@ -46,7 +46,7 @@
       <template slot="items" scope="props">
         <tr id="portfolioHoldingsTableBody" class="indigo--text text--darken-4">
           <td class="font-size-11">{{props.item.securityName}}</td>
-          <td class="font-size-11 text-right">{{props.item.marketValue}}</td>
+          <td class="font-size-11 text-right">{{props.item.marketPrice}}</td>
           <td class="font-size-11 text-right">{{props.item.quantityHeld | currency('',0)}}</td>
           <td class="font-size-11 text-right">{{props.item.valuation | currency('',2)}}</td>
           <td class="font-size-11 text-right">{{props.item.percentageOfPortfolio | currency('',2)}}</td>

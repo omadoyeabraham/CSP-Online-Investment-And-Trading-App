@@ -88,11 +88,19 @@
                             </li>
                             <li class="p10">
                               <span class="left">PRICE CHANGE (&#8358;):</span>
-                              <span class="right">{{selectedSecurityStatusInfo.todaysChange| currency('',2)}}</span>
+                                    <span class="right red--text" v-if="selectedSecurityStatusInfo.priceChange < 0">
+                              ({{Math.abs(selectedSecurityStatusInfo.priceChange) | currency('',2)}})
+                            </span>
+                            <span class="right green--text" v-else-if="selectedSecurityStatusInfo.priceChange > 0">{{selectedSecurityStatusInfo.priceChange | currency('',2)}}</span>
+                              <span class="right" v-else>{{selectedSecurityStatusInfo.priceChange | currency('',2)}}</span>
                             </li>
                             <li class="p10">
                               <span class="left">Price Change (%):</span>
-                              <span class="right">{{selectedSecurityStatusInfo.todaysChangeP| currency('',2)}}</span>
+                             <span class="right red--text" v-if="selectedSecurityStatusInfo.priceChangeP < 0">
+                              ({{Math.abs(selectedSecurityStatusInfo.priceChangeP) | currency('',2)}})
+                            </span>
+                            <span class="right green--text" v-else-if="selectedSecurityStatusInfo.priceChangeP > 0">{{selectedSecurityStatusInfo.priceChangeP | currency('',2)}}</span>
+                              <span class="right" v-else>{{selectedSecurityStatusInfo.priceChangeP | currency('',2)}}</span>
                             </li>
                             <li class="p10">
                               <span class="left">OPEN PRICE (&#8358;):</span>
@@ -154,6 +162,10 @@ export default
     }
   },
 
+  beforeDestroy () {
+    StockbrokingService.resetMarketSnapShot()
+  },
+
   data () {
     return {
       valid: false,
@@ -209,14 +221,22 @@ export default
         return
       }
 
-      let selectedStockObject = this.allSecurities.find(function (security) {
-        return security.value === newlySelectedStock
+      // let selectedStockObject = this.allSecurities.find(function (security) {
+      //   return security.value === newlySelectedStock
+      // })
+
+      // let selectedStockID = (selectedStockObject) ? parseFloat(selectedStockObject.id) : 1
+
+      // StockbrokingService.getSecurityMarketSnapShot(newlySelectedStock)
+      // StockbrokingService.getSecurityStatusInfo(newlySelectedStock)
+
+      let gettingSecurityMarketSnapShot = StockbrokingService.getSecurityMarketSnapShot(newlySelectedStock)
+      gettingSecurityMarketSnapShot.then((response) => {
+        // Set the market data for the stock that was selected.
+        StockbrokingService.setSecurityMarketSnapShot(response.data)
       })
 
-      let selectedStockID = (selectedStockObject) ? parseFloat(selectedStockObject.id) : 1
-
-      StockbrokingService.getSecurityMarketSnapShot(newlySelectedStock)
-      StockbrokingService.getSecurityStatusInfo(selectedStockID)
+      StockbrokingService.getSecurityStatusInfo(newlySelectedStock)
     }
   },
 

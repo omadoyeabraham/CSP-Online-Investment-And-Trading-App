@@ -13,7 +13,7 @@
       v-if="['Login', 'Register', 'PageNotFound'].indexOf($route.name) !== 0">
       <v-toolbar-title>
         <v-toolbar-side-icon @click.stop="sidebarIsVisible = !sidebarIsVisible"
-         class="blue--text text--darken-4">
+         class="blue--text text--darken-4" data-toggle="tooltip" data-placement="top" title="MENU">
          <!-- <v-icon v-if="sidebarIsVisible" class="sidebar-arrow">keyboard_arrow_left</v-icon>
           <v-icon v-else class="sidebar-arrow">keyboard_arrow_right</v-icon> -->
         </v-toolbar-side-icon>
