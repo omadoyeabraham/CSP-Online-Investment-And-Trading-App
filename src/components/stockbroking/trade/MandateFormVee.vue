@@ -7,8 +7,8 @@
   <v-card>
 
     <v-card-title primary-title class="font-weight-bold p2 d-flex justify-start">
-      <h5 class=" pt10 font-weight-bold pl5 mb-0 font-size-12 text-uppercase">Cash Available for Trading:
-        {{availableCash | currency('₦') }}
+      <h5 class=" pt10 font-weight-bold pl5 mb-0 font-size-11 text-uppercase">Cash Available:
+        <span class="font-size-17 font-weight-normal">{{availableCash | currency('₦') }}</span>
       </h5>
     </v-card-title>
 
@@ -22,7 +22,7 @@
 
               <!-- Order Type -->
               <v-flex xs6 class="height-55px mb6">
-                <v-select class="" :label="'Order Type'" :items="orderTypes" v-model="orderType" v-validate="'required'" name="orderType" :rules="orderTypeRules"
+                <v-select class="" :label="'ORDER TYPE'" :items="orderTypes" v-model="orderType" v-validate="'required'" name="orderType" :rules="orderTypeRules"
                 :disabled="inPreviewState">
                 </v-select>
               </v-flex>
@@ -30,46 +30,49 @@
               <!-- Stocks -->
               <v-flex xs6 class="height-55px mb6">
                 <v-select class=""
-                label="Stock" :items="securityNames" v-model="securityName" :rules="securityNameRules" :no-data-text="noStockToSellText" v-validate="'required'" name="securityName" :disabled="inPreviewState" autocomplete clearable>
+                label="STOCK" :items="securityNames" v-model="securityName" :rules="securityNameRules" :no-data-text="noStockToSellText" v-validate="'required'" name="securityName" :disabled="inPreviewState">
                 </v-select>
+                <!-- <v-select class=""
+                label="STOCK" :items="securityNames" v-model="securityName" :rules="securityNameRules" :no-data-text="noStockToSellText" v-validate="'required'" name="securityName" :disabled="inPreviewState" autocomplete clearable>
+                </v-select> -->
               </v-flex>
 
 
               <!-- Quantity -->
               <v-flex xs6 class="height-55px mb6">
-                <v-text-field :label="'Quantity'" v-model="quantity" :type="'number'" :rules="quantityRules"  v-validate="'required'" name="quantity" :disabled="inPreviewState">
+                <v-text-field :label="'QUANTITY'" v-model="quantity" :type="'number'" :rules="quantityRules"  v-validate="'required'" name="quantity" :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
 
               <!-- Quantity Held -->
               <v-flex xs6 v-if="canShowQuantityHeld" class="height-55px mb6">
-                <v-text-field :label="'Quantity Held'" :value="quantityHeld | currency('',0)" :type="'text'"   disabled>
+                <v-text-field :label="'QUANTITY HELD'" :value="quantityHeld | currency('',0)" :type="'text'"   disabled>
                 </v-text-field>
               </v-flex>
 
               <!-- Price Option -->
               <v-flex xs6 class="height-55px mb6">
-                <v-select class="" :label="'Price Option'" :items="priceOptions" v-model="priceOption" v-validate="'required'" :rules="priceOptionRules"  name="priceOption" :disabled="inPreviewState">
+                <v-select class="" :label="'PRICE OPTION'" :items="priceOptions" v-model="priceOption" v-validate="'required'" :rules="priceOptionRules"  name="priceOption" :disabled="inPreviewState">
                 </v-select>
               </v-flex>
 
               <!-- Order Term for Market -->
               <v-flex v-if="isMarketOrder" xs6 class="font-size-10 height-55px mb6">
-                <v-text-field  label="Order Term" placeholder="GOOD FOR A DAY"  :type="'text'" name="orderTerm" disabled>
+                <v-text-field  label="ORDER TERM" placeholder="GOOD FOR A DAY"  :type="'text'" name="orderTerm" disabled>
                 </v-text-field>
               </v-flex>
 
               <!-- Order Term for Limit -->
               <v-flex v-if="!isMarketOrder" xs6 class="font-size-10 height-55px mb6">
-                <v-select class="font-size-10" :label="'Order Term'" :items="tradeOrderTerms" v-model="orderTerm" :rules="orderTermRules"  v-validate="'required'" name="orderTerm" :disabled="inPreviewState">
+                <v-select class="font-size-10" :label="'ORDER TERM'" :items="tradeOrderTerms" v-model="orderTerm" :rules="orderTermRules"  v-validate="'required'" name="orderTerm" :disabled="inPreviewState">
                 </v-select>
               </v-flex>
 
               <!-- Limit Price -->
               <v-flex xs6 v-if="isLimitOrder" class="height-55px mb6">
                 <!-- When not Previewing -->
-                <v-text-field   :label="'Limit Price'" v-model="limitPrice" :type="'number'" :rules="limitPriceRules"  v-validate="'required'" name="limitPrice" :disabled="inPreviewState">
+                <v-text-field   :label="'LIMIT PRICE'" v-model="limitPrice" :type="'number'" :rules="limitPriceRules"  v-validate="'required'" name="limitPrice" :disabled="inPreviewState">
                 </v-text-field>
                 <!-- When previewing v-if="!inPreviewState" -->
                 <!-- <v-text-field v-else  :label="'Limit Price'" :value="limitPrice | currency('',2)" :type="'text'" disabled>
@@ -80,13 +83,13 @@
               <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
                 <!-- <v-text-field  readonly :label="'Consideration'" v-model="orderConsideration" :type="'number'"   :disabled="inPreviewState">
                 </v-text-field> -->
-                <v-text-field  readonly :label="'Consideration'" :value="orderConsideration | currency('₦', 2)" :type="'text'"   :disabled="inPreviewState">
+                <v-text-field  readonly :label="'CONSIDERATION'" :value="orderConsideration | currency('₦', 2)" :type="'text'"   :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
               <!-- Total Fees -->
               <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
-                <v-text-field :label="'Total Fees'" :value="orderTotalFees | currency('₦',2)" :type="'text'"  :disabled="inPreviewState">
+                <v-text-field :label="'TOTAL FEES'" :value="orderTotalFees | currency('₦',2)" :type="'text'"  :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
@@ -303,7 +306,6 @@ export default
     }),
 
     obtainUpdatedCustomerData: function () {
-      console.log('Called update from mandate form')
       this.updateCustomerData(this.userId)
     },
 
@@ -361,7 +363,7 @@ export default
                 orderTotal = absoluteOrderTotal.toLocaleString()
                 orderTotal = `(${absoluteOrderTotal})`
               } else {
-                orderTotal = orderTotal.toLocaleString('en-IN')
+                orderTotal = orderTotal.toLocaleString()
               }
 
               this.formattedOrderTotal = '₦' + orderTotal
@@ -506,9 +508,9 @@ export default
      */
     getOrderTotalDescription: function () {
       if (this.orderType === 'BUY') {
-        this.orderTotalText = 'Total Estimated Cost'
+        this.orderTotalText = 'TOTAL ESTIMATED COST'
       } else {
-        this.orderTotalText = 'Total Estimated Proceeds'
+        this.orderTotalText = 'TOTAL ESTIMATED PROCEEDS'
       }
     },
 

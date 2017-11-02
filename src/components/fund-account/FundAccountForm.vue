@@ -33,13 +33,13 @@
 
                 <!-- Customer Name -->
                 <v-flex xs12 class="height-55px mb6">
-                  <v-text-field :label="'Customer Name'" v-model="username" :type="'text'"  disabled>
+                  <v-text-field :label="'CUSTOMER NAME'" v-model="username" :type="'text'"  disabled>
                   </v-text-field>
                 </v-flex>
 
                 <!-- Username -->
                 <v-flex xs6 class="height-55px mb6">
-                  <v-text-field :label="'Username'" v-model="portalUsername" :type="'text'"    name="username" disabled>
+                  <v-text-field :label="'USERNAME'" v-model="portalUsername" :type="'text'"    name="username" disabled>
                   </v-text-field>
                 </v-flex>
 
@@ -51,26 +51,26 @@
 
                 <!-- Payment Method -->
                 <v-flex xs6 class="height-55px mb6">
-                   <v-text-field :label="'Payment Method'" v-model="paymentMethod" :type="'text'"    name="paymentMethod" disabled>
+                   <v-text-field :label="'PAYMENT METHOD'" v-model="paymentMethod" :type="'text'"    name="paymentMethod" disabled>
                   </v-text-field>
                 </v-flex>
 
                 <!-- Cash Account -->
                 <v-flex xs12 class="height-55px mb6">
-                 <v-select class="" :label="'Select a cash account'" :items="cashAccounts" v-model="cashAccount" v-validate="'required'" :rules="cashAccountRules"  name="paymentMethod" :disabled="inPreviewState">
+                 <v-select class="" :label="'SELECT A CASH ACCOUNT'" :items="cashAccounts" v-model="cashAccount" v-validate="'required'" :rules="cashAccountRules"  name="paymentMethod" :disabled="inPreviewState">
                   </v-select>
                 </v-flex>
 
                 <!-- Currency -->
                 <v-flex xs6 class="height-55px mb6">
-                  <v-text-field :label="'Currency'" v-model="currency" :type="'text'"   v-validate="'required'" name="currency " :disabled="inPreviewState" disabled>
+                  <v-text-field :label="'CURRENCY'" v-model="currency" :type="'text'"   v-validate="'required'" name="currency " :disabled="inPreviewState" disabled>
                   </v-text-field>
                 </v-flex>
 
                 <!-- Amount to be shown only when not previwing the form -->
                 <v-flex xs6 class="height-55px mb6" v-if="!inPreviewState">
                   <v-text-field
-                    :label="'Amount'" v-model="clientAmount"
+                    :label="'AMOUNT'" v-model="clientAmount"
                     :type="'number'" :rules="amountRules"
                     v-validate="'required|min_value:50000|max_value:20000000'" name="amount"
                     :disabled="inPreviewState"
@@ -80,25 +80,25 @@
 
               <!-- Customer Amount to be shown only when previewing -->
               <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
-                <v-text-field  :label="'Customer Amount'" :value="clientAmount | currency('',0)" :type="'text'"   :disabled="inPreviewState">
+                <v-text-field  :label="'CUSTOMER AMOUNT'" :value="clientAmount | currency('',0)" :type="'text'"   :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
               <!-- Total Charges -->
               <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
-                <v-text-field  :label="'Total Charges'" v-model="transactionCharge" :type="'text'"   :disabled="inPreviewState">
+                <v-text-field  :label="'TOTAL CHARGES'" v-model="transactionCharge" :type="'text'"   :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
               <!-- Total Amount -->
               <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
-                <v-text-field  :label="'Total Amount'" :value="totalAmount | currency('',0)" :type="'text'"   :disabled="inPreviewState">
+                <v-text-field  :label="'TOTAL AMOUNT'" :value="totalAmount | currency('',0)" :type="'text'"   :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
 
               <!-- Transaction Code -->
               <v-flex xs12 v-if="inPreviewState" class="height-55px mb20">
-                <v-text-field  :label="'Transaction Code'" v-model="transaction_id"
+                <v-text-field  :label="'TRANSACTION CODE'" v-model="transaction_id"
                 hint="Please take note of your unique transaction id" persistent-hint
                 :type="'text'"  :disabled="inPreviewState">
                 </v-text-field>

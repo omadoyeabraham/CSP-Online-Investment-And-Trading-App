@@ -156,6 +156,7 @@
     // Calculate the data point interval on the Y axis
     const maximumValue = Math.max(...values)
     const minimumValue = Math.min(...values)
+    const diffRange = maximumValue - minimumValue
     /**
      * Divide by 500 = (5*100) because we want (5+1) data points
      *                 /100 & *100 so we round up to the nearest 100 using Math.ceil
@@ -211,9 +212,85 @@
     return chartData;
   }
 
+  // Return the data used to plot the 5 day ASI chart
+  let getCspPriceMovementChart = (data) => {
+    const dates = [];
+    const values = [];
+
+    // Loop through state data and properly format the dates and values
+    data.forEach((dayData) => {
+      // Remove the timestamp from the date returned
+      // const date = dayData.createdDttm.split(' ')[0]
+
+      dates.push(dayData.date)
+      values.push(parseFloat(dayData.price))
+    });
+
+    // Calculate the data point interval on the Y axis
+    const maximumValue = Math.max(...values)
+    const minimumValue = Math.min(...values)
+    const diffRange = maximumValue - minimumValue
+
+    /**
+     * Divide by 500 = (5*100) because we want (5+1) data points
+     *                 /100 & *100 so we round up to the nearest 100 using Math.ceil
+     */
+    const yAxisInterval = ((maximumValue - minimumValue) / 3).toFixed(2)
+
+    const chartData = {
+      chart: {
+        type: 'area'
+      },
+      lineWidth: 1,
+      title: {
+        text: ''
+      },
+      xAxis: {
+        categories: dates,
+        labels: {
+          enabled: false
+        }
+      },
+      yAxis: {
+        title: {
+          text: ''
+        },
+        labels: {
+          formatter: function () {
+            return this.value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          }
+        },
+        min: minimumValue,
+        max: maximumValue,
+        tickInterval: yAxisInterval
+      },
+      series: [{
+        name: ' ',
+        data: values,
+        showInLegend: false
+      }],
+      credits: {
+        enabled: false
+      },
+      plotOptions: {
+        area: {
+          // fillOpacity: 0.1,
+          // fillColor: '#4c7396'
+        },
+        series: {
+
+        }
+      }
+    }
+
+    return chartData;
+  }
+
+
 
  export const ChartService = {
    getCspPieChart: getCspPieChart,
    getCspBarChart: getCspBarChart,
-   getCspAreaChart: getCspAreaChart
+   getCspAreaChart: getCspAreaChart,
+   getCspPriceMovementChart: getCspPriceMovementChart
  }

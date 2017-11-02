@@ -87,7 +87,7 @@
 
     created () {
       // Continously poll the server every 30 seconds for updated user data
-      this.getUpdatedCustomerData = setInterval(this.obtainUpdatedCustomerData, 5000)
+      this.getUpdatedCustomerData = setInterval(this.obtainUpdatedCustomerData, 30000)
     },
 
     beforeDestroy () {
@@ -135,6 +135,7 @@
       ]),
 
       obtainUpdatedCustomerData: function () {
+        console.log('Got to component refresh message')
         this.updateCustomerData(this.userId)
       }
     }

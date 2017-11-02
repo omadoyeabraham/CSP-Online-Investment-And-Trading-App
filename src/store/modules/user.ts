@@ -53,7 +53,7 @@ const getters = {
   },
 
   getAccountManagerEmail: (state) => {
-    return (state.accountManagerEmail) ? state.accountManagerEmail : 'info@cardinalstone.com'
+    return (state.accountManagerEmail) ? state.accountManagerEmail : 'abraham.omadoye@cardinalstone.com'
   }
 
 }
@@ -91,7 +91,7 @@ const actions = {
    */
   updateCustomerData({ commit, state }, customerId) {
     let updatingCustomerData = UserService.getUserData(customerId)
-
+    console.log('Got to the updating customer data action')
     updatingCustomerData.then((response) => {
       let userData = response.data
 

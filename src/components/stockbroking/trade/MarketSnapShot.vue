@@ -403,7 +403,7 @@ export default
     }),
 
     priceMovementChartData: function () {
-      let chartData = ChartService.getCspAreaChart(this.selectedSecurityMarketSnapShot.priceMovements)
+      let chartData = ChartService.getCspPriceMovementChart(this.selectedSecurityMarketSnapShot.priceMovements)
 
       return chartData
     }

@@ -19,7 +19,7 @@
       :items="stockHoldings"
       :search="search"
       :no-data-text="noDataText"
-      id="portfolioHoldingsTable" class="table-striped table-bordered elevation-1">
+      id="portfolioHoldingsTable" class="table-striped table-bordered table-responsive table-sm  elevation-1">
       <template slot="headers" scope="props">
         <!-- <tr class="bg-csp-light-blue " id="portfolioHoldingsTableHeader">
           <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'text-right', 'white--text',
@@ -39,7 +39,7 @@
             <th class="text-right">TOTAL COST(₦)</th>
             <th class="text-right">GAIN/LOSS(₦)</th>
             <th class="text-right">GAIN/LOSS(%)</th>
-            <th class="text-center">ACTION</th>
+            <th class="text-center width-135px">ACTION</th>
           </tr>
       </template>
 
@@ -161,6 +161,7 @@ export default
       padding: 0px 5px !important
       color: #FFFFFF
       font-weight: bold
+      font-size: 11px
 
   #portfolioHoldingsTableBody
     td

@@ -100,6 +100,11 @@ export default new Router({
       component: FundAccount
     },
     {
+      path: '/fund-account/?s=:responsecode',
+      name: 'fund-account-response-from-api',
+      component: FundAccount
+    },
+    {
       path: '/reset-password',
       name: 'reset-password',
       component: ResetPassword

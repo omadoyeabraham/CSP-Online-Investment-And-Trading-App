@@ -19,9 +19,9 @@
                 <v-flex d-flex xs6 class="">
                   <v-text-field
                     append-icon="search"
-                    label="Search Market Data"
+                    label="SEARCH"
                     hide-details
-                    class="xs4"
+                    class="xs4 font-size-11"
                     v-model="search">
                   </v-text-field>
                 </v-flex>
@@ -44,17 +44,9 @@
         :rows-per-page-items="rowsPerPageItems"
         class="elevation-1 marketDataTable table-striped table-bordered">
         <template slot="headers" scope="props">
-          <!-- <tr class="bg-csp-light-blue marketDataTableHeader">
-            <th v-for="header in props.headers" :key="header.text" :class="['column sortable', 'white--text',    pagination.descending ? 'desc' : 'asc',
-                              header.value === pagination.sortBy ? 'active' : ''
-                              ]" @click="changeSort(header.value)">
-            </th>
-          </tr> -->
-
-
           <tr class="bg-csp-light-blue marketDataTableHeader">
             <th>SYMBOL</th>
-            <th class="text-right">P.CLOSE(₦)</th>
+            <th class="text-right hidden-md-down">P.CLOSE(₦)</th>
             <th class="text-right">OPEN(₦)</th>
             <th class="text-right">HIGH(₦)</th>
             <th class="text-right">LOW(₦)</th>
@@ -64,7 +56,7 @@
             <th class="text-right">CHANGE(%)</th>
             <th class="text-right">VOLUME</th>
             <th class="text-right">VALUE(₦)</th>
-            <th class="text-center white--text">ACTION</th>
+            <th class="text-center width-80px white--text ">ACTION</th>
           </tr>
         </template>
 
@@ -77,7 +69,7 @@
                 @click="setSelectedSecurity(props.item.name)">{{props.item.name}}
               </span>
             </td>
-            <td class="font-size-10 text-right">{{props.item.previousClose}}</td>
+            <td class="font-size-10 text-right hidden-md-down">{{props.item.previousClose}}</td>
             <td class="font-size-10 text-right">{{props.item.openingPrice}}</td>
             <td class="font-size-10 text-right">{{props.item.highPrice}}</td>
             <td class="font-size-10 text-right">{{props.item.lowPrice}}</td>
@@ -97,13 +89,13 @@
             <td class="font-size-10 text-right">{{props.item.percentChange | currency('',2)}}</td>
             <td class="font-size-10 text-right">{{props.item.quantityTraded | currency('',2)}}</td>
             <td class="font-size-10 text-right">{{props.item.valueTraded | currency('',2)}}</td>
-            <td class="font-size-10 text-center" style="padding: 0px">
+            <td class="font-size-10 text-center width-80px d-flex align-center justify-center" style="padding: 0px; border: 0px">
 
                 <!-- BUY -->
                 <v-btn
                   data-toggle="tooltip" data-placement="top" title="BUY" icon class="m0 p0 width-30px height-30px"
                   @click="tradeStock('BUY', props.item.name)">
-                  <v-icon class="green--text font-weight-bold" >
+                  <v-icon class="green--text font-weight-bold font-size-18" >
                     call_received
                   </v-icon>
                 </v-btn>
@@ -112,7 +104,7 @@
                <v-btn
                 data-toggle="tooltip" data-placement="top" title="SELL" icon class="m0 p0 width-30px height-30px"
                 @click="tradeStock('SELL', props.item.name)">
-                <v-icon  class="blue--text font-weight-bold" >
+                <v-icon  class="blue--text font-weight-bold font-size-18" >
                   call_made
                 </v-icon>
                </v-btn>
@@ -122,8 +114,7 @@
                   data-toggle="tooltip" data-placement="top" title="WATCHLIST"
                   icon class="m0 p0 width-30px height-30px"
                   @click="watchStock(props.item.name)">
-                  <v-icon class="color-csp-blue ml4 fa fa-eye fa-2x btn-icon font-weight-bold">
-                    <!-- remove_red_eye -->
+                  <v-icon class="color-csp-blue ml4 fa fa-eye fa-2x btn-icon font-weight-bold font-size-18">
                   </v-icon>
                 </v-btn>
 
@@ -278,11 +269,12 @@
       padding: 5px 5px !important
       color: #FFFFFF !important
       font-weight: bold
-      font-size: 11px
+      font-size: 10px
 
   .marketDataTableBody
+    border-bottom: none !important
     &:hover
-      *background: #DDD !important
+      background: #CCC !important
       cursor: pointer
 
   .marketDataTableBody
@@ -290,6 +282,8 @@
       padding: 5px 5px !important
       height: 25px
       color: #31708f
+    td:last-child
+      border-bottom: 0px solid transparent !important
   .btn__content
     padding: 0px !important
   .eemulate-link

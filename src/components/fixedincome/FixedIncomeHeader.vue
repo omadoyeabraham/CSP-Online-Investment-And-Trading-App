@@ -18,7 +18,8 @@
       <v-layout row class="pl7">
         <v-flex>
           <h5 v-if="showTotalValue" class="font-weight-bold">
-            VALUE OF PORTFOLIO: {{currency}}{{totalValueOfPortfolio | currency('',2)}}
+            <span class="font-size-11">VALUE OF PORTFOLIO:</span>
+            <span class="font-size-17 font-weight-normal">{{currency}}{{totalValueOfPortfolio | currency('',2)}}</span>
           </h5>
         </v-flex>
       </v-layout> <hr class="mt0">

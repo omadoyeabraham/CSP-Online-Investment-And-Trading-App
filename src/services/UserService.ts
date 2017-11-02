@@ -60,32 +60,19 @@ const resetPassword = (userID,oldPassword, newPassword) => {
  * @param accountManagerEmail
  * @return Promise
  */
-const contactManager = (subject, message, accountManagerEmail) => {
-  let emailIsSent = false
+const contactManager = (subject, message, accountManagerEmail,username) => {
 
-  let willSendEmail = new Promise(
-    (resolve, reject) => {
-      if (emailIsSent) {
-        const response = {
-          status: 200,
-          message: 'Email Successfully Sent'
-        }
-
-        setTimeout(function () {
-          resolve(response)
-        }, 3000)
-      } else {
-        const error = new Error('An error occured while sending the email')
-
-        setTimeout(function () {
-          reject(error)
-        }, 3000)
-
-      }
+  return axios({
+    url: ApiUrlService.ContactManager,
+    method: 'POST',
+    data: {
+      subject: subject,
+      message: message,
+      email: accountManagerEmail,
+      userName: username
     }
-  )
+  })
 
-  return willSendEmail
 }
 
 

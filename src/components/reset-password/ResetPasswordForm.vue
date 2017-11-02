@@ -18,7 +18,7 @@
                 <!-- Current Password -->
                 <v-flex xs12 class="height-55px mb6 pl10 pr10" >
                   <v-text-field
-                    :label="'Current Password'" v-model="oldPassword"
+                    :label="'CURRENT PASSWORD'" v-model="oldPassword"
                     :type="'password'" :rules="oldPasswordRules" class=""
                     v-validate="'required'" name="oldPassword">
                   </v-text-field>
@@ -27,7 +27,7 @@
                 <!-- New Password -->
                 <v-flex xs12 class="height-55px mb6 pl10 pr10" >
                   <v-text-field
-                    :label="'New Password'" v-model="newPassword"
+                    :label="'NEW PASSWORD'" v-model="newPassword"
                     :type="'password'" :rules="newPasswordRules"
                     v-validate="'required'" name="newPassword">
                   </v-text-field>
@@ -36,7 +36,7 @@
                 <!-- Confirm Password -->
                 <v-flex xs12 class="height-55px mb6 pl10 pr10" >
                   <v-text-field
-                    :label="'Confirm Password'" v-model="confirmPassword"
+                    :label="'CONFIRM PASSWORD'" v-model="confirmPassword"
                     :type="'password'" :rules="confirmPasswordRules"
                     v-validate="'required'" name="confirmPassword">
                   </v-text-field>

@@ -20,7 +20,7 @@
                 <!-- Manager Name -->
                 <v-flex xs12 class="height-55px mb6 pl10 pr10" >
                   <v-text-field
-                    :label="'Manager Name'" v-model="accountManagerName"
+                    :label="'MANAGER NAME'" v-model="accountManagerName"
                     :type="'text'" class=""
                     disabled>
                   </v-text-field>
@@ -29,7 +29,7 @@
                 <!-- Manager Email -->
                 <v-flex xs12 class="height-55px mb6 pl10 pr10" >
                   <v-text-field
-                    :label="'Manager Email'" v-model="accountManagerEmail"
+                    :label="'MANAGER EMAIL'" v-model="accountManagerEmail"
                     :type="'text'" class=""
                     disabled>
                   </v-text-field>
@@ -38,7 +38,7 @@
                 <!-- Subject -->
                 <v-flex xs12 class="height-55px mb6 pl10 pr10" >
                   <v-text-field
-                    :label="'Subject'" v-model="subject"
+                    :label="'SUBJECT'" v-model="subject"
                     :type="'text'" :rules="subjectRules"
                     v-validate="'required'" name="subject">
                   </v-text-field>
@@ -47,8 +47,9 @@
                 <!-- Message -->
                 <v-flex xs12 class="height-55px mb6 pl10 pr10" >
                   <v-text-field
-                    :label="'Message'" v-model="message"
-                    :type="'text'" :rules="messageRules"
+                    :label="'MESSAGE'" v-model="message"
+                    :type="'textarea'" :rules="messageRules"
+                    multi-line
                     v-validate="'required'" name="message">
                   </v-text-field>
                 </v-flex>
@@ -56,7 +57,7 @@
               </v-layout>
 
               <!-- Loading Icon when resetting password -->
-              <v-layout v-if="sendingEmail"  row class=" d-flex justify-center ">
+              <v-layout v-if="sendingEmail"  row class="mt100 d-flex justify-center ">
                 <v-flex class="xs6 d-flex justify-center align-center mt20">
                   <!-- <span class="font-size-10">Calculating Order Cost</span> -->
                   <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
@@ -65,7 +66,7 @@
               </v-layout>
 
               <!-- Buttons -->
-              <v-layout row class="mt20 ml2">
+              <v-layout row class="mt100 ml2">
                 <v-flex xs6 class="d-flex justify-start">
                   <v-btn style="background: #4c7396; color: #FFFFFF" @click="sendMessage()"
                     :disabled="sendingEmail">
@@ -128,7 +129,8 @@ export default
   computed: {
     ...mapGetters({
       'accountManagerName': 'getAccountManagerName',
-      'accountManagerEmail': 'getAccountManagerEmail'
+      'accountManagerEmail': 'getAccountManagerEmail',
+      'username': 'getUsername'
     })
   },
 
@@ -146,7 +148,7 @@ export default
         // No validation errors
         if (result) {
           // Send the email out
-          let sendingMessage = UserService.contactManager()
+          let sendingMessage = UserService.contactManager(this.subject, this.message, this.accountManagerEmail, this.username)
 
           sendingMessage.then((response) => {
             console.log(response)
