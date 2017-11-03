@@ -602,7 +602,8 @@ const getters = {
 
     // Loop through the bond holding, and perform the necessary calculations
     bondPortfolioHoldings.forEach((bondHolding, index) => {
-      faceValue = parseFloat(bondHolding.quantityHeld) * parseFloat(bondHolding.parValue)
+      // faceValue = parseFloat(bondHolding.quantityHeld) * parseFloat(bondHolding.parValue)
+      faceValue = parseFloat(bondHolding.marketValue)
       accruedCoupon = (parseFloat(bondHolding.dirtyPrice) - parseFloat(bondHolding.marketPrice)) * parseFloat(bondHolding.quantityHeld)
 
       bondHolding.id = index

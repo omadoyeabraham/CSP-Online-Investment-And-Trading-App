@@ -65,7 +65,7 @@
 <script>
   // The state management store used that houses application wide state
   import store from '../store';
-  // import * as mutationTypes from '../store/mutation-types'
+  import * as mutationTypes from '../store/mutation-types'
   // import {AuthenticationService} from '../services/AuthenticationService'
 
   import {mapState, mapGetters} from 'vuex'
@@ -136,10 +136,35 @@
 
     methods: {
       logout: function () {
-        // AuthenticationService.logout(this.user.userID)
+        // let logOutUser = AuthenticationService.logout(this.user.userID)
+
+        // logOutUser.then((response) => {
+        //   // Clear previously saved data before logging into the system again
+        //   window.sessionStorage.clear()
+
+        //   // Clear the stb store before logging in
+        //   store.commit(mutationTypes.CLEAR_STOCKBROKING_STORE)
+
+        //   // Clear the user store before logging in
+        //   store.commit(mutationTypes.CLEAR_USER_STORE)
+
+        //   // Redirect to the login page
+        //   this.$router.push({ name: 'Login' })
+        // }).catch((error) => {
+        //   console.log(error)
+        // })
 
         // // Reset the various stores to their default states
         // store.commit(mutationTypes.CLEAR_STOCKBROKING_STORE)
+
+        // Clear the stb store before logging in
+        store.commit(mutationTypes.CLEAR_STOCKBROKING_STORE)
+
+        // Clear the user store before logging in
+        store.commit(mutationTypes.CLEAR_USER_STORE)
+
+        // Clear previously saved data before logging into the system again
+        window.sessionStorage.clear()
 
         // Redirect to the login page
         this.$router.push({ name: 'Login' })

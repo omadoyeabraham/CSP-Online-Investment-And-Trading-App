@@ -8,7 +8,9 @@
 
   <div class="h-100" id="loginWrapper">
     <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
-       <div class="card card-container elevation-24">
+
+      <v-layout row>
+        <div class="card card-container elevation-24">
             <img id="company-img" class="img-responsive" src="../assets/img/cardinalstone.png" />
             <p id="profile-name" class="profile-name-card"></p>
 
@@ -85,13 +87,14 @@
             <a href="#" class="forgot-password">
                 Forgot your password?
             </a>
-			<p class="contact-company">
-				<a href="#">
-					Contact CardinalStone Help Desk
-				</a>
-
-			</p>
+        <p class="contact-company">
+          <a href="#">
+            Contact CardinalStone Help Desk
+          </a>
+        </p>
         </div><!-- /card-container -->
+      </v-layout>
+
     </div><!-- /container -->
   </div>
 
@@ -105,10 +108,22 @@
   import * as mutationTypes from '../store/mutation-types'
   import {AuthenticationService} from '../services/AuthenticationService';
   import StockbrokingService from '../services/StockbrokingService';
-  import { required } from 'vuelidate/lib/validators'
+  // import UtilityService from '../services/UtilityService';
+  import { required } from 'vuelidate/lib/validators';
 
   export default
   {
+
+    beforeCreate () {
+      /**
+      * Redirect users on mobile devices to the mobile view of the CSP portal
+       */
+      // if (UtilityService.isMobileUser) {
+      //   // window.location.assign('http://google.com')
+      //   // console.log('Mobile User')
+      //   // this.$router.push('http://google.com')
+      // }
+    },
 
     beforeDestroy () {
       // Clear the authentication error message incase it's been set
@@ -187,7 +202,14 @@
 
           this.$store.commit(mutationTypes.SET_AUTHENTICATION_ERROR_MESSAGE, 'We do not recognise this username or password')
 
-          this.$router.push({ name: 'Login' })
+          this.$store.commit(mutationTypes.SAVE_AUTHENTICATED_USER_TO_STORE, []);
+          this.$store.commit(mutationTypes.SAVE_USER_STOCKBROKING_DATA_TO_STORE, []);
+          this.$store.commit(mutationTypes.SET_STOCKBROKING_TOTAL_VALUE, []);
+          this.$store.commit(mutationTypes.SAVE_USER_FIXEDINCOME_DATA_TO_STORE, []);
+          this.$store.commit(mutationTypes.SAVE_USER_CASH_DATA_TO_STORE, []);
+          this.$store.commit(mutationTypes.SAVE_USER_SMA_DATA_TO_STORE, []);
+
+          // this.$router.push('login')
         });
       }
 

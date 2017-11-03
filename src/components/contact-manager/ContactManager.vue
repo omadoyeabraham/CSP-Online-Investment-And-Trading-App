@@ -13,7 +13,7 @@
     <v-layout row>
 
       <!-- Fund Account Form -->
-      <v-flex xs4>
+      <v-flex xs4 offset-xs4>
         <contact-manager-form>
         </contact-manager-form>
       </v-flex>

@@ -5,7 +5,7 @@
  */
 
 // export const BaseApiUrl = 'https://restserver.cardinalstone.com/api';
-export const BaseApiUrl = 'http://restserver.cardinalstone.com/public/index.php/api';
+export const BaseApiUrl = 'https://restserver.cardinalstone.com/public/index.php/api';
 
 export const AuthenticationUrl = `${BaseApiUrl}/findCustomerByName`;
 export const LogoutUrl = `${BaseApiUrl}/logout`

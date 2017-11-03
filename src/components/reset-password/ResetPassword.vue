@@ -10,7 +10,7 @@
       <v-flex class="font-size-20 csp-light-blue-text">Reset Password</v-flex>
     </v-layout> <hr>
 
-    <!-- Form and Privacy Content -->
+    <!-- Form-->
     <v-layout row>
 
       <!-- Fund Account Form -->
@@ -21,15 +21,24 @@
 
     </v-layout>
 
+    <!--Password Policy -->
+    <v-layout row class="mt50">
+      <v-flex xs6>
+        <password-policy></password-policy>
+      </v-flex>
+    </v-layout>
+
   </v-container>
 </template>
 
 <script>
 import ResetPasswordForm from './ResetPasswordForm'
+import PasswordPolicy from './PasswordPolicy'
 
 export default {
   components: {
-    ResetPasswordForm
+    ResetPasswordForm,
+    PasswordPolicy
   }
 }
 </script>

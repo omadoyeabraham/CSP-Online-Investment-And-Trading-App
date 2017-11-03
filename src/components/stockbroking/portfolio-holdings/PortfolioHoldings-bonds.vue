@@ -108,7 +108,7 @@
                 </li>
                 <li class="list-group-item font-size-12 white--text">
                   <span>Face Value</span>
-                  <span class="ml-auto font-weight-normal">{{selectedBond.faceValue}}</span>
+                  <span class="ml-auto font-weight-normal">{{selectedBond.faceValue | currency('',2)}}</span>
                 </li>
                 <li class="list-group-item font-size-12 white--text">
                   <span>Accrued Coupon</span>

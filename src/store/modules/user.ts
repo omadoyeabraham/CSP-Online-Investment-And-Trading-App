@@ -53,7 +53,7 @@ const getters = {
   },
 
   getAccountManagerEmail: (state) => {
-    return (state.accountManagerEmail) ? state.accountManagerEmail : 'abraham.omadoye@cardinalstone.com'
+    return (state.accountManagerEmail) ? state.accountManagerEmail : 'crd@cardinalstone.com'
   }
 
 }

@@ -43,8 +43,31 @@
         v-if="mini===false">
         <span>Account Actions</span>
       </div>
-
       <UserAccountActionsComponent :accountActions="accountActions"></UserAccountActionsComponent>
+
+      <!-- Links -->
+      <div
+        class="sidebar-header d-flex justify-content-between mt20"
+        v-if="mini===false">
+        <span>Links</span>
+      </div>
+      <!-- <UserAccountActionsComponent :accountActions="actionLinks"></UserAccountActionsComponent> -->
+      <v-list dense>
+        <v-list-tile>
+          <div class="mr10">
+            <v-icon class="sidebar-icon">fa fa-bar-chart</v-icon>
+          </div>
+          <v-list-tile-content>
+            <v-list-tile-title class="font-size-11" style="overflow: hidden">
+              <a href="https://research.cardinalstone.com" target="blank">Visit the Research Portal</a>
+              <v-chip
+                class="red white--text font-size-10"
+                style="height: 20px">
+                New</v-chip>
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
 
       <!-- <MarketTime
         class="height-55px">
@@ -135,7 +158,6 @@
       ]),
 
       obtainUpdatedCustomerData: function () {
-        console.log('Got to component refresh message')
         this.updateCustomerData(this.userId)
       }
     }
@@ -154,7 +176,8 @@
     margin-bottom: 0
     border-bottom: 1px solid rgb(204,204,204)
 
-    .sidebar-icon
-      color: #428bca !important
+  .sidebar-icon
+      color: #8fb0cc !important
+
 
 </style>

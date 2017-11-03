@@ -29,9 +29,19 @@
      return (keys.length == 0)
  }
 
+ /**
+  * Determine if a user is accessing the application via a mobile browser
+  *
+  * @return boolean
+  */
+ let isMobileUser = () => {
+  return true
+ }
+
 
  export default {
    getDefaultCashStatementStartDate,
    getDefaultCashStatementEndDate,
-   objectHasNodata
+   objectHasNodata,
+   isMobileUser
  }

@@ -28,15 +28,6 @@ import StockbrokingService from './StockbrokingService'
   */
  let login = (username: string, password: string) => {
 
-  // Clear previously saved data before logging into the system again
-  window.sessionStorage.clear()
-
-  // Clear the stb store before logging in
-  store.commit(mutationTypes.CLEAR_STOCKBROKING_STORE)
-
-  // Clear the user store before logging in
-  store.commit(mutationTypes.CLEAR_USER_STORE)
-
   return axios({
     method: 'post',
     url: ApiUrls.AuthenticationUrl,
@@ -49,15 +40,13 @@ import StockbrokingService from './StockbrokingService'
   * Logout the user
   */
  let logout = (customerId) => {
-  console.log(`Logging out ${customerId}`)
-
   // Clear the data saved in local storage
-  window.sessionStorage.clear()
+  // window.sessionStorage.clear()
 
   // Clear the stb store before logging in
-  store.commit(mutationTypes.CLEAR_STOCKBROKING_STORE)
+  // store.commit(mutationTypes.CLEAR_STOCKBROKING_STORE)
 
-  axios({
+  return axios({
     method: 'POST',
     url: ApiUrls.LogoutUrl,
     data: { customerId: customerId }

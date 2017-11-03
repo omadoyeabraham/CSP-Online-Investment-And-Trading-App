@@ -106,9 +106,10 @@ export const userAccountActions: Array<object> = [
     routeName: 'fund-account',
     new: true
   },
-  { icon: 'perm_identity', action: 'Manage Profile', link: '/manage-profile' },
+  // { icon: 'perm_identity', action: 'Manage Profile', link: '/manage-profile' },
   { icon: 'lock', action: 'Reset Password', link: '/reset-password' },
   { icon: 'contact_phone', action: 'Contact Manager', link: '/contact-manager' },
 ]
+
 
 
