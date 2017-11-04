@@ -247,7 +247,7 @@ const getters = {
   },
 
   /**
-   * Get the portfolio holdings of the currentl selected portfolio
+   * Get the portfolio holdings of the currently selected portfolio
    *
    */
   getCurrentPortfolioHoldings: (state, getters) => {
@@ -257,7 +257,11 @@ const getters = {
     }
 
     // Check because some portfolios don't have the portfolio holdings index set on the portfolio object
-    let portfolioHoldings = state.currentPortfolio.portfolioHoldings ? state.currentPortfolio.portfolioHoldings : [];
+    let portfolioHoldings = state.currentPortfolio.portfolioHoldings ?  state.currentPortfolio.portfolioHoldings : [];
+
+    // Ensure the portfolio Holdings is always an array of objects
+    portfolioHoldings = UtilityService.ensureDataIsAnArray(portfolioHoldings)
+    console.log(portfolioHoldings)
 
     return portfolioHoldings
   },

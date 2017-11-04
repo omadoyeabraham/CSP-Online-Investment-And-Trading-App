@@ -38,10 +38,27 @@
   return true
  }
 
+ /**
+  * Ensure that the data passed in is an array. In cases of objects, convert to an Array of one object
+  *
+  * @param data
+  * return Array<objects>
+  */
+ let ensureDataIsAnArray = (data) => {
+   if (typeof data === 'object' && !Array.isArray(data)) {
+
+      // Data is an object
+      return [data]
+   }
+
+   // Data is an array
+   return data
+ }
+
 
  export default {
    getDefaultCashStatementStartDate,
    getDefaultCashStatementEndDate,
    objectHasNodata,
-   isMobileUser
+   isMobileUser,ensureDataIsAnArray
  }

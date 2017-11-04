@@ -25,9 +25,12 @@
       <v-layout column>
         <v-flex style="margin-top: -10px">
           <span class="body-1 welcome">Welcome,
-             <span class=" username">
+             <span v-if="userNameIsDefined" class="username">
               {{firstName.toLowerCase() | capitalize}}
               {{lastName.toLowerCase() | capitalize}}
+             </span>
+             <span v-else class="username">
+               {{clientName.toLowerCase() | capitalize}}
              </span>
           </span>
 
@@ -101,8 +104,17 @@
 
       ...mapGetters({
         'firstName': 'getFirstName',
-        'lastName': 'getLastName'
-      })
+        'lastName': 'getLastName',
+        'clientName': 'getClientName'
+      }),
+
+      /**
+       * Determine if the user's first and last name is set
+       *
+      */
+      userNameIsDefined: function () {
+        return ((this.firstName !== 'undefined') && (this.lastName !== 'undefined'))
+      }
     },
 
     mounted () {

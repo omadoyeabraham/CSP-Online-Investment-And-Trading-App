@@ -33,9 +33,15 @@ const getters = {
     return state.lastName
   },
 
+  getClientName: (state) => {
+    return state.info.label
+  },
+
   getUsername: (state) => {
     let firstName = state.firstName[0].toUpperCase() + state.firstName.slice(1)
     let lastName = state.lastName[0].toUpperCase() + state.lastName.slice(1)
+
+    console.log(typeof firstName, typeof lastName)
 
     return `${firstName} ${lastName}`
   },
