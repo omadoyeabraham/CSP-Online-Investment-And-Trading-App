@@ -22,6 +22,8 @@ import TerminatedDollarInvestments from '@/components/fixedIncome/TerminatedDoll
 // Cash Components
 import NairaCashAccounts from '@/components/cash/NairaCashAccounts'
 import DollarCashAccounts from '@/components/cash/DollarCashAccounts'
+// import CashAccountsOverview from '@components/cash/CashAccountsOverview'
+import CashAccountsOverview from '../components/cash/CashAccountsOverview.vue'
 
 // SMA
 import Sma from '@/components/sma/Sma'
@@ -138,6 +140,11 @@ export default new Router({
       path: '/di/terminated',
       name: 'di-terminated',
       component: TerminatedDollarInvestments
+    },
+    {
+      path: '/cash',
+      name: 'cash-overview',
+      component: CashAccountsOverview
     },
     {
       path: '/cash/naira',

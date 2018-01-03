@@ -1,5 +1,5 @@
 <!--
-  This component is the parent component for the entire cash account page
+  This component is the parent component for the entire dollar cash account page
 
   @author Omadoye Abraham <omadoyeabraham@gmail.com>
 -->

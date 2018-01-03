@@ -1,15 +1,17 @@
 <template>
   <v-container fluid class="pb0">
 
-  <!-- Page heading and Fund account button -->
+  <!-- Page heading -->
   <v-layout row class="">
     <v-flex d-flex align-end >
-      <h3 class="font-size-20 csp-light-blue-text mb0">{{title}}</h3>
-    </v-flex>
-    <v-flex d-flex justify-end align-start>
-      <v-btn :to="'/fund-account'" info  class="fund-account-btn font-size-10 p0 ml-auto mb0 mr0">
-        Fund My Account
-      </v-btn>
+
+      <!-- currently hidden because of a change in requirements -->
+      <!-- <h3 class="font-size-20 csp-light-blue-text mb0">{{title}}</h3> -->
+
+      <h3 class="font-size-20 csp-light-blue-text mb0">
+        <router-link :to="'/cash'">Cash Accounts /</router-link>
+        <span>{{}}</span>
+      </h3>
     </v-flex>
   </v-layout>
 
@@ -19,7 +21,9 @@
       <v-flex d-flex align-end>
         <h3 class="font-size-11 csp-blue-text font-weight-bold">NUMBER OF CASH ACCOUNTS: {{totalNumberOfCashAccounts}} ACCOUNTS</h3>
       </v-flex>
-      <v-flex d-flex justify-end>
+
+      <!--Account switching currently hidden because of a change in application -->
+      <v-flex d-flex justify-end v-if="false">
          <label class="mr-sm-2 d-flex align-end font-size-11 font-weight-bold mt10" for="selectAccount">SELECT ACCOUNT:</label>
         <select class="custom-select mt10" id="selectAccount"
           v-model="selectedNairaCashAccountID"
@@ -29,10 +33,18 @@
             v-bind:value="item.id">{{item.label}}</option>
         </select>
       </v-flex>
+
+      <!-- Fund Account button -->
+      <v-flex d-flex justify-end align-start>
+      <v-btn :to="'/fund-account'" info  class="fund-account-btn font-size-10 p0 ml-auto mb0 mr0">
+        Fund My Account
+      </v-btn>
+    </v-flex>
+
     </v-layout>
     <hr class="mb1">
 
-    <!-- Period and date range search -->
+    <!-- Period and date range search  -->
     <v-layout row class="mb0 height-60px">
       <!-- period -->
       <v-flex d-flex align-center>
