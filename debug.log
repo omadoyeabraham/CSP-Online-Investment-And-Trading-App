@@ -46,3 +46,4 @@
 [1030/155444.006:ERROR:process_info.cc(632)] range at 0x57929ade00000000, size 0x148 fully unreadable
 [1030/155444.006:ERROR:process_info.cc(632)] range at 0x0, size 0x148 fully unreadable
 [1124/151135.901:ERROR:settings.cc(263)] Settings version is not 1
+[0103/101015.135:ERROR:settings.cc(263)] Settings version is not 1
