@@ -164,7 +164,7 @@
       },
 
       totalValueOfSmaInvestments: function () {
-        return parseFloat(this.smaTotalValue) + parseFloat(this.totalNairaSmaCashBalance)
+        return parseFloat(this.smaTotalValue) // + parseFloat(this.totalNairaSmaCashBalance)
       }
 
     }

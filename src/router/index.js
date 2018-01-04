@@ -26,7 +26,7 @@ import DollarCashAccounts from '@/components/cash/DollarCashAccounts'
 import CashAccountsOverview from '../components/cash/CashAccountsOverview.vue'
 
 // SMA
-import Sma from '@/components/sma/Sma'
+import SmaOverview from '../components/sma/SmaOverview'
 
 // Fund Account
 import FundAccount from '@/components/fund-account/FundAccount'
@@ -119,7 +119,7 @@ export default new Router({
     {
       path: '/sma',
       name: 'sma',
-      component: Sma
+      component: SmaOverview
     },
     {
       path: '/fi/running',

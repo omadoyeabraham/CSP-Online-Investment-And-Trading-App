@@ -345,7 +345,7 @@ const getters = {
 
     nairaCashAccounts.forEach((nairaCashAccount) => {
 
-      // Only add the balances from non SMA accounts
+      // Only add the balances from SMA accounts
       if (nairaCashAccount.label.indexOf('(SMA)') !== -1) {
         totalNairaSmaCashBalance += parseFloat(nairaCashAccount.unClearedBalance)
       }
@@ -356,7 +356,7 @@ const getters = {
 
   },
 
-    /**
+  /**
    * Get the total cash balance for Dollar Investments
    *
    */

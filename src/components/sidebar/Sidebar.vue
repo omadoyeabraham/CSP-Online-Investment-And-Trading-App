@@ -90,6 +90,7 @@
   import {nairaInvestments, dollarInvestments, userAccountActions} from '../../services/SidebarService.ts';
 
   import {stockbroking} from '../../services/NairaInvestmentsService';
+  import CashService from '../../services/CashService'
   import MarketTime from '../MarketTime'
 
   const NairaInvestments = nairaInvestments;
@@ -111,6 +112,9 @@
     created () {
       // Continously poll the server every 30 seconds for updated user data
       this.getUpdatedCustomerData = setInterval(this.obtainUpdatedCustomerData, 30000)
+
+      // Get updated cash data from the server every 1 minute
+      this.getUpdatedCustomerCashData = setInterval(this.obtainUpdatedCustomerCashData, 600000)
     },
 
     beforeDestroy () {
@@ -159,6 +163,11 @@
 
       obtainUpdatedCustomerData: function () {
         this.updateCustomerData(this.userId)
+      },
+
+      obtainUpdatedCustomerCashData: function () {
+        console.log('Obtain updated cash data called')
+        CashService.setDefaultCashAccountValues()
       }
     }
 

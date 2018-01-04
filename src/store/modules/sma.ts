@@ -27,8 +27,9 @@ const getters = {
     let smaTotalValue = 0
 
     portfolios.forEach((portfolio) => {
+      // if (portfolio.portfolioClass != "EXCHANGE" || portfolio.label.indexOf('(SMA)') != -1) {
       // DO not sum up exchange or non-SMA portfolios
-      if (portfolio.portfolioClass != "EXCHANGE" || portfolio.label.indexOf('(SMA)') != -1) {
+      if (portfolio.portfolioClass != "EXCHANGE") {
         smaTotalValue += parseFloat(portfolio.currentValuation.amount)
       } else {
         return
@@ -57,6 +58,54 @@ const getters = {
     const chartData = ChartService.getCspPieChart(getters.getSmaSectorData)
 
     return chartData
+  },
+
+  getSmaCurrentPortfolioHoldings: (state, getters) => {
+    return state.smaStb[0].portfolioHoldings
+  },
+
+  getSmaStockPortfolioHoldings: (state, getters) => {
+
+    let currentPortfolioHoldings = getters.getSmaCurrentPortfolioHoldings
+
+    if (currentPortfolioHoldings.length === 0) {
+      return []
+    }
+
+    // Filter to pick only equity stock
+    let stockPortfolioHoldings = currentPortfolioHoldings.filter((portfolioHolding) => {
+      return (portfolioHolding.securityType === 'EQUITY')
+    })
+
+    let percentageOfPortfolio = 0
+    let gainOrLoss = 0
+    let percentageGainOrLoss = 0
+    let totalCost = 0
+    let currentStockValue = 0
+    let totalPortfolioValue = getters.currentPortfolioTotalValue
+    let currentPortfolioStockHoldings = []
+
+    stockPortfolioHoldings.forEach((stockPortfolioHolding) => {
+      percentageOfPortfolio = ((parseFloat(stockPortfolioHolding.valuation)) / totalPortfolioValue) * 100
+      totalCost = parseFloat(stockPortfolioHolding.costBasis) * parseFloat(stockPortfolioHolding.quantityHeld)
+      gainOrLoss = parseFloat(stockPortfolioHolding.valuation) - totalCost
+      percentageGainOrLoss = (gainOrLoss / totalCost) * 100
+
+      stockPortfolioHolding.percentageOfPortfolio = percentageOfPortfolio
+      stockPortfolioHolding.gainOrLoss = gainOrLoss
+      stockPortfolioHolding.percentageGainOrLoss = percentageGainOrLoss
+      stockPortfolioHolding.totalCost = totalCost
+
+      if (gainOrLoss < 0) {
+        stockPortfolioHolding.lost = true
+      } else if (gainOrLoss > 0) {
+        stockPortfolioHolding.gained = true
+      }
+
+      currentPortfolioStockHoldings.push(stockPortfolioHolding)
+    })
+
+    return currentPortfolioStockHoldings
   }
 
 }
