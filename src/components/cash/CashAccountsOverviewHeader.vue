@@ -8,7 +8,8 @@
   <v-layout row class="">
     <v-flex d-flex align-end >
       <h3 class="font-size-20 csp-light-blue-text mb0">
-        <router-link :to="'/fund-account'">Cash Accounts </router-link> / Account Summary</h3>
+        Cash Accounts / Account Summary
+      </h3>
     </v-flex>
   </v-layout>
 

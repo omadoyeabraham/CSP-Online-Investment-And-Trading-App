@@ -46,7 +46,7 @@
 
   import CashService from '../../services/CashService'
 
-  import CashAccountHeader from './CashAccountHeader'
+  import CashAccountHeader from './NairaCashAccountHeader'
   import CashAccountSummary from './CashAccountSummary'
   import CashAccountDetails from './CashAccountDetails'
   export default

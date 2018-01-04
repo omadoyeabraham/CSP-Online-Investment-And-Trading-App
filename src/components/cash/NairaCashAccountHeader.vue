@@ -9,8 +9,8 @@
       <!-- <h3 class="font-size-20 csp-light-blue-text mb0">{{title}}</h3> -->
 
       <h3 class="font-size-20 csp-light-blue-text mb0">
-        <router-link :to="'/cash'">Cash Accounts /</router-link>
-        <span>{{}}</span>
+        <router-link :to="'/cash'" class="csp-light-blue-text">Cash Accounts /</router-link>
+        <span>{{selectedNairaCashAccount.label}}</span>
       </h3>
     </v-flex>
   </v-layout>
@@ -19,7 +19,7 @@
     <!-- Number of accounts and account switching -->
     <v-layout row  class="">
       <v-flex d-flex align-end>
-        <h3 class="font-size-11 csp-blue-text font-weight-bold">NUMBER OF CASH ACCOUNTS: {{totalNumberOfCashAccounts}} ACCOUNTS</h3>
+        <h3 class="font-size-11 csp-blue-text font-weight-bold mb0">NUMBER OF CASH ACCOUNTS: {{totalNumberOfCashAccounts}} ACCOUNTS</h3>
       </v-flex>
 
       <!--Account switching currently hidden because of a change in application -->

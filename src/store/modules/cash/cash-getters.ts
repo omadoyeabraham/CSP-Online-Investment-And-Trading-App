@@ -98,6 +98,10 @@ const getters = {
     return _.union(state.userData.NGN, state.userData.USD)
   },
 
+  getAllCashAccountsDefaultValues: (state) => {
+    return state.allCashAccountsDefaultValues;
+  },
+
   /**
    * Return the cash statements (which might have been filtered by date) for the current
    * naira cash account selected
@@ -319,9 +323,11 @@ const getters = {
     nairaCashAccounts.forEach((nairaCashAccount) => {
 
       // Only add the balances from non SMA accounts
-      if (nairaCashAccount.label.indexOf('(SMA)') === -1) {
-        totalNairaCashBalance += parseFloat(nairaCashAccount.unClearedBalance)
-      }
+      // if (nairaCashAccount.label.indexOf('(SMA)') === -1) {
+      //   totalNairaCashBalance += parseFloat(nairaCashAccount.unClearedBalance)
+      // }
+
+      totalNairaCashBalance += parseFloat(nairaCashAccount.unClearedBalance)
 
     })
 
@@ -364,6 +370,22 @@ const getters = {
 
     return totalDollarCashBalance
 
+  },
+
+  /**
+   * Return the currently selected Naira cash account
+   *
+   */
+  getSelectedNairaCashAccount: (state, getters) => {
+    return state.getSelectedNairaCashAccount
+  },
+
+    /**
+   * Return the currently selected Dollar cash account
+   *
+   */
+  getSelectedDollarCashAccount: (state, getters) => {
+    return state.getSelectedDollarCashAccount
   }
 
 }

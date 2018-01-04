@@ -104,7 +104,7 @@ const actions = {
       // Commit the authenticated user's data to the vue store.
       commit(mutationTypes.UPDATE_USER_STOCKBROKING_DATA_IN_STORE, userData);
       commit(mutationTypes.SAVE_USER_FIXEDINCOME_DATA_TO_STORE, userData);
-      commit(mutationTypes.SAVE_USER_CASH_DATA_TO_STORE, userData);
+      commit(mutationTypes.UPDATE_USER_CASH_DATA_IN_STORE, userData);
       commit(mutationTypes.SAVE_USER_SMA_DATA_TO_STORE, userData);
     }).catch((error) => {
       console.log(error)

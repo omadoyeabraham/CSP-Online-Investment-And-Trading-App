@@ -108,7 +108,8 @@
   import * as mutationTypes from '../store/mutation-types'
   import {AuthenticationService} from '../services/AuthenticationService';
   import StockbrokingService from '../services/StockbrokingService';
-  // import UtilityService from '../services/UtilityService';
+  import CashService from '../services/CashService';
+
   import { required } from 'vuelidate/lib/validators';
 
   export default
@@ -187,6 +188,7 @@
           StockbrokingService.getActiveTradeOrderTerms()
           StockbrokingService.getSecurityNames()
           StockbrokingService.getTradeOrders(0)
+          CashService.setDefaultCashAccountValues()
 
           // Hide the sign-in loading spinner
           this.isAuthenticating = false

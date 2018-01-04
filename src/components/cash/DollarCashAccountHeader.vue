@@ -1,29 +1,41 @@
 <template>
   <v-container fluid class="pb0">
 
-    <!-- Page heading and Fund account button -->
+    <!-- Page heading -->
     <v-layout row>
       <v-flex d-flex align-center>
-        <h3 class="font-size-20 csp-light-blue-text">{{title}}</h3>
+        <!-- currently hidden because of a change in requirements -->
+        <!-- <h3 class="font-size-20 csp-light-blue-text mb0">{{title}}</h3> -->
+
+        <h3 class="font-size-20 csp-light-blue-text mb0">
+          <router-link :to="'/cash'" class="csp-light-blue-text">Cash Accounts /</router-link>
+          <span>{{selectedDollarCashAccount.label}}</span>
+        </h3>
       </v-flex>
-      <v-flex d-flex justify-end align-start>
-        <v-btn :to="'/fund-account'" info  class="fund-account-btn font-size-10 p0 ml-auto mb0 mr0">
-          Fund My Account
-        </v-btn>
-      </v-flex>
+
     </v-layout>
 
     <!-- Number of accounts and account switching -->
     <v-layout row class="mb10">
       <v-flex d-flex align-end>
-        <h3 class="font-size-11 csp-blue-text font-weight-bold">NUMBER OF CASH ACCOUNTS: {{totalNumberOfCashAccounts}} ACCOUNTS</h3>
+        <h3 class="font-size-11 csp-blue-text font-weight-bold mb0">NUMBER OF CASH ACCOUNTS: {{totalNumberOfCashAccounts}} ACCOUNTS</h3>
       </v-flex>
-      <v-flex d-flex justify-end>
+
+      <!-- Hidden because of a change in application requirements -->
+      <v-flex d-flex justify-end v-if="false">
          <label class="mr-sm-2 d-flex align-end font-size-11 font-weight-bold mt10" for="selectAccount">SELECT ACCOUNT:</label>
         <select class="custom-select mt10" id="selectAccount" v-model="selectedDollarCashAccountID">
           <option v-for="(item, index) in cashAccounts" :key="index" v-bind:value="item.id">{{item.label}}</option>
         </select>
       </v-flex>
+
+      <!-- Fund account button -->
+      <v-flex d-flex justify-end align-start>
+        <v-btn :to="'/fund-account'" info  class="fund-account-btn font-size-10 p0 ml-auto mb0 mr0">
+          Fund My Account
+        </v-btn>
+      </v-flex>
+
     </v-layout>
     <hr class="mb1">
 

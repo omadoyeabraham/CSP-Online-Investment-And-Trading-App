@@ -29,6 +29,11 @@ const mutations = {
       state.selectedDollarCashAccount = state.userData.USD[0]
     }
 
+    state.allCashAccountsDefaultValues = [
+      ...state.userData.NGN,
+      ...state.userData.USD
+    ]
+
 
   },
 

@@ -18,26 +18,80 @@
         </tr>
       </thead>
         <tbody>
-      <tr v-for="(cashAccount, index) in nairaCashAccounts" :key="index">
-        <td @click="viewCashAccount(cashAccount.id, cashAccount.currency)" class="link">{{ cashAccount.label }} </td>
+      <tr v-for="(cashAccount, index) in allCashAccounts" :key="index"
+           @click="viewCashAccount(cashAccount.id, cashAccount.currency)" class="link">
+        <td style="font-weight: 600">{{ cashAccount.label }} </td>
         <td>{{ cashAccount.currency }}</td>
-        <td class="text-right"></td>
-        <td class="text-right">{{cashAccount.clearedBalance | currency('', 2)}}</td>
-        <td class="text-right">{{}}</td>
+        <td class="text-right">
+          <span v-if="cashAccount.currency === 'NGN'">
+            {{cashAccount.cspInitialUnclearedEffects | currency('&#8358;',2)}}
+          </span>
+          <span v-if="cashAccount.currency === 'USD'">
+            {{cashAccount.cspInitialUnclearedEffects | currency('&#36;',2)}}
+          </span>
+        </td>
+        <td class="text-right">
+            <span v-if="cashAccount.clearedBalance < 0" class="red--text">
+               <span v-if="cashAccount.currency === 'NGN'" >
+                 &#8358;({{Math.abs(cashAccount.clearedBalance) | currency('',2)}})
+               </span>
+              <span v-if="cashAccount.currency === 'USD'" >
+                 ({{Math.abs(cashAccount.clearedBalance) | currency('&#36;',2)}})
+               </span>
+            </span>
+            <span v-else>
+              <span v-if="cashAccount.currency === 'NGN'">
+                {{cashAccount.clearedBalance | currency('&#8358;',2)}}
+              </span>
+              <span v-if="cashAccount.currency === 'USD'">
+                {{cashAccount.clearedBalance | currency('&#36;',2)}}
+              </span>
+            </span>
+        </td>
+        <td class="text-right">
+          <span v-if="(parseFloat(cashAccount.cspInitialUnclearedEffects) + parseFloat(cashAccount.clearedBalance)) < 0" class="red--text">
+            <span v-if="cashAccount.currency === 'NGN'">
+               &#8358;({{Math.abs((parseFloat(cashAccount.cspInitialUnclearedEffects) + parseFloat(cashAccount.clearedBalance))) |currency('', 2)}})
+            </span>
+             <span v-if="cashAccount.currency === 'USD'">
+               &#36;({{Math.abs((parseFloat(cashAccount.cspInitialUnclearedEffects) + parseFloat(cashAccount.clearedBalance))) |currency('', 2)}})
+            </span>
+          </span>
+          <span v-else>
+            <span v-if="cashAccount.currency === 'NGN'">
+              {{ (parseFloat(cashAccount.cspInitialUnclearedEffects) + parseFloat(cashAccount.clearedBalance)) | currency('&#8358;', 2) }}
+            </span>
+             <span v-if="cashAccount.currency === 'USD'">
+              {{ (parseFloat(cashAccount.cspInitialUnclearedEffects) + parseFloat(cashAccount.clearedBalance)) | currency('&#36;', 2) }}
+            </span>
+          </span>
+        </td>
       </tr>
     </tbody>
     </table>
 
+    <hr class="mt18">
+
     <!-- Naira and Dollar balances -->
-    <v-flex xs12 class="mt15">
-      <v-flex text-right class="font-size-14 csp-light-blue-text font-weight-bold">
-        <span>Naira Balance: </span>
-        <span class="ml6">&#8358;31,202.69</span>
-      </v-flex>
-      <v-flex text-right class="mt5 font-size-14 csp-light-blue-text font-weight-bold">
-        <span>Dollar Balance: </span>
-        <span class="ml6">&#8358;31,202.69</span>
-      </v-flex>
+
+    <v-flex xs12 text-right class="mt15">
+      <v-container fluid class='p0'>
+        <v-layout>
+          <v-flex xs9></v-flex>
+          <v-flex xs2 text-right class="font-size-14 csp-light-blue-text font-weight-bold">Naira Balance:</v-flex>
+          <v-flex xs1 text-left class="font-size-14 csp-light-blue-text font-weight-bold">{{totalNairaCashBalance | currency('&#8358;', 2)}}</v-flex>
+        </v-layout>
+      </v-container>
+    </v-flex>
+
+    <v-flex xs12 text-right class="">
+      <v-container fluid class='p0'>
+        <v-layout>
+          <v-flex xs9></v-flex>
+          <v-flex xs2 text-right class="font-size-14 csp-light-blue-text font-weight-bold">Dollar Balance:</v-flex>
+          <v-flex xs1 text-left class="font-size-14 csp-light-blue-text font-weight-bold">{{totalDollarCashBalance | currency('&#36;', 2)}}</v-flex>
+        </v-layout>
+      </v-container>
     </v-flex>
 
     <!-- Note -->
@@ -59,13 +113,15 @@ import CashService from '../../services/CashService'
 export default {
   data () {
     return {
-      name: 'Cash money'
+
     }
   },
 
   computed: {
     ...mapGetters({
-      'nairaCashAccounts': 'getNairaCashAccounts'
+      'allCashAccounts': 'getAllCashAccountsDefaultValues',
+      'totalNairaCashBalance': 'getTotalNairaCashBalance',
+      'totalDollarCashBalance': 'getTotalDollarCashBalance'
     })
   },
 
@@ -78,6 +134,7 @@ export default {
      * Set and navigate to the appropriate cash account page with the selected cash account
      */
     viewCashAccount: function ($cashAccountId, $currency = 'NGN') {
+      CashService.setDefaultCashAccountValues()
       if ($currency === 'NGN') {
         CashService.changeSelectedNairaCashAccount($cashAccountId)
         this.$router.push('/cash/naira')
@@ -110,7 +167,7 @@ export default {
           font-size: 12px
     tbody
       td
-        padding: 15px 10px !important
+        padding: 20px 10px !important
         height: 25px
         color: #31708f
         font-size: 13px

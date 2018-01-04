@@ -53,7 +53,7 @@ export const nairaInvestments: Array<object> = [
     icon: 'keyboard',
     text: 'Cash Account',
     totalValue: store.state.stockbroking.totalValue,
-    routeName: 'cash-naira',
+    routeName: 'cash-overview',
     isNairaCashBalance: true
   },
   {
@@ -84,7 +84,7 @@ export const dollarInvestments: Array<object> = [
     icon: 'keyboard',
     text: 'Cash Account',
     totalValue: store.state.stockbroking.totalValue,
-    routeName: 'cash-dollar',
+    routeName: 'cash-overview',
     isDollarCashBalance: true
   },
   {

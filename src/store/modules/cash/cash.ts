@@ -12,6 +12,7 @@ import mutations from './cash-mutations'
 
 const state = {
   userData: {},
+  allCashAccountsDefaultValues: [],
   selectedNairaCashAccount: {},
   selectedDollarCashAccount: {},
   nairaCashStatements: [],
