@@ -6,12 +6,26 @@
 
 <template>
 
-  <div class="h-100" id="loginWrapper">
-    <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
+  <div class="h-100 mb0" id="loginWrapper" style='margin-bottom: 0px !important'>
+    <!-- Logo at the top of the page -->
+    <img id="company-img" class="img-responsive" src="../assets/img/cardinalstone-white.png" />
+
+    <!--Login Card -->
+    <div class="container d-flex flex-column justify-content-center align-items-center">
 
       <v-layout row>
         <div class="card card-container elevation-24">
-            <img id="company-img" class="img-responsive" src="../assets/img/cardinalstone.png" />
+
+              <v-layout row class="d-flex column">
+                <v-flex class="pr0 text-center">
+                   <img id="company-img" class="img-responsive"
+                   src="../assets/img/logo.png" width='50px' />
+                </v-flex>
+                <v-flex class="align-self-center pl0">
+                   <span class="text-csp-blue font-size-20">Log-in to your account</span>
+                </v-flex>
+              </v-layout>
+
             <p id="profile-name" class="profile-name-card"></p>
 
                   <v-snackbar
@@ -87,15 +101,38 @@
             <a href="#" class="forgot-password">
                 Forgot your password?
             </a>
-        <p class="contact-company">
+        <!-- <p class="contact-company">
           <a href="#">
             Contact CardinalStone Help Desk
           </a>
-        </p>
+        </p> -->
+
+        <!-- Buttons and icons -->
+        <v-layout class="text-center mt25">
+          <v-flex class="text-csp-blue btn-link">
+             <v-icon class="font-size-34 text-csp-blue">fa-edit</v-icon>
+             <span class="d-block font-size-16">Sign Up</span>
+          </v-flex>
+           <v-flex class="text-csp-blue btn-link">
+             <v-icon class="font-size-34 text-csp-blue">account_balance</v-icon>
+             <span class="d-block font-size-16">Locate Us</span>
+          </v-flex>
+           <v-flex class="text-csp-blue btn-link">
+             <v-icon class="font-size-34 text-csp-blue">perm_phone_msg</v-icon>
+             <span class="d-block font-size-16">Contact Us</span>
+          </v-flex>
+        </v-layout>
+
         </div><!-- /card-container -->
       </v-layout>
 
     </div><!-- /container -->
+
+    <!-- Footer Links -->
+    <v-layout row id='footer-links-wrapper'>
+      aa
+    </v-layout>
+
   </div>
 
 
@@ -239,6 +276,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
 
 background: -moz-linear-gradient(
@@ -284,12 +322,25 @@ filter: progid:DXImageTransform.Microsoft.gradient(
     endColorstr="#1A2155",
     GradientType=1
   ); /* ie6-9 */
-
-
+  background-image: url('../../static/img/background2.png');
+  background-size: cover;
+  background-repeat: no-repeat
 
   }
+
+  .btn-link:hover {
+    cursor: pointer;
+    text-decoration: none;
+    /* color: rgb(104, 145, 162) !important; */
+  }
+
+  .btn-link:hover v-icon {
+    /* color: rgb(104, 145, 162) !important */
+  }
   .card-container.card {
-    max-width: 450px;
+    border-radius: 10px;
+    min-width: 450px;
+    max-width: 500px;
     padding: 30px 40px;
   }
   input{
@@ -309,7 +360,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(
       /* just in case there no content*/
       padding: 20px 25px 30px;
       *margin: 0 auto 25px;
-      *margin-top: 20%;
+      margin-top: 20%;
       /* shadows and rounded borders */
       -moz-border-radius: 2px;
       -webkit-border-radius: 2px;
@@ -421,5 +472,12 @@ filter: progid:DXImageTransform.Microsoft.gradient(
 .contact-company a:hover{
 	color: rgb(71,77,118); /*A lighter shade of CardinalStone blue*/
 	text-decoration: none;
+}
+
+#footer-links-wrapper {
+  position: absolute;
+  bottom: 10px;
+  left: 0px;
+  right: 0px;
 }
 </style>

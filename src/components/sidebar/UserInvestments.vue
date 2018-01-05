@@ -142,7 +142,7 @@
       ...mapGetters({
         'stbTotalValue': 'getStbTotalValue',
         'fiTotalValue': 'getFiTotalValue',
-        'smaTotalValue': 'getSmaTotalEquityValue',
+        'smaTotalValue': 'getSmaTotalInvestmentsValue',
         'dollarInvestmentsTotalValue': 'getDollarInvestmentsTotalValue',
         'totalNairaCashBalance': 'getTotalNairaCashBalance',
         'totalDollarCashBalance': 'getTotalDollarCashBalance',

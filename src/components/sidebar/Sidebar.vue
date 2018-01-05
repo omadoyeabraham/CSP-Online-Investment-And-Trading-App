@@ -114,7 +114,7 @@
       this.getUpdatedCustomerData = setInterval(this.obtainUpdatedCustomerData, 30000)
 
       // Get updated cash data from the server every 1 minute
-      this.getUpdatedCustomerCashData = setInterval(this.obtainUpdatedCustomerCashData, 600000)
+      this.getUpdatedCustomerCashData = setInterval(this.obtainUpdatedCustomerCashData, 10000)
     },
 
     beforeDestroy () {

@@ -17,9 +17,9 @@ import UserService from '../../services/UserService'
 const state = () => ({
   info: {},
   userID: null,
-  firstName: null,
-  lastName: null,
-  portalUsername: null
+  firstName: 'valued',
+  lastName: 'client',
+  portalUsername: ''
 })
 
  // Getters

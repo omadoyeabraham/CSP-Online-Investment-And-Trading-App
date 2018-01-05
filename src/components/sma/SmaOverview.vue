@@ -6,7 +6,7 @@
 <template>
   <v-container fluid>
 
-   <sma-header :smaPortfolioValue="totalValueOfSmaInvestments"></sma-header>
+   <sma-header :smaPortfolioValue="smaTotalValue"></sma-header>
 
     <v-layout row class="d-flex justify-end pt5 pb5">
 
@@ -18,11 +18,12 @@
       activeTextColor="#428bca"
       class="">
 
-      <v-tab title="STOCKS" class="">
+      <v-tab title="EQUITIES" class="">
         <SmaStocks :stockHoldings="stockHoldings"></SmaStocks>
       </v-tab>
 
-      <v-tab title="BONDS" class="">
+      <v-tab title="FIXED INCOME" class="">
+        <sma-fixed-income></sma-fixed-income>
       </v-tab>
 
     </vue-tabs>
@@ -34,6 +35,7 @@
 
 <script>
   import SmaStocks from './SmaStocks';
+  import SmaFixedIncome from './SmaFixedIncome'
   import SmaHeader from './SmaHeader'
 
   import {mapGetters} from 'vuex'
@@ -42,18 +44,16 @@
   {
     components: {
       SmaStocks,
-      SmaHeader
+      SmaHeader,
+      SmaFixedIncome
     },
 
     computed: {
       ...mapGetters({
-        'smaTotalEquityValue': 'getSmaTotalEquityValue',
+        'smaTotalValue': 'getSmaTotalInvestmentsValue',
         'totalNairaSmaCashBalance': 'getTotalNairaSmaCashBalance',
         'stockHoldings': 'getSmaStockPortfolioHoldings'
-      }),
-      totalValueOfSmaInvestments: function () {
-        return parseFloat(this.smaTotalEquityValue) + parseFloat(this.totalNairaSmaCashBalance)
-      }
+      })
     }
   }
 </script>

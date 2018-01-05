@@ -6,11 +6,15 @@
 // All mutation types that can be carried out on the store state by the application
 import * as mutationTypes from '../mutation-types.js';
 
+import * as moment from 'moment'
+
 import { ChartService } from '../../services/ChartsService'
 
 // Initial store state
 const state: object = {
-  smaStb: [],
+  smaStb: [{
+    'data': 'initial data'
+  }],
   smaFi: []
 }
 
@@ -18,6 +22,15 @@ const state: object = {
 // Getters
 const getters = {
 
+  getRunnningSmaFiInvestments: (state) => {
+    let fixedIncomeInvestments = state.smaFi
+
+    let runningFiInvestments = fixedIncomeInvestments.filter(investment => {
+      return investment.status === 'RUNNING'
+    })
+
+    return runningFiInvestments
+  },
 
   /**
     * Calculate the total sma equity value of the user's portfolio
@@ -37,6 +50,21 @@ const getters = {
     })
 
     return smaTotalValue
+  },
+
+  getSmaTotalRunningFiValue: (state, getters) => {
+    let runningFiInvestments = getters.getRunnningSmaFiInvestments
+    let totalFiValue = 0
+
+    runningFiInvestments.forEach(investment => {
+      totalFiValue += parseFloat(investment.accruedNetInterest) + parseFloat(investment.faceValue)
+    })
+
+    return totalFiValue
+  },
+
+  getSmaTotalInvestmentsValue: (state, getters) => {
+    return getters.getSmaTotalEquityValue + getters.getSmaTotalRunningFiValue
   },
 
   userHasSma: (state) => {
@@ -61,7 +89,15 @@ const getters = {
   },
 
   getSmaCurrentPortfolioHoldings: (state, getters) => {
-    return state.smaStb[0].portfolioHoldings
+    if(state.smaStb.length === 0) {
+      return []
+    }
+
+    let smaStb = state.smaStb ? state.smaStb : [{a: 1}]
+    console.log(smaStb)
+    let portfolioHoldings = smaStb[0].portfolioHoldings ? smaStb[0].portfolioHoldings : []
+
+    return portfolioHoldings
   },
 
   getSmaStockPortfolioHoldings: (state, getters) => {
@@ -106,6 +142,28 @@ const getters = {
     })
 
     return currentPortfolioStockHoldings
+  },
+
+  getSmaFixedIncomeInvestments: (state, getters) => {
+    let fixedIncomeInvestments = state.smaFi
+    let investments = []
+
+    // Loop through running fixed income investments and perform the necessary calculations
+    fixedIncomeInvestments.forEach((investment) => {
+      let currentValue = parseFloat(investment.accruedNetInterest) + parseFloat(investment.faceValue)
+      let valueAtMaturity = parseFloat(investment.faceValue) + parseFloat(investment.expectedInterest)
+
+      let startDate = moment(investment.startDate, "YYYY-MM-DD")
+      let durationTillDate = moment().diff(startDate, 'days')
+
+      investment.currentValue = currentValue
+      investment.valueAtMaturity = valueAtMaturity
+      investment.durationTillDate = durationTillDate
+
+      investments.push(investment)
+    })
+
+    return investments
   }
 
 }

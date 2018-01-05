@@ -240,7 +240,7 @@ let getCashDataFromDefaultCashStatements = (cashStatements = []) => {
   closingBalance = parseFloat(closingStatement.balance)
 
   // UnclearedEffects and unclearedBalance
-  let unclearedEffectsStatements = getUnclearedEffectsFromDefaultCashStatements()
+  let unclearedEffectsStatements = getUnclearedEffectsFromDefaultCashStatements(cashStatements)
   unclearedEffectsStatements.forEach((unclearedEffect) => {
     unclearedEffects += parseFloat(unclearedEffect.creditAmount)
   })
