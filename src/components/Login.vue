@@ -90,10 +90,10 @@
                 </v-layout>
 
                 <v-btn info
-                  class="blue darken-4 font-size-13 mt10"
+                  class="blue darken-4 font-size-13 mt10 mb20 login-btn"
                   :loading="false"
                   @click="login">
-                SIGN IN
+                LOGIN
                 </v-btn>
 
             </form>
@@ -132,14 +132,17 @@
     <v-layout row id='footer-links-wrapper' class=''>
       <v-flex xs6>
         <v-layout row class='m0 social-icons-wrapper'>
-          <a href="https://cardinalstone.com" target="_blank">
+          <a href="https://facebook.com/CardinalStoneNG" target="_blank">
             <v-icon class='m10'>fa-facebook-square</v-icon>
           </a>
-          <a href="https://cardinalstone.com" target="_blank">
+          <a href="https://twitter.com/CardinalStoneNG" target="_blank">
            <v-icon class='m10'>fa-twitter-square</v-icon>
           </a>
-          <a href="https://cardinalstone.com" target="_blank">
+          <a href="https://instagram.com/CardinalStoneNG" target="_blank">
            <v-icon class='m10'>fa-instagram</v-icon>
+          </a>
+          <a href="https://linkedin.com/company/CardinalStoneNG" target="_blank">
+           <v-icon class='m10'>fa-linkedin-square</v-icon>
           </a>
         </v-layout>
       </v-flex>
@@ -382,6 +385,11 @@ filter: progid:DXImageTransform.Microsoft.gradient(
       box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   }
 
+  .login-btn {
+    border-radius: 7px;
+    width: 50%
+  }
+
 #company-img{
 	margin: 0 auto;
 }
@@ -423,7 +431,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(
 .form-signin input[type=password],
 .form-signin input[type=text],
 .form-signin button {
-    width: 100%;
+    *width: 100%;
     display: block;
     margin-bottom: 10px;
     z-index: 1;
@@ -448,7 +456,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(
     height: 36px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
-    border-radius: 3px;
+    border-radius: 10px;
     border: none;
     -o-transition: all 0.218s;
     -moz-transition: all 0.218s;
