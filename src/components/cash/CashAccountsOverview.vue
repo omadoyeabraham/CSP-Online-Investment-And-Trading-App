@@ -74,25 +74,28 @@
 
     <!-- Naira and Dollar balances -->
 
-    <v-flex xs12 text-right class="mt15">
-      <v-container fluid class='p0'>
-        <v-layout>
-          <v-flex xs9></v-flex>
-          <v-flex xs2 text-right class="font-size-14 csp-light-blue-text font-weight-bold">Naira Balance:</v-flex>
-          <v-flex xs1 text-left class="font-size-14 csp-light-blue-text font-weight-bold">{{totalNairaCashBalance | currency('&#8358;', 2)}}</v-flex>
-        </v-layout>
-      </v-container>
-    </v-flex>
-
-    <v-flex xs12 text-right class="">
-      <v-container fluid class='p0'>
-        <v-layout>
-          <v-flex xs9></v-flex>
-          <v-flex xs2 text-right class="font-size-14 csp-light-blue-text font-weight-bold">Dollar Balance:</v-flex>
-          <v-flex xs1 text-left class="font-size-14 csp-light-blue-text font-weight-bold">{{totalDollarCashBalance | currency('&#36;', 2)}}</v-flex>
-        </v-layout>
-      </v-container>
-    </v-flex>
+    <v-layout class="">
+      <v-flex class="text-right d-flex justify-content-end">
+        <table>
+          <tbody>
+            <tr>
+              <td class="font-size-14 csp-light-blue-text font-weight-bold">Naira Balance:</td>
+              <td class="font-size-14  font-weight-bold text-left pl10">
+                <span v-if="totalNairaCashBalance < 0" class="red--text">({{Math.abs(totalNairaCashBalance) | currency('&#8358;',2)}})</span>
+                <span v-else class="csp-light-blue-text"> {{totalNairaCashBalance | currency('&#8358;', 2)}} </span>
+              </td>
+            </tr>
+            <tr>
+              <td class="font-size-14 csp-light-blue-text font-weight-bold">Dollar Balance:</td>
+              <td class="font-size-14  font-weight-bold text-left pl10">
+                <span v-if="totalDollarCashBalance < 0" class="red--text">({{Math.abs(totalDollarCashBalance) | currency('&#36;',2)}})</span>
+                <span v-else class="csp-light-blue-text"> {{totalDollarCashBalance | currency('&#36;', 2)}} </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </v-flex>
+    </v-layout>
 
     <!-- Note -->
     <v-flex xs12 class="height-55px mb6 mt100">
