@@ -8,10 +8,10 @@
 
   <div class="h-100 mb0" id="loginWrapper" style='margin-bottom: 0px !important'>
     <!-- Logo at the top of the page -->
-    <img id="company-img" class="img-responsive" src="../assets/img/cardinalstone-white.png" />
+    <img id="company-img" class="img-responsive ml30" src="../assets/img/cardinalstone-white.png" />
 
     <!--Login Card -->
-    <div class="container d-flex flex-column justify-content-center align-items-center">
+    <div class="container-fluid d-flex flex-column justify-content-center align-items-center" id="inner-login-wrapper">
 
       <v-layout row>
         <div class="card card-container elevation-24">
@@ -81,7 +81,6 @@
                   autocomplete="nope">
                 </v-text-field>
 
-
                 <!-- Loading Icon when signing in-->
                 <v-layout v-if="isAuthenticating"  row class=" d-flex justify-center ">
                   <v-flex class="xs6 d-flex justify-center align-center">
@@ -101,26 +100,27 @@
             <a href="#" class="forgot-password">
                 Forgot your password?
             </a>
-        <!-- <p class="contact-company">
-          <a href="#">
-            Contact CardinalStone Help Desk
-          </a>
-        </p> -->
 
         <!-- Buttons and icons -->
         <v-layout class="text-center mt25">
-          <v-flex class="text-csp-blue btn-link">
-             <v-icon class="font-size-34 text-csp-blue">fa-edit</v-icon>
-             <span class="d-block font-size-16">Sign Up</span>
-          </v-flex>
-           <v-flex class="text-csp-blue btn-link">
-             <v-icon class="font-size-34 text-csp-blue">account_balance</v-icon>
-             <span class="d-block font-size-16">Locate Us</span>
-          </v-flex>
-           <v-flex class="text-csp-blue btn-link">
-             <v-icon class="font-size-34 text-csp-blue">perm_phone_msg</v-icon>
-             <span class="d-block font-size-16">Contact Us</span>
-          </v-flex>
+           <v-flex>
+               <a href='#/login' class="text-csp-blue btn-link">
+                  <v-icon class="font-size-34 text-csp-blue">fa-edit</v-icon>
+                  <span class="d-block font-size-16">Sign Up</span>
+              </a>
+           </v-flex>
+           <v-flex>
+             <a href="https://cardinalstone.com/contact-us/" target="_blank" class="text-csp-blue btn-link">
+                <v-icon class="font-size-34 text-csp-blue">account_balance</v-icon>
+                <span class="d-block font-size-16">Locate Us</span>
+             </a>
+           </v-flex>
+           <v-flex>
+             <a href="https://cardinalstone.com/contact-us/" target="_blank" class="text-csp-blue btn-link">
+                <v-icon class="font-size-34 text-csp-blue">perm_phone_msg</v-icon>
+                <span class="d-block font-size-16">Contact Us</span>
+             </a>
+           </v-flex>
         </v-layout>
 
         </div><!-- /card-container -->
@@ -129,13 +129,23 @@
     </div><!-- /container -->
 
     <!-- Footer Links -->
-    <v-layout row id='footer-links-wrapper'>
-      aa
+    <v-layout row id='footer-links-wrapper' class=''>
+      <v-flex xs6>
+        <v-layout row class='m0 social-icons-wrapper'>
+          <a href="https://cardinalstone.com" target="_blank">
+            <v-icon class='m10'>fa-facebook-square</v-icon>
+          </a>
+          <a href="https://cardinalstone.com" target="_blank">
+           <v-icon class='m10'>fa-twitter-square</v-icon>
+          </a>
+          <a href="https://cardinalstone.com" target="_blank">
+           <v-icon class='m10'>fa-instagram</v-icon>
+          </a>
+        </v-layout>
+      </v-flex>
     </v-layout>
 
   </div>
-
-
 
 </template>
 
@@ -267,7 +277,7 @@
 </script>
 
 <!-- Scoped styles apply only to this component -->
-<style scoped>
+<style scoped lang='scss'>
   .is-danger {
     background: red
   }
@@ -277,6 +287,7 @@
     background-repeat: no-repeat;
     background-position: center;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    min-height: 100%;
 
 
 background: -moz-linear-gradient(
@@ -324,7 +335,8 @@ filter: progid:DXImageTransform.Microsoft.gradient(
   ); /* ie6-9 */
   background-image: url('../../static/img/background2.png');
   background-size: cover;
-  background-repeat: no-repeat
+  background-position: center center;
+
 
   }
 
@@ -474,10 +486,34 @@ filter: progid:DXImageTransform.Microsoft.gradient(
 	text-decoration: none;
 }
 
+#inner-login-wrapper {
+  *background-image: url('../../static/img/background2.png');
+  *z-index: -1
+}
+
 #footer-links-wrapper {
   position: absolute;
   bottom: 10px;
-  left: 0px;
-  right: 0px;
+  left: 50px;
+  right:50px;
+  *background: red;
+  color: #ffffff;
+}
+
+.social-icons-wrapper {
+  font-size: 25px
+}
+.social-icons-wrapper i{
+  color: #fff !important
+}
+
+.social-icons-wrapper{
+
+    i {
+      &:hover {
+        color: #aaa !important;
+        cursor: pointer
+      }
+    }
 }
 </style>
