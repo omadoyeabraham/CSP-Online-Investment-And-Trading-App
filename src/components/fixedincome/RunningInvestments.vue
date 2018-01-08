@@ -81,20 +81,23 @@
                 {{selectedInvestment.expectedMaturity | moment("DD-MMM-YYYY") }}
               </span>
             </li>
-            <li class="list-group-item font-size-12 white--text">
-              <span>Investment Duration</span>
-              <span class="ml-auto font-weight-normal">{{selectedInvestment.tenure | currency('',2)}} days</span>
+            <li v-if="investmentType!=='terminated'" class="list-group-item font-size-12 white--text">
+              <span >Investment Duration</span>
+              <span class="ml-auto font-weight-normal">{{selectedInvestment.tenure}} days</span>
             </li>
             <li class="list-group-item font-size-12 white--text">
-              <span>Duration till Date</span>
-              <span class="ml-auto font-weight-normal">{{selectedInvestment.durationTillDate}} days</span>
+              <span v-if="investmentType==='terminated'">Duration till Termination</span>
+              <span v-else>Duration till Date</span>
+              <span v-if="investmentType==='terminated'" class="ml-auto font-weight-normal">{{selectedInvestment.tenure}} days</span>
+              <span v-else class="ml-auto font-weight-normal">{{selectedInvestment.durationTillDate}} days</span>
             </li>
             <li class="list-group-item font-size-12 white--text">
               <span>Rate of Return</span>
               <span class="ml-auto font-weight-normal">{{selectedInvestment.currentRate}}% P.A.</span>
             </li>
             <li class="list-group-item font-size-12 white--text">
-              <span>Return to Date</span>
+              <span v-if="investmentType==='terminated'">Return to Termination</span>
+              <span v-else>Return to Date</span>
               <span class="ml-auto font-weight-normal">{{currency}}{{selectedInvestment.accruedInterest | currency('',2)}}</span>
             </li>
             <li class="list-group-item font-size-12 white--text">
@@ -102,7 +105,8 @@
               <span class="ml-auto font-weight-normal">{{currency}}{{selectedInvestment.valueAtMaturity | currency('',2)}}</span>
             </li>
             <li class="list-group-item font-size-12 white--text">
-              <span>Current Value of Investment</span>
+              <span v-if="investmentType==='terminated'">Value at Termination</span>
+              <span v-else>Current Value of Investment</span>
               <span class="ml-auto font-weight-normal">{{currency}}{{selectedInvestment.currentValue | currency('',2)}}</span>
             </li>
 
