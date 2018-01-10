@@ -99,7 +99,6 @@ export default
       setTimeout(function () {
         this.showTransactionSuccessDialog = false
         this.showTransactionErrorDialog = false
-        console.log('aaaaaaaaaaaaaaa')
       }, 3000)
     } else { // response code was not sent
 

@@ -58,6 +58,17 @@
 
             <form class="form-signin">
 
+                 <!-- <v-alert error
+                  icon="new_releases" :value="true"
+                  >
+                  Dear Valued Client, <br><br>
+
+You may experience a slight downtime while accessing our online trading portal. Please note that we are working to resolve the glitch. Kindly send your buy/sell instruction to mandates@cardinalstone.com to enable our brokers execute your trades on the Nigerian Stock Exchange (NSE). <br><br>
+
+Thank you.
+
+                 </v-alert> -->
+
                  <v-alert error
                   icon="new_releases" :value="true"
                   v-if="authError">
@@ -285,7 +296,6 @@
     background: red
   }
   #loginWrapper {
-    *background-image: url('../../static/img/login.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

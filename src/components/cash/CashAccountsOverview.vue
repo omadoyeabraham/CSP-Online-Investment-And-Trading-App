@@ -109,7 +109,7 @@
 
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import CashAccountsOverviewHeader from './CashAccountsOverviewHeader'
 import CashService from '../../services/CashService'
 
@@ -120,11 +120,23 @@ export default {
     }
   },
 
+  created () {
+    this.obtainUpdatedCustomerCashData;
+
+     // Get updated cash data from the server every 1 minute
+    // this.getUpdatedCustomerCashData = setInterval(this.obtainUpdatedCustomerCashData, 10000)
+  },
+
+  beforeDestroy () {
+    clearInterval(this.getUpdatedCustomerData)
+  },
+
   computed: {
     ...mapGetters({
       'allCashAccounts': 'getAllCashAccountsDefaultValues',
       'totalNairaCashBalance': 'getTotalNairaCashBalance',
-      'totalDollarCashBalance': 'getTotalDollarCashBalance'
+      'totalDollarCashBalance': 'getTotalDollarCashBalance',
+      'userId': 'getUserId'
     })
   },
 
@@ -133,6 +145,15 @@ export default {
   },
 
   methods: {
+
+    ...mapActions({
+      updateCustomerData: 'updateCustomerData'
+    }),
+
+    obtainUpdatedCustomerCashData: function () {
+      CashService.setDefaultCashAccountValues()
+    },
+
     /**
      * Set and navigate to the appropriate cash account page with the selected cash account
      */

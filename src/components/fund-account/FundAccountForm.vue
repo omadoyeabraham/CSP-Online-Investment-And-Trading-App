@@ -1,3 +1,4 @@
+
 <template>
 
   <v-container fluid class="p0">
@@ -15,7 +16,7 @@
               id="paymentForm"
               name="cpay"
               method="POST"
-              action="https://staging.nibss-plc.com.ng/CentralPayPlus/pay">
+              action="https://centralpay.nibss-plc.com.ng/CentralPayPlus/pay">
 
               <!--Hidden Fields sent to Nibbs -->
               <input type="hidden" name="merchant_id" :value="merchant_id" />

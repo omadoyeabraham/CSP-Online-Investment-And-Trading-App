@@ -113,12 +113,12 @@
       // Continously poll the server every 30 seconds for updated user data
       this.getUpdatedCustomerData = setInterval(this.obtainUpdatedCustomerData, 30000)
 
-      // Get updated cash data from the server every 1 minute
-      this.getUpdatedCustomerCashData = setInterval(this.obtainUpdatedCustomerCashData, 10000)
+      // Get updated cash data from the server every 10 seconds
+      // this.getUpdatedCustomerCashData = setInterval(this.obtainUpdatedCustomerCashData, 10000)
     },
 
     beforeDestroy () {
-      clearInterval(this.getUpdatedCustomerData)
+      // clearInterval(this.getUpdatedCustomerData)
     },
 
     // Component specific data
@@ -166,7 +166,6 @@
       },
 
       obtainUpdatedCustomerCashData: function () {
-        console.log('Obtain updated cash data called')
         CashService.setDefaultCashAccountValues()
       }
     }
