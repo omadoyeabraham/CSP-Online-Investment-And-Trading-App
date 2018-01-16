@@ -297,23 +297,23 @@ Thank you.
                   error
                   icon="new_releases" :value="true"
                   v-if="changePasswordError">
-                Passwords do not match
+                {{changePasswordError}}
                 </v-alert>
                 <v-text-field
                   label="New Password"
-                  v-model="newPassword"
-                  :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
-                  :append-icon-cb="() => (hidePassword = !hidePassword)"
-                  :type="hidePassword ? 'password' : 'text'"
+                  v-model="newPasswordForReset"
+                  :append-icon="hideNewPassword ? 'visibility' : 'visibility_off'"
+                  :append-icon-cb="() => (hideNewPassword = !hideNewPassword)"
+                  :type="hideNewPassword ? 'password' : 'text'"
                   :rules="passwordRules"
                   autocomplete="nope">
                 </v-text-field>
                 <v-text-field
                   label="Confirm Password"
-                  v-model="confirmPassword"
-                  :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
-                  :append-icon-cb="() => (hidePassword = !hidePassword)"
-                  :type="hidePassword ? 'password' : 'text'"
+                  v-model="confirmPasswordForReset"
+                  :append-icon="hideConfirmPassword ? 'visibility' : 'visibility_off'"
+                  :append-icon-cb="() => (hideConfirmPassword = !hideConfirmPassword)"
+                  :type="hideConfirmPassword ? 'password' : 'text'"
                   :rules="passwordRules"
                   autocomplete="nope">
                 </v-text-field>
@@ -331,7 +331,7 @@ Thank you.
                 <v-flex xs6 class="d-flex justify-end ">
                   <v-btn small style="background: #4c7396; color: #FFFFFF"
                          @click="changePassword()">
-                    Send reset link
+                    Change Password
                   </v-btn>
                 </v-flex>
 
@@ -352,6 +352,19 @@ Thank you.
       </div><!-- /container -->
     </v-dialog>
 
+      <!-- Alert for successful password change -->
+      <v-snackbar success
+        :timeout="snackbarTimeout"
+        :top="true"
+        :multi-line="snackbarMode === 'multi-line'"
+        :vertical="snackbarMode === 'vertical'"
+        :color="'success'"
+        v-model="showPasswordChangedSnackbar"
+        >
+        Password successfully changed
+
+      </v-snackbar>
+
   </div>
 
 </template>
@@ -364,6 +377,7 @@ Thank you.
   import {AuthenticationService} from '../services/AuthenticationService';
   import StockbrokingService from '../services/StockbrokingService';
   import CashService from '../services/CashService';
+  import UserService from '../services/UserService';
 
   import { required } from 'vuelidate/lib/validators';
 
@@ -377,23 +391,38 @@ Thank you.
     mounted () {
       // Show the change password dialog box
       if (this.$route.query.resetLink) {
-        console.log(this.$route.query.resetLink)
-
-          // Hide the login form
-        document.getElementById('loginCard').style.visibility = 'hidden'
-
-        // Display the edit popup modal/dialog
-        document.querySelector('#openChangePasswordDialog').click();
-
         /**
-         * Stopping the event propagation because of the auto-close quirk that vuetify's dialog
-         * popup has if the click event is not triggered from within the activator slot of the
-         * dialog component
+        * Verify the authenticity of the reset link, and get the username
          */
-        event.stopPropagation()
+        let verifyResetCode = AuthenticationService.verifyPasswordResetCode(this.$route.query.resetLink)
+        verifyResetCode.then(response => {
+          let responseData = response.data
 
-        // Hide the login form
-        document.getElementById('loginCard').style.visibility = 'hidden'
+          // The reset link is still valid
+          if (responseData.username) {
+            this.usernameForPasswordReset = responseData.username
+            this.userIdForPasswordReset = parseInt(responseData.user_id)
+
+            // Hide the login form
+            document.getElementById('loginCard').style.visibility = 'hidden'
+            // Display the edit popup modal/dialog
+            document.querySelector('#openChangePasswordDialog').click();
+
+            /**
+             * Stopping the event propagation because of the auto-close quirk that vuetify's dialog
+             * popup has if the click event is not triggered from within the activator slot of the
+             * dialog component
+             */
+            event.stopPropagation()
+            // Hide the login form
+            document.getElementById('loginCard').style.visibility = 'hidden'
+          } else {
+            // The reset link is invalid so popup an error
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
       }
     },
 
@@ -405,6 +434,9 @@ Thank you.
 
     data () {
       return {
+        snackbarTimeout: 4000,
+        snackbarMode: '',
+        showPasswordChangedSnackbar: false,
         valid: false,
         resetEmailSent: false,
         name: 'CardinalStone Trade Direct',
@@ -414,11 +446,18 @@ Thank you.
         newPassword: '',
         confirmPassword: '',
         username: '',
+        usernameForPasswordReset: '',
+        userIdForPasswordReset: '',
+        newPasswordForReset: '',
+        oldPasswordForReset: '',
+        confirmPasswordForReset: '',
         resetPasswordUsername: '',
         isSearchingForUser: '',
         isSendingResetLink: '',
         password: '',
         hidePassword: true,
+        hideConfirmPassword: true,
+        hideNewPassword: true,
         isAuthenticating: false,
         usernameRules: [
           (username) => !!username || 'Required'
@@ -564,8 +603,7 @@ Thank you.
 
             // Display spinner for sending reset link
             this.isSendingResetLink = true;
-
-            this.sendPasswordResetLink(responseData.portalUserName, responseData.emailAddress1);
+            this.sendPasswordResetLink(responseData.portalUserName, responseData.emailAddress1, responseData.id);
           } else {
             // User was not found
             this.isSearchingForUser = false;
@@ -577,8 +615,8 @@ Thank you.
         })
       },
 
-      sendPasswordResetLink: function (username, email) {
-        let sendingResetLink = AuthenticationService.sendPasswordResetLink(username, email)
+      sendPasswordResetLink: function (username, email, userId) {
+        let sendingResetLink = AuthenticationService.sendPasswordResetLink(username, email, userId)
 
         sendingResetLink.then((response) => {
           // Email was sent successfully
@@ -588,8 +626,39 @@ Thank you.
         })
       },
 
+      /**
+       * Change a user's password after the password enters a new password upon receiving a password reset link.
+       */
       changePassword: function () {
+        if (this.newPasswordForReset !== this.confirmPasswordForReset) {
+          this.$store.commit(mutationTypes.SET_CHANGE_PASSWORD_ERROR_MESSAGE, 'Passwords do not match')
+          return
+        }
 
+        if (this.newPasswordForReset.length < 5) {
+          this.$store.commit(mutationTypes.SET_CHANGE_PASSWORD_ERROR_MESSAGE, 'Password must have at least 5 characters')
+          return
+        }
+
+        this.isChangingPassword = true
+
+        let changingPassword = UserService.changePassword(this.userIdForPasswordReset, this.newPasswordForReset)
+
+        changingPassword.then(response => {
+          let responseData = response.data
+
+          // Password was changed successfully
+          if (responseData.status) {
+            this.showPasswordChangedSnackbar = true
+            this.closeChangePasswordDialog()
+          }
+
+          this.isChangingPassword = false
+        })
+        .catch(err => {
+          console.log(err)
+          this.isChangingPassword = false
+        })
       }
 
     },

@@ -12,7 +12,8 @@ export const BaseApiUrl = 'https://restserver2.cardinalstone.com/api';
 export const AuthenticationUrl = `${BaseApiUrl}/findCustomerByName`;
 export const FindUserByUsername = `${BaseApiUrl}/findCustomerByUsername`;
 export const SendPasswordResetLink = `${BaseApiUrl}/sendPasswordResetLink`;
-export const LogoutUrl = `${BaseApiUrl}/logout`
+export const VerifyPasswordResetCode = `${BaseApiUrl}/verifyPasswordResetCode`;
+export const LogoutUrl = `${BaseApiUrl}/logout`;
 
 // Stockbroking
 export const GetTradeOrdersUrl = `${BaseApiUrl}/findCustomerOrders`;
@@ -46,6 +47,7 @@ export const GetCustomerData = `${BaseApiUrl}/findCustomerById`
 
 // Reset Password
 export const ResetPassword = `${BaseApiUrl}/resetPassword`
+export const ChangePassword = `${BaseApiUrl}/changePassword`
 
 // Contact Manager
 export const ContactManager = `${BaseApiUrl}/contactManager`

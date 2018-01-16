@@ -62,15 +62,31 @@ import StockbrokingService from './StockbrokingService'
    })
  }
 
- let sendPasswordResetLink = (username: string, email: string) => {
+ let sendPasswordResetLink = (username: string, email: string, userId: number) => {
    return axios({
      method: 'post',
      url: ApiUrls.SendPasswordResetLink,
      data: {
        'username': username,
-       'email': email
+       'email': email,
+       'user_id': userId
       }
    })
+ }
+
+ /**
+  * Ascertain that the password reset link sent to a user is still valid
+  * @param resetLink {string} The reset code sent to a client
+  * @return promise
+  */
+ let verifyPasswordResetCode = (resetCode: string = "") => {
+  return axios({
+    method: 'post',
+    url: ApiUrls.VerifyPasswordResetCode,
+    data: {
+      resetCode: resetCode
+    }
+  })
  }
 
 
@@ -79,5 +95,6 @@ import StockbrokingService from './StockbrokingService'
    login: login,
    logout: logout,
    findUserByUsername: findUserByUsername,
-   sendPasswordResetLink: sendPasswordResetLink
+   sendPasswordResetLink: sendPasswordResetLink,
+   verifyPasswordResetCode: verifyPasswordResetCode
  }
