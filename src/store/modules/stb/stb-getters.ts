@@ -261,7 +261,6 @@ const getters = {
 
     // Ensure the portfolio Holdings is always an array of objects
     portfolioHoldings = UtilityService.ensureDataIsAnArray(portfolioHoldings)
-    console.log(portfolioHoldings)
 
     return portfolioHoldings
   },

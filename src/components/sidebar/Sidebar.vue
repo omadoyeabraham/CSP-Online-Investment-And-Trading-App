@@ -118,7 +118,7 @@
     },
 
     beforeDestroy () {
-      // clearInterval(this.getUpdatedCustomerData)
+      clearInterval(this.getUpdatedCustomerData)
     },
 
     // Component specific data

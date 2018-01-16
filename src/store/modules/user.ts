@@ -97,7 +97,6 @@ const actions = {
    */
   updateCustomerData({ commit, state }, customerId) {
     let updatingCustomerData = UserService.getUserData(customerId)
-    console.log('Got to the updating customer data action')
     updatingCustomerData.then((response) => {
       let userData = response.data
 
