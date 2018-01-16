@@ -161,7 +161,7 @@ Thank you.
 
     <!-- Dialog for I forgot my password -->
     <v-dialog
-      v-model="showForgotPasswordDialog" lazy absolute
+      v-model="showForgotPasswordDialog" lazy absolute persistent
       width="560">
       <v-btn id="openForgotPasswordDialog"
             style="display: none"
@@ -271,7 +271,7 @@ Thank you.
 
     <!-- Dialog for change password -->
     <v-dialog
-      v-model="showChangePasswordDialog" lazy absolute
+      v-model="showChangePasswordDialog" lazy absolute persistent
       width="560">
       <v-btn id="openChangePasswordDialog"
             style="display: none"
