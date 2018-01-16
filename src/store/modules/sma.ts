@@ -94,7 +94,6 @@ const getters = {
     }
 
     let smaStb = state.smaStb ? state.smaStb : [{a: 1}]
-    console.log(smaStb)
     let portfolioHoldings = smaStb[0].portfolioHoldings ? smaStb[0].portfolioHoldings : []
 
     return portfolioHoldings
