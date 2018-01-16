@@ -32,7 +32,7 @@ const mutations = {
 
     // Remove after 3 seconds
     setTimeout(function () { state.mandateHasBeenPlaced = false;
-    console.log('cancelled') }, 3000);
+    }, 3000);
   },
 
   /**

@@ -47,9 +47,25 @@ const mutations = {
     // If the user has at least 1 STB portfolio
     if (userData.STB.hasOwnProperty('EXCHANGE')) {
       state.portfolios = userData.STB.EXCHANGE
-      // console.log(userData.STB.EXCHANGE)
+      console.log(userData.STB.EXCHANGE)
       state.updatesMade += 1
       state.smaPortfolios = userData.STB.MANAGED ? (userData.STB.MANAGED) : []
+
+      // Get the currently selected portfolio and reselect it so the values are updated
+      const currentPortfolioNo = state.currentPortfolio.accountNo
+      let selectedPortfolio = []
+      state.portfolios.forEach((portfolio) => {
+        if (portfolio.accountNo == currentPortfolioNo) {
+          selectedPortfolio = portfolio
+        }
+      })
+
+      state.currentPortfolio = selectedPortfolio
+
+      // Check to set portfolio holdings if doesn't exist on this portfolio
+      if (state.currentPortfolio.portfolioHoldings === undefined) {
+        state.currentPortfolio.portfolioHoldings = []
+      }
 
       // The user has a stockbroking portfolio
       state.userHasStb = true
