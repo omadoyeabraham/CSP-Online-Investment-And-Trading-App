@@ -54,9 +54,47 @@ import StockbrokingService from './StockbrokingService'
 
  }
 
+ let findUserByUsername = (username: string) => {
+   return axios({
+     method: 'post',
+     url: ApiUrls.FindUserByUsername,
+     data: { 'username': username }
+   })
+ }
+
+ let sendPasswordResetLink = (username: string, email: string, userId: number) => {
+   return axios({
+     method: 'post',
+     url: ApiUrls.SendPasswordResetLink,
+     data: {
+       'username': username,
+       'email': email,
+       'user_id': userId
+      }
+   })
+ }
+
+ /**
+  * Ascertain that the password reset link sent to a user is still valid
+  * @param resetLink {string} The reset code sent to a client
+  * @return promise
+  */
+ let verifyPasswordResetCode = (resetCode: string = "") => {
+  return axios({
+    method: 'post',
+    url: ApiUrls.VerifyPasswordResetCode,
+    data: {
+      resetCode: resetCode
+    }
+  })
+ }
+
 
  // Export the methods from the authentication service
  export const AuthenticationService = {
    login: login,
-   logout: logout
+   logout: logout,
+   findUserByUsername: findUserByUsername,
+   sendPasswordResetLink: sendPasswordResetLink,
+   verifyPasswordResetCode: verifyPasswordResetCode
  }

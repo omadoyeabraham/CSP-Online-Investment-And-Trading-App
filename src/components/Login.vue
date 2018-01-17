@@ -14,7 +14,7 @@
     <div class="container-fluid d-flex flex-column justify-content-center align-items-center" id="inner-login-wrapper">
 
       <v-layout row>
-        <div class="card card-container elevation-24">
+        <div class="card card-container elevation-24" id="loginCard">
 
               <v-layout row class="d-flex column">
                 <v-flex class="pr0 text-center">
@@ -108,7 +108,7 @@ Thank you.
                 </v-btn>
 
             </form>
-            <a href="#" class="forgot-password">
+            <a href="#" class="forgot-password" @click="showForgotPasswordForm()">
                 Forgot your password?
             </a>
 
@@ -159,17 +159,225 @@ Thank you.
       </v-flex>
     </v-layout>
 
+    <!-- Dialog for I forgot my password -->
+    <v-dialog
+      v-model="showForgotPasswordDialog" lazy absolute persistent
+      width="560">
+      <v-btn id="openForgotPasswordDialog"
+            style="display: none"
+            color="primary"
+            dark slot="activator">
+      </v-btn>
+      <!--Forgot Password Card -->
+      <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
+        <v-layout row>
+          <div class="card card-container elevation-24">
+            <v-layout row class="d-flex column">
+              <v-flex class="pr0 text-center">
+                  <img id="company-img" class="img-responsive"
+                  src="../assets/img/logo.png" width='50px' />
+              </v-flex>
+              <v-flex class="align-self-center pl0">
+                  <span class="text-csp-blue font-size-20">Password Reset</span>
+              </v-flex>
+            </v-layout>
+            <p class="font-size-13 mt20 text-left">Please enter your username to have a password reset link sent to you.</p>
+              <v-snackbar
+                :timeout="timeout"
+                :top="y === 'top'"
+                :bottom="y === 'bottom'"
+                :right="x === 'right'"
+                :left="x === 'left'"
+                :multi-line="mode === 'multi-line'"
+                :vertical="mode === 'vertical'"
+                v-model="snackbar"
+                class="red darken-4"
+              >
+                <v-container fluid class="pl5 pr20">
+                  <v-layout row>
+                    <v-flex xs10 class="d-flex align-center">
+                      {{text}}
+                    </v-flex>
+                    <v-flex xs2 class="">
+                      <v-btn flat class="white--text" @click.native="snackbar = false">
+                        <v-icon class="white--text">close</v-icon>
+                      </v-btn>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-snackbar>
+
+              <form class="form-signin">
+                <v-alert
+                  error
+                  icon="new_releases" :value="true"
+                  v-if="resetPasswordError">
+                Invalid Username
+                </v-alert>
+                <v-alert
+                  success
+                  icon="new_releases" :value="true"
+                  v-if="resetEmailSent">
+               Kindly check your mail for the reset link. Click on this  <a href='/login'>link</a> to login
+                </v-alert>
+                <v-text-field
+                  label="Username"
+                  :append-icon="'account_circle'"
+                  v-model="resetPasswordUsername"
+                  :rules="usernameRules"
+                  autocomplete="nope">
+                </v-text-field>
+
+                <!-- Loading Icon when searching for the user-->
+                <v-layout v-if="isSearchingForUser"  row class=" d-flex justify-center ">
+                  <v-flex class="xs6 d-flex justify-center align-center">
+                    <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
+                    <span class="font-size-12 ml5">Verifying username.</span>
+                  </v-flex>
+                </v-layout>
+                 <!-- Loading Icon when sending the reset email-->
+                <v-layout v-if="isSendingResetLink"  row class=" d-flex justify-center ">
+                  <v-flex class="xs6 d-flex justify-center align-center">
+                    <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
+                    <span class="font-size-12 ml5">Sending reset link.</span>
+                  </v-flex>
+                </v-layout>
+            <!-- Buttons -->
+            <v-container fluid class="p0 ">
+              <v-layout  row class="mt20">
+                <v-flex xs6 class="d-flex justify-end ">
+                  <v-btn small style="background: #4c7396; color: #FFFFFF"
+                         @click="resetUserPassword()">
+                    Send reset link
+                  </v-btn>
+                </v-flex>
+
+                <v-flex xs6>
+                  <v-btn small class="red darken-1 white--text"
+                    @click="closeForgotPasswordDialog()">
+                    CANCEL
+                  </v-btn>
+                </v-flex>
+              </v-layout>
+            </v-container>
+
+              </form>
+
+          </div><!-- /card-container -->
+        </v-layout>
+
+      </div><!-- /container -->
+    </v-dialog>
+
+    <!-- Dialog for change password -->
+    <v-dialog
+      v-model="showChangePasswordDialog" lazy absolute persistent
+      width="560">
+      <v-btn id="openChangePasswordDialog"
+            style="display: none"
+            color="primary"
+            dark slot="activator">
+      </v-btn>
+      <!--Change Password Card -->
+      <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
+        <v-layout row>
+          <div class="card card-container elevation-24">
+            <v-layout row class="d-flex column">
+              <v-flex class="pr0 text-center">
+                  <img id="company-img" class="img-responsive"
+                  src="../assets/img/logo.png" width='50px' />
+              </v-flex>
+              <v-flex class="align-self-center pl0">
+                  <span class="text-csp-blue font-size-20">Reset your password</span>
+              </v-flex>
+            </v-layout>
+            <p class="font-size-13 mt20 text-left">Please enter your new password.</p>
+              <form class="form-signin">
+                <v-alert
+                  error
+                  icon="new_releases" :value="true"
+                  v-if="changePasswordError">
+                {{changePasswordError}}
+                </v-alert>
+                <v-text-field
+                  label="New Password"
+                  v-model="newPasswordForReset"
+                  :append-icon="hideNewPassword ? 'visibility' : 'visibility_off'"
+                  :append-icon-cb="() => (hideNewPassword = !hideNewPassword)"
+                  :type="hideNewPassword ? 'password' : 'text'"
+                  :rules="passwordRules"
+                  autocomplete="nope">
+                </v-text-field>
+                <v-text-field
+                  label="Confirm Password"
+                  v-model="confirmPasswordForReset"
+                  :append-icon="hideConfirmPassword ? 'visibility' : 'visibility_off'"
+                  :append-icon-cb="() => (hideConfirmPassword = !hideConfirmPassword)"
+                  :type="hideConfirmPassword ? 'password' : 'text'"
+                  :rules="passwordRules"
+                  autocomplete="nope">
+                </v-text-field>
+
+                <!-- Loading Icon when searching for the user-->
+                <v-layout v-if="isChangingPassword"  row class=" d-flex justify-center ">
+                  <v-flex class="xs6 d-flex justify-center align-center">
+                    <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
+                    <span class="font-size-12 ml5">Changing Password</span>
+                  </v-flex>
+                </v-layout>
+            <!-- Buttons -->
+            <v-container fluid class="p0 ">
+              <v-layout  row class="mt20">
+                <v-flex xs6 class="d-flex justify-end ">
+                  <v-btn small style="background: #4c7396; color: #FFFFFF"
+                         @click="changePassword()">
+                    Change Password
+                  </v-btn>
+                </v-flex>
+
+                <!-- <v-flex xs6>
+                  <v-btn small class="red darken-1 white--text"
+                    @click="closeChangePasswordDialog()">
+                    CANCEL
+                  </v-btn>
+                </v-flex> -->
+              </v-layout>
+            </v-container>
+
+              </form>
+
+          </div><!-- /card-container -->
+        </v-layout>
+
+      </div><!-- /container -->
+    </v-dialog>
+
+      <!-- Alert for successful password change -->
+      <v-snackbar success
+        :timeout="snackbarTimeout"
+        :top="true"
+        :multi-line="snackbarMode === 'multi-line'"
+        :vertical="snackbarMode === 'vertical'"
+        :color="'success'"
+        v-model="showPasswordChangedSnackbar"
+        >
+        Password successfully changed
+
+      </v-snackbar>
+
   </div>
 
 </template>
 
 <script>
+  import store from '../store';
   import {mapState} from 'vuex'
   import axios from 'axios'
   import * as mutationTypes from '../store/mutation-types'
   import {AuthenticationService} from '../services/AuthenticationService';
   import StockbrokingService from '../services/StockbrokingService';
   import CashService from '../services/CashService';
+  import UserService from '../services/UserService';
 
   import { required } from 'vuelidate/lib/validators';
 
@@ -177,27 +385,79 @@ Thank you.
   {
 
     beforeCreate () {
-      /**
-      * Redirect users on mobile devices to the mobile view of the CSP portal
-       */
-      // if (UtilityService.isMobileUser) {
-      //   // window.location.assign('http://google.com')
-      //   // console.log('Mobile User')
-      //   // this.$router.push('http://google.com')
-      // }
+
+    },
+
+    mounted () {
+      // Show the change password dialog box
+      if (this.$route.query.resetLink) {
+        /**
+        * Verify the authenticity of the reset link, and get the username
+         */
+        let verifyResetCode = AuthenticationService.verifyPasswordResetCode(this.$route.query.resetLink)
+        verifyResetCode.then(response => {
+          let responseData = response.data
+
+          // The reset link is still valid
+          if (responseData.username) {
+            this.usernameForPasswordReset = responseData.username
+            this.userIdForPasswordReset = parseInt(responseData.user_id)
+
+            // Hide the login form
+            document.getElementById('loginCard').style.visibility = 'hidden'
+            // Display the edit popup modal/dialog
+            document.querySelector('#openChangePasswordDialog').click();
+
+            /**
+             * Stopping the event propagation because of the auto-close quirk that vuetify's dialog
+             * popup has if the click event is not triggered from within the activator slot of the
+             * dialog component
+             */
+            event.stopPropagation()
+            // Hide the login form
+            document.getElementById('loginCard').style.visibility = 'hidden'
+          } else {
+            // The reset link is invalid so popup an error
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
     },
 
     beforeDestroy () {
       // Clear the authentication error message incase it's been set
       this.$store.commit(mutationTypes.CLEAR_AUTHENTICATION_ERROR_MESSAGE)
+      this.$store.commit(mutationTypes.CLEAR_RESET_PASSWORD_ERROR_MESSAGE)
     },
 
     data () {
       return {
+        snackbarTimeout: 4000,
+        snackbarMode: '',
+        showPasswordChangedSnackbar: false,
+        valid: false,
+        resetEmailSent: false,
         name: 'CardinalStone Trade Direct',
+        showForgotPasswordDialog: false,
+        showChangePasswordDialog: false,
+        isChangingPassword: false,
+        newPassword: '',
+        confirmPassword: '',
         username: '',
+        usernameForPasswordReset: '',
+        userIdForPasswordReset: '',
+        newPasswordForReset: '',
+        oldPasswordForReset: '',
+        confirmPasswordForReset: '',
+        resetPasswordUsername: '',
+        isSearchingForUser: '',
+        isSendingResetLink: '',
         password: '',
         hidePassword: true,
+        hideConfirmPassword: true,
+        hideNewPassword: true,
         isAuthenticating: false,
         usernameRules: [
           (username) => !!username || 'Required'
@@ -216,7 +476,9 @@ Thank you.
 
     computed: {
       ...mapState({
-        'authError': (store) => store.errors.authenticationErrorMessage
+        'authError': (store) => store.errors.authenticationErrorMessage,
+        'resetPasswordError': (store) => store.errors.resetPasswordErrorMessage,
+        'changePasswordError': (store) => store.errors.changePasswordErrorMessage
       })
     },
 
@@ -274,6 +536,129 @@ Thank you.
 
           // this.$router.push('login')
         });
+      },
+
+      // Show forgot password form
+      showForgotPasswordForm: function () {
+        // Display the edit popup modal/dialog
+        document.querySelector('#openForgotPasswordDialog').click();
+
+        /**
+         * Stopping the event propagation because of the auto-close quirk that vuetify's dialog
+         * popup has if the click event is not triggered from within the activator slot of the
+         * dialog component
+         */
+        event.stopPropagation()
+
+        // Hide the login form
+        document.getElementById('loginCard').style.visibility = 'hidden'
+      },
+
+      closeForgotPasswordDialog: function () {
+        // Show the login form
+        document.getElementById('loginCard').style.visibility = 'visible'
+        this.showForgotPasswordDialog = false
+
+        // Clear the stb store before logging in
+        store.commit(mutationTypes.CLEAR_STOCKBROKING_STORE)
+        // Clear the user store before logging in
+        store.commit(mutationTypes.CLEAR_USER_STORE)
+        // Clear previously saved data before logging into the system again
+        window.sessionStorage.clear()
+        // Redirect to the login page
+        this.$router.push({ name: 'Login' })
+      },
+
+      closeChangePasswordDialog: function () {
+        // Show the login form
+        document.getElementById('loginCard').style.visibility = 'visible'
+        this.showChangePasswordDialog = false
+
+        // Clear the stb store before logging in
+        store.commit(mutationTypes.CLEAR_STOCKBROKING_STORE)
+        // Clear the user store before logging in
+        store.commit(mutationTypes.CLEAR_USER_STORE)
+        // Clear previously saved data before logging into the system again
+        window.sessionStorage.clear()
+        // Redirect to the login page
+        this.$router.push({ name: 'Login' })
+      },
+
+      resetUserPassword: function () {
+        // Show the spinner saying that the we're verifying the username
+        this.isSearchingForUser = true;
+
+        // Clear the error message if any exists
+        this.$store.commit(mutationTypes.CLEAR_RESET_PASSWORD_ERROR_MESSAGE)
+
+        let getUserByUsername = AuthenticationService.findUserByUsername(this.resetPasswordUsername);
+
+        getUserByUsername.then((response) => {
+          let responseData = response.data;
+
+          // User is a valid user
+          if (responseData.portalUserName && (responseData.portalUserName === this.resetPasswordUsername)) {
+             // User has been found
+            this.isSearchingForUser = false;
+
+            // Display spinner for sending reset link
+            this.isSendingResetLink = true;
+            this.sendPasswordResetLink(responseData.portalUserName, responseData.emailAddress1, responseData.id);
+          } else {
+            // User was not found
+            this.isSearchingForUser = false;
+
+            this.$store.commit(mutationTypes.SET_RESET_PASSWORD_ERROR_MESSAGE, 'We do not recognise this username')
+
+            return;
+          }
+        })
+      },
+
+      sendPasswordResetLink: function (username, email, userId) {
+        let sendingResetLink = AuthenticationService.sendPasswordResetLink(username, email, userId)
+
+        sendingResetLink.then((response) => {
+          // Email was sent successfully
+          this.isSendingResetLink = false
+
+          this.resetEmailSent = true
+        })
+      },
+
+      /**
+       * Change a user's password after the password enters a new password upon receiving a password reset link.
+       */
+      changePassword: function () {
+        if (this.newPasswordForReset !== this.confirmPasswordForReset) {
+          this.$store.commit(mutationTypes.SET_CHANGE_PASSWORD_ERROR_MESSAGE, 'Passwords do not match')
+          return
+        }
+
+        if (this.newPasswordForReset.length < 5) {
+          this.$store.commit(mutationTypes.SET_CHANGE_PASSWORD_ERROR_MESSAGE, 'Password must have at least 5 characters')
+          return
+        }
+
+        this.isChangingPassword = true
+
+        let changingPassword = UserService.changePassword(this.userIdForPasswordReset, this.newPasswordForReset)
+
+        changingPassword.then(response => {
+          let responseData = response.data
+
+          // Password was changed successfully
+          if (responseData.status) {
+            this.showPasswordChangedSnackbar = true
+            this.closeChangePasswordDialog()
+          }
+
+          this.isChangingPassword = false
+        })
+        .catch(err => {
+          console.log(err)
+          this.isChangingPassword = false
+        })
       }
 
     },

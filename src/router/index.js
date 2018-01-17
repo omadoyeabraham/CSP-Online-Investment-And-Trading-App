@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Login from '@/components/Login'
 import Dashboard from '@/components/dashboard/Dashboard'
 import PageNotFound from '@/components/404'
+import ChangePassword from '../components/ChangePassword.vue'
 
 // Stockbroking Components
 import StbPortfolioSummary from '@/components/stockbroking/portfolio-summary/PortfolioSummary'
@@ -43,7 +44,13 @@ export default new Router({
   routes: [
     {
       path: '/public',
-      redirect: ''
+      redirect: '',
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/login/:resetCode/',
+      name: 'changePassword',
+      component: ChangePassword
     },
     {
       path: '/login',
@@ -53,112 +60,134 @@ export default new Router({
     {
       path: '/dashboard',
       name: 'Dashboard',
-      component: Dashboard
+      component: Dashboard,
+      meta: { requiresAuth: true }
     },
     {
       path: '/stb/portfolio-summary',
       name: 'stb-portfolio-summary',
-      component: StbPortfolioSummary
+      component: StbPortfolioSummary,
+      meta: { requiresAuth: true }
     },
     {
       path: '/stb/trade',
       name: 'stb-trade',
-      component: StbTrade
+      component: StbTrade,
+      meta: { requiresAuth: true }
     },
     {
       path: '/stb/trade/:orderType/:instrument',
       name: 'stb-trade-redirected',
-      component: StbTrade
+      component: StbTrade,
+      meta: { requiresAuth: true }
     },
     {
       path: '/stb/trade-history',
       name: 'stb-trade-history',
-      component: StbTradeHistory
+      component: StbTradeHistory,
+      meta: { requiresAuth: true }
     },
     {
       path: '/stb/trade-history?',
       name: 'stb-trade-history-ignore-check',
-      component: StbTradeHistory
+      component: StbTradeHistory,
+      meta: { requiresAuth: true }
     },
     {
       path: '/stb/portfolio-holdings',
       name: 'stb-portfolio-holdings',
-      component: StbPortfolioHoldings
+      component: StbPortfolioHoldings,
+      meta: { requiresAuth: true }
     },
     {
       path: '/stb/market-data',
       name: 'stb-market-data',
-      component: StbMarketData
+      component: StbMarketData,
+      meta: { requiresAuth: true }
     },
     {
       path: '/stb/watchlist',
       name: 'stb-watchlist',
-      component: StbWatchList
+      component: StbWatchList,
+      meta: { requiresAuth: true }
     },
     {
       path: '/stb/watchlist/:instrument',
       name: 'stb-watchlist-redirected',
-      component: StbWatchList
+      component: StbWatchList,
+      meta: { requiresAuth: true }
     },
     {
       path: '/fund-account',
       name: 'fund-account',
-      component: FundAccount
+      component: FundAccount,
+      meta: { requiresAuth: true }
     },
     {
       path: '/fund-account/?s=:responsecode',
       name: 'fund-account-response-from-api',
-      component: FundAccount
+      component: FundAccount,
+      meta: { requiresAuth: true }
     },
     {
       path: '/reset-password',
       name: 'reset-password',
-      component: ResetPassword
+      component: ResetPassword,
+      meta: { requiresAuth: true }
     },
     {
       path: '/contact-manager',
       name: 'contact-manager',
-      component: ContactManager
+      component: ContactManager,
+      meta: { requiresAuth: true }
     },
     {
       path: '/sma',
       name: 'sma',
-      component: SmaOverview
+      component: SmaOverview,
+      meta: { requiresAuth: true }
     },
     {
       path: '/fi/running',
       name: 'fi-running',
-      component: FixedIncomeRunningInvestments
+      component: FixedIncomeRunningInvestments,
+      meta: { requiresAuth: true }
     },
     {
       path: '/fi/terminated',
       name: 'fi-terminated',
-      component: FixedIncomeTerminatedInvestments
+      component: FixedIncomeTerminatedInvestments,
+      meta: { requiresAuth: true }
     },
     {
       path: '/di/running',
       name: 'di-running',
-      component: RunningDollarInvestments
+      component: RunningDollarInvestments,
+      meta: { requiresAuth: true }
     },
     {
       path: '/di/terminated',
       name: 'di-terminated',
-      component: TerminatedDollarInvestments
+      component: TerminatedDollarInvestments,
+      meta: { requiresAuth: true }
     },
     {
       path: '/cash',
       name: 'cash-overview',
-      component: CashAccountsOverview
+      component: CashAccountsOverview,
+      meta: { requiresAuth: true }
     },
     {
       path: '/cash/naira',
       name: 'cash-naira',
-      component: NairaCashAccounts
+      component: NairaCashAccounts,
+      meta: { requiresAuth: true }
     },
     {
       path: '/cash/dollar',
       name: 'cash-dollar',
-      component: DollarCashAccounts
+      component: DollarCashAccounts,
+      meta: { requiresAuth: true }
     },
     {
       path: '*',

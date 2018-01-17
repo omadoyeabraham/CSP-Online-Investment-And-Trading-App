@@ -54,6 +54,20 @@ const resetPassword = (userID,oldPassword, newPassword) => {
 }
 
 /**
+ * Change a user's password
+ *
+ * @param userID
+ * @param newPassword
+ */
+const changePassword = (userID, newPassword) => {
+  return axios({
+    method: 'POST',
+    url: ApiUrlService.ChangePassword,
+    data: { customerId: userID, newPassword: newPassword }
+  })
+}
+
+/**
  * Send out the contact manager email from the portal
  * @param subject
  * @param message
@@ -79,5 +93,6 @@ const contactManager = (subject, message, accountManagerEmail,username) => {
  export default {
    getUserData,
    resetPassword,
+   changePassword,
    contactManager
  }

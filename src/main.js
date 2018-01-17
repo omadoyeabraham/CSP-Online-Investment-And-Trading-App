@@ -79,16 +79,15 @@ router.beforeEach((to, from, next) => {
   /**
    * If a logged out user is trying to access a "non Login" page, redirect said user to the login * page
    */
-
-  if (window.sessionStorage.length === 0 && to.name !== 'Login') {
+  if (window.sessionStorage.length === 0 && (to.name !== 'Login' && to.name !== 'changePassword')) {
     // Stop navigation to the intended route
     next(false)
 
     // Redirect the user to the login page instead
+    next()
     next('/login')
   } else if (window.sessionStorage.length === 0 && to.name === 'Login') {
     // User is trying to logout
-
     next()
   } else {
     // Add the authorization header to axios if its set in storage
@@ -97,7 +96,6 @@ router.beforeEach((to, from, next) => {
       axios.defaults.headers.common['Authorization'] = window.sessionStorage.accessToken;
     } else {
       // Access token is not set
-
       // Stop navigation to the intended route
       next(false)
       // Redirect the user to the login page instead
