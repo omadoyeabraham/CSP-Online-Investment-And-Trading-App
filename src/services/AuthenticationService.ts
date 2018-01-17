@@ -62,14 +62,15 @@ import StockbrokingService from './StockbrokingService'
    })
  }
 
- let sendPasswordResetLink = (username: string, email: string, userId: number) => {
+ let sendPasswordResetLink = (username: string, email: string, userId: number, label: string) => {
    return axios({
      method: 'post',
      url: ApiUrls.SendPasswordResetLink,
      data: {
        'username': username,
        'email': email,
-       'user_id': userId
+       'user_id': userId,
+       'userLabel': label
       }
    })
  }

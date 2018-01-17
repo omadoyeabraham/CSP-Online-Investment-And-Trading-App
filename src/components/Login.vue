@@ -603,7 +603,8 @@ Thank you.
 
             // Display spinner for sending reset link
             this.isSendingResetLink = true;
-            this.sendPasswordResetLink(responseData.portalUserName, responseData.emailAddress1, responseData.id);
+            console.log(responseData.label)
+            this.sendPasswordResetLink(responseData.portalUserName, responseData.emailAddress1, responseData.id, responseData.label);
           } else {
             // User was not found
             this.isSearchingForUser = false;
@@ -615,14 +616,15 @@ Thank you.
         })
       },
 
-      sendPasswordResetLink: function (username, email, userId) {
-        let sendingResetLink = AuthenticationService.sendPasswordResetLink(username, email, userId)
+      sendPasswordResetLink: function (username, email, userId, userLabel) {
+        let sendingResetLink = AuthenticationService.sendPasswordResetLink(username, email, userId, userLabel)
 
         sendingResetLink.then((response) => {
           // Email was sent successfully
           this.isSendingResetLink = false
 
           this.resetEmailSent = true
+          this.resetPasswordUsername = ''
         })
       },
 
