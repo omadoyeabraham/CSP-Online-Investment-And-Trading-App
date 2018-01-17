@@ -12,7 +12,8 @@ import * as mutationTypes from '../mutation-types.js';
  // Initial store state
 const state = {
   authenticationErrorMessage: null,
-  resetPasswordErrorMessage: null
+  resetPasswordErrorMessage: null,
+  changePasswordErrorMessage: null
 }
 
  // Getters
@@ -41,7 +42,7 @@ const mutations = {
     state.authenticationErrorMessage = null
   },
 
-    /**
+  /**
    * Set the error message received during authentication.
    *
    * @param {any} state
@@ -58,6 +59,25 @@ const mutations = {
    */
   [mutationTypes.CLEAR_RESET_PASSWORD_ERROR_MESSAGE](state) {
     state.resetPasswordErrorMessage = null
+  },
+
+    /**
+   * Set the error message received during authentication.
+   *
+   * @param {any} state
+   * @param {string} errorMessage
+   */
+  [mutationTypes.SET_CHANGE_PASSWORD_ERROR_MESSAGE](state, errorMessage) {
+    state.changePasswordErrorMessage = errorMessage
+  },
+
+  /**
+   * Clear the authentication error message, and set it to null
+   *
+   * @param {any} state
+   */
+  [mutationTypes.CLEAR_CHANGE_PASSWORD_ERROR_MESSAGE](state) {
+    state.changePasswordErrorMessage = null
   }
 
 }

@@ -269,6 +269,89 @@ Thank you.
       </div><!-- /container -->
     </v-dialog>
 
+    <!-- Dialog for change password -->
+    <v-dialog
+      v-model="showChangePasswordDialog" lazy absolute
+      width="560">
+      <v-btn id="openChangePasswordDialog"
+            style="display: none"
+            color="primary"
+            dark slot="activator">
+      </v-btn>
+      <!--Change Password Card -->
+      <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
+        <v-layout row>
+          <div class="card card-container elevation-24">
+            <v-layout row class="d-flex column">
+              <v-flex class="pr0 text-center">
+                  <img id="company-img" class="img-responsive"
+                  src="../assets/img/logo.png" width='50px' />
+              </v-flex>
+              <v-flex class="align-self-center pl0">
+                  <span class="text-csp-blue font-size-20">Reset your password</span>
+              </v-flex>
+            </v-layout>
+            <p class="font-size-13 mt20 text-left">Please enter your new password.</p>
+              <form class="form-signin">
+                <v-alert
+                  error
+                  icon="new_releases" :value="true"
+                  v-if="changePasswordError">
+                Passwords do not match
+                </v-alert>
+                <v-text-field
+                  label="New Password"
+                  v-model="newPassword"
+                  :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
+                  :append-icon-cb="() => (hidePassword = !hidePassword)"
+                  :type="hidePassword ? 'password' : 'text'"
+                  :rules="passwordRules"
+                  autocomplete="nope">
+                </v-text-field>
+                <v-text-field
+                  label="Confirm Password"
+                  v-model="confirmPassword"
+                  :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
+                  :append-icon-cb="() => (hidePassword = !hidePassword)"
+                  :type="hidePassword ? 'password' : 'text'"
+                  :rules="passwordRules"
+                  autocomplete="nope">
+                </v-text-field>
+
+                <!-- Loading Icon when searching for the user-->
+                <v-layout v-if="isChangingPassword"  row class=" d-flex justify-center ">
+                  <v-flex class="xs6 d-flex justify-center align-center">
+                    <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
+                    <span class="font-size-12 ml5">Changing Password</span>
+                  </v-flex>
+                </v-layout>
+            <!-- Buttons -->
+            <v-container fluid class="p0 ">
+              <v-layout  row class="mt20">
+                <v-flex xs6 class="d-flex justify-end ">
+                  <v-btn small style="background: #4c7396; color: #FFFFFF"
+                         @click="changePassword()">
+                    Send reset link
+                  </v-btn>
+                </v-flex>
+
+                <!-- <v-flex xs6>
+                  <v-btn small class="red darken-1 white--text"
+                    @click="closeChangePasswordDialog()">
+                    CANCEL
+                  </v-btn>
+                </v-flex> -->
+              </v-layout>
+            </v-container>
+
+              </form>
+
+          </div><!-- /card-container -->
+        </v-layout>
+
+      </div><!-- /container -->
+    </v-dialog>
+
   </div>
 
 </template>
@@ -288,14 +371,30 @@ Thank you.
   {
 
     beforeCreate () {
-      /**
-      * Redirect users on mobile devices to the mobile view of the CSP portal
-       */
-      // if (UtilityService.isMobileUser) {
-      //   // window.location.assign('http://google.com')
-      //   // console.log('Mobile User')
-      //   // this.$router.push('http://google.com')
-      // }
+
+    },
+
+    mounted () {
+      // Show the change password dialog box
+      if (this.$route.query.resetLink) {
+        console.log(this.$route.query.resetLink)
+
+          // Hide the login form
+        document.getElementById('loginCard').style.visibility = 'hidden'
+
+        // Display the edit popup modal/dialog
+        document.querySelector('#openChangePasswordDialog').click();
+
+        /**
+         * Stopping the event propagation because of the auto-close quirk that vuetify's dialog
+         * popup has if the click event is not triggered from within the activator slot of the
+         * dialog component
+         */
+        event.stopPropagation()
+
+        // Hide the login form
+        document.getElementById('loginCard').style.visibility = 'hidden'
+      }
     },
 
     beforeDestroy () {
@@ -310,6 +409,10 @@ Thank you.
         resetEmailSent: false,
         name: 'CardinalStone Trade Direct',
         showForgotPasswordDialog: false,
+        showChangePasswordDialog: false,
+        isChangingPassword: false,
+        newPassword: '',
+        confirmPassword: '',
         username: '',
         resetPasswordUsername: '',
         isSearchingForUser: '',
@@ -335,7 +438,8 @@ Thank you.
     computed: {
       ...mapState({
         'authError': (store) => store.errors.authenticationErrorMessage,
-        'resetPasswordError': (store) => store.errors.resetPasswordErrorMessage
+        'resetPasswordError': (store) => store.errors.resetPasswordErrorMessage,
+        'changePasswordError': (store) => store.errors.changePasswordErrorMessage
       })
     },
 
@@ -426,6 +530,21 @@ Thank you.
         this.$router.push({ name: 'Login' })
       },
 
+      closeChangePasswordDialog: function () {
+        // Show the login form
+        document.getElementById('loginCard').style.visibility = 'visible'
+        this.showChangePasswordDialog = false
+
+        // Clear the stb store before logging in
+        store.commit(mutationTypes.CLEAR_STOCKBROKING_STORE)
+        // Clear the user store before logging in
+        store.commit(mutationTypes.CLEAR_USER_STORE)
+        // Clear previously saved data before logging into the system again
+        window.sessionStorage.clear()
+        // Redirect to the login page
+        this.$router.push({ name: 'Login' })
+      },
+
       resetUserPassword: function () {
         // Show the spinner saying that the we're verifying the username
         this.isSearchingForUser = true;
@@ -467,6 +586,10 @@ Thank you.
 
           this.resetEmailSent = true
         })
+      },
+
+      changePassword: function () {
+
       }
 
     },
