@@ -14,7 +14,7 @@
     <div class="container-fluid d-flex flex-column justify-content-center align-items-center" id="inner-login-wrapper">
 
       <v-layout row>
-        <div class="card card-container elevation-24">
+        <div class="card card-container elevation-24" id="loginCard">
 
               <v-layout row class="d-flex column">
                 <v-flex class="pr0 text-center">
@@ -108,7 +108,7 @@ Thank you.
                 </v-btn>
 
             </form>
-            <a href="#" class="forgot-password">
+            <a href="#" class="forgot-password" @click="showForgotPasswordForm()">
                 Forgot your password?
             </a>
 
@@ -159,11 +159,122 @@ Thank you.
       </v-flex>
     </v-layout>
 
+    <!-- Dialog for I forgot my password -->
+    <v-dialog
+      v-model="showForgotPasswordDialog" lazy absolute
+      width="560">
+      <v-btn id="openForgotPasswordDialog"
+            style="display: none"
+            color="primary"
+            dark slot="activator">
+      </v-btn>
+      <!--Forgot Password Card -->
+      <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
+        <v-layout row>
+          <div class="card card-container elevation-24">
+            <v-layout row class="d-flex column">
+              <v-flex class="pr0 text-center">
+                  <img id="company-img" class="img-responsive"
+                  src="../assets/img/logo.png" width='50px' />
+              </v-flex>
+              <v-flex class="align-self-center pl0">
+                  <span class="text-csp-blue font-size-20">Password Reset</span>
+              </v-flex>
+            </v-layout>
+            <p class="font-size-13 mt20 text-left">Please enter your username to have a password reset link sent to you.</p>
+              <v-snackbar
+                :timeout="timeout"
+                :top="y === 'top'"
+                :bottom="y === 'bottom'"
+                :right="x === 'right'"
+                :left="x === 'left'"
+                :multi-line="mode === 'multi-line'"
+                :vertical="mode === 'vertical'"
+                v-model="snackbar"
+                class="red darken-4"
+              >
+                <v-container fluid class="pl5 pr20">
+                  <v-layout row>
+                    <v-flex xs10 class="d-flex align-center">
+                      {{text}}
+                    </v-flex>
+                    <v-flex xs2 class="">
+                      <v-btn flat class="white--text" @click.native="snackbar = false">
+                        <v-icon class="white--text">close</v-icon>
+                      </v-btn>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-snackbar>
+
+              <form class="form-signin">
+                <v-alert
+                  error
+                  icon="new_releases" :value="true"
+                  v-if="resetPasswordError">
+                Invalid Username
+                </v-alert>
+                <v-alert
+                  success
+                  icon="new_releases" :value="true"
+                  v-if="resetEmailSent">
+               Kindly check your mail for the reset link. Click on this  <a href='/login'>link</a> to login
+                </v-alert>
+                <v-text-field
+                  label="Username"
+                  :append-icon="'account_circle'"
+                  v-model="resetPasswordUsername"
+                  :rules="usernameRules"
+                  autocomplete="nope">
+                </v-text-field>
+
+                <!-- Loading Icon when searching for the user-->
+                <v-layout v-if="isSearchingForUser"  row class=" d-flex justify-center ">
+                  <v-flex class="xs6 d-flex justify-center align-center">
+                    <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
+                    <span class="font-size-12 ml5">Verifying username.</span>
+                  </v-flex>
+                </v-layout>
+                 <!-- Loading Icon when sending the reset email-->
+                <v-layout v-if="isSendingResetLink"  row class=" d-flex justify-center ">
+                  <v-flex class="xs6 d-flex justify-center align-center">
+                    <v-progress-circular indeterminate class="primary--text height-20px width-20px"></v-progress-circular>
+                    <span class="font-size-12 ml5">Sending reset link.</span>
+                  </v-flex>
+                </v-layout>
+            <!-- Buttons -->
+            <v-container fluid class="p0 ">
+              <v-layout  row class="mt20">
+                <v-flex xs6 class="d-flex justify-end ">
+                  <v-btn small style="background: #4c7396; color: #FFFFFF"
+                         @click="resetUserPassword()">
+                    Send reset link
+                  </v-btn>
+                </v-flex>
+
+                <v-flex xs6>
+                  <v-btn small class="red darken-1 white--text"
+                    @click="closeForgotPasswordDialog()">
+                    CANCEL
+                  </v-btn>
+                </v-flex>
+              </v-layout>
+            </v-container>
+
+              </form>
+
+          </div><!-- /card-container -->
+        </v-layout>
+
+      </div><!-- /container -->
+    </v-dialog>
+
   </div>
 
 </template>
 
 <script>
+  import store from '../store';
   import {mapState} from 'vuex'
   import axios from 'axios'
   import * as mutationTypes from '../store/mutation-types'
@@ -190,12 +301,19 @@ Thank you.
     beforeDestroy () {
       // Clear the authentication error message incase it's been set
       this.$store.commit(mutationTypes.CLEAR_AUTHENTICATION_ERROR_MESSAGE)
+      this.$store.commit(mutationTypes.CLEAR_RESET_PASSWORD_ERROR_MESSAGE)
     },
 
     data () {
       return {
+        valid: false,
+        resetEmailSent: false,
         name: 'CardinalStone Trade Direct',
+        showForgotPasswordDialog: false,
         username: '',
+        resetPasswordUsername: '',
+        isSearchingForUser: '',
+        isSendingResetLink: '',
         password: '',
         hidePassword: true,
         isAuthenticating: false,
@@ -216,7 +334,8 @@ Thank you.
 
     computed: {
       ...mapState({
-        'authError': (store) => store.errors.authenticationErrorMessage
+        'authError': (store) => store.errors.authenticationErrorMessage,
+        'resetPasswordError': (store) => store.errors.resetPasswordErrorMessage
       })
     },
 
@@ -274,6 +393,80 @@ Thank you.
 
           // this.$router.push('login')
         });
+      },
+
+      // Show forgot password form
+      showForgotPasswordForm: function () {
+        // Display the edit popup modal/dialog
+        document.querySelector('#openForgotPasswordDialog').click();
+
+        /**
+         * Stopping the event propagation because of the auto-close quirk that vuetify's dialog
+         * popup has if the click event is not triggered from within the activator slot of the
+         * dialog component
+         */
+        event.stopPropagation()
+
+        // Hide the login form
+        document.getElementById('loginCard').style.visibility = 'hidden'
+      },
+
+      closeForgotPasswordDialog: function () {
+        // Show the login form
+        document.getElementById('loginCard').style.visibility = 'visible'
+        this.showForgotPasswordDialog = false
+
+        // Clear the stb store before logging in
+        store.commit(mutationTypes.CLEAR_STOCKBROKING_STORE)
+        // Clear the user store before logging in
+        store.commit(mutationTypes.CLEAR_USER_STORE)
+        // Clear previously saved data before logging into the system again
+        window.sessionStorage.clear()
+        // Redirect to the login page
+        this.$router.push({ name: 'Login' })
+      },
+
+      resetUserPassword: function () {
+        // Show the spinner saying that the we're verifying the username
+        this.isSearchingForUser = true;
+
+        // Clear the error message if any exists
+        this.$store.commit(mutationTypes.CLEAR_RESET_PASSWORD_ERROR_MESSAGE)
+
+        let getUserByUsername = AuthenticationService.findUserByUsername(this.resetPasswordUsername);
+
+        getUserByUsername.then((response) => {
+          let responseData = response.data;
+
+          // User is a valid user
+          if (responseData.portalUserName && (responseData.portalUserName === this.resetPasswordUsername)) {
+             // User has been found
+            this.isSearchingForUser = false;
+
+            // Display spinner for sending reset link
+            this.isSendingResetLink = true;
+
+            this.sendPasswordResetLink();
+          } else {
+            // User was not found
+            this.isSearchingForUser = false;
+
+            this.$store.commit(mutationTypes.SET_RESET_PASSWORD_ERROR_MESSAGE, 'We do not recognise this username')
+
+            return;
+          }
+        })
+      },
+
+      sendPasswordResetLink: function () {
+        let sendingResetLink = AuthenticationService.sendPasswordResetLink(this.resetPasswordUsername)
+
+        sendingResetLink.then((response) => {
+          // Email was sent successfully
+          this.isSendingResetLink = false
+
+          this.resetEmailSent = true
+        })
       }
 
     },

@@ -54,9 +54,27 @@ import StockbrokingService from './StockbrokingService'
 
  }
 
+ let findUserByUsername = (username: string) => {
+   return axios({
+     method: 'post',
+     url: ApiUrls.FindUserByUsername,
+     data: { 'username': username }
+   })
+ }
+
+ let sendPasswordResetLink = (username: string) => {
+   return axios({
+     method: 'post',
+     url: ApiUrls.SendPasswordResetLink,
+     data: { 'username': username }
+   })
+ }
+
 
  // Export the methods from the authentication service
  export const AuthenticationService = {
    login: login,
-   logout: logout
+   logout: logout,
+   findUserByUsername: findUserByUsername,
+   sendPasswordResetLink: sendPasswordResetLink
  }

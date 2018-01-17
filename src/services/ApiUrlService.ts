@@ -5,10 +5,13 @@
  */
 
 export const BaseApiUrl = 'https://restserver2.cardinalstone.com/api';
+// export const BaseApiUrl = 'http://localhost/projects/webapps/apis/restserver/public/index.php/api'
 // export const BaseApiUrl = 'https://restserver.cardinalstone.com/api';
 // export const BaseApiUrl = 'https://restserver.cardinalstone.com/public/index.php/api';
 
 export const AuthenticationUrl = `${BaseApiUrl}/findCustomerByName`;
+export const FindUserByUsername = `${BaseApiUrl}/findCustomerByUsername`;
+export const SendPasswordResetLink = `${BaseApiUrl}/sendPasswordResetLink`;
 export const LogoutUrl = `${BaseApiUrl}/logout`
 
 // Stockbroking

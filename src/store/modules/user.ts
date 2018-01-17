@@ -96,7 +96,11 @@ const actions = {
    * @param param0
    */
   updateCustomerData({ commit, state }, customerId) {
+    if (customerId === 0) {
+      return;
+    }
     let updatingCustomerData = UserService.getUserData(customerId)
+    console.log(`UserID: ${customerId}`)
     console.log('Got to the updating customer data action')
     updatingCustomerData.then((response) => {
       let userData = response.data
