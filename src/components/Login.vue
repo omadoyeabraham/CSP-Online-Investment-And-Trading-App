@@ -365,6 +365,19 @@ Thank you.
 
       </v-snackbar>
 
+        <!-- Alert for successful password reset email sent -->
+      <v-snackbar success
+        :timeout="snackbarTimeout"
+        :top="true"
+        :multi-line="snackbarMode === 'multi-line'"
+        :vertical="snackbarMode === 'vertical'"
+        :color="'success'"
+        v-model="showPasswordEmailSnackbar"
+        >
+        Password successfully changed
+
+      </v-snackbar>
+
   </div>
 
 </template>
@@ -437,6 +450,7 @@ Thank you.
         snackbarTimeout: 4000,
         snackbarMode: '',
         showPasswordChangedSnackbar: false,
+        showPasswordEmailSnackbar: false,
         valid: false,
         resetEmailSent: false,
         name: 'CardinalStone Trade Direct',
@@ -603,7 +617,6 @@ Thank you.
 
             // Display spinner for sending reset link
             this.isSendingResetLink = true;
-            console.log(responseData.label)
             this.sendPasswordResetLink(responseData.portalUserName, responseData.emailAddress1, responseData.id, responseData.label);
           } else {
             // User was not found
@@ -624,7 +637,9 @@ Thank you.
           this.isSendingResetLink = false
 
           this.resetEmailSent = true
+          this.showPasswordEmailSnackbar = true
           this.resetPasswordUsername = ''
+          this.closeForgotPasswordDialog()
         })
       },
 
