@@ -367,14 +367,14 @@ Thank you.
 
         <!-- Alert for successful password reset email sent -->
       <v-snackbar success
-        :timeout="snackbarTimeout"
+        :timeout="snackbarPasswordTimeout"
         :top="true"
         :multi-line="snackbarMode === 'multi-line'"
         :vertical="snackbarMode === 'vertical'"
         :color="'success'"
         v-model="showPasswordEmailSnackbar"
         >
-        Password successfully changed
+        Kindly check your mail for the password reset link.
 
       </v-snackbar>
 
@@ -448,6 +448,7 @@ Thank you.
     data () {
       return {
         snackbarTimeout: 4000,
+        snackbarPasswordTimeout: 6000,
         snackbarMode: '',
         showPasswordChangedSnackbar: false,
         showPasswordEmailSnackbar: false,
