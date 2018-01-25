@@ -72,11 +72,12 @@
                 </v-flex>
 
                 <!-- Amount to be shown only when not previwing the form -->
+                <!-- v-validate="'required|min_value:50000|max_value:20000000'" -->
                 <v-flex xs6 class="height-55px mb6" v-if="!inPreviewState">
                   <v-text-field
                     :label="'AMOUNT'" v-model="clientAmount"
                     :type="'number'" :rules="amountRules"
-                    v-validate="'required|min_value:50000|max_value:20000000'" name="amount"
+                     name="amount"
                     :disabled="inPreviewState"
                     min=50000>
                   </v-text-field>
@@ -203,9 +204,9 @@ export default
         (v) => !!v || 'Required'
       ],
       amountRules: [
-        (v) => !!v || 'Required',
-        (v) => (v < 50000) === false || 'Minimum of ₦50,000',
-        (v) => (v > 20000000) === false || 'Maximum of ₦20,000,000'
+        (v) => !!v || 'Required'
+        // (v) => (v < 50000) === false || 'Minimum of ₦50,000',
+        // (v) => (v > 20000000) === false || 'Maximum of ₦20,000,000'
       ]
     }
   },

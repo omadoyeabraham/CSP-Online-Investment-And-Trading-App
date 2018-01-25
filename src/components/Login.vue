@@ -365,6 +365,19 @@ Thank you.
 
       </v-snackbar>
 
+        <!-- Alert for successful password reset email sent -->
+      <v-snackbar success
+        :timeout="snackbarPasswordTimeout"
+        :top="true"
+        :multi-line="snackbarMode === 'multi-line'"
+        :vertical="snackbarMode === 'vertical'"
+        :color="'success'"
+        v-model="showPasswordEmailSnackbar"
+        >
+        Kindly check your mail for the password reset link.
+
+      </v-snackbar>
+
   </div>
 
 </template>
@@ -435,8 +448,10 @@ Thank you.
     data () {
       return {
         snackbarTimeout: 4000,
+        snackbarPasswordTimeout: 6000,
         snackbarMode: '',
         showPasswordChangedSnackbar: false,
+        showPasswordEmailSnackbar: false,
         valid: false,
         resetEmailSent: false,
         name: 'CardinalStone Trade Direct',
@@ -603,7 +618,7 @@ Thank you.
 
             // Display spinner for sending reset link
             this.isSendingResetLink = true;
-            this.sendPasswordResetLink(responseData.portalUserName, responseData.emailAddress1, responseData.id);
+            this.sendPasswordResetLink(responseData.portalUserName, responseData.emailAddress1, responseData.id, responseData.label);
           } else {
             // User was not found
             this.isSearchingForUser = false;
@@ -615,14 +630,17 @@ Thank you.
         })
       },
 
-      sendPasswordResetLink: function (username, email, userId) {
-        let sendingResetLink = AuthenticationService.sendPasswordResetLink(username, email, userId)
+      sendPasswordResetLink: function (username, email, userId, userLabel) {
+        let sendingResetLink = AuthenticationService.sendPasswordResetLink(username, email, userId, userLabel)
 
         sendingResetLink.then((response) => {
           // Email was sent successfully
           this.isSendingResetLink = false
 
           this.resetEmailSent = true
+          this.showPasswordEmailSnackbar = true
+          this.resetPasswordUsername = ''
+          this.closeForgotPasswordDialog()
         })
       },
 
