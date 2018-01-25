@@ -4,7 +4,9 @@
  * @author Omadoye Abraham <omadoyeabraham@gmail.com>
  */
 
-export const BaseApiUrl = 'https://restserver2.cardinalstone.com/api';
+// export const BaseApiUrl = 'http://127.0.0.1/cardinalstone-apps/restserver/public/index.php/api';
+export const BaseApiUrl = 'https://restserverstaging.cardinalstone.com/api';
+// export const BaseApiUrl = 'https://restserver2.cardinalstone.com/api';
 // export const BaseApiUrl = 'https://restserver.cardinalstone.com/api';
 // export const BaseApiUrl = 'https://restserver.cardinalstone.com/public/index.php/api';
 

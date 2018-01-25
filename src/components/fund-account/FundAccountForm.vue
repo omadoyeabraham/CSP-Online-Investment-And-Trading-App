@@ -12,6 +12,9 @@
       <v-card-media>
         <v-container fluid class="pt0 pl1 pr1">
           <v-layout row>
+            <!-- action=" https://staging.nibss-plc.com.ng/CentralPayPlus/pay" -->
+            <!-- action=" https://centralpay.nibss-plc.com.ng/CentralPayPlus/pay" -->
+
             <v-form v-model="valid" ref="form" class="w100p"
               id="paymentForm"
               name="cpay"
@@ -78,6 +81,15 @@
                     min=50000>
                   </v-text-field>
                 </v-flex>
+                  <!-- <v-flex xs6 class="height-55px mb6" v-if="!inPreviewState">
+                  <v-text-field
+                    :label="'AMOUNT'" v-model="clientAmount"
+                    :type="'number'" :rules="amountRules"
+                    name="amount"
+                    :disabled="inPreviewState"
+                    >
+                  </v-text-field>
+                </v-flex> -->
 
               <!-- Customer Amount to be shown only when previewing -->
               <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">

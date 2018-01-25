@@ -69,8 +69,6 @@
   // The state management store used that houses application wide state
   import store from '../store';
   import * as mutationTypes from '../store/mutation-types'
-  // import {AuthenticationService} from '../services/AuthenticationService'
-
   import {mapState, mapGetters} from 'vuex'
 
   // Import the components that are rendered by the application base

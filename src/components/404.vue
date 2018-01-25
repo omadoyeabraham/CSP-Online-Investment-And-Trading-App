@@ -2,7 +2,7 @@
   <v-container>
 
   <v-alert info value="true">
-    We are currently working on this module. Please check back later.
+    Oops an unknown system error has occured. Refresh your browser to clear this error.
     <!-- <router-link :to="{name: 'Login'}"> Go Home </router-link> -->
   </v-alert>
 
@@ -11,7 +11,11 @@
 
 <script>
 export default {
-
+  beforeRouteEnter (to, from, next) {
+    console.log(to)
+    console.log(from)
+    console.log(next)
+  }
 }
 </script>
 

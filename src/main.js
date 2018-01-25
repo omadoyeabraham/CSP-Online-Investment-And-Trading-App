@@ -9,8 +9,8 @@ import Vuetify from 'vuetify'
 Vue.use(Vuetify);
 
 // Boostrap JS and Tether JS (for tooltip positioning)
-import tether from 'tether'
-window.tether = tether
+// import tether from 'tether'
+// window.tether = tether
 // Vue.use(tether)
 
 // Map components for highcharts
@@ -80,32 +80,49 @@ router.beforeEach((to, from, next) => {
    * If a logged out user is trying to access a "non Login" page, redirect said user to the login * page
    */
 
-  if (window.sessionStorage.length === 0 && to.name !== 'Login') {
-    // Stop navigation to the intended route
-    next(false)
-
-    // Redirect the user to the login page instead
-    next('/login')
-  } else if (window.sessionStorage.length === 0 && to.name === 'Login') {
-    // User is trying to logout
-
-    next()
-  } else {
-    // Add the authorization header to axios if its set in storage
-    if (window.sessionStorage.accessToken) {
-      // Add authorization header to all future axios requests, until the user logs out
-      axios.defaults.headers.common['Authorization'] = window.sessionStorage.accessToken;
+  // accessToken is not set therefore the user is logged out.
+  if (!window.sessionStorage.accessToken) {
+    // User is trying to login, so allow the user.
+    if (to.name === 'Login') {
+      next()
     } else {
-      // Access token is not set
-
-      // Stop navigation to the intended route
+      // User is not logged in, and is trying to access a protected route, so redirect to login.
       next(false)
-      // Redirect the user to the login page instead
       next('/login')
     }
-    // Continue navigation to the intended route
+  } else {
+    // accessToken is set, add it to axios and allow the user access all routes (so next()).
+    axios.defaults.headers.common['Authorization'] = window.sessionStorage.accessToken;
     next()
   }
+
+  // if (window.sessionStorage.length === 0 && to.name !== 'Login') {
+  //   // Stop navigation to the intended route
+  //   next(false)
+
+  //   // Redirect the user to the login page instead
+  //   next('/login')
+  //   debugger
+  // } else if (window.sessionStorage.length === 0 && to.name === 'Login') {
+  //   // User is trying to logout
+
+  //   next()
+  // } else {
+  //   // Add the authorization header to axios if its set in storage
+  //   if (window.sessionStorage.accessToken) {
+  //     // Add authorization header to all future axios requests, until the user logs out
+  //     axios.defaults.headers.common['Authorization'] = window.sessionStorage.accessToken;
+  //   } else {
+  //     // Access token is not set
+  //     debugger
+  //     // Stop navigation to the intended route
+  //     next(false)
+  //     // Redirect the user to the login page instead
+  //     next('/login')
+  //   }
+  //   // Continue navigation to the intended route
+  //   next()
+  // }
 })
 
 /* eslint-disable no-new */
