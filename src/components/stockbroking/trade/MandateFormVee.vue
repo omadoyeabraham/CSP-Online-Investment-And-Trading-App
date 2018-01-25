@@ -457,7 +457,6 @@ export default
         this.$store.commit(mutationTypes.SET_MANDATE_PLACEMENT_STATE, true)
 
         // Make a call to update the user's data after an interval of 1 seconds
-        console.log('Called updated after placing mandate')
         setTimeout(this.obtainUpdatedCustomerData, 1000)
 
         // Redirect to the trade history page
