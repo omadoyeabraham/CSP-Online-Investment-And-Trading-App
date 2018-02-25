@@ -30,7 +30,7 @@ import CashAccountsOverview from '../components/cash/CashAccountsOverview.vue'
 import SmaOverview from '../components/sma/SmaOverview'
 
 // Fund Account
-import FundAccount from '@/components/fund-account/FundAccount-404'
+import FundAccount from '@/components/fund-account/FundAccount'
 
 // Reset Password
 import ResetPassword from '@/components/reset-password/ResetPassword'

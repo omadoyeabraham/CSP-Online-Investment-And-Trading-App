@@ -58,7 +58,7 @@
 
             <form class="form-signin">
 
-                 <!-- <v-alert error
+                 <v-alert error
                   icon="new_releases" :value="true"
                   >
                   Dear Valued Client, <br><br>
@@ -67,7 +67,7 @@ You may experience a slight downtime while accessing our online trading portal. 
 
 Thank you.
 
-                 </v-alert> -->
+                 </v-alert>
 
                  <v-alert error
                   icon="new_releases" :value="true"

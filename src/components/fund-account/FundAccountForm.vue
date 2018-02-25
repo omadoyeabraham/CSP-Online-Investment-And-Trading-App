@@ -78,6 +78,7 @@
                     :label="'AMOUNT'" v-model="clientAmount"
                     :type="'number'" :rules="amountRules"
                      name="amount"
+                     v-validate="'required|min_value:50000|max_value:20000000'"
                     :disabled="inPreviewState"
                     min=50000>
                   </v-text-field>
@@ -160,86 +161,76 @@
 </template>
 
 <script>
-import {AccountFundingService} from '../../services/AccountFundingService'
-export default
-{
-  props: [
-    'user',
-    'username',
-    'portalUsername',
-    'cashAccounts'
-  ],
+import { AccountFundingService } from "../../services/AccountFundingService";
+export default {
+  props: ["user", "username", "portalUsername", "cashAccounts"],
 
   $$validates: true,
 
-  data () {
+  data() {
     return {
       valid: false,
       inPreviewState: false,
       gettingTransactionDetails: false,
       placingFundRequest: false,
-      paymentMethod: 'BANK TRANSFER',
-      cashAccount: '',
-      currency: 'Naira (NGN)',
-      clientAmount: '',
-      merchant_id: '',
-      product_id: '',
-      product_description: '',
-      customer_id: '',
-      nibbs_amount: '',
-      nibbs_currency: '',
-      transaction_id: '',
-      response_url: '',
-      hash: '',
-      transactionCharge: '',
-      totalAmount: '',
+      paymentMethod: "BANK TRANSFER",
+      cashAccount: "",
+      currency: "Naira (NGN)",
+      clientAmount: "",
+      merchant_id: "",
+      product_id: "",
+      product_description: "",
+      customer_id: "",
+      nibbs_amount: "",
+      nibbs_currency: "",
+      transaction_id: "",
+      response_url: "",
+      hash: "",
+      transactionCharge: "",
+      totalAmount: "",
       paymentMethods: [
-        { text: 'Bank Transfer', value: 'BANK' },
-        { text: 'Card Payment', value: 'CARD' }
+        { text: "Bank Transfer", value: "BANK" },
+        { text: "Card Payment", value: "CARD" }
       ],
-      paymentMethodRules: [
-        (v) => !!v || 'Required'
-      ],
-      cashAccountRules: [
-        (v) => !!v || 'Required'
-      ],
+      paymentMethodRules: [v => !!v || "Required"],
+      cashAccountRules: [v => !!v || "Required"],
       amountRules: [
-        (v) => !!v || 'Required'
-        // (v) => (v < 50000) === false || 'Minimum of ₦50,000',
-        // (v) => (v > 20000000) === false || 'Maximum of ₦20,000,000'
+        v => !!v || "Required",
+        v => v < 50000 === false || "Minimum of ₦50,000",
+        v => v > 20000000 === false || "Maximum of ₦20,000,000"
       ]
-    }
+    };
   },
 
   methods: {
     /**
      * Get transaction details icluding the hash, transactionID
      */
-    getPaymentTransactionDetails: function () {
-      this.$validator.validateAll().then((result) => {
+    getPaymentTransactionDetails: function() {
+      this.$validator.validateAll().then(result => {
         // Form is being validated
 
         // Validation errors occured
         if (!result) {
           // Used to display the errors to the user, if the preview btn is pressed
-          let formComponents = this.$refs.form.$children
+          let formComponents = this.$refs.form.$children;
 
-          formComponents.forEach((formComponent) => {
-            formComponent.shouldValidate = true
-          })
+          formComponents.forEach(formComponent => {
+            formComponent.shouldValidate = true;
+          });
 
           // Terminate processing because of the errors
-          return
+          return;
         } else {
           // No validation errors occured
 
           // Show the loading icon when getting transaction data
-          this.gettingTransactionDetails = true
+          this.gettingTransactionDetails = true;
 
-           // Retrieve details about the user selected cash Account
-          let selectedCashAccount = this.cashAccounts.find((cashAccount) => {
-            return (cashAccount.value = this.cashAccount)
-          })
+          // Retrieve details about the user selected cash Account
+          let selectedCashAccount = this.cashAccounts.find(cashAccount => {
+            return (cashAccount.value = this.cashAccount);
+          });
 
           let paymentTransaction = {
             productId: this.cashAccount,
@@ -248,66 +239,71 @@ export default
             currency: 566,
             clientId: this.user.info.id,
             companyName: selectedCashAccount.companyName
-          }
+          };
 
-          let paymentTransactionDetails = AccountFundingService.getPaymentTransactionDetails(paymentTransaction)
+          let paymentTransactionDetails = AccountFundingService.getPaymentTransactionDetails(
+            paymentTransaction
+          );
 
-          paymentTransactionDetails.then((response) => {
-            let transactionDetails = response.data
+          paymentTransactionDetails
+            .then(response => {
+              let transactionDetails = response.data;
 
-            this.product_id = this.cashAccount
-            this.product_description = paymentTransaction.productDescription
-            this.customer_id = paymentTransaction.clientId
-            this.nibbs_amount = transactionDetails.amountInKobo
-            this.nibbs_currency = 566
-            this.transaction_id = transactionDetails.transactionId
-            this.merchant_id = transactionDetails.merchantId
-            this.response_url = transactionDetails.responseURL
-            this.hash = transactionDetails.hash
-            this.transactionCharge = transactionDetails.charge
+              this.product_id = this.cashAccount;
+              this.product_description = paymentTransaction.productDescription;
+              this.customer_id = paymentTransaction.clientId;
+              this.nibbs_amount = transactionDetails.amountInKobo;
+              this.nibbs_currency = 566;
+              this.transaction_id = transactionDetails.transactionId;
+              this.merchant_id = transactionDetails.merchantId;
+              this.response_url = transactionDetails.responseURL;
+              this.hash = transactionDetails.hash;
+              this.transactionCharge = transactionDetails.charge;
 
-            // because the total amount is returned in kobo
-            this.totalAmount = (parseFloat(transactionDetails.amountInKobo) / 100)
+              // because the total amount is returned in kobo
+              this.totalAmount =
+                parseFloat(transactionDetails.amountInKobo) / 100;
 
-            // Show the loading icon when getting transaction data
-            this.gettingTransactionDetails = false
+              // Show the loading icon when getting transaction data
+              this.gettingTransactionDetails = false;
 
-            // Change the form's state to previewing
-            this.inPreviewState = true
+              // Change the form's state to previewing
+              this.inPreviewState = true;
 
-            // Submit the payment form
-            // document.getElementById('paymentForm').submit()
-          }).catch((error) => {
-            console.log(error)
-          })
+              // Submit the payment form
+              // document.getElementById('paymentForm').submit()
+            })
+            .catch(error => {
+              console.log(error);
+            });
         }
-      })
+      });
     },
 
-    submitPaymentTransaction: function () {
+    submitPaymentTransaction: function() {
       // Submit the payment form
-      document.getElementById('paymentForm').submit()
+      document.getElementById("paymentForm").submit();
     },
 
-    cancelPaymentTransaction: function () {
+    cancelPaymentTransaction: function() {
       // Hide the loading icon when getting transaction data
-      this.gettingTransactionDetails = false
+      this.gettingTransactionDetails = false;
 
       // Used to display the errors to the user, if the preview btn is pressed
-      let formComponents = this.$refs.form.$children
+      let formComponents = this.$refs.form.$children;
 
-      formComponents.forEach((formComponent) => {
-        formComponent.shouldValidate = false
-        formComponent.shouldValidate = false
-      })
+      formComponents.forEach(formComponent => {
+        formComponent.shouldValidate = false;
+        formComponent.shouldValidate = false;
+      });
 
-      this.inPreviewState = false
-      this.cashAccount = ''
-      this.clientAmount = ''
-      this.$validator.reset()
+      this.inPreviewState = false;
+      this.cashAccount = "";
+      this.clientAmount = "";
+      this.$validator.reset();
     }
   }
-}
+};
 </script>
 
 <style>
