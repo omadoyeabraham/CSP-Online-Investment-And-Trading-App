@@ -81,7 +81,8 @@
 
               <!-- Caveat message for market orders -->
                 <v-flex xs6 v-if="isMarketOrder" class="height-55px mb6">
-                <p class="red--text font-size-11 mt2"><i>*Orders placed at market price have a 10% markup.</i></p>
+                <p class="red--text font-size-11 mt2"><i>*Kindly note that Market Order connotes an execution price 
+                  of up to 10.25% of the previous day's close price.</i></p>
               </v-flex>
 
               <!-- Consideration -->
@@ -492,7 +493,7 @@ export default {
         const closePrice = parseFloat(
           this.selectedSecurityStatusInfo.closePrice
         );
-        const percentageOfClosePrice = 10 / 100 * closePrice;
+        const percentageOfClosePrice = 10.25 / 100 * closePrice;
 
         let consideration =
           this.quantity * (closePrice + percentageOfClosePrice);
