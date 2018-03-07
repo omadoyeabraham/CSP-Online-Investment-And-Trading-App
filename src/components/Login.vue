@@ -58,7 +58,7 @@
 
             <form class="form-signin">
 
-                 <v-alert error
+                 <!-- <v-alert error
                   icon="new_releases" :value="true"
                   >
                   Dear Valued Client, <br><br>
@@ -67,7 +67,7 @@ You may experience a slight downtime while accessing our online trading portal. 
 
 Thank you.
 
-                 </v-alert>
+                 </v-alert> -->
 
                  <v-alert error
                   icon="new_releases" :value="true"
@@ -383,558 +383,596 @@ Thank you.
 </template>
 
 <script>
-  import store from '../store';
-  import {mapState} from 'vuex'
-  import axios from 'axios'
-  import * as mutationTypes from '../store/mutation-types'
-  import {AuthenticationService} from '../services/AuthenticationService';
-  import StockbrokingService from '../services/StockbrokingService';
-  import CashService from '../services/CashService';
-  import UserService from '../services/UserService';
+import store from "../store";
+import { mapState } from "vuex";
+import axios from "axios";
+import * as mutationTypes from "../store/mutation-types";
+import { AuthenticationService } from "../services/AuthenticationService";
+import StockbrokingService from "../services/StockbrokingService";
+import CashService from "../services/CashService";
+import UserService from "../services/UserService";
 
-  import { required } from 'vuelidate/lib/validators';
+import { required } from "vuelidate/lib/validators";
 
-  export default
-  {
+export default {
+  beforeCreate() {},
 
-    beforeCreate () {
-
-    },
-
-    mounted () {
-      // Show the change password dialog box
-      if (this.$route.query.resetLink) {
-        /**
-        * Verify the authenticity of the reset link, and get the username
-         */
-        let verifyResetCode = AuthenticationService.verifyPasswordResetCode(this.$route.query.resetLink)
-        verifyResetCode.then(response => {
-          let responseData = response.data
+  mounted() {
+    // Show the change password dialog box
+    if (this.$route.query.resetLink) {
+      /**
+       * Verify the authenticity of the reset link, and get the username
+       */
+      let verifyResetCode = AuthenticationService.verifyPasswordResetCode(
+        this.$route.query.resetLink
+      );
+      verifyResetCode
+        .then(response => {
+          let responseData = response.data;
 
           // The reset link is still valid
           if (responseData.username) {
-            this.usernameForPasswordReset = responseData.username
-            this.userIdForPasswordReset = parseInt(responseData.user_id)
+            this.usernameForPasswordReset = responseData.username;
+            this.userIdForPasswordReset = parseInt(responseData.user_id);
 
             // Hide the login form
-            document.getElementById('loginCard').style.visibility = 'hidden'
+            document.getElementById("loginCard").style.visibility = "hidden";
             // Display the edit popup modal/dialog
-            document.querySelector('#openChangePasswordDialog').click();
+            document.querySelector("#openChangePasswordDialog").click();
 
             /**
              * Stopping the event propagation because of the auto-close quirk that vuetify's dialog
              * popup has if the click event is not triggered from within the activator slot of the
              * dialog component
              */
-            event.stopPropagation()
+            event.stopPropagation();
             // Hide the login form
-            document.getElementById('loginCard').style.visibility = 'hidden'
+            document.getElementById("loginCard").style.visibility = "hidden";
           } else {
             // The reset link is invalid so popup an error
           }
         })
         .catch(err => {
-          console.log(err)
-        })
-      }
-    },
+          console.log(err);
+        });
+    }
+  },
 
-    beforeDestroy () {
-      // Clear the authentication error message incase it's been set
-      this.$store.commit(mutationTypes.CLEAR_AUTHENTICATION_ERROR_MESSAGE)
-      this.$store.commit(mutationTypes.CLEAR_RESET_PASSWORD_ERROR_MESSAGE)
-    },
+  beforeDestroy() {
+    // Clear the authentication error message incase it's been set
+    this.$store.commit(mutationTypes.CLEAR_AUTHENTICATION_ERROR_MESSAGE);
+    this.$store.commit(mutationTypes.CLEAR_RESET_PASSWORD_ERROR_MESSAGE);
+  },
 
-    data () {
-      return {
-        snackbarTimeout: 4000,
-        snackbarPasswordTimeout: 6000,
-        snackbarMode: '',
-        showPasswordChangedSnackbar: false,
-        showPasswordEmailSnackbar: false,
-        valid: false,
-        resetEmailSent: false,
-        name: 'CardinalStone Trade Direct',
-        showForgotPasswordDialog: false,
-        showChangePasswordDialog: false,
-        isChangingPassword: false,
-        newPassword: '',
-        confirmPassword: '',
-        username: '',
-        usernameForPasswordReset: '',
-        userIdForPasswordReset: '',
-        newPasswordForReset: '',
-        oldPasswordForReset: '',
-        confirmPasswordForReset: '',
-        resetPasswordUsername: '',
-        isSearchingForUser: '',
-        isSendingResetLink: '',
-        password: '',
-        hidePassword: true,
-        hideConfirmPassword: true,
-        hideNewPassword: true,
-        isAuthenticating: false,
-        usernameRules: [
-          (username) => !!username || 'Required'
-        ],
-        passwordRules: [
-          (password) => !!password || 'Required'
-        ],
-        snackbar: false,
-        y: 'top',
-        x: null,
-        mode: '',
-        timeout: 10,
-        text: 'Invalid Username or Password'
-      }
-    },
+  data() {
+    return {
+      snackbarTimeout: 4000,
+      snackbarPasswordTimeout: 6000,
+      snackbarMode: "",
+      showPasswordChangedSnackbar: false,
+      showPasswordEmailSnackbar: false,
+      valid: false,
+      resetEmailSent: false,
+      name: "CardinalStone Trade Direct",
+      showForgotPasswordDialog: false,
+      showChangePasswordDialog: false,
+      isChangingPassword: false,
+      newPassword: "",
+      confirmPassword: "",
+      username: "",
+      usernameForPasswordReset: "",
+      userIdForPasswordReset: "",
+      newPasswordForReset: "",
+      oldPasswordForReset: "",
+      confirmPasswordForReset: "",
+      resetPasswordUsername: "",
+      isSearchingForUser: "",
+      isSendingResetLink: "",
+      password: "",
+      hidePassword: true,
+      hideConfirmPassword: true,
+      hideNewPassword: true,
+      isAuthenticating: false,
+      usernameRules: [username => !!username || "Required"],
+      passwordRules: [password => !!password || "Required"],
+      snackbar: false,
+      y: "top",
+      x: null,
+      mode: "",
+      timeout: 10,
+      text: "Invalid Username or Password"
+    };
+  },
 
-    computed: {
-      ...mapState({
-        'authError': (store) => store.errors.authenticationErrorMessage,
-        'resetPasswordError': (store) => store.errors.resetPasswordErrorMessage,
-        'changePasswordError': (store) => store.errors.changePasswordErrorMessage
-      })
-    },
+  computed: {
+    ...mapState({
+      authError: store => store.errors.authenticationErrorMessage,
+      resetPasswordError: store => store.errors.resetPasswordErrorMessage,
+      changePasswordError: store => store.errors.changePasswordErrorMessage
+    })
+  },
 
-    methods: {
+  methods: {
+    // Login the user
+    login: function() {
+      // Show the sign-in loading spinner
+      this.isAuthenticating = true;
 
-      // Login the user
-      login: function () {
-        // Show the sign-in loading spinner
-        this.isAuthenticating = true;
-
-        let authenticateUser = AuthenticationService.login(this.username, this.password)
-        authenticateUser.then((response) => {
+      let authenticateUser = AuthenticationService.login(
+        this.username,
+        this.password
+      );
+      authenticateUser
+        .then(response => {
           let userData = response.data;
 
           // Commit the authenticated user's data to the vue store.
-          this.$store.commit(mutationTypes.SAVE_AUTHENTICATED_USER_TO_STORE, userData);
-          this.$store.commit(mutationTypes.SAVE_USER_STOCKBROKING_DATA_TO_STORE, userData);
-          this.$store.commit(mutationTypes.SET_STOCKBROKING_TOTAL_VALUE, userData);
-          this.$store.commit(mutationTypes.SAVE_USER_FIXEDINCOME_DATA_TO_STORE, userData);
-          this.$store.commit(mutationTypes.SAVE_USER_CASH_DATA_TO_STORE, userData);
-          this.$store.commit(mutationTypes.SAVE_USER_SMA_DATA_TO_STORE, userData);
+          this.$store.commit(
+            mutationTypes.SAVE_AUTHENTICATED_USER_TO_STORE,
+            userData
+          );
+          this.$store.commit(
+            mutationTypes.SAVE_USER_STOCKBROKING_DATA_TO_STORE,
+            userData
+          );
+          this.$store.commit(
+            mutationTypes.SET_STOCKBROKING_TOTAL_VALUE,
+            userData
+          );
+          this.$store.commit(
+            mutationTypes.SAVE_USER_FIXEDINCOME_DATA_TO_STORE,
+            userData
+          );
+          this.$store.commit(
+            mutationTypes.SAVE_USER_CASH_DATA_TO_STORE,
+            userData
+          );
+          this.$store.commit(
+            mutationTypes.SAVE_USER_SMA_DATA_TO_STORE,
+            userData
+          );
 
           // Add authorization header to all future axios requests, until the user logs out
-          axios.defaults.headers.common['Authorization'] = userData.customer.portalPasswordToken;
+          axios.defaults.headers.common["Authorization"] =
+            userData.customer.portalPasswordToken;
 
           // Store the access token in session, so users who reload can still access resources
-          window.sessionStorage.setItem('accessToken', userData.customer.portalPasswordToken)
+          window.sessionStorage.setItem(
+            "accessToken",
+            userData.customer.portalPasswordToken
+          );
 
           // Async calls to data needed by the application
-          StockbrokingService.getActiveTradeOrderTerms()
-          StockbrokingService.getSecurityNames()
-          StockbrokingService.getTradeOrders(0)
-          CashService.setDefaultCashAccountValues()
+          StockbrokingService.getActiveTradeOrderTerms();
+          StockbrokingService.getSecurityNames();
+          StockbrokingService.getTradeOrders(0);
+          CashService.setDefaultCashAccountValues();
 
           // Hide the sign-in loading spinner
-          this.isAuthenticating = false
+          this.isAuthenticating = false;
 
           // Redirect to the dashboard after successful authetication
-          this.$router.push({ name: 'Dashboard' })
-        }).catch((error) => {
+          this.$router.push({ name: "Dashboard" });
+        })
+        .catch(error => {
           // return 'Invalid username or password';
-          console.log(error)
+          console.log(error);
 
           // Hide the sign-in loading spinner
-          this.isAuthenticating = false
+          this.isAuthenticating = false;
 
-          this.$store.commit(mutationTypes.SET_AUTHENTICATION_ERROR_MESSAGE, 'We do not recognise this username or password')
+          this.$store.commit(
+            mutationTypes.SET_AUTHENTICATION_ERROR_MESSAGE,
+            "We do not recognise this username or password"
+          );
 
-          this.$store.commit(mutationTypes.SAVE_AUTHENTICATED_USER_TO_STORE, []);
-          this.$store.commit(mutationTypes.SAVE_USER_STOCKBROKING_DATA_TO_STORE, []);
+          this.$store.commit(
+            mutationTypes.SAVE_AUTHENTICATED_USER_TO_STORE,
+            []
+          );
+          this.$store.commit(
+            mutationTypes.SAVE_USER_STOCKBROKING_DATA_TO_STORE,
+            []
+          );
           this.$store.commit(mutationTypes.SET_STOCKBROKING_TOTAL_VALUE, []);
-          this.$store.commit(mutationTypes.SAVE_USER_FIXEDINCOME_DATA_TO_STORE, []);
+          this.$store.commit(
+            mutationTypes.SAVE_USER_FIXEDINCOME_DATA_TO_STORE,
+            []
+          );
           this.$store.commit(mutationTypes.SAVE_USER_CASH_DATA_TO_STORE, []);
           this.$store.commit(mutationTypes.SAVE_USER_SMA_DATA_TO_STORE, []);
 
           // this.$router.push('login')
         });
-      },
+    },
 
-      // Show forgot password form
-      showForgotPasswordForm: function () {
-        // Display the edit popup modal/dialog
-        document.querySelector('#openForgotPasswordDialog').click();
-
-        /**
-         * Stopping the event propagation because of the auto-close quirk that vuetify's dialog
-         * popup has if the click event is not triggered from within the activator slot of the
-         * dialog component
-         */
-        event.stopPropagation()
-
-        // Hide the login form
-        document.getElementById('loginCard').style.visibility = 'hidden'
-      },
-
-      closeForgotPasswordDialog: function () {
-        // Show the login form
-        document.getElementById('loginCard').style.visibility = 'visible'
-        this.showForgotPasswordDialog = false
-
-        // Clear the stb store before logging in
-        store.commit(mutationTypes.CLEAR_STOCKBROKING_STORE)
-        // Clear the user store before logging in
-        store.commit(mutationTypes.CLEAR_USER_STORE)
-        // Clear previously saved data before logging into the system again
-        window.sessionStorage.clear()
-        // Redirect to the login page
-        this.$router.push({ name: 'Login' })
-      },
-
-      closeChangePasswordDialog: function () {
-        // Show the login form
-        document.getElementById('loginCard').style.visibility = 'visible'
-        this.showChangePasswordDialog = false
-
-        // Clear the stb store before logging in
-        store.commit(mutationTypes.CLEAR_STOCKBROKING_STORE)
-        // Clear the user store before logging in
-        store.commit(mutationTypes.CLEAR_USER_STORE)
-        // Clear previously saved data before logging into the system again
-        window.sessionStorage.clear()
-        // Redirect to the login page
-        this.$router.push({ name: 'Login' })
-      },
-
-      resetUserPassword: function () {
-        // Show the spinner saying that the we're verifying the username
-        this.isSearchingForUser = true;
-
-        // Clear the error message if any exists
-        this.$store.commit(mutationTypes.CLEAR_RESET_PASSWORD_ERROR_MESSAGE)
-
-        let getUserByUsername = AuthenticationService.findUserByUsername(this.resetPasswordUsername);
-
-        getUserByUsername.then((response) => {
-          let responseData = response.data;
-
-          // User is a valid user
-          if (responseData.portalUserName && (responseData.portalUserName === this.resetPasswordUsername)) {
-             // User has been found
-            this.isSearchingForUser = false;
-
-            // Display spinner for sending reset link
-            this.isSendingResetLink = true;
-            this.sendPasswordResetLink(responseData.portalUserName, responseData.emailAddress1, responseData.id, responseData.label);
-          } else {
-            // User was not found
-            this.isSearchingForUser = false;
-
-            this.$store.commit(mutationTypes.SET_RESET_PASSWORD_ERROR_MESSAGE, 'We do not recognise this username')
-
-            return;
-          }
-        })
-      },
-
-      sendPasswordResetLink: function (username, email, userId, userLabel) {
-        let sendingResetLink = AuthenticationService.sendPasswordResetLink(username, email, userId, userLabel)
-
-        sendingResetLink.then((response) => {
-          // Email was sent successfully
-          this.isSendingResetLink = false
-
-          this.resetEmailSent = true
-          this.showPasswordEmailSnackbar = true
-          this.resetPasswordUsername = ''
-          this.closeForgotPasswordDialog()
-        })
-      },
+    // Show forgot password form
+    showForgotPasswordForm: function() {
+      // Display the edit popup modal/dialog
+      document.querySelector("#openForgotPasswordDialog").click();
 
       /**
-       * Change a user's password after the password enters a new password upon receiving a password reset link.
+       * Stopping the event propagation because of the auto-close quirk that vuetify's dialog
+       * popup has if the click event is not triggered from within the activator slot of the
+       * dialog component
        */
-      changePassword: function () {
-        if (this.newPasswordForReset !== this.confirmPasswordForReset) {
-          this.$store.commit(mutationTypes.SET_CHANGE_PASSWORD_ERROR_MESSAGE, 'Passwords do not match')
-          return
+      event.stopPropagation();
+
+      // Hide the login form
+      document.getElementById("loginCard").style.visibility = "hidden";
+    },
+
+    closeForgotPasswordDialog: function() {
+      // Show the login form
+      document.getElementById("loginCard").style.visibility = "visible";
+      this.showForgotPasswordDialog = false;
+
+      // Clear the stb store before logging in
+      store.commit(mutationTypes.CLEAR_STOCKBROKING_STORE);
+      // Clear the user store before logging in
+      store.commit(mutationTypes.CLEAR_USER_STORE);
+      // Clear previously saved data before logging into the system again
+      window.sessionStorage.clear();
+      // Redirect to the login page
+      this.$router.push({ name: "Login" });
+    },
+
+    closeChangePasswordDialog: function() {
+      // Show the login form
+      document.getElementById("loginCard").style.visibility = "visible";
+      this.showChangePasswordDialog = false;
+
+      // Clear the stb store before logging in
+      store.commit(mutationTypes.CLEAR_STOCKBROKING_STORE);
+      // Clear the user store before logging in
+      store.commit(mutationTypes.CLEAR_USER_STORE);
+      // Clear previously saved data before logging into the system again
+      window.sessionStorage.clear();
+      // Redirect to the login page
+      this.$router.push({ name: "Login" });
+    },
+
+    resetUserPassword: function() {
+      // Show the spinner saying that the we're verifying the username
+      this.isSearchingForUser = true;
+
+      // Clear the error message if any exists
+      this.$store.commit(mutationTypes.CLEAR_RESET_PASSWORD_ERROR_MESSAGE);
+
+      let getUserByUsername = AuthenticationService.findUserByUsername(
+        this.resetPasswordUsername
+      );
+
+      getUserByUsername.then(response => {
+        let responseData = response.data;
+
+        // User is a valid user
+        if (
+          responseData.portalUserName &&
+          responseData.portalUserName === this.resetPasswordUsername
+        ) {
+          // User has been found
+          this.isSearchingForUser = false;
+
+          // Display spinner for sending reset link
+          this.isSendingResetLink = true;
+          this.sendPasswordResetLink(
+            responseData.portalUserName,
+            responseData.emailAddress1,
+            responseData.id,
+            responseData.label
+          );
+        } else {
+          // User was not found
+          this.isSearchingForUser = false;
+
+          this.$store.commit(
+            mutationTypes.SET_RESET_PASSWORD_ERROR_MESSAGE,
+            "We do not recognise this username"
+          );
+
+          return;
         }
+      });
+    },
 
-        if (this.newPasswordForReset.length < 5) {
-          this.$store.commit(mutationTypes.SET_CHANGE_PASSWORD_ERROR_MESSAGE, 'Password must have at least 5 characters')
-          return
-        }
+    sendPasswordResetLink: function(username, email, userId, userLabel) {
+      let sendingResetLink = AuthenticationService.sendPasswordResetLink(
+        username,
+        email,
+        userId,
+        userLabel
+      );
 
-        this.isChangingPassword = true
+      sendingResetLink.then(response => {
+        // Email was sent successfully
+        this.isSendingResetLink = false;
 
-        let changingPassword = UserService.changePassword(this.userIdForPasswordReset, this.newPasswordForReset)
+        this.resetEmailSent = true;
+        this.showPasswordEmailSnackbar = true;
+        this.resetPasswordUsername = "";
+        this.closeForgotPasswordDialog();
+      });
+    },
 
-        changingPassword.then(response => {
-          let responseData = response.data
+    /**
+     * Change a user's password after the password enters a new password upon receiving a password reset link.
+     */
+    changePassword: function() {
+      if (this.newPasswordForReset !== this.confirmPasswordForReset) {
+        this.$store.commit(
+          mutationTypes.SET_CHANGE_PASSWORD_ERROR_MESSAGE,
+          "Passwords do not match"
+        );
+        return;
+      }
+
+      if (this.newPasswordForReset.length < 5) {
+        this.$store.commit(
+          mutationTypes.SET_CHANGE_PASSWORD_ERROR_MESSAGE,
+          "Password must have at least 5 characters"
+        );
+        return;
+      }
+
+      this.isChangingPassword = true;
+
+      let changingPassword = UserService.changePassword(
+        this.userIdForPasswordReset,
+        this.newPasswordForReset
+      );
+
+      changingPassword
+        .then(response => {
+          let responseData = response.data;
 
           // Password was changed successfully
           if (responseData.status) {
-            this.showPasswordChangedSnackbar = true
-            this.closeChangePasswordDialog()
+            this.showPasswordChangedSnackbar = true;
+            this.closeChangePasswordDialog();
           }
 
-          this.isChangingPassword = false
+          this.isChangingPassword = false;
         })
         .catch(err => {
-          console.log(err)
-          this.isChangingPassword = false
-        })
-      }
-
-    },
-
-    validations: {
-      username: {
-        required
-      },
-      password: {
-        required
-      }
+          console.log(err);
+          this.isChangingPassword = false;
+        });
     }
+  },
 
+  validations: {
+    username: {
+      required
+    },
+    password: {
+      required
+    }
   }
+};
 </script>
 
 <!-- Scoped styles apply only to this component -->
 <style scoped lang='scss'>
-  .is-danger {
-    background: red
-  }
-  #loginWrapper {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    min-height: 100%;
+.is-danger {
+  background: red;
+}
+#loginWrapper {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  min-height: 100%;
 
-
-background: -moz-linear-gradient(
-  4deg,
-  #3679ff 0%,
-  #1f3378 53%,
-  #1a2155 67%
-); /* ff3.6+ */
-background: -webkit-gradient(
-  linear,
-  left top,
-  right top,
-  color-stop(0%, #3679ff),
-  color-stop(53%, #1f3378),
-  color-stop(67%, #1a2155)
-); /* safari4+,chrome */
-background: -webkit-linear-gradient(
-  4deg,
-  #3679ff 0%,
-  #1f3378 53%,
-  #1a2155 67%
-); /* safari5.1+,chrome10+ */
-background: -o-linear-gradient(
-  4deg,
-  #3679ff 0%,
-  #1f3378 53%,
-  #1a2155 67%
-); /* opera 11.10+ */
-background: -ms-linear-gradient(
-  4deg,
-  #3679ff 0%,
-  #1f3378 53%,
-  #1a2155 67%
-); /* ie10+ */
-background: linear-gradient(
-  86deg,
-  #3679ff 0%,
-  #1f3378 53%,
-  #1a2155 67%
-); /* w3c */
-filter: progid:DXImageTransform.Microsoft.gradient(
-    startColorstr="#3679FF",
-    endColorstr="#1A2155",
-    GradientType=1
-  ); /* ie6-9 */
-  background-image: url('../../static/img/background2.png');
+  background: -moz-linear-gradient(
+    4deg,
+    #3679ff 0%,
+    #1f3378 53%,
+    #1a2155 67%
+  ); /* ff3.6+ */
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    color-stop(0%, #3679ff),
+    color-stop(53%, #1f3378),
+    color-stop(67%, #1a2155)
+  ); /* safari4+,chrome */
+  background: -webkit-linear-gradient(
+    4deg,
+    #3679ff 0%,
+    #1f3378 53%,
+    #1a2155 67%
+  ); /* safari5.1+,chrome10+ */
+  background: -o-linear-gradient(
+    4deg,
+    #3679ff 0%,
+    #1f3378 53%,
+    #1a2155 67%
+  ); /* opera 11.10+ */
+  background: -ms-linear-gradient(
+    4deg,
+    #3679ff 0%,
+    #1f3378 53%,
+    #1a2155 67%
+  ); /* ie10+ */
+  background: linear-gradient(
+    86deg,
+    #3679ff 0%,
+    #1f3378 53%,
+    #1a2155 67%
+  ); /* w3c */
+  filter: progid:DXImageTransform.Microsoft.gradient(
+      startColorstr="#3679FF",
+      endColorstr="#1A2155",
+      GradientType=1
+    ); /* ie6-9 */
+  background-image: url("../../static/img/background2.png");
   background-size: cover;
   background-position: center center;
-
-
-  }
-
-  .btn-link:hover {
-    cursor: pointer;
-    text-decoration: none;
-    /* color: rgb(104, 145, 162) !important; */
-  }
-
-  .btn-link:hover v-icon {
-    /* color: rgb(104, 145, 162) !important */
-  }
-  .card-container.card {
-    border-radius: 10px;
-    min-width: 450px;
-    max-width: 500px;
-    padding: 30px 40px;
-  }
-  input{
-    min-width: 250px
-  }
-  .btn {
-      font-weight: 700;
-      height: 36px;
-      margin: 0px auto;
-      -moz-user-select: none;
-      -webkit-user-select: none;
-      user-select: none;
-      cursor: default;
-  }
-  .card {
-      background-color: #F7F7F7;
-      /* just in case there no content*/
-      padding: 20px 25px 30px;
-      *margin: 0 auto 25px;
-      margin-top: 20%;
-      /* shadows and rounded borders */
-      -moz-border-radius: 2px;
-      -webkit-border-radius: 2px;
-      border-radius: 2px;
-      -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-      -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  }
-
-  .login-btn {
-    border-radius: 7px;
-    width: 50%
-  }
-
-#company-img{
-	margin: 0 auto;
 }
-
-/*
- * Form styles
- */
+.btn-link:hover {
+  cursor: pointer;
+  text-decoration: none; /* color: rgb(104, 145, 162) !important; */
+}
+.btn-link:hover v-icon {
+  /* color: rgb(104, 145, 162) !important */
+}
+.card-container.card {
+  border-radius: 10px;
+  min-width: 450px;
+  max-width: 500px;
+  padding: 30px 40px;
+}
+input {
+  min-width: 250px;
+}
+.btn {
+  font-weight: 700;
+  height: 36px;
+  margin: 0px auto;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+.card {
+  background-color: #f7f7f7;
+  /* just in case there no content */
+  padding: 20px 25px 30px;
+  *margin: 0 auto 25px;
+  margin-top: 20%;
+  /* shadows and rounded borders */
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+.login-btn {
+  border-radius: 7px;
+  width: 50%;
+}
+#company-img {
+  margin: 0 auto;
+}
+/* * Form styles */
 .profile-name-card {
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    margin: 10px 0 0;
-    min-height: 1em;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px 0 0;
+  min-height: 1em;
 }
-
 .reauth-email {
-    display: block;
-    color: #404040;
-    line-height: 2;
-    margin-bottom: 10px;
-    font-size: 14px;
-    text-align: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+  display: block;
+  color: #404040;
+  line-height: 2;
+  margin-bottom: 10px;
+  font-size: 14px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
-
 .form-signin #inputEmail,
 .form-signin #inputPassword {
-    direction: ltr;
-    height: 44px;
-    font-size: 16px;
+  direction: ltr;
+  height: 44px;
+  font-size: 16px;
 }
-
-.form-signin input[type=email],
-.form-signin input[type=password],
-.form-signin input[type=text],
+.form-signin input[type="email"],
+.form-signin input[type="password"],
+.form-signin input[type="text"],
 .form-signin button {
-    *width: 100%;
-    display: block;
-    margin-bottom: 10px;
-    z-index: 1;
-    position: relative;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+  *width: 100%;
+  display: block;
+  margin-bottom: 10px;
+  z-index: 1;
+  position: relative;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
-
 .form-signin .form-control:focus {
-    border-color: rgb(104, 145, 162);
-    outline: 0;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
+  border-color: rgb(104, 145, 162);
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgb(104, 145, 162);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(104, 145, 162);
 }
-
 .btn.btn-signin {
-	background-color: rgb(26,33,85); /*CardinalStone blue*/
-    padding: 0px;
-    font-weight: 700;
-    font-size: 14px;
-    height: 36px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 10px;
-    border: none;
-    -o-transition: all 0.218s;
-    -moz-transition: all 0.218s;
-    -webkit-transition: all 0.218s;
-    transition: all 0.218s;
+  background-color: rgb(26, 33, 85); /* CardinalStone blue */
+  padding: 0px;
+  font-weight: 700;
+  font-size: 14px;
+  height: 36px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 10px;
+  border: none;
+  -o-transition: all 0.218s;
+  -moz-transition: all 0.218s;
+  -webkit-transition: all 0.218s;
+  transition: all 0.218s;
 }
-
 .btn.btn-signin:hover,
 .btn.btn-signin:active,
 .btn.btn-signin:focus {
-    background-color: rgb(71,77,118); /*A lighter shade of CardinalStone blue*/
+  background-color: rgb(71, 77, 118);
+  /* A lighter shade of CardinalStone blue */
 }
-
 .forgot-password {
-    color: rgb(26,33,85); /*CardinalStone blue*/
+  color: rgb(26, 33, 85); /* CardinalStone blue */
 }
-
 .forgot-password:hover,
 .forgot-password:active,
-.forgot-password:focus{
-    color: rgb(71,77,118); /*A lighter shade of CardinalStone blue*/
-	text-decoration: none;
+.forgot-password:focus {
+  color: rgb(71, 77, 118); /* A lighter shade of CardinalStone blue */
+  text-decoration: none;
+}
+.contact-company {
+  margin-top: 30px;
+}
+.contact-company a {
+  color: rgb(26, 33, 85); /* CardinalStone blue */
 }
 
-.contact-company{
-	margin-top: 30px;
+.contact-company a:hover {
+  color: rgb(71, 77, 118);
+  /* A lighter shade of CardinalStone blue */
+  text-decoration: none;
 }
-
-.contact-company a{
-	color: rgb(26,33,85); /*CardinalStone blue*/
-}
-
-.contact-company a:hover{
-	color: rgb(71,77,118); /*A lighter shade of CardinalStone blue*/
-	text-decoration: none;
-}
-
 #inner-login-wrapper {
-  *background-image: url('../../static/img/background2.png');
-  *z-index: -1
+  *background-image: url("../../static/img/background2.png");
+  *z-index: -1;
 }
 
 #footer-links-wrapper {
   position: absolute;
   bottom: 10px;
   left: 50px;
-  right:50px;
+  right: 50px;
   *background: red;
   color: #ffffff;
 }
-
 .social-icons-wrapper {
-  font-size: 25px
+  font-size: 25px;
 }
-.social-icons-wrapper i{
-  color: #fff !important
+.social-icons-wrapper i {
+  color: #fff !important;
 }
-
-.social-icons-wrapper{
-
-    i {
-      &:hover {
-        color: #aaa !important;
-        cursor: pointer
-      }
+.social-icons-wrapper {
+  i {
+    &:hover {
+      color: #aaa !important;
+      cursor: pointer;
     }
+  }
 }
 </style>
