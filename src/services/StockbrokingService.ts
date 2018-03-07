@@ -64,11 +64,20 @@ import * as ApiUrls from './ApiUrlService';
   * @return Boolean
   */
  let tradeOrderCanBeCancelled = (tradeOrder) => {
-   return tradeOrder.orderStatus == "BOOKED" ||
-     (tradeOrder.fixOrderStatus == "NEW" && tradeOrder.orderStatus == "EXECUTING") ||
-     (tradeOrder.fixOrderStatus == "REPLACED" && tradeOrder.orderStatus == "EXECUTING") ||
-     (tradeOrder.fixOrderStatus == "REJECTED" && tradeOrder.orderStatus == "EXECUTING") ||
-     (tradeOrder.fixOrderStatus == "NA" && tradeOrder.orderStatus == "EXECUTING");
+  return (
+    tradeOrder.orderStatus == "BOOKED" ||
+    (tradeOrder.fixOrderStatus == "NEW" &&
+      tradeOrder.orderStatus == "EXECUTING") ||
+    (tradeOrder.fixOrderStatus == "REPLACED" &&
+      tradeOrder.orderStatus == "EXECUTING") ||
+    (tradeOrder.fixOrderStatus == "REJECTED" &&
+      tradeOrder.orderStatus == "EXECUTING") ||
+    (tradeOrder.fixOrderStatus == "PRIVATE_ORDER" &&
+      tradeOrder.orderStatus == "EXECUTING") ||
+    (tradeOrder.fixOrderStatus == "PARTIALLY_FILLED" &&
+      tradeOrder.orderStatus == "EXECUTING") ||
+    (tradeOrder.fixOrderStatus == "NA" && tradeOrder.orderStatus == "EXECUTING")
+  );
  }
 
  /**

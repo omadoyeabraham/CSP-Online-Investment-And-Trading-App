@@ -79,6 +79,11 @@
                 </v-text-field> -->
               </v-flex>
 
+              <!-- Caveat message for market orders -->
+                <v-flex xs6 v-if="isMarketOrder" class="height-55px mb6">
+                <p class="red--text font-size-11 mt2"><i>*Orders placed at market price have a 10% markup.</i></p>
+              </v-flex>
+
               <!-- Consideration -->
               <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
                 <!-- <v-text-field  readonly :label="'Consideration'" v-model="orderConsideration" :type="'number'"   :disabled="inPreviewState">
@@ -169,163 +174,160 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapActions } from 'vuex'
+import { mapGetters, mapState, mapActions } from "vuex";
 
-import * as mutationTypes from '../../../store/mutation-types'
-import StockbrokingService from '../../../services/StockbrokingService'
+import * as mutationTypes from "../../../store/mutation-types";
+import StockbrokingService from "../../../services/StockbrokingService";
 
-export default
-{
-  props: ['redirectedOrderType', 'redirectedSecurityName'],
+export default {
+  props: ["redirectedOrderType", "redirectedSecurityName"],
 
-  mounted () {
+  mounted() {
     // Set the selected security, when redirecting from any of the BUY/SELL buttons
     if (this.redirectedOrderType && this.redirectedSecurityName) {
-      this.orderType = this.redirectedOrderType
-      this.securityName = this.redirectedSecurityName
+      this.orderType = this.redirectedOrderType;
+      this.securityName = this.redirectedSecurityName;
     }
 
-    this.$store.commit(mutationTypes.SET_SECURITY_SELECTED_ON_TRADE_PAGE, this.securityName)
+    this.$store.commit(
+      mutationTypes.SET_SECURITY_SELECTED_ON_TRADE_PAGE,
+      this.securityName
+    );
   },
 
-  data () {
+  data() {
     return {
       showMandateErrorSnackbar: false,
       mandateErrorSnackbarText: null,
       snackbarTimeout: 3000,
-      snackbarMode: '',
-      mandateErrorSnackbarColor: 'red lighten-2',
-      noStockToSellText: 'No stock to sell',
+      snackbarMode: "",
+      mandateErrorSnackbarColor: "red lighten-2",
+      noStockToSellText: "No stock to sell",
       valid: false,
-      orderTerm: '',
+      orderTerm: "",
       orderType: null,
       securityName: null,
-      priceOption: '',
-      limitPrice: '',
-      quantity: '',
-      quantityHeld: '',
+      priceOption: "",
+      limitPrice: "",
+      quantity: "",
+      quantityHeld: "",
       orderConsideration: null,
       orderTotal: null,
       formattedOrderTotal: null,
       orderTotalFees: null,
-      orderTotalText: '',
+      orderTotalText: "",
       inPreviewState: false,
       canShowQuantityHeld: false,
       gettingPreviewData: false,
       placingMandate: false,
-      orderTypeRules: [
-        (v) => !!v || 'Required'
-      ],
+      orderTypeRules: [v => !!v || "Required"],
       orderTypes: [
-        { text: 'Buy', value: 'BUY' },
-        { text: 'Sell', value: 'SELL' }
+        { text: "Buy", value: "BUY" },
+        { text: "Sell", value: "SELL" }
       ],
-      orderTermRules: [
-        (v) => !!v || 'Required'
-      ],
-      limitPriceRules: [
-        (v) => !!v || 'Required'
-      ],
-      priceOptionRules: [
-        (v) => !!v || 'Required'
-      ],
-      securityNameRules: [
-        (v) => !!v || 'Required'
-      ],
+      orderTermRules: [v => !!v || "Required"],
+      limitPriceRules: [v => !!v || "Required"],
+      priceOptionRules: [v => !!v || "Required"],
+      securityNameRules: [v => !!v || "Required"],
       quantityRules: [
-        (v) => !!v || 'Required',
-        (v) => (v % 1) === 0 || 'Whole number required'
+        v => !!v || "Required",
+        v => v % 1 === 0 || "Whole number required"
       ],
       priceOptions: [
-        { text: 'Market', value: 'MARKET' },
-        { text: 'Limit', value: 'LIMIT' }
+        { text: "Market", value: "MARKET" },
+        { text: "Limit", value: "LIMIT" }
       ]
-    }
+    };
   },
 
   computed: {
     ...mapGetters({
-      'tradeOrderTerms': 'getTradeOrderTerms',
-      'allSecurityNames': 'getSecurityNames',
-      'currentPortfolioSecurityNames': 'getAllSecuritiesInCurrentPortfolio',
-      'currentPortfolioHoldings': 'getStockPortfolioHoldings',
-      'availableCash': 'currentPortfolioAvailableCash',
-      'userId': 'getUserId'
+      tradeOrderTerms: "getTradeOrderTerms",
+      allSecurityNames: "getSecurityNames",
+      currentPortfolioSecurityNames: "getAllSecuritiesInCurrentPortfolio",
+      currentPortfolioHoldings: "getStockPortfolioHoldings",
+      availableCash: "currentPortfolioAvailableCash",
+      userId: "getUserId"
     }),
 
     ...mapState({
-      'portfolioName': (store) => store.stockbroking.currentPortfolio.name,
-      'portfolioLabel': (store) => store.stockbroking.currentPortfolio.label,
-      'selectedSecurityStatusInfo': (store) => store.stockbroking.selectedSecurityStatusInfo
+      portfolioName: store => store.stockbroking.currentPortfolio.name,
+      portfolioLabel: store => store.stockbroking.currentPortfolio.label,
+      selectedSecurityStatusInfo: store =>
+        store.stockbroking.selectedSecurityStatusInfo
     }),
 
-    isLimitOrder: function () {
-      return this.priceOption === 'LIMIT'
+    isLimitOrder: function() {
+      return this.priceOption === "LIMIT";
     },
 
-    isMarketOrder: function () {
-      return this.priceOption === 'MARKET'
+    isMarketOrder: function() {
+      return this.priceOption === "MARKET";
     },
 
-    securityNames: function () {
-      if (this.orderType === 'SELL') {
-        return this.currentPortfolioSecurityNames
-      } else if (this.orderType === 'BUY') {
-        return this.allSecurityNames
+    securityNames: function() {
+      if (this.orderType === "SELL") {
+        return this.currentPortfolioSecurityNames;
+      } else if (this.orderType === "BUY") {
+        return this.allSecurityNames;
       } else {
-        return []
+        return [];
       }
     }
-
   },
 
   watch: {
-    securityName: function (selectedSecurityName) {
-      this.$store.commit(mutationTypes.SET_SECURITY_SELECTED_ON_TRADE_PAGE, selectedSecurityName)
+    securityName: function(selectedSecurityName) {
+      this.$store.commit(
+        mutationTypes.SET_SECURITY_SELECTED_ON_TRADE_PAGE,
+        selectedSecurityName
+      );
 
       // Check to see if the current portfolio has the currently selected security name
-      let currentSecurity = this.currentPortfolioHoldings.find((portfolioHolding) => {
-        return portfolioHolding.securityName === this.securityName
-      })
+      let currentSecurity = this.currentPortfolioHoldings.find(
+        portfolioHolding => {
+          return portfolioHolding.securityName === this.securityName;
+        }
+      );
 
       // If the portfolio has the security, set this.quantityHeld
       if (currentSecurity !== undefined) {
-        this.quantityHeld = currentSecurity.quantityHeld
-        this.canShowQuantityHeld = true
+        this.quantityHeld = currentSecurity.quantityHeld;
+        this.canShowQuantityHeld = true;
       } else {
         // the portfolio does not have the selected security
-        this.quantityHeld = ''
-        this.canShowQuantityHeld = false
+        this.quantityHeld = "";
+        this.canShowQuantityHeld = false;
       }
     }
   },
 
   methods: {
     ...mapActions({
-      updateCustomerData: 'updateCustomerData'
+      updateCustomerData: "updateCustomerData"
     }),
 
-    obtainUpdatedCustomerData: function () {
-      this.updateCustomerData(this.userId)
+    obtainUpdatedCustomerData: function() {
+      this.updateCustomerData(this.userId);
     },
 
     /**
      * Preview a mandate before sending it out
      *
      */
-    previewOrder: function () {
-      this.$validator.validateAll().then((result) => {
+    previewOrder: function() {
+      this.$validator.validateAll().then(result => {
         // Form is being validated
 
         // Show the loading icon for previewing
-        this.gettingPreviewData = true
+        this.gettingPreviewData = true;
 
         // Ensure that the order term for market orders is good for a day
-        let orderTerm = ''
+        let orderTerm = "";
         if (this.isMarketOrder) {
-          orderTerm = '0000000000'
+          orderTerm = "0000000000";
         } else {
-          orderTerm = this.orderTerm
+          orderTerm = this.orderTerm;
         }
 
         if (result) {
@@ -336,98 +338,105 @@ export default
             orderTermName: orderTerm,
             quantityRequested: this.quantity,
             limitPrice: this.limitPrice,
-            orderOrigin: 'WEB',
-            orderCurrency: 'NGN',
+            orderOrigin: "WEB",
+            orderCurrency: "NGN",
             portfolioLabel: this.portfolioLabel,
             portfolioName: this.portfolioName
-          }
+          };
 
           /**
            * Api call which returns a promise. The resolved data will return either be a fault string
            * or an object with the amount(consideration + fees) and currency of the tradeorder
            */
-          let getTradeOrderTotal = StockbrokingService.previewTradeOrder(tradeOrder)
+          let getTradeOrderTotal = StockbrokingService.previewTradeOrder(
+            tradeOrder
+          );
 
-          getTradeOrderTotal.then((response) => {
-            let responseData = response.data
+          getTradeOrderTotal
+            .then(response => {
+              let responseData = response.data;
 
-            // An appropriate value was returned for the getTradeOrderTotal request
-            if (responseData.amount) {
-              // Get the order's total amount as returned from the API call
-              let orderTotal = Number(parseFloat(responseData.amount).toFixed(2))
-              this.orderTotal = orderTotal
+              // An appropriate value was returned for the getTradeOrderTotal request
+              if (responseData.amount) {
+                // Get the order's total amount as returned from the API call
+                let orderTotal = Number(
+                  parseFloat(responseData.amount).toFixed(2)
+                );
+                this.orderTotal = orderTotal;
 
-              // Format negative order totals properly
-              if (orderTotal < 0) {
-                let absoluteOrderTotal = Math.abs(orderTotal)
-                orderTotal = absoluteOrderTotal.toLocaleString()
-                orderTotal = `(${absoluteOrderTotal})`
+                // Format negative order totals properly
+                if (orderTotal < 0) {
+                  let absoluteOrderTotal = Math.abs(orderTotal);
+                  orderTotal = absoluteOrderTotal.toLocaleString();
+                  orderTotal = `(${absoluteOrderTotal})`;
+                } else {
+                  orderTotal = orderTotal.toLocaleString();
+                }
+
+                this.formattedOrderTotal = "₦" + orderTotal;
+
+                // calculate the total consideration for the order
+                this.calculateConsideration();
+
+                // Calculate the total fees for this order
+                this.calculateTotalFees();
+
+                // get the text used in the orderTotal input displayed after previewing
+                this.getOrderTotalDescription();
+
+                this.inPreviewState = true;
+
+                // Hide the loading icon for previewing
+                this.gettingPreviewData = false;
               } else {
-                orderTotal = orderTotal.toLocaleString()
+                // An error string was returned in response to the getTradeOrderTotal request
+                console.log(responseData);
+
+                // Handle mandate errors here
+                this.mandateErrorSnackbarText = responseData.status;
+                this.showMandateErrorSnackbar = true;
+
+                // Hide the loading icon for previewing
+                this.gettingPreviewData = false;
               }
-
-              this.formattedOrderTotal = '₦' + orderTotal
-
-              // calculate the total consideration for the order
-              this.calculateConsideration()
-
-              // Calculate the total fees for this order
-              this.calculateTotalFees()
-
-              // get the text used in the orderTotal input displayed after previewing
-              this.getOrderTotalDescription()
-
-              this.inPreviewState = true
+            })
+            .catch(error => {
+              // Handle errors here
+              console.log(error);
 
               // Hide the loading icon for previewing
-              this.gettingPreviewData = false
-            } else {
-              // An error string was returned in response to the getTradeOrderTotal request
-              console.log(responseData)
-
-              // Handle mandate errors here
-              this.mandateErrorSnackbarText = responseData.status
-              this.showMandateErrorSnackbar = true
-
-              // Hide the loading icon for previewing
-              this.gettingPreviewData = false
-            }
-          }).catch((error) => {
-            // Handle errors here
-            console.log(error)
-
-            // Hide the loading icon for previewing
-            this.gettingPreviewData = false
-          })
-        } else { // Validation errors occured
+              this.gettingPreviewData = false;
+            });
+        } else {
+          // Validation errors occured
           // Used to display the errors to the user, if the preview btn is pressed
-          let formComponents = this.$refs.form.$children
-          formComponents.forEach((formComponent) => {
-            formComponent.shouldValidate = true
-          })
+          let formComponents = this.$refs.form.$children;
+          formComponents.forEach(formComponent => {
+            formComponent.shouldValidate = true;
+          });
 
           // Hide the loading icon for previewing
-          this.gettingPreviewData = false
+          this.gettingPreviewData = false;
 
-          return
+          return;
         }
-      })
+      });
     },
 
     /**
      * Place a mandate, after successfully previewing the mandate
      *
      */
-    placeOrder: function () {
+    placeOrder: function() {
       // Show the loading icon for placing mandates
-      this.placingMandate = true
+      this.placingMandate = true;
 
       // Ensure that the order term for market orders is good for a day
-      let orderTerm = ''
+      let orderTerm = "";
       if (this.isMarketOrder) {
-        orderTerm = '0000000000'
+        orderTerm = "0000000000";
       } else {
-        orderTerm = this.orderTerm
+        orderTerm = this.orderTerm;
       }
 
       // Get the tradeOrder object
@@ -438,86 +447,92 @@ export default
         orderTermName: orderTerm,
         quantityRequested: this.quantity,
         limitPrice: this.limitPrice,
-        orderOrigin: 'WEB',
-        orderCurrency: 'NGN',
+        orderOrigin: "WEB",
+        orderCurrency: "NGN",
         portfolioLabel: this.portfolioLabel,
         portfolioName: this.portfolioName
-      }
+      };
 
       /**
        * Api call which returns a promise. This call is used to place the mandate on the floor of the * NSE
        */
-      let placeTradeOrder = StockbrokingService.createTradeOrder(tradeOrder)
+      let placeTradeOrder = StockbrokingService.createTradeOrder(tradeOrder);
 
-      placeTradeOrder.then((response) => {
-        // Hide the loading icon for placing mandates
-        this.placingMandate = false
+      placeTradeOrder
+        .then(response => {
+          // Hide the loading icon for placing mandates
+          this.placingMandate = false;
 
-        // Set and show the mandate placed message on the trade history page
-        this.$store.commit(mutationTypes.SET_MANDATE_PLACEMENT_STATE, true)
+          // Set and show the mandate placed message on the trade history page
+          this.$store.commit(mutationTypes.SET_MANDATE_PLACEMENT_STATE, true);
 
-        // Make a call to update the user's data after an interval of 1 seconds
-        setTimeout(this.obtainUpdatedCustomerData, 1000)
+          // Make a call to update the user's data after an interval of 1 seconds
+          setTimeout(this.obtainUpdatedCustomerData, 1000);
 
-        // Redirect to the trade history page
-        this.$router.push({name: 'stb-trade-history-ignore-check'})
-      }).catch((error) => {
-        console.log(`error while placing mandates`)
-        console.log(error)
-      })
+          // Redirect to the trade history page
+          this.$router.push({ name: "stb-trade-history-ignore-check" });
+        })
+        .catch(error => {
+          console.log(`error while placing mandates`);
+          console.log(error);
+        });
     },
 
     /**
      * Calculate the consideration for the trade order being previewed
      */
-    calculateConsideration: function () {
+    calculateConsideration: function() {
       // For limit orders
-      if (this.priceOption === 'LIMIT') {
-        let consideration = parseFloat(this.limitPrice) * parseFloat(this.quantity)
-        this.orderConsideration = consideration.toFixed(2)
+      if (this.priceOption === "LIMIT") {
+        let consideration =
+          parseFloat(this.limitPrice) * parseFloat(this.quantity);
+        this.orderConsideration = consideration.toFixed(2);
       } else {
         // For market Orders
-        const lastTradedPrice = parseFloat(this.selectedSecurityStatusInfo.lastPrice)
-        const percentageOfLastTradedPrice = (10 / 100) * lastTradedPrice
+        const lastTradedPrice = parseFloat(
+          this.selectedSecurityStatusInfo.lastPrice
+        );
+        const percentageOfLastTradedPrice = 10 / 100 * lastTradedPrice;
 
-        let consideration = (this.quantity) * (lastTradedPrice + percentageOfLastTradedPrice)
-        this.orderConsideration = consideration.toFixed(2)
+        let consideration =
+          this.quantity * (lastTradedPrice + percentageOfLastTradedPrice);
+        this.orderConsideration = consideration.toFixed(2);
       }
     },
 
     /**
      * Calculate the total fees for the trade order being previewed
      */
-    calculateTotalFees: function () {
-      let totalFees = 0
+    calculateTotalFees: function() {
+      let totalFees = 0;
       // Buy orders
-      if (this.orderType === 'BUY') {
-        totalFees = this.orderTotal - this.orderConsideration
+      if (this.orderType === "BUY") {
+        totalFees = this.orderTotal - this.orderConsideration;
       } else {
         // Sell orders
-        totalFees = this.orderConsideration - this.orderTotal
+        totalFees = this.orderConsideration - this.orderTotal;
       }
 
-      totalFees = totalFees.toFixed(2)
+      totalFees = totalFees.toFixed(2);
 
-      this.orderTotalFees = totalFees
+      this.orderTotalFees = totalFees;
     },
 
     /**
      * Return the text description for the order being previewed
      */
-    getOrderTotalDescription: function () {
-      if (this.orderType === 'BUY') {
-        this.orderTotalText = 'TOTAL ESTIMATED COST'
+    getOrderTotalDescription: function() {
+      if (this.orderType === "BUY") {
+        this.orderTotalText = "TOTAL ESTIMATED COST";
       } else {
-        this.orderTotalText = 'TOTAL ESTIMATED PROCEEDS'
+        this.orderTotalText = "TOTAL ESTIMATED PROCEEDS";
       }
     },
 
     /**
      * Cancel the current order being worked on and reset all input fields
      */
-    cancelOrder: function () {
+    cancelOrder: function() {
       // this.orderType = null
       // this.priceOption = null
       // this.securityName = null
@@ -525,14 +540,14 @@ export default
       // this.limitPrice = null
       // this.quantity = null
       // this.inPreviewState = false
-      this.$router.push({name: 'stb-trade-history'})
+      this.$router.push({ name: "stb-trade-history" });
     },
 
     /**
      * Cancel the preview on the mandate page
      */
-    cancelPreview: function () {
-      this.inPreviewState = false
+    cancelPreview: function() {
+      this.inPreviewState = false;
     },
 
     /**
@@ -540,12 +555,19 @@ export default
      *
      * @return Boolean
      */
-    mandateFormHasNotBeenTouched: function () {
-      return ((this.orderTerm === '') && (this.orderType === null) && (this.securityName === null) && (this.priceOption === '') && (this.limitPrice === '') && (this.quantity === '') && (this.quantityHeld === ''))
+    mandateFormHasNotBeenTouched: function() {
+      return (
+        this.orderTerm === "" &&
+        this.orderType === null &&
+        this.securityName === null &&
+        this.priceOption === "" &&
+        this.limitPrice === "" &&
+        this.quantity === "" &&
+        this.quantityHeld === ""
+      );
     }
   }
-
-}
+};
 </script>
 
 <style>
