@@ -489,13 +489,13 @@ export default {
         this.orderConsideration = consideration.toFixed(2);
       } else {
         // For market Orders
-        const lastTradedPrice = parseFloat(
-          this.selectedSecurityStatusInfo.lastPrice
+        const closePrice = parseFloat(
+          this.selectedSecurityStatusInfo.closePrice
         );
-        const percentageOfLastTradedPrice = 10 / 100 * lastTradedPrice;
+        const percentageOfClosePrice = 10 / 100 * closePrice;
 
         let consideration =
-          this.quantity * (lastTradedPrice + percentageOfLastTradedPrice);
+          this.quantity * (closePrice + percentageOfClosePrice);
         this.orderConsideration = consideration.toFixed(2);
       }
     },
