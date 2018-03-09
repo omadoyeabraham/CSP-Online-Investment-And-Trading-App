@@ -86,66 +86,78 @@
 </template>
 
 <script>
-  // The stockbroking service
-  import StockbrokingService from '../../../services/StockbrokingService';
-  import * as mutationTypes from '../../../store/mutation-types'
+// The stockbroking service
+import StockbrokingService from "../../../services/StockbrokingService";
+import * as mutationTypes from "../../../store/mutation-types";
 
-  import PortfolioSwitchingHeader from '../PortfolioSwitchingHeader'
-  import TradeOrders from './TradeOrders'
+import PortfolioSwitchingHeader from "../PortfolioSwitchingHeader";
+import TradeOrders from "./TradeOrders";
 
-  import DatePicker from 'vue-md-date-picker'
+import DatePicker from "vue-md-date-picker";
 
-  import {mapState, mapGetters} from 'vuex';
+import { mapState, mapGetters } from "vuex";
 
-  export default
-  {
-    components: {
-      DatePicker,
-      PortfolioSwitchingHeader,
-      TradeOrders
-    },
-    // Actions to be carried out before this component is created. Ensures that the component has the necessary data to be rendered
-    beforeCreate () {
+export default {
+  components: {
+    DatePicker,
+    PortfolioSwitchingHeader,
+    TradeOrders
+  },
+  // Actions to be carried out before this component is created. Ensures that the component has the necessary data to be rendered
+  beforeCreate() {
+    StockbrokingService.getTradeOrders(0);
+  },
+
+  beforeDestroy() {
+    // Clear the popup for mandate placement successful
+    this.$store.commit(mutationTypes.CLEAR_MANDATE_PLACEMENT_STATE);
+
+    clearInterval(this.updateTradeHistory);
+  },
+
+  created() {
+    // Refresh the trade orders every 10 seconds
+    this.updateTradeHistory = setInterval(this.refreshTradeOrders, 10000);
+  },
+
+  data() {
+    return {
+      snackbarTimeout: 1000,
+      snackbarMode: "",
+      startDateMenu: false,
+      startDate: null,
+      endDateMenu: false,
+      endDate: null,
+      show: true,
+      search: "",
+      tabs: ["COMPLETED", "OUTSTANDING"],
+      active: null
+    };
+  },
+
+  computed: {
+    ...mapState({
+      user: store => store.user,
+      mandateHasBeenPlaced: store => store.messages.mandateHasBeenPlaced,
+      showTradeCancelledSnackbar: store =>
+        store.stockbroking.showTradeCancelledSnackbar
+    }),
+    ...mapGetters({
+      completedTradeOrders: "getCompletedTradeOrders",
+      outstandingTradeOrders: "getOutstandingTradeOrders",
+      partiallyFilledTradeOrders: "getPartiallyFilledTradeOrders",
+      cancelledTradeOrders: "getCancelledTradeOrders",
+      allTradeOrders: "getAllTradeOrders"
+    })
+  },
+
+  methods: {
+    refreshTradeOrders: function() {
+      // Refresh the trade orders
       StockbrokingService.getTradeOrders(0);
-    },
-
-    beforeDestroy () {
-      // Clear the popup for mandate placement successful
-      this.$store.commit(mutationTypes.CLEAR_MANDATE_PLACEMENT_STATE)
-    },
-
-    data () {
-      return {
-        snackbarTimeout: 1000,
-        snackbarMode: '',
-        startDateMenu: false,
-        startDate: null,
-        endDateMenu: false,
-        endDate: null,
-        show: true,
-        search: '',
-        tabs: ['COMPLETED', 'OUTSTANDING'],
-        active: null
-      }
-    },
-
-    computed: {
-
-      ...mapState({
-        'user': (store) => store.user,
-        'mandateHasBeenPlaced': (store) => store.messages.mandateHasBeenPlaced,
-        'showTradeCancelledSnackbar': (store) => store.stockbroking.showTradeCancelledSnackbar
-      }),
-      ...mapGetters({
-        'completedTradeOrders': 'getCompletedTradeOrders',
-        'outstandingTradeOrders': 'getOutstandingTradeOrders',
-        'partiallyFilledTradeOrders': 'getPartiallyFilledTradeOrders',
-        'cancelledTradeOrders': 'getCancelledTradeOrders',
-        'allTradeOrders': 'getAllTradeOrders'
-      })
     }
-
   }
+};
 </script>
 
 <style scoped lang="sass">
