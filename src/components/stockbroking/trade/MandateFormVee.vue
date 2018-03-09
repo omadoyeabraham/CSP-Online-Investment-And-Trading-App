@@ -81,8 +81,8 @@
 
               <!-- Caveat message for market orders -->
                 <v-flex xs6 v-if="isMarketOrder" class="height-55px mb6">
-                <p class="red--text font-size-11 mt2"><i>*Kindly note that Market Order connotes an execution price 
-                  of up to 10.25% of the previous day's close price.</i></p>
+                <p class="red--text font-size-11 mt2"><i>*Kindly note that Market Order connotes an 
+                  execution price of up to 10.25% of previous close price.</i></p>
               </v-flex>
 
               <!-- Consideration -->
@@ -92,7 +92,7 @@
                 <v-text-field  readonly :label="'CONSIDERATION'" :value="orderConsideration | currency('₦', 2)" :type="'text'"   :disabled="inPreviewState">
                 </v-text-field>
               </v-flex>
-
+ 
               <!-- Total Fees -->
               <v-flex xs6 v-if="inPreviewState" class="height-55px mb6">
                 <v-text-field :label="'TOTAL FEES'" :value="orderTotalFees | currency('₦',2)" :type="'text'"  :disabled="inPreviewState">
