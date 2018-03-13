@@ -464,18 +464,31 @@ export default {
           // Hide the loading icon for placing mandates
           this.placingMandate = false;
 
-          // Set and show the mandate placed message on the trade history page
-          this.$store.commit(mutationTypes.SET_MANDATE_PLACEMENT_STATE, true);
+          // Only show the popup for successfully completed mandates
+          if (typeof response.data === "number") {
+            // Set and show the mandate placed message on the trade history page
+            this.$store.commit(mutationTypes.SET_MANDATE_PLACEMENT_STATE, true);
 
-          // Make a call to update the user's data after an interval of 1 seconds
-          setTimeout(this.obtainUpdatedCustomerData, 1000);
+            // Make a call to update the user's data after an interval of 1 seconds
+            setTimeout(this.obtainUpdatedCustomerData, 1000);
 
-          // Redirect to the trade history page
-          this.$router.push({ name: "stb-trade-history-ignore-check" });
+            // Redirect to the trade history page
+            this.$router.push({ name: "stb-trade-history-ignore-check" });
+          } else {
+            // For some weird reason the mandate was not placed, so display the error
+            // Handle mandate errors here
+            this.mandateErrorSnackbarText =
+              "Mandate Placement was unsuccessful";
+            this.showMandateErrorSnackbar = true;
+          }
         })
         .catch(error => {
           console.log(`error while placing mandates`);
           console.log(error);
+
+          // Handle mandate errors here
+          this.mandateErrorSnackbarText = "Mandate Placement was unsuccessful";
+          this.showMandateErrorSnackbar = true;
         });
     },
 
