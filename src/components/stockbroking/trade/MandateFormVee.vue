@@ -478,7 +478,7 @@ export default {
             // For some weird reason the mandate was not placed, so display the error
             // Handle mandate errors here
             this.mandateErrorSnackbarText =
-              "Mandate Placement was unsuccessful";
+              "Mandate Placement was unsuccessful, please try again.";
             this.showMandateErrorSnackbar = true;
           }
         })

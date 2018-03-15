@@ -4,172 +4,186 @@
  */
 
 // All mutation types that can be carried out on the store state by the application
-import * as mutationTypes from '../mutation-types.js';
+import * as mutationTypes from "../mutation-types.js";
 
-import * as moment from 'moment'
+import * as moment from "moment";
 
-import { ChartService } from '../../services/ChartsService'
+import { ChartService } from "../../services/ChartsService";
 
 // Initial store state
 const state: object = {
-  smaStb: [{
-    'data': 'initial data'
-  }],
+  smaStb: [
+    {
+      data: "initial data"
+    }
+  ],
   smaFi: []
-}
-
+};
 
 // Getters
 const getters = {
-
-  getRunnningSmaFiInvestments: (state) => {
-    let fixedIncomeInvestments = state.smaFi
+  getRunnningSmaFiInvestments: state => {
+    let fixedIncomeInvestments = state.smaFi;
 
     let runningFiInvestments = fixedIncomeInvestments.filter(investment => {
-      return investment.status === 'RUNNING'
-    })
+      return investment.status === "RUNNING";
+    });
 
-    return runningFiInvestments
+    return runningFiInvestments;
   },
 
   /**
-    * Calculate the total sma equity value of the user's portfolio
-    */
-  getSmaTotalEquityValue: (state) => {
-    const portfolios = state.smaStb
-    let smaTotalValue = 0
+   * Calculate the total sma equity value of the user's portfolio
+   */
+  getSmaTotalEquityValue: state => {
+    const portfolios = state.smaStb;
+    let smaTotalValue = 0;
 
-    portfolios.forEach((portfolio) => {
+    portfolios.forEach(portfolio => {
       // if (portfolio.portfolioClass != "EXCHANGE" || portfolio.label.indexOf('(SMA)') != -1) {
       // DO not sum up exchange or non-SMA portfolios
       if (portfolio.portfolioClass != "EXCHANGE") {
-        smaTotalValue += parseFloat(portfolio.currentValuation.amount)
+        smaTotalValue += parseFloat(portfolio.currentValuation.amount);
       } else {
-        return
+        return;
       }
-    })
+    });
 
-    return smaTotalValue
+    return smaTotalValue;
   },
 
   getSmaTotalRunningFiValue: (state, getters) => {
-    let runningFiInvestments = getters.getRunnningSmaFiInvestments
-    let totalFiValue = 0
+    let runningFiInvestments = getters.getRunnningSmaFiInvestments;
+    let totalFiValue = 0;
 
     runningFiInvestments.forEach(investment => {
-      totalFiValue += parseFloat(investment.accruedNetInterest) + parseFloat(investment.faceValue)
-    })
+      totalFiValue +=
+        parseFloat(investment.accruedNetInterest) +
+        parseFloat(investment.faceValue);
+    });
 
-    return totalFiValue
+    return totalFiValue;
   },
 
   getSmaTotalInvestmentsValue: (state, getters) => {
-    return getters.getSmaTotalEquityValue + getters.getSmaTotalRunningFiValue
+    return getters.getSmaTotalEquityValue + getters.getSmaTotalRunningFiValue;
   },
 
-  userHasSma: (state) => {
-
-  },
+  userHasSma: state => {},
 
   getSmaSectorData: (state, getters) => {
-    let totalEquityValue = getters.getSmaTotalValue
+    let totalEquityValue = getters.getSmaTotalValue;
 
-    return [{
-      name: 'Equities',
-      percentageGain: '3.33',
-      percentageOfPortfolio: "52.00",
-      y: 3149900
-    }]
+    return [
+      {
+        name: "Equities",
+        percentageGain: "3.33",
+        percentageOfPortfolio: "52.00",
+        y: 3149900
+      }
+    ];
   },
 
-  getSmaAllocationChartData: (state,getters) => {
-    const chartData = ChartService.getCspPieChart(getters.getSmaSectorData)
+  getSmaAllocationChartData: (state, getters) => {
+    const chartData = ChartService.getCspPieChart(getters.getSmaSectorData);
 
-    return chartData
+    return chartData;
   },
 
   getSmaCurrentPortfolioHoldings: (state, getters) => {
-    if(state.smaStb.length === 0) {
-      return []
+    if (state.smaStb.length === 0) {
+      return [];
     }
 
-    let smaStb = state.smaStb ? state.smaStb : [{a: 1}]
-    let portfolioHoldings = smaStb[0].portfolioHoldings ? smaStb[0].portfolioHoldings : []
+    let smaStb = state.smaStb ? state.smaStb : [{ a: 1 }];
+    let portfolioHoldings = smaStb[0].portfolioHoldings
+      ? smaStb[0].portfolioHoldings
+      : [];
 
-    return portfolioHoldings
+    return portfolioHoldings;
   },
 
   getSmaStockPortfolioHoldings: (state, getters) => {
+    let currentPortfolioHoldings = getters.getSmaCurrentPortfolioHoldings;
 
-    let currentPortfolioHoldings = getters.getSmaCurrentPortfolioHoldings
+    currentPortfolioHoldings =
+      currentPortfolioHoldings.constructor === Array
+        ? currentPortfolioHoldings
+        : [currentPortfolioHoldings];
 
     if (currentPortfolioHoldings.length === 0) {
-      return []
+      return [];
     }
 
     // Filter to pick only equity stock
-    let stockPortfolioHoldings = currentPortfolioHoldings.filter((portfolioHolding) => {
-      return (portfolioHolding.securityType === 'EQUITY')
-    })
+    let stockPortfolioHoldings = currentPortfolioHoldings.filter(
+      portfolioHolding => {
+        return portfolioHolding.securityType === "EQUITY";
+      }
+    );
 
-    let percentageOfPortfolio = 0
-    let gainOrLoss = 0
-    let percentageGainOrLoss = 0
-    let totalCost = 0
-    let currentStockValue = 0
-    let totalPortfolioValue = getters.currentPortfolioTotalValue
-    let currentPortfolioStockHoldings = []
+    let percentageOfPortfolio = 0;
+    let gainOrLoss = 0;
+    let percentageGainOrLoss = 0;
+    let totalCost = 0;
+    let currentStockValue = 0;
+    let totalPortfolioValue = getters.currentPortfolioTotalValue;
+    let currentPortfolioStockHoldings = [];
 
-    stockPortfolioHoldings.forEach((stockPortfolioHolding) => {
-      percentageOfPortfolio = ((parseFloat(stockPortfolioHolding.valuation)) / totalPortfolioValue) * 100
-      totalCost = parseFloat(stockPortfolioHolding.costBasis) * parseFloat(stockPortfolioHolding.quantityHeld)
-      gainOrLoss = parseFloat(stockPortfolioHolding.valuation) - totalCost
-      percentageGainOrLoss = (gainOrLoss / totalCost) * 100
+    stockPortfolioHoldings.forEach(stockPortfolioHolding => {
+      percentageOfPortfolio =
+        parseFloat(stockPortfolioHolding.valuation) / totalPortfolioValue * 100;
+      totalCost =
+        parseFloat(stockPortfolioHolding.costBasis) *
+        parseFloat(stockPortfolioHolding.quantityHeld);
+      gainOrLoss = parseFloat(stockPortfolioHolding.valuation) - totalCost;
+      percentageGainOrLoss = gainOrLoss / totalCost * 100;
 
-      stockPortfolioHolding.percentageOfPortfolio = percentageOfPortfolio
-      stockPortfolioHolding.gainOrLoss = gainOrLoss
-      stockPortfolioHolding.percentageGainOrLoss = percentageGainOrLoss
-      stockPortfolioHolding.totalCost = totalCost
+      stockPortfolioHolding.percentageOfPortfolio = percentageOfPortfolio;
+      stockPortfolioHolding.gainOrLoss = gainOrLoss;
+      stockPortfolioHolding.percentageGainOrLoss = percentageGainOrLoss;
+      stockPortfolioHolding.totalCost = totalCost;
 
       if (gainOrLoss < 0) {
-        stockPortfolioHolding.lost = true
+        stockPortfolioHolding.lost = true;
       } else if (gainOrLoss > 0) {
-        stockPortfolioHolding.gained = true
+        stockPortfolioHolding.gained = true;
       }
 
-      currentPortfolioStockHoldings.push(stockPortfolioHolding)
-    })
+      currentPortfolioStockHoldings.push(stockPortfolioHolding);
+    });
 
-    return currentPortfolioStockHoldings
+    return currentPortfolioStockHoldings;
   },
 
   getSmaFixedIncomeInvestments: (state, getters) => {
-    let fixedIncomeInvestments = state.smaFi
-    let investments = []
+    let fixedIncomeInvestments = state.smaFi;
+    let investments = [];
 
     // Loop through running fixed income investments and perform the necessary calculations
-    fixedIncomeInvestments.forEach((investment) => {
-      let currentValue = parseFloat(investment.accruedNetInterest) + parseFloat(investment.faceValue)
-      let valueAtMaturity = parseFloat(investment.faceValue) + parseFloat(investment.expectedInterest)
+    fixedIncomeInvestments.forEach(investment => {
+      let currentValue =
+        parseFloat(investment.accruedNetInterest) +
+        parseFloat(investment.faceValue);
+      let valueAtMaturity =
+        parseFloat(investment.faceValue) +
+        parseFloat(investment.expectedInterest);
 
-      let startDate = moment(investment.startDate, "YYYY-MM-DD")
-      let durationTillDate = moment().diff(startDate, 'days')
+      let startDate = moment(investment.startDate, "YYYY-MM-DD");
+      let durationTillDate = moment().diff(startDate, "days");
 
-      investment.currentValue = currentValue
-      investment.valueAtMaturity = valueAtMaturity
-      investment.durationTillDate = durationTillDate
+      investment.currentValue = currentValue;
+      investment.valueAtMaturity = valueAtMaturity;
+      investment.durationTillDate = durationTillDate;
 
-      investments.push(investment)
-    })
+      investments.push(investment);
+    });
 
-    return investments
+    return investments;
   }
-
-}
-
+};
 
 const mutations = {
-
   /**
    * Save the user's sma data to the store
    *
@@ -177,17 +191,13 @@ const mutations = {
    * @param {any} userData
    */
   [mutationTypes.SAVE_USER_SMA_DATA_TO_STORE](state, userData) {
-    state.smaStb = userData.STB.MANAGED ? userData.STB.MANAGED : []
-    state.smaFi = userData.FI.NGNSMA ? userData.FI.NGNSMA : []
+    state.smaStb = userData.STB.MANAGED ? userData.STB.MANAGED : [];
+    state.smaFi = userData.FI.NGNSMA ? userData.FI.NGNSMA : [];
   }
-
-
-} // End Of MUTATIONS
-
-
+}; // End Of MUTATIONS
 
 export default {
   state,
   getters,
   mutations
-}
+};
