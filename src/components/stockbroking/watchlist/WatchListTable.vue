@@ -253,6 +253,7 @@ export default
 
     // Update a watchlist item
     updateWatchList: function () {
+      console.log(this.selectedWatchList)
       let updatingWatchList = WatchListService.updateWatchList(this.selectedWatchList)
 
       updatingWatchList.then((response) => {
