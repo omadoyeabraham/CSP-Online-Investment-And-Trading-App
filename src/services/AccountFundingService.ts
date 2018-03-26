@@ -3,23 +3,22 @@
  *
  */
 
-import axios from 'axios';
+import axios from "axios";
 
 // Service exposing the urls for the API
-import * as ApiUrls from './ApiUrlService';
+import * as ApiUrls from "./ApiUrlService";
 
 /**
  * Get the payment transaction details required to be sent to Nibbs
  */
 let getPaymentTransactionDetails = (paymentData: Object) => {
   return axios({
-    method: 'POST',
+    method: "POST",
     url: ApiUrls.GetPaymentTransactionDetails,
     data: paymentData
-  })
-}
-
+  });
+};
 
 export const AccountFundingService = {
   getPaymentTransactionDetails
-}
+};
