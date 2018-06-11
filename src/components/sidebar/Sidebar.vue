@@ -111,7 +111,7 @@
 
     created () {
       // Continously poll the server every 30 seconds for updated user data
-      this.getUpdatedCustomerData = setInterval(this.obtainUpdatedCustomerData, 30000)
+      this.getUpdatedCustomerData = setInterval(this.obtainUpdatedCustomerData, 30000);
 
       // Get updated cash data from the server every 10 seconds
       // this.getUpdatedCustomerCashData = setInterval(this.obtainUpdatedCustomerCashData, 10000)

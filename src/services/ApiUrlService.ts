@@ -6,6 +6,7 @@
 
 // export const BaseApiUrl = 'http://127.0.0.1/cardinalstone-apps/restserver/public/index.php/api';
 // export const BaseApiUrl = 'https://restserverstaging.cardinalstone.com/api';
+// export const BaseApiUrl = "http://127.0.0.1:4059/api";
 export const BaseApiUrl = 'https://restserver2.cardinalstone.com/api';
 // export const BaseApiUrl = 'http://localhost/projects/webapps/apis/restserver/public/index.php/api'
 // export const BaseApiUrl = 'https://restserver.cardinalstone.com/api';
@@ -39,17 +40,17 @@ export const ToggleWatchListUrl = `${BaseApiUrl}/toggleWatchList`;
 export const GetDashboardDataUrl = `${BaseApiUrl}/getDashboardData`;
 
 // CashAccounts
-export const GetCashAccountStatements = `${BaseApiUrl}/findFiAcctLedgerEntriesByAccountNumber`
+export const GetCashAccountStatements = `${BaseApiUrl}/findFiAcctLedgerEntriesByAccountNumber`;
 
 // Account Funding
-export const GetPaymentTransactionDetails = `${BaseApiUrl}/getPaymentTransactionDetails`
+export const GetPaymentTransactionDetails = `${BaseApiUrl}/getPaymentTransactionDetails`;
 
 // Customer data
-export const GetCustomerData = `${BaseApiUrl}/findCustomerById`
+export const GetCustomerData = `${BaseApiUrl}/findCustomerById`;
 
 // Reset Password
-export const ResetPassword = `${BaseApiUrl}/resetPassword`
-export const ChangePassword = `${BaseApiUrl}/changePassword`
+export const ResetPassword = `${BaseApiUrl}/resetPassword`;
+export const ChangePassword = `${BaseApiUrl}/changePassword`;
 
 // Contact Manager
-export const ContactManager = `${BaseApiUrl}/contactManager`
+export const ContactManager = `${BaseApiUrl}/contactManager`;

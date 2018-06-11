@@ -8,7 +8,7 @@
 
   <div class="h-100 mb0" id="loginWrapper" style='margin-bottom: 0px !important'>
     <!-- Logo at the top of the page -->
-    <img id="company-img" class="img-responsive ml30" src="../assets/img/cardinalstone-white.png" />
+    <img id="company-img" class="img-responsive ml30 mt10" src="../assets/img/cardinalstone-at-ten.png" />
 
     <!--Login Card -->
     <div class="container-fluid d-flex flex-column justify-content-center align-items-center" id="inner-login-wrapper">
@@ -784,7 +784,8 @@ export default {
     #3679ff 0%,
     #1f3378 53%,
     #1a2155 67%
-  ); /* safari5.1+,chrome10+ */
+  );
+  /* safari5.1+,chrome10+ */
   background: -o-linear-gradient(
     4deg,
     #3679ff 0%,
@@ -797,24 +798,22 @@ export default {
     #1f3378 53%,
     #1a2155 67%
   ); /* ie10+ */
-  background: linear-gradient(
-    86deg,
-    #3679ff 0%,
-    #1f3378 53%,
-    #1a2155 67%
-  ); /* w3c */
+  background: linear-gradient(86deg, #3679ff 0%, #1f3378 53%, #1a2155 67%);
+  /* w3c */
   filter: progid:DXImageTransform.Microsoft.gradient(
       startColorstr="#3679FF",
       endColorstr="#1A2155",
       GradientType=1
-    ); /* ie6-9 */
+    );
+  /* ie6-9 */
   background-image: url("../../static/img/background2.png");
   background-size: cover;
   background-position: center center;
 }
 .btn-link:hover {
   cursor: pointer;
-  text-decoration: none; /* color: rgb(104, 145, 162) !important; */
+  text-decoration: none;
+  /* color: rgb(104, 145, 162) !important; */
 }
 .btn-link:hover v-icon {
   /* color: rgb(104, 145, 162) !important */
@@ -857,6 +856,7 @@ input {
 }
 #company-img {
   margin: 0 auto;
+  max-height: 120px;
 }
 /* * Form styles */
 .profile-name-card {
@@ -907,7 +907,8 @@ input {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(104, 145, 162);
 }
 .btn.btn-signin {
-  background-color: rgb(26, 33, 85); /* CardinalStone blue */
+  background-color: rgb(26, 33, 85);
+  /* CardinalStone blue */
   padding: 0px;
   font-weight: 700;
   font-size: 14px;
@@ -924,8 +925,11 @@ input {
 .btn.btn-signin:hover,
 .btn.btn-signin:active,
 .btn.btn-signin:focus {
-  background-color: rgb(71, 77, 118);
-  /* A lighter shade of CardinalStone blue */
+  background-color: rgb(
+    71,
+    77,
+    118
+  ); /* A lighter shade of CardinalStone blue */
 }
 .forgot-password {
   color: rgb(26, 33, 85); /* CardinalStone blue */
@@ -933,16 +937,17 @@ input {
 .forgot-password:hover,
 .forgot-password:active,
 .forgot-password:focus {
-  color: rgb(71, 77, 118); /* A lighter shade of CardinalStone blue */
+  color: rgb(71, 77, 118);
+  /* A lighter shade of CardinalStone blue */
   text-decoration: none;
 }
 .contact-company {
   margin-top: 30px;
 }
 .contact-company a {
-  color: rgb(26, 33, 85); /* CardinalStone blue */
+  color: rgb(26, 33, 85);
+  /* CardinalStone blue */
 }
-
 .contact-company a:hover {
   color: rgb(71, 77, 118);
   /* A lighter shade of CardinalStone blue */
@@ -952,7 +957,6 @@ input {
   *background-image: url("../../static/img/background2.png");
   *z-index: -1;
 }
-
 #footer-links-wrapper {
   position: absolute;
   bottom: 10px;

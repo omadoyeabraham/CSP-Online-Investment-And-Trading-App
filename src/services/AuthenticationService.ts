@@ -59,7 +59,7 @@ import StockbrokingService from './StockbrokingService'
      method: 'post',
      url: ApiUrls.FindUserByUsername,
      data: { 'username': username }
-   })
+   }) 
  }
 
  let sendPasswordResetLink = (username: string, email: string, userId: number, label: string) => {
