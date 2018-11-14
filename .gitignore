@@ -8,6 +8,8 @@ test/unit/coverage
 test/e2e/reports
 selenium-debug.log
 
+src/services/ApiUrlService.ts
+
 # Editor directories and files
 .idea
 *.su
